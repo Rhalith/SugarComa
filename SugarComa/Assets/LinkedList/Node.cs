@@ -1,21 +1,49 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace LinkedList
+{
+
+
+[Serializable]
 public class Node : MonoBehaviour
 {
-    [SerializeField] pathFinder pathfinder;
-    [SerializeField] public Node current, previous, next, alternate, alternateprevious, selectionNext;
-    [SerializeField] Player player;
-    [SerializeField] Vector3 playerpos;
+    [Serializable]
+    public class Selection
+    {
+        public Node leftChoice, rightChoice;
+        public MeshRenderer left, right;
+        public bool isSelector;
+    }
+    public enum Specification
+    {
+        empty,
+        gold,
+        goal,
+        selection,
+        heal,
+        gift,
+        jackpot,
+        trap_1,
+        trap_2,
+        trap_3
+    }
     [Tooltip("Özelliði yoksa boþ býrak!")]
-    public string spec; // Inspector'dan kendin doldur özelliðine göre.
+    public Specification specification;
+    [HideInInspector]
     public Vector3 nodePos;
-    [Tooltip("SEÇÝM YOKSA BOÞ BIRAK!")]
-    [SerializeField] public Node leftChoice, rightChoice;
-    [SerializeField] public MeshRenderer left, right;
-    [SerializeField] public bool isSelector;
-    public bool forStop;
+    public Node current, previous, next, alternate, alternateprevious, selectionNext;
+
+    [Header("Diðer Scriptler")]
+    [SerializeField] pathFinder pathfinder;
+    [SerializeField] Player player;
+
+
+    [Header("Seçim Ayarlarý")]
+    public Selection selection;
+
 
 
     private void Awake()
@@ -47,34 +75,16 @@ public class Node : MonoBehaviour
     }
     private void setSpec()
     {
-        switch (spec)
+        switch (specification)
         {
-            case "selection":
+            case Specification.selection:
                 //blabla
                 break;
-            case "gold":
+            case Specification.gold:
                 //blabla
                 break;
             default:
                 break;
-        }
-           
-    }
-    public void MainRootFinder(Node node)
-    {
-        if (!node.forStop)
-        {
-            return;
-        }
-        node.forStop = false;
-        current.GetComponent<MeshRenderer>().material = player.greenMaterial;
-        if (node.next != null)
-        {
-            MainRootFinder(node.next);
-        }
-        if(node.alternate != null)
-        {
-            MainRootFinder(node.alternate);
         }
     }
     //public void FindSpec(string target, ref int i)
@@ -124,13 +134,16 @@ public class Node : MonoBehaviour
     //            pathfinder.isNextPlayer = true;
     //            pathfinder.paths.Reverse();
     //            return;
-                
+
     //        }
     //    }
     //    else
     //    {
-            
-            
+
+
     //    }
     //}
+
+
+}
 }

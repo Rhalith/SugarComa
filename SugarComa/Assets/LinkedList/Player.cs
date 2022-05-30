@@ -1,19 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace LinkedList
+{
 public class Player : MonoBehaviour
 {
-
-    [SerializeField] public Node node;
-    [SerializeField] pathFinder pathfinder;
+    [Serializable]
+    public class Selection
+    {
+        public bool isSelecting, isSelected;
+        public Material greenMaterial, redMaterial;
+    }
+    public Node node;
+    
+    public int health;
+    public int gold;
     public int steps;
     public int speed;
     public bool isMoving;
-    public bool isSelecting, isSelected;
-    [SerializeField] public Material greenMaterial, redMaterial;
+    [Header("Diðer Scriptler")]
+    [SerializeField] pathFinder pathfinder;
+    [SerializeField] GameController gameController;
+    [Header("Seçim Ayarlarý")]
+    public Selection selection;
+
     void Update()
     {
-        if (!isSelecting)
+        if (!selection.isSelecting)
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
             {
@@ -22,8 +36,8 @@ public class Player : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.X) && !isMoving)
             {
-                pathfinder.FindBestPath(node, "goal");
-                StartCoroutine(Move("goal"));               
+                pathfinder.FindBestPath(node, Node.Specification.goal);
+                StartCoroutine(Move("goal"));             
             }
         }
         else
@@ -36,7 +50,7 @@ public class Player : MonoBehaviour
             {
                 selectNode("right");
             }
-            if (Input.GetKeyDown(KeyCode.KeypadEnter) && isSelected)
+            if (Input.GetKeyDown(KeyCode.KeypadEnter) && selection.isSelected)
             {
                 selectNode("clear");
                 StartCoroutine(Move("normal"));
@@ -68,13 +82,13 @@ public class Player : MonoBehaviour
         }//Kupa kazanacaðýmýz yer gibi yerler için test.
         else if (type.Equals("normal"))
         {
-            while (steps>0 && !isSelecting)
+            while (steps>0 && !selection.isSelecting)
             {
                 Vector3 nextPos = node.selectionNext.nodePos;
                 while (MoveToNextNode(nextPos)) { yield return null; }
-                if (node.next.isSelector)
+                if (node.next.selection.isSelector)
                 {
-                    isSelecting = true;
+                    selection.isSelecting = true;
                     node.goToNextNode();
                     steps--;
                     yield break;
@@ -85,6 +99,7 @@ public class Player : MonoBehaviour
             }
         }
         isMoving = false;
+        CheckCurrentNode(node);
         pathfinder.ResetPathFinder(isMoving);
     }
 
@@ -93,24 +108,57 @@ public class Player : MonoBehaviour
         switch (type)
         {
             case "left":
-                node.left.material = greenMaterial;
-                node.right.material = redMaterial;
-                node.selectionNext = node.leftChoice;
-                isSelected = true;
+                node.selection.left.material = selection.greenMaterial;
+                node.selection.right.material = selection.redMaterial;
+                node.selectionNext = node.selection.leftChoice;
+                selection.isSelected = true;
                 break;
             case "right":
-                node.right.material = greenMaterial;
-                node.left.material = redMaterial;
-                node.selectionNext = node.rightChoice;
-                isSelected = true;
+                node.selection.right.material = selection.greenMaterial;
+                node.selection.left.material = selection.redMaterial;
+                node.selectionNext = node.selection.rightChoice;
+                selection.isSelected = true;
                 break;
             default:
-                node.right.material = redMaterial;
-                node.left.material = redMaterial;
-                isSelecting = false;
+                node.selection.right.material = selection.redMaterial;
+                node.selection.left.material = selection.redMaterial;
+                selection.isSelecting = false;
                 isMoving = false;
-                isSelected = false;
+                selection.isSelected = false;
                 break;
         }
+    }
+    void CheckCurrentNode(Node node)
+    {
+        switch (node.specification)
+        {
+            case Node.Specification.gold:
+                addGold(5);
+                break;
+            case Node.Specification.heal:
+                addHealth(5);
+                break;
+        }
+    }
+    void addGold(int value)
+    {
+        gold += value;
+        gameController.ChangeText();
+    }
+    void addHealth(int value)
+    {
+        health += value;
+        if (health > 30)
+        {
+            health = 30;
+        }
+        gameController.ChangeText();
+    }
+
+        //void CheckNode(Node node)
+        //{
+        //    if(node.specification.Equals(Node.Specification.))
+        //}
+
     }
 }
