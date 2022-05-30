@@ -2,27 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LinkedList
-{
+
 public class NotifyScript
 {
-     List<Observer> observers = new List<Observer>();
+    public List<Observer> userInterfaceElements = new List<Observer>();
 
     public void Notify()
     {
-        foreach (Observer observer in observers)
+        foreach (Observer observer in userInterfaceElements)
         {
             observer.OnNotify();
         }
     }
-    public void AddObserver(Observer observer)
+    public void AddObserver(Observer observer, List<Observer> list)
     {
-        observers.Add(observer);
+        userInterfaceElements.Add(observer);
     }
-    public void RemoveObserver(Observer observer)
+    public void RemoveObserver(Observer observer, List<Observer> list)
     {
-        observers.Remove(observer);
+        userInterfaceElements.Remove(observer);
     }
 }
-}
+
 

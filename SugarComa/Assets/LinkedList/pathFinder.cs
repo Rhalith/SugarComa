@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace LinkedList
-{
-    public class pathFinder : MonoBehaviour
+public class pathFinder : MonoBehaviour
     {
         public List<Node> paths;
         public List<List<Node>> nodes = new() { new() };
@@ -209,4 +207,3 @@ namespace LinkedList
     //    }
     //    findSpec(target);
     //}
-}

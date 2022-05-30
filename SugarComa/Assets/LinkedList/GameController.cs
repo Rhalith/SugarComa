@@ -1,10 +1,8 @@
 using System.Collections;
-using System;
 using System.Collections.Generic;
 using UnityEngine; using UnityEngine.UI;
 using TMPro;
-namespace LinkedList
-{
+
     public class GameController : MonoBehaviour
     {
         public PlayerObjects playerObjects;
@@ -14,7 +12,7 @@ namespace LinkedList
         private void Start()
         {
             TextChanger textChanger = new TextChanger(playerObjects.playerGold, playerObjects.playerHealth, playerObjects.player);
-            notifyScript.AddObserver(textChanger);
+            notifyScript.AddObserver(textChanger, notifyScript.userInterfaceElements);
         }
 
         public void ChangeText()
@@ -22,12 +20,12 @@ namespace LinkedList
             notifyScript.Notify();
         }
     }
-    [Serializable]
+    [System.Serializable]
     public class PlayerObjects
     {
         public Player player;
         public TMP_Text playerGold, playerHealth;
     }
-}
+
 
 

@@ -1,12 +1,10 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace LinkedList
-{
 public class Player : MonoBehaviour
 {
-    [Serializable]
+    [System.Serializable]
     public class Selection
     {
         public bool isSelecting, isSelected;
@@ -133,10 +131,13 @@ public class Player : MonoBehaviour
         switch (node.specification)
         {
             case Node.Specification.gold:
-                addGold(5);
+                addGold(Random.Range(5, 8));
                 break;
             case Node.Specification.heal:
                 addHealth(5);
+                break;
+            case Node.Specification.gift:
+                addItem();
                 break;
         }
     }
@@ -154,11 +155,44 @@ public class Player : MonoBehaviour
         }
         gameController.ChangeText();
     }
-
-        //void CheckNode(Node node)
-        //{
-        //    if(node.specification.Equals(Node.Specification.))
-        //}
-
+    void addItem()
+    {
+        int i = Random.Range(1, 11);
+        switch (i)
+        {
+            case 1:
+                print("Kalkan");
+                break;
+            case 2:
+                print("Kurmalý araba");
+                break;
+            case 3:
+                print("Büyük sapan");
+                break;
+            case 4:
+                print("Teleport");
+                break;
+            case 5:
+                print("Arý");
+                break;
+            case 6:
+                print("Mýknatýs");
+                break;
+            case 7:
+                print("Sürpriz Kutusu");
+                break;
+            case 8:
+                print("Boks eldiveni");
+                break;
+            case 9:
+                print("Saðlýk kutusu");
+                break;
+            case 10:
+                print("Kanca");
+                break;
+            default:
+                break;
+        }
     }
+    
 }

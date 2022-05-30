@@ -1,16 +1,11 @@
 using System.Collections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LinkedList
-{
 
-
-[Serializable]
 public class Node : MonoBehaviour
 {
-    [Serializable]
+    [System.Serializable]
     public class Selection
     {
         public Node leftChoice, rightChoice;
@@ -146,4 +141,4 @@ public class Node : MonoBehaviour
 
 
 }
-}
+

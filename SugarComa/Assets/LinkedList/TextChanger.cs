@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace LinkedList
-{
-    
     public abstract class Observer
     {
         public abstract void OnNotify();
@@ -35,4 +32,3 @@ namespace LinkedList
         }
 
     }
-}
