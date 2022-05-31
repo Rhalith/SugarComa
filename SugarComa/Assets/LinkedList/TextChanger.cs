@@ -4,31 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-    public abstract class Observer
+public abstract class Observer
+{
+    public abstract void OnNotify();
+}
+
+public class TextChanger : Observer
+{
+    public TMP_Text playerGold, playerHealth, playerGoblet;
+    public Player player;
+
+    public TextChanger(TMP_Text playerGold, TMP_Text playerHealth,TMP_Text playerGoblet, Player player)
     {
-        public abstract void OnNotify();
+        this.playerGold = playerGold;
+        this.playerHealth = playerHealth;
+        this.playerGoblet = playerGoblet;
+        this.player = player;
     }
 
-    public class TextChanger : Observer
+    void ChangeText()
     {
-        public TMP_Text playerGold, playerHealth;
-        public Player player;
-
-        public TextChanger(TMP_Text playerGold, TMP_Text playerHealth, Player player)
-        {
-            this.playerGold = playerGold;
-            this.playerHealth = playerHealth;
-            this.player = player;
-        }
-
-        void ChangeText()
-        {
-            playerGold.text = "Gold: " + player.gold.ToString();
-            playerHealth.text = "Health: " + player.health.ToString();
-        }
-        public override void OnNotify()
-        {
-            ChangeText();
-        }
-
+        playerGold.text = "Gold: " + player.gold.ToString();
+        playerHealth.text = "Health: " + player.health.ToString();
+        playerGoblet.text = "Goblet: " + player.goblet.ToString();
     }
+    public override void OnNotify()
+    {
+        ChangeText();
+    }
+
+}

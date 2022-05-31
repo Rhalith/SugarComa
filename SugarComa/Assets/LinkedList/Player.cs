@@ -11,15 +11,16 @@ public class Player : MonoBehaviour
         public Material greenMaterial, redMaterial;
     }
     public Node node;
-    
     public int health;
     public int gold;
+    public int goblet;
     public int steps;
     public int speed;
     public bool isMoving;
     [Header("Diðer Scriptler")]
     [SerializeField] pathFinder pathfinder;
     [SerializeField] GameController gameController;
+    [SerializeField] GobletSelection gobletSelection;
     [Header("Seçim Ayarlarý")]
     public Selection selection;
 
@@ -131,22 +132,28 @@ public class Player : MonoBehaviour
         switch (node.specification)
         {
             case Node.Specification.gold:
-                addGold(Random.Range(5, 8));
+                AddGold(Random.Range(5, 8));
                 break;
             case Node.Specification.heal:
-                addHealth(5);
+                AddHealth(5);
                 break;
             case Node.Specification.gift:
-                addItem();
+                AddItem();
+                break;
+            case Node.Specification.jackpot:
+                RandomJackpot(5);
+                break;
+            case Node.Specification.goal:
+                GobletSelection();
                 break;
         }
     }
-    void addGold(int value)
+    void AddGold(int value)
     {
         gold += value;
         gameController.ChangeText();
     }
-    void addHealth(int value)
+    void AddHealth(int value)
     {
         health += value;
         if (health > 30)
@@ -155,7 +162,7 @@ public class Player : MonoBehaviour
         }
         gameController.ChangeText();
     }
-    void addItem()
+    void AddItem()
     {
         int i = Random.Range(1, 11);
         switch (i)
@@ -194,5 +201,24 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-    
+    void RandomJackpot(int value)
+    {
+        int i = Random.Range(1, 4);
+        switch (i)
+        {
+            case 1:
+                AddItem();
+                break;
+            case 2:
+                AddGold(Random.Range(value, 8));
+                break;
+            case 3:
+                AddHealth(value);
+                break;
+        }
+    }
+    void GobletSelection()
+    {
+        gobletSelection.OpenGobletSelection();
+    }
 }

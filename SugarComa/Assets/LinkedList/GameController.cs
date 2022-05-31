@@ -11,7 +11,7 @@ using TMPro;
 
         private void Start()
         {
-            TextChanger textChanger = new TextChanger(playerObjects.playerGold, playerObjects.playerHealth, playerObjects.player);
+            TextChanger textChanger = new TextChanger(playerObjects.playerGold, playerObjects.playerHealth,playerObjects.playerGoblet, playerObjects.player);
             notifyScript.AddObserver(textChanger, notifyScript.userInterfaceElements);
         }
 
@@ -24,7 +24,7 @@ using TMPro;
     public class PlayerObjects
     {
         public Player player;
-        public TMP_Text playerGold, playerHealth;
+        public TMP_Text playerGold, playerHealth, playerGoblet;
     }
 
 
