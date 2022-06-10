@@ -18,12 +18,6 @@ public class Graph : MonoBehaviour
             _platforms.Add(source, platforms);
         }
 
-        if (!_visited.ContainsKey(source))
-            _visited.Add(source, false);
-
-        if (!_visited.ContainsKey(destination))
-            _visited.Add(destination, false);
-
         platforms.Add(destination);
     }
 
@@ -35,7 +29,6 @@ public class Graph : MonoBehaviour
         if (!_platforms.TryGetValue(source, out List<Platform> platforms))
             return;
 
-        _visited.Remove(source);
         platforms.Remove(destination);
 
         if (platforms.Count == 0)
@@ -53,11 +46,6 @@ public class Graph : MonoBehaviour
         {
             if (!_platforms.TryGetValue(source, out List<Platform> platforms))
             {
-                lock (_visited)
-                {
-                    _visited.Add(source, false);
-                }
-
                 platforms = new List<Platform>();
                 _platforms.Add(source, platforms);
             }
@@ -100,15 +88,8 @@ public class Graph : MonoBehaviour
         foreach (var el in _platforms)
         {
             var key = el.Key;
-            var values = el.Value;
 
             if (key.specification == spec && !platforms.Contains(key)) platforms.Add(key);
-
-            for (int i = 0; i < values.Count; i++)
-            {
-                var value = values[i];
-                if (value.specification == spec && !platforms.Contains(value)) platforms.Add(value);
-            }
         }
         return platforms.ToArray();
     }
@@ -131,105 +112,78 @@ public class Graph : MonoBehaviour
     /// <param name="destination"></param>
     /// <param name="path">The path to the destination.</param>
     /// <param name="maxStep"></param>
-    /// <param name="step"></param>
-    public int DepthFirstSearch(Platform source, Platform destination, List<Platform> path, int maxStep = -1, int step = 0)
+    public bool DepthFirstSearch(Platform source, Platform destination, List<Platform> path, int maxStep = -1)
     {
+        // stop searching and return step when source is equal to destination.
+        if (source.Equals(destination))
+        {
+            path.Add(destination);
+            return true;
+        }
+
+        int step = path.Count;
+        // stop the searching, if the step greater than maximum step.
+        // return false
+        if (maxStep != -1 && step >= maxStep) return false;
+
         if (_platforms.TryGetValue(source, out List<Platform> platforms))
         {
-            if (platforms == null)
-            {
-                ResetVisited();
-                return -1;
-            }
-
-            _visited[source] = true;
-
-            if (source.Equals(destination))
-            {
-                ResetVisited();
-                return step;
-            }
-
-            if (maxStep != -1 && step >= maxStep)
-            {
-                ResetVisited();
-                return maxStep + 1;
-            }
-
             int count = platforms.Count;
-            int[] steps = new int[count];
-            var tempPaths = new List<Platform>[count];
-            for (int i = 0; i < count; ++i)
+            // if the source platform has already been added, there is no path to the destination platform.
+            // return false
+            if (path.Contains(source)) return false;
+
+            path.Add(source);
+            
+            if (count == 1)
             {
-                var key = platforms[i];
-
-                if (!_visited.TryGetValue(key, out bool visited))
+                return DepthFirstSearch(platforms[0], destination, path, maxStep);
+            }
+            else
+            {
+                var alternativePaths = new List<Platform>[count];
+                for (int i = 0; i < count; ++i)
                 {
-                    visited = false;
-                    _visited[key] = visited;
-                }
+                    // create alternative path
+                    var alternative = new List<Platform>();
+                    alternative.AddRange(path);
 
-                var tempStep = step;
-                var tempPath = new List<Platform>();
-                if (!visited)
-                {
-                    tempPaths[i] = tempPath;
-                    tempStep = DepthFirstSearch(key, destination, tempPath, maxStep, ++tempStep);
+                    bool found = DepthFirstSearch(platforms[i], destination, alternative, maxStep);
 
-                    // finded destination.
-                    if (tempStep != -1)
+                    // if the destination is found.
+                    if (found)
                     {
-                        if (maxStep == -1)
-                        {
-                            tempPath.Add(key);
-                            maxStep = tempStep;
-                        }
-                        else if (tempStep < maxStep)
-                        {
-                            tempPath.Add(key);
-                            maxStep = tempStep;
-                        }
+                        alternativePaths[i] = alternative;
+                        maxStep = alternative.Count;
                     }
                 }
-                else tempStep = -1;
-                steps[i] = tempStep;
-            }
+                // find best path.
+                var index = BestPathIndex(alternativePaths);
+                if (index == -1) return false;
 
-            var minIndex = MinIndex(steps);
-            if (minIndex == -1)
-            {
-                ResetVisited();
-                return -1;
-            }
+                // add alternative path to path.
+                path.Clear();
+                path.AddRange(alternativePaths[index]);
 
-            if (minIndex < tempPaths.Length && tempPaths[minIndex] != null) path.AddRange(tempPaths[minIndex]);
-            return steps[minIndex];
+                return true;
+            }
         }
-        ResetVisited();
-        return -1;
+        return false;
     }
 
-    /// <summary>
-    /// All visited values are set to false.
-    /// </summary>
-    public void ResetVisited()
+    private int BestPathIndex(List<Platform>[] platforms)
     {
-        var keys = _visited.Keys.ToArray();
-        for (int i = 0; i < keys.Length; ++i) _visited[keys[i]] = false;
-    }
+        if (platforms == null || platforms.Length == 0) return -1;
 
-    private int MinIndex(int[] arr)
-    {
-        if (arr == null || arr.Length == 0) return -1;
-
-        if (arr.Length == 1) return 0;
-
-        int index = 0;
+        int index = -1;
         int bestValue = int.MaxValue;
-        for (int i = 0; i < arr.Length; i++)
+        for (int i = 0; i < platforms.Length; i++)
         {
-            var value = arr[i];
-            if (value != -1 && value < bestValue)
+            var plats = platforms[i];
+            if (plats == null) continue;
+
+            var value = plats.Count;
+            if (value < bestValue)
             {
                 index = i;
                 bestValue = value;
@@ -239,5 +193,4 @@ public class Graph : MonoBehaviour
     }
 
     [SerializeField] private PlatformDictionary _platforms;
-    [System.NonSerialized] private readonly Dictionary<Platform, bool> _visited = new();
 }

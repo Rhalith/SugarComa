@@ -11,17 +11,13 @@ public class PathFollower : MonoBehaviour
     [HideInInspector] private int _currentPlatformIndex;
     [HideInInspector] private Vector3 _currentPosition;
     [HideInInspector] private Vector3 _startPosition;
-    [HideInInspector] private int _increment;
-    [HideInInspector] private bool _isIncrement;
 
-    public void StartFollow(Platform[] path, bool increment = false)
+    public void StartFollow(Platform[] path)
     {
         if (path == null || path.Length == 0) return;
 
         _path = path;
-        _isIncrement = increment;
-        _increment = increment ? 1 : -1;
-        _currentPlatformIndex = increment ? 0 : path.Length;
+        _currentPlatformIndex = -1;
 
         NextPlatform();
 
@@ -48,11 +44,10 @@ public class PathFollower : MonoBehaviour
 
     private void NextPlatform()
     {
-        bool condition = _isIncrement ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
-        if (condition)
+        if (_currentPlatformIndex < _path.Length - 1)
         {
             _t = 0;
-            _currentPlatformIndex += _increment;
+            _currentPlatformIndex++;
             _startPosition = transform.position;
             _currentPosition = _path[_currentPlatformIndex].position;
             _currentPosition.y = transform.position.y;

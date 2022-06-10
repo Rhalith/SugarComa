@@ -28,12 +28,12 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     var path = _pathfinder.ToSelector(_current, _step);
-                    StartMoving(path, true);
+                    StartMoving(path);
                 }
                 else if (Input.GetKeyDown(KeyCode.X))
                 {
                     var path = _pathfinder.ToSelector(_current);
-                    StartMoving(path, true);
+                    StartMoving(path);
                 }
                 else if (Input.GetKeyDown(KeyCode.C))
                 {
@@ -56,23 +56,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 var path = _pathfinder.ToSelector(_current, _step, _selectorDirection);
                 SelectPlatform(RouteSelectorDirection.None);
-                StartMoving(path, true);
+                StartMoving(path);
             }
         }
 
         MoveOver();
     }
 
-    private void StartMoving(Platform[] path, bool increment = false)
+    private void StartMoving(Platform[] path)
     {
         if (path == null || _moveStart) return;
 
-        var currentIndex = increment ? path.Length - 1 : 0;
         if (path.Length > 0)
         {
             _moveStart = true;
-            _pathFollower.StartFollow(path, increment);
-            _current = path[currentIndex];
+            _pathFollower.StartFollow(path);
+            _current = path[^1];
         }
     }
 
