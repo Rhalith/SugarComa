@@ -171,6 +171,26 @@ public class Graph : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Show path.
+    /// </summary>
+    public void OnDrawGizmosSelected()
+    {
+        foreach (var platform in _platforms)
+        {
+            var key = platform.Key;
+            var value = platform.Value;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(key.position, 0.05f);
+            Gizmos.color = Color.green;
+            for (int i = 0; i < value.Count; ++i)
+            {
+                Gizmos.DrawLine(key.position, value[i].position);
+            }
+        }
+    }
+
     private int BestPathIndex(List<Platform>[] platforms)
     {
         if (platforms == null || platforms.Length == 0) return -1;
