@@ -26,8 +26,8 @@ public class Platform : MonoBehaviour
             case PlatformSpecification.Selection:
                 //TODO
                 break;
-            case PlatformSpecification.Gold: renderer.material = GameManager.Instance.platform.goldMaterial; break;
-            case PlatformSpecification.Heal: renderer.material = GameManager.Instance.platform.healMaterial; break;
+            case PlatformSpecification.Gold: renderer.material = GameManager.PlatformMaterial.goldMaterial; break;
+            case PlatformSpecification.Heal: renderer.material = GameManager.PlatformMaterial.healMaterial; break;
             default:
                 break;
         }

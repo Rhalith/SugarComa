@@ -1013,6 +1013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 546016265}
+  - component: {fileID: 546016269}
   - component: {fileID: 546016268}
   - component: {fileID: 546016267}
   - component: {fileID: 546016266}
@@ -1068,7 +1069,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c814e38117cb9444d88b62804941bcc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _step: 1
+  step: 1
+  goalStep: 5
   _current: {fileID: 4293725584193019754}
   _pathfinder: {fileID: 803034596}
 --- !u!114 &546016268
@@ -1085,6 +1087,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   isMoving: 0
+--- !u!114 &546016269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546016264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c619d688aebb04a8735dd892f80062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextSelectionPressed: 0
+  nextSelectionStepPressed: 0
+  nextGoalPressed: 0
+  nextGoalStepPressed: 0
+  selectLeftPressed: 0
+  selectRightPressed: 0
+  applySelectPressed: 0
 --- !u!1001 &602623643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2769,10 +2790,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9a4cc0e11d89b24aaba5baf908f05ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selection:
+  _selectionMaterial:
     greenMaterial: {fileID: 2100000, guid: cd5a890bb4cb671428c4c51fb6f2c138, type: 2}
     redMaterial: {fileID: 2100000, guid: d1ffb5b180b77c247a247c9b2fa636da, type: 2}
-  platform:
+  _platformMaterial:
     goldMaterial: {fileID: 2100000, guid: 35b9bef5365d4ba4fbcf84d12dfef831, type: 2}
     healMaterial: {fileID: 2100000, guid: cd5a890bb4cb671428c4c51fb6f2c138, type: 2}
 --- !u!1001 &1225420747

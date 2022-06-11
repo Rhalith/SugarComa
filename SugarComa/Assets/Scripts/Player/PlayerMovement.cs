@@ -2,68 +2,77 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private int _step = 1;
-    [SerializeField] private Platform _current;
+    public int step = 1;
+    public int goalStep = 5;
 
-    [Header("Diðer Scriptler")]
+    [SerializeField] private Platform _current;
     [SerializeField] private PathFinder _pathfinder;
 
-    [HideInInspector] private bool _moveStart;
-    [HideInInspector] private PathFollower _pathFollower;
-    [HideInInspector] private PlayerCollector _playerCollector;
-    [HideInInspector] private RouteSelectorDirection _selectorDirection;
+    private bool _moveStart;
+    private PathFollower _pathFollower;
+    private PlayerInput _playerInput;
+    private PlayerCollector _playerCollector;
+    private RouteSelectorDirection _selectorDirection;
 
     private void Start()
     {
+        _playerInput = GetComponent<PlayerInput>();
         _playerCollector = GetComponent<PlayerCollector>();
         _pathFollower = GetComponent<PathFollower>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!_current.HasSelector)
         {
-            if (!_pathFollower.isMoving)
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    var path = _pathfinder.ToSelector(_current, _step);
-                    StartMoving(path);
-                }
-                else if (Input.GetKeyDown(KeyCode.X))
-                {
-                    var path = _pathfinder.ToSelector(_current);
-                    StartMoving(path);
-                }
-                else if (Input.GetKeyDown(KeyCode.C))
-                {
-                    var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal);
-                    StartMoving(path);
-                }
-                else if (Input.GetKeyDown(KeyCode.V))
-                {
-                    var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal, 5);
-                    StartMoving(path);
-                }
-            }
+            if (!_pathFollower.isMoving) StartMove();
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.A)) SelectPlatform(RouteSelectorDirection.Left);
-            else if (Input.GetKeyDown(KeyCode.D)) SelectPlatform(RouteSelectorDirection.Right);
-
-            if (Input.GetKeyDown(KeyCode.Return) && _selectorDirection != RouteSelectorDirection.None)
-            {
-                var path = _pathfinder.ToSelector(_current, _step, _selectorDirection);
-                SelectPlatform(RouteSelectorDirection.None);
-                StartMoving(path);
-            }
+            ProcessSelect();
         }
 
         MoveOver();
     }
 
-    private void StartMoving(Platform[] path)
+    private void StartMove()
+    {
+        if (_playerInput.nextSelectionStepPressed)
+        {
+            var path = _pathfinder.ToSelector(_current, step);
+            StartFollowPath(path);
+        }
+        else if (_playerInput.nextSelectionPressed)
+        {
+            var path = _pathfinder.ToSelector(_current);
+            StartFollowPath(path);
+        }
+        else if (_playerInput.nextGoalPressed)
+        {
+            var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal);
+            StartFollowPath(path);
+        }
+        else if (_playerInput.nextGoalStepPressed)
+        {
+            var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal, goalStep);
+            StartFollowPath(path);
+        }
+    }
+
+    private void ProcessSelect()
+    {
+        if (_playerInput.selectLeftPressed) SelectPlatform(RouteSelectorDirection.Left);
+        else if (_playerInput.selectRightPressed) SelectPlatform(RouteSelectorDirection.Right);
+
+        if (_playerInput.applySelectPressed && _selectorDirection != RouteSelectorDirection.None)
+        {
+            var path = _pathfinder.ToSelector(_current, step, _selectorDirection);
+            SelectPlatform(RouteSelectorDirection.None);
+            StartFollowPath(path);
+        }
+    }
+
+    private void StartFollowPath(Platform[] path)
     {
         if (path == null || _moveStart) return;
 
@@ -91,16 +100,16 @@ public class PlayerMovement : MonoBehaviour
         switch (direction)
         {
             case RouteSelectorDirection.Left:
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.Instance.selection.greenMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.Instance.selection.redMaterial);
+                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.greenMaterial);
+                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
                 break;
             case RouteSelectorDirection.Right:
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.Instance.selection.greenMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.Instance.selection.redMaterial);
+                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.greenMaterial);
+                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
                 break;
             default:
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.Instance.selection.redMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.Instance.selection.redMaterial);
+                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
+                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
                 break;
         }
     }

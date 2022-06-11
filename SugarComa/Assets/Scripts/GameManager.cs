@@ -3,28 +3,65 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    public static GameManager Instance => _instance;
 
-    public Selection selection;
-    public Platform platform;
+    private bool _isGameOver;
+    private float _totalGameTime;
+    [SerializeField] private SelectionMaterial _selectionMaterial;
+    [SerializeField] private PlatformMaterial _platformMaterial;
 
-    private void Awake()
+    public static PlatformMaterial PlatformMaterial
     {
-        if (_instance != null && _instance != this)  Destroy(gameObject);
-        else  _instance = this;
+        get
+        {
+            if (_instance == null) return null;
+            return _instance._platformMaterial;
+        }
     }
 
-    [System.Serializable]
-    public class Selection
+    public static SelectionMaterial SelectionMaterial
     {
-        public Material greenMaterial;
-        public Material redMaterial;
+        get
+        {
+            if (_instance == null) return null;
+            return _instance._selectionMaterial;
+        }
     }
 
-    [System.Serializable]
-    public class Platform
+    public static bool IsGameOver
     {
-        public Material goldMaterial;
-        public Material healMaterial;
+        get
+        {
+            if (_instance == null) return false;
+            return _instance._isGameOver;
+        }
+    }
+
+    public static float TotalGameTime
+    {
+        get
+        {
+            if (_instance == null) return 0f;
+            return _instance._totalGameTime;
+        }
+    }
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        _instance = this;
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (_isGameOver) return;
+
+        _totalGameTime += Time.deltaTime;
     }
 }

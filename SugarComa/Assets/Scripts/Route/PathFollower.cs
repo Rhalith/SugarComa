@@ -6,11 +6,11 @@ public class PathFollower : MonoBehaviour
 
     [HideInInspector] public bool isMoving;
 
-    [HideInInspector] private float _t;
-    [HideInInspector] private Platform[] _path;
-    [HideInInspector] private int _currentPlatformIndex;
-    [HideInInspector] private Vector3 _currentPosition;
-    [HideInInspector] private Vector3 _startPosition;
+    private float _t;
+    private Platform[] _path;
+    private int _currentPlatformIndex;
+    private Vector3 _currentPosition;
+    private Vector3 _startPosition;
 
     public void StartFollow(Platform[] path)
     {
@@ -24,11 +24,11 @@ public class PathFollower : MonoBehaviour
         isMoving = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isMoving) return;
 
-        _t += Time.deltaTime * speed;
+        _t += Time.fixedDeltaTime * speed;
 
         if (transform.position != _currentPosition)
         {
