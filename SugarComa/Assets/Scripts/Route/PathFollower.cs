@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PathFollower : MonoBehaviour
 {
-    public float speed;
+    public float speed; // game object movement speed.
 
-    [HideInInspector] public bool isMoving;
+    [HideInInspector] public bool isMoving; // does the gameobject move.
 
     private float _t;
     private Platform[] _path;
@@ -12,8 +12,13 @@ public class PathFollower : MonoBehaviour
     private Vector3 _currentPosition;
     private Vector3 _startPosition;
 
+    /// <summary>
+    /// Movement goes on the given path.
+    /// </summary>
+    /// <param name="path"></param>
     public void StartFollow(Platform[] path)
     {
+        // if path exists
         if (path == null || path.Length == 0) return;
 
         _path = path;

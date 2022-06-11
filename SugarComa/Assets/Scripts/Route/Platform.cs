@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    [HideInInspector] public Vector3 position;
+    [HideInInspector] public Vector3 position; // game object position.
 
     [Tooltip("Özelliði yoksa boþ býrak!")]
     public PlatformSpecification specification;

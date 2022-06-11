@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [DefaultExecutionOrder(-100)]
@@ -13,7 +11,7 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool selectRightPressed;
 	[HideInInspector] public bool applySelectPressed;
 
-	private bool _readyToClear;
+	private bool _readyToClear; // used to keep input in sync
 
 
 	void Update()
@@ -32,8 +30,10 @@ public class PlayerInput : MonoBehaviour
 
 	void ClearInput()
 	{
+		//If we're not ready to clear input, return
 		if (!_readyToClear) return;
 
+		//Reset all inputs
 		nextSelectionPressed = false;
 		nextSelectionStepPressed = false;
 		nextGoalPressed = false;
