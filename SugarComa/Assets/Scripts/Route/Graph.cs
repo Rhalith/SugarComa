@@ -40,7 +40,7 @@ public class Graph : MonoBehaviour
     /// <summary>
     /// Adds edge to the source as thread safe.
     /// </summary>
-    public void AddEdgeSave(Platform source, Platform destination)
+    public void AddEdgeThreadSafe(Platform source, Platform destination)
     {
         lock (_platforms)
         {
@@ -60,7 +60,7 @@ public class Graph : MonoBehaviour
     /// <summary>
     /// Deletes the target from source as thread safe.
     /// </summary>
-    public void RemoveSave(Platform source, Platform destination)
+    public void RemoveThreadSafe(Platform source, Platform destination)
     {
         lock (_platforms)
         {
