@@ -21,7 +21,7 @@ public class PathFinder : MonoBehaviour
     {
         if (source == null) return null;
 
-        var pathes = new List<List<Platform>>();
+        var paths = new List<List<Platform>>();
 
         var index = 0;
         var maxDepth = -1;
@@ -32,7 +32,7 @@ public class PathFinder : MonoBehaviour
             var found = FindPrivate(source, destinations[i], out List<Platform> path, maxDepth);
             if (!found) continue;
 
-            pathes.Add(path);
+            paths.Add(path);
             var tempMaxDepth = path.Count;
 
             if (maxDepth == -1)
@@ -47,11 +47,38 @@ public class PathFinder : MonoBehaviour
             }
         }
 
-        if (pathes.Count == 0) return null;
+        if (paths.Count == 0) return null;
 
-        var bestPath = pathes[index];
+        var bestPath = paths[index];
         if (take > 0) return bestPath.Take(take).ToArray();
         return bestPath.ToArray();
+    }
+
+    /// <summary>
+    /// Finds and returns paths from the given source to the destination.
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="spec"></param>
+    /// <param name="take"></param>
+    public List<Platform[]> GetPaths(Platform source, PlatformSpecification spec, int take = -1)
+    {
+        if (source == null) return null;
+
+        var paths = new List<Platform[]>();
+
+        var maxDepth = -1;
+        // find destinations platforms by spec.
+        var destinations = _graph.GetPlatformsBySpec(spec);
+        for (int i = 0; i < destinations.Length; i++)
+        {
+            var found = FindPrivate(source, destinations[i], out List<Platform> path, maxDepth);
+            if (!found) continue;
+
+            if (take != -1) paths.Add(path.Take(take).ToArray());
+            else paths.Add(path.ToArray());
+        }
+
+        return paths;
     }
 
     /// <summary>
