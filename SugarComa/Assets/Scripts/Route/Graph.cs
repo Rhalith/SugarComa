@@ -85,10 +85,11 @@ public class Graph : MonoBehaviour
     public Platform[] GetPlatformsBySpec(PlatformSpecification spec)
     {
         var platforms = new List<Platform>();
-        foreach (var el in _platforms)
-        {
-            var key = el.Key;
 
+        var keys = _platforms.Keys.ToArray();
+        for (int i = 0; i < keys.Length; ++i)
+        {
+            var key = keys[i];
             if (key.specification == spec && !platforms.Contains(key)) platforms.Add(key);
         }
         return platforms.ToArray();
