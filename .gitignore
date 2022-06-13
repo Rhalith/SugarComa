@@ -13,6 +13,7 @@
 
 # Visual Studio cache/options directory
 .vs/
+.vsconfig
 
 # file on crash reports
 sysinfo.txt
