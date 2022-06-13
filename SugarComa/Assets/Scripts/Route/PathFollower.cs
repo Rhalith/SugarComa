@@ -13,37 +13,70 @@ public class PathFollower : MonoBehaviour
     private Vector3 _startPosition;
     private int _step;
     private int _maxStep;
-    private int _increment;
-    private bool _isIncrement;
+    private int _toForward;
+    private bool _isToForward;
 
     /// <summary>
-    /// Movement goes on the given path.
+    /// The movement starts on the given path.
     /// </summary>
     /// <param name="path"></param>
-    public void StartFollow(Platform[] path, int maxStep = -1, bool increment = true)
+    public void StartFollow(Platform[] path, int maxStep = -1, bool toForward = true)
     {
         // if path exists
         if (path == null || path.Length == 0) return;
 
         _path = path;
-
         _step = -1;
         _maxStep = maxStep;
-        _isIncrement = increment;
-        if (increment)
+        _isToForward = toForward;
+        if (toForward)
         {
-            _increment = 1;
+            _toForward = 1;
             _currentPlatformIndex = -1;
         }
         else
         {
-            _increment = -1;
-            _currentPlatformIndex = path.Length;
+            _toForward = -1;
+            _currentPlatformIndex = _path.Length;
         }
 
         NextPlatform();
 
         isMoving = true;
+    }
+
+    /// <summary>
+    /// The movement starts on the last given path.
+    /// </summary>
+    /// <param name="maxStep"></param>
+    /// <param name="toForward"></param>
+    public void MoveLastPath(int maxStep = -1, bool toForward = true)
+    {
+        // if path exists
+        if (_path == null || _path.Length == 0) return;
+
+        _step = -1;
+        _maxStep = maxStep;
+        _isToForward = toForward;
+        _toForward = toForward ? 1 : -1;
+
+        NextPlatform();
+
+        isMoving = true;
+    }
+
+    /// <summary>
+    /// Returns the current platform.
+    /// </summary>
+    public Platform GetCurrentPlatform()
+    {
+        // if there is no path
+        if (_path == null || _path.Length == 0) return null;
+
+        if (_currentPlatformIndex < -1) return _path[0];
+        else if (_currentPlatformIndex >= _path.Length) return _path[^1];
+
+        return _path[_currentPlatformIndex];
     }
 
     private void FixedUpdate()
@@ -66,7 +99,7 @@ public class PathFollower : MonoBehaviour
 
     private void NextPlatform()
     {
-        bool condition = _isIncrement ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
+        bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
 
         // if the step greater than maximum step, stop the movement.
         if (_maxStep != -1) condition = condition && _step < _maxStep;
@@ -75,7 +108,7 @@ public class PathFollower : MonoBehaviour
         {
             _t = 0;
             _step++;
-            _currentPlatformIndex += _increment;
+            _currentPlatformIndex += _toForward;
             _startPosition = transform.position;
             _currentPosition = _path[_currentPlatformIndex].position;
             _currentPosition.y = transform.position.y;

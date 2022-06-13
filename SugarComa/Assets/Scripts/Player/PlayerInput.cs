@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool nextSelectionStepPressed;
 	[HideInInspector] public bool nextGoalPressed;
 	[HideInInspector] public bool nextGoalStepPressed;
+	[HideInInspector] public bool moveToBackStepPressed;
 	[HideInInspector] public bool selectLeftPressed;
 	[HideInInspector] public bool selectRightPressed;
 	[HideInInspector] public bool applySelectPressed;
@@ -38,6 +39,7 @@ public class PlayerInput : MonoBehaviour
 		nextSelectionStepPressed = false;
 		nextGoalPressed = false;
 		nextGoalStepPressed = false;
+		moveToBackStepPressed = false;
 		selectLeftPressed = false;
 		selectRightPressed = false;
 		applySelectPressed = false;
@@ -51,6 +53,7 @@ public class PlayerInput : MonoBehaviour
 		nextSelectionStepPressed = nextSelectionStepPressed || Input.GetKeyDown(KeyCode.Space);
 		nextGoalPressed = nextGoalPressed || Input.GetKeyDown(KeyCode.C);
 		nextGoalStepPressed = nextGoalStepPressed || Input.GetKeyDown(KeyCode.V);
+		moveToBackStepPressed = moveToBackStepPressed || Input.GetKeyDown(KeyCode.B);
 		selectLeftPressed = selectLeftPressed || Input.GetKeyDown(KeyCode.A);
 		selectRightPressed = selectRightPressed || Input.GetKeyDown(KeyCode.D);
 		applySelectPressed = applySelectPressed || Input.GetKeyDown(KeyCode.Return);

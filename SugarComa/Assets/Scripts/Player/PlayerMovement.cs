@@ -57,6 +57,11 @@ public class PlayerMovement : MonoBehaviour
             var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal, goalStep);
             StartFollowPath(path);
         }
+        else if (_playerInput.moveToBackStepPressed)
+        {
+            _moveStart = true;
+            _pathFollower.MoveLastPath(step, false);
+        }
     }
 
     private void ProcessSelect()
@@ -80,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
         {
             _moveStart = true;
             _pathFollower.StartFollow(path);
-            _current = path[^1];
         }
     }
 
@@ -89,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         if (_moveStart && !_pathFollower.isMoving)
         {
             _moveStart = false;
+            _current = _pathFollower.GetCurrentPlatform();
             _playerCollector.CheckCurrentNode(_current);
         }
     }
