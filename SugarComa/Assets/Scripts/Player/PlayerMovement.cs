@@ -9,17 +9,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PathFinder _pathfinder;
 
     private bool _moveStart;
-    private PathFollower _pathFollower;
-    private PlayerInput _playerInput;
-    private PlayerCollector _playerCollector;
+    [SerializeField] private PathFollower _pathFollower;
+    [SerializeField] private PlayerInput _playerInput;
+    [SerializeField] private PlayerCollector _playerCollector;
     private RouteSelectorDirection _selectorDirection;
-
-    private void Start()
-    {
-        _playerInput = GetComponent<PlayerInput>();
-        _playerCollector = GetComponent<PlayerCollector>();
-        _pathFollower = GetComponent<PathFollower>();
-    }
 
     private void FixedUpdate()
     {

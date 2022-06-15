@@ -20,7 +20,7 @@ public class GobletSelection : MonoBehaviour
         gameObject.SetActive(true);
     }
     
-    public void Takeit()
+    public void TakeIt()
     {
         player.goblet++;
         player.gold -= 50;
@@ -28,7 +28,7 @@ public class GobletSelection : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Leaveit()
+    public void LeaveIt()
     {
         controller.ChangeText();
         gameObject.SetActive(false);

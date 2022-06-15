@@ -9,9 +9,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        var playerCollector = playerObjects.player.GetComponent<PlayerCollector>();
-
-        TextChanger textChanger = new(playerObjects.playerGold, playerObjects.playerHealth,playerObjects.playerGoblet, playerCollector);
+        TextChanger textChanger = new(playerObjects.playerGold, playerObjects.playerHealth,playerObjects.playerGoblet, playerObjects.playerCollector);
         notifyScript.AddObserver(textChanger);
     }
 
@@ -24,6 +22,6 @@ public class GameController : MonoBehaviour
 [System.Serializable]
 public class PlayerObjects
 {
-    public GameObject player;
+    public PlayerCollector playerCollector;
     public TMP_Text playerGold, playerHealth, playerGoblet;
 }
