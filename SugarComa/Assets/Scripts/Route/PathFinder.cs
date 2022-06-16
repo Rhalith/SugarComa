@@ -19,7 +19,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="take"></param>
     public Platform[] FindBest(Platform source, PlatformSpecification spec, int take = -1)
     {
-        if (source == null) return null;
+        if (source == null || take == 0) return null;
 
         var paths = new List<List<Platform>>();
 
@@ -62,7 +62,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="take"></param>
     public List<Platform[]> GetPaths(Platform source, PlatformSpecification spec, int take = -1)
     {
-        if (source == null) return null;
+        if (source == null || take == 0) return null;
 
         var paths = new List<Platform[]>();
 
@@ -88,6 +88,8 @@ public class PathFinder : MonoBehaviour
     /// <param name="step"></param>
     public Platform[] ToSelector(Platform source, int step = -1, RouteSelectorDirection direction = RouteSelectorDirection.None)
     {
+        if (source == null || step == 0) return null;
+
         var path = new List<Platform>();
         Platform next = source;
         do
@@ -124,6 +126,8 @@ public class PathFinder : MonoBehaviour
     /// <param name="maxDepth"></param>
     public Platform[] Find(Platform source, Platform destination, int maxDepth = -1)
     {
+        if (source == null || destination == null || maxDepth == 0) return null;
+
         FindPrivate(source, destination, out List<Platform> path, maxDepth);
         return path.ToArray();
     }

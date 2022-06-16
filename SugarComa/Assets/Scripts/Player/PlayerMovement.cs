@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public int step = 1;
+    public int maximumStep = 1;
     public int goalStep = 5;
 
     [SerializeField] private Platform _current;
     [SerializeField] private PathFinder _pathfinder;
 
+    [Header("Status")]
+    [SerializeField] private int _currentStep;
+
     private bool _moveStart;
+    
     private PathFollower _pathFollower;
     private PlayerInput _playerInput;
     private PlayerCollector _playerCollector;
@@ -23,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed) _currentStep = maximumStep;
+
         if (!_current.HasSelector)
         {
             if (!_pathFollower.isMoving) StartMove();
@@ -39,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerInput.nextSelectionStepPressed)
         {
-            var path = _pathfinder.ToSelector(_current, step);
+            var path = _pathfinder.ToSelector(_current, _currentStep);
             StartFollowPath(path);
         }
         else if (_playerInput.nextSelectionPressed)
@@ -60,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         else if (_playerInput.moveToBackStepPressed)
         {
             _moveStart = true;
-            _pathFollower.MoveLastPath(step, false);
+            _pathFollower.MoveLastPath(maximumStep, false);
         }
     }
 
@@ -71,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_playerInput.applySelectPressed && _selectorDirection != RouteSelectorDirection.None)
         {
-            var path = _pathfinder.ToSelector(_current, step, _selectorDirection);
+            var path = _pathfinder.ToSelector(_current, _currentStep, _selectorDirection);
             SelectPlatform(RouteSelectorDirection.None);
             StartFollowPath(path);
         }
@@ -93,8 +99,13 @@ public class PlayerMovement : MonoBehaviour
         if (_moveStart && !_pathFollower.isMoving)
         {
             _moveStart = false;
-            _current = _pathFollower.GetCurrentPlatform();
-            _playerCollector.CheckCurrentNode(_current);
+            var current = _pathFollower.GetCurrentPlatform();
+            if (current != null)
+            {
+                _current = current;
+                _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
+                _playerCollector.CheckCurrentNode(_current);
+            } 
         }
     }
 
