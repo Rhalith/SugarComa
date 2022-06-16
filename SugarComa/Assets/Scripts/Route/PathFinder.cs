@@ -88,7 +88,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="step"></param>
     public Platform[] ToSelector(Platform source, int step = -1, RouteSelectorDirection direction = RouteSelectorDirection.None)
     {
-        var path = new List<Platform>() { source };
+        var path = new List<Platform>();
         Platform next = source;
         do
         {
@@ -107,7 +107,6 @@ public class PathFinder : MonoBehaviour
             else break;
 
             if (path.Contains(next)) break;
-
 
             path.Add(next);
             step--;
@@ -133,6 +132,9 @@ public class PathFinder : MonoBehaviour
     {
         path = new List<Platform>();
         if (source == null || destination == null) return false;
-        return _graph.DepthFirstSearch(source, destination, path, maxDepth);
+        var result = _graph.DepthFirstSearch(source, destination, path, maxDepth);
+        // remove source
+        path.Remove(source);
+        return result;
     }
 }
