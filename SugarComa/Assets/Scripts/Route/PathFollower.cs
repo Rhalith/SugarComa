@@ -4,6 +4,8 @@ public class PathFollower : MonoBehaviour
 {
     public float speed; // game object movement speed.
 
+    public int PathLength => _path.Length;
+
     [HideInInspector] public bool isMoving; // does the gameobject move.
 
     private float _t;
@@ -73,7 +75,7 @@ public class PathFollower : MonoBehaviour
         // if there is no path
         if (_path == null || _path.Length == 0) return null;
 
-        if (_currentPlatformIndex < -1) return _path[0];
+        if (_currentPlatformIndex <= -1) return _path[0];
         else if (_currentPlatformIndex >= _path.Length) return _path[^1];
 
         return _path[_currentPlatformIndex];
