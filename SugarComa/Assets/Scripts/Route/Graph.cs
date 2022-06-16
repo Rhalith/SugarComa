@@ -115,7 +115,7 @@ public class Graph : MonoBehaviour
     /// <param name="maxStep"></param>
     public bool DepthFirstSearch(Platform source, Platform destination, List<Platform> path, int maxStep = -1)
     {
-        // stop searching and return step when source is equal to destination.
+        // stop searching and return true when source is equal to destination.
         if (source.Equals(destination))
         {
             path.Add(destination);
