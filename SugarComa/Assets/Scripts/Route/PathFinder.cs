@@ -4,12 +4,8 @@ using System.Collections.Generic;
 
 public class PathFinder : MonoBehaviour
 {
-    [HideInInspector] private Graph _graph;
+    [SerializeField] Graph _graph;
 
-    private void Awake()
-    {
-        _graph = GetComponent<Graph>();
-    }
 
     /// <summary>
     /// Finds and returns the best path between paths from the given source to the specifications.
