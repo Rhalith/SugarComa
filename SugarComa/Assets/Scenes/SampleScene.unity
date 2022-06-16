@@ -1069,10 +1069,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c814e38117cb9444d88b62804941bcc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 1
+  maximumStep: 6
   goalStep: 5
   _current: {fileID: 4293725584193019754}
   _pathfinder: {fileID: 803034596}
+  _currentStep: 0
   _pathFollower: {fileID: 546016268}
   _playerInput: {fileID: 546016269}
   _playerCollector: {fileID: 546016266}
