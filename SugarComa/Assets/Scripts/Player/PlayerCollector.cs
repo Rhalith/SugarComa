@@ -8,6 +8,8 @@ public class PlayerCollector : MonoBehaviour
 
     [SerializeField] private GameController _gameController;
     [SerializeField] private GobletSelection _gobletSelection;
+    [SerializeField] private PlayerInventory _playerInventory;
+    [SerializeField] Item item;
 
     public void CheckCurrentNode(Platform platform)
     {
@@ -25,6 +27,7 @@ public class PlayerCollector : MonoBehaviour
     {
         gold += value;
         _gameController.ChangeText();
+        
     }
     
     void AddHealth(int value)
@@ -43,34 +46,34 @@ public class PlayerCollector : MonoBehaviour
         switch (i)
         {
             case 1:
-                print("Kalkan");
+                item.shield.OnAddItem();
                 break;
             case 2:
-                print("Kurmali araba");
+                item.car.OnAddItem();
                 break;
             case 3:
-                print("Büyük sapan");
+                item.sapan.OnAddItem();
                 break;
             case 4:
-                print("Teleport");
+                item.teleport.OnAddItem();
                 break;
             case 5:
-                print("Ari");
+                item.bee.OnAddItem();
                 break;
             case 6:
-                print("M?knat?s");
+                item.magnet.OnAddItem();
                 break;
             case 7:
-                print("Sürpriz Kutusu");
+                item.randombox.OnAddItem();
                 break;
             case 8:
-                print("Boks eldiveni");
+                item.boxgloves.OnAddItem();
                 break;
             case 9:
-                print("Saglik kutusu");
+                item.healbox.OnAddItem();
                 break;
             case 10:
-                print("Kanca");
+                item.hook.OnAddItem();
                 break;
             default:
                 break;
@@ -91,5 +94,20 @@ public class PlayerCollector : MonoBehaviour
     void GobletSelection()
     {
         _gobletSelection.OpenGobletSelection();
+    }
+
+    [System.Serializable]
+    public class Item
+    {
+        public ItemObject shield;
+        public ItemObject car;
+        public ItemObject sapan;
+        public ItemObject teleport;
+        public ItemObject bee;
+        public ItemObject magnet;
+        public ItemObject randombox;
+        public ItemObject boxgloves;
+        public ItemObject healbox;
+        public ItemObject hook;
     }
 }

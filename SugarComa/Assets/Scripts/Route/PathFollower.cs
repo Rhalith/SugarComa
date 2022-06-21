@@ -11,13 +11,14 @@ public class PathFollower : MonoBehaviour
     private float _t;
     private Platform[] _path;
     private int _currentPlatformIndex;
-    private Vector3 _currentPosition;
+    [SerializeField] private Vector3 _currentPosition;
     private Vector3 _startPosition;
     private int _step;
     private int _maxStep;
     private int _toForward;
     private bool _isToForward;
 
+    [SerializeField] GameObject player;
     /// <summary>
     /// The movement starts on the given path.
     /// </summary>
