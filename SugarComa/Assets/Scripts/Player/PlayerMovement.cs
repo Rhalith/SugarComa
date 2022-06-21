@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PathFollower _pathFollower;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private PlayerCollector _playerCollector;
+    [SerializeField] private PlayerInventory _playerInventory;
     private RouteSelectorDirection _selectorDirection;
 
     private void FixedUpdate()
@@ -59,6 +60,15 @@ public class PlayerMovement : MonoBehaviour
         {
             _moveStart = true;
             _pathFollower.MoveLastPath(maximumStep, false);
+        }
+        //just for open inventory, if you think we should declare new method, you can do.
+        else if (_playerInput.openInventory)
+        {
+            _playerInventory.OpenInventory();
+        }
+        else if (_playerInput.closeUI)
+        {
+            _playerInventory.CloseInventory();
         }
     }
 

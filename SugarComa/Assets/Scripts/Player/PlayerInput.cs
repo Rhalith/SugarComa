@@ -11,6 +11,8 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool selectLeftPressed;
 	[HideInInspector] public bool selectRightPressed;
 	[HideInInspector] public bool applySelectPressed;
+	[HideInInspector] public bool openInventory;
+	[HideInInspector] public bool closeUI;
 
 	private bool _readyToClear; // used to keep input in sync
 
@@ -43,6 +45,8 @@ public class PlayerInput : MonoBehaviour
 		selectLeftPressed = false;
 		selectRightPressed = false;
 		applySelectPressed = false;
+		openInventory = false;
+		closeUI = false;
 
 		_readyToClear = false;
 	}
@@ -57,5 +61,7 @@ public class PlayerInput : MonoBehaviour
 		selectLeftPressed = selectLeftPressed || Input.GetKeyDown(KeyCode.A);
 		selectRightPressed = selectRightPressed || Input.GetKeyDown(KeyCode.D);
 		applySelectPressed = applySelectPressed || Input.GetKeyDown(KeyCode.Return);
+		openInventory = openInventory || Input.GetKeyDown(KeyCode.I);
+		closeUI = closeUI || Input.GetKeyDown(KeyCode.Escape);
 	}
 }

@@ -7,6 +7,7 @@ public class PlayerInventory : MonoBehaviour
 {
     private Dictionary<InventoryItemData, InventoryItem> _itemDictionary;
 
+    public GameObject inventoryUI;
     public List<InventoryItem> inventory { get; private set; }
 
     private void Awake()
@@ -50,6 +51,15 @@ public class PlayerInventory : MonoBehaviour
                 _itemDictionary.Remove(refData);
             }
         }
+    }
+
+    public void OpenInventory()
+    {
+        inventoryUI.SetActive(true);
+    }
+    public void CloseInventory()
+    {
+        inventoryUI.SetActive(false);
     }
 }
 

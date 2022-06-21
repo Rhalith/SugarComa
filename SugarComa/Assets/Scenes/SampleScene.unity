@@ -4135,6 +4135,7 @@ MonoBehaviour:
   _pathFollower: {fileID: 546016268}
   _playerInput: {fileID: 546016269}
   _playerCollector: {fileID: 546016266}
+  _playerInventory: {fileID: 546016270}
 --- !u!114 &546016268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4171,6 +4172,8 @@ MonoBehaviour:
   selectLeftPressed: 0
   selectRightPressed: 0
   applySelectPressed: 0
+  openInventory: 0
+  closeUI: 0
 --- !u!114 &546016270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4183,6 +4186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02fdd68c0731ff44aed5d9a9f3a6b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 978873987}
 --- !u!1 &548817697
 GameObject:
   m_ObjectHideFlags: 0
@@ -8091,7 +8095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &978873988
 RectTransform:
   m_ObjectHideFlags: 0
