@@ -7,7 +7,7 @@ public class Platform : MonoBehaviour
     [Tooltip("Özelliði yoksa boþ býrak!")]
     public PlatformSpecification specification;
 
-    [HideInInspector] public PlatformSpecification myspec;
+    private PlatformSpecification myspec;
 
     public RouteSelector selector;
 
