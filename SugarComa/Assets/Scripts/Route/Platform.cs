@@ -7,12 +7,15 @@ public class Platform : MonoBehaviour
     [Tooltip("Özelliði yoksa boþ býrak!")]
     public PlatformSpecification specification;
 
+    [HideInInspector] public PlatformSpecification myspec;
+
     public RouteSelector selector;
 
     public bool HasSelector => selector != null && selector.HasSelector;
 
     private void Start()
     {
+        myspec = specification;
         position = transform.position;
         SetSpec();
     }
@@ -31,5 +34,10 @@ public class Platform : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void ResetSpec()
+    {
+        specification = myspec;
     }
 }

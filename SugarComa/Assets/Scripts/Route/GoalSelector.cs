@@ -6,20 +6,25 @@ public class GoalSelector : MonoBehaviour
 {
     [SerializeField] List<Platform> platforms;
 
-    [SerializeField] PlayerMovement _playerMovement; //for current platform
-
     [SerializeField] CinemachineVirtualCamera _camera;
 
     [SerializeField] CinemachineBrain _cinemachineBrain;
 
     private int realPriority;
-    public void RandomGoalSelect()
+
+    private void Start()
+    {
+        RandomGoalSelect(true);
+        RandomGoalSelect(true);
+    }
+
+    public void RandomGoalSelect(bool isStart = false)
     {
         int i = Random.Range(0, platforms.Count+1);
         if (platforms[i].specification != PlatformSpecification.Goal)
         {
             platforms[i].specification = PlatformSpecification.Goal;
-            VirtualCameraLookTo(_camera, platforms[i].transform);
+            if(isStart == false) VirtualCameraLookTo(_camera, platforms[i].transform);
             print(platforms[i]);
             return;
         }

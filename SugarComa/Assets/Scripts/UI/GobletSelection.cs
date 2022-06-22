@@ -3,11 +3,12 @@ using UnityEngine.UI;
 
 public class GobletSelection : MonoBehaviour
 {
-    public GameController controller;
-    public PlayerCollector player;
-    public Button Goblet;
+    [SerializeField] GameController controller;
+    [SerializeField] PlayerCollector player;
+    [SerializeField] Button Goblet;
     [SerializeField] GoalSelector _goalSelector;
-    
+    [SerializeField] PlayerMovement _playerMovement;
+
     public void OpenGobletSelection()
     {
         if(player.gold >= 50)
@@ -27,6 +28,7 @@ public class GobletSelection : MonoBehaviour
         player.gold -= 50;
         controller.ChangeText();
         gameObject.SetActive(false);
+        _playerMovement._current.ResetSpec();
         _goalSelector.RandomGoalSelect();
     }
 
