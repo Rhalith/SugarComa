@@ -3,6 +3,7 @@ using UnityEngine;
 public class PathFollower : MonoBehaviour
 {
     public float speed; // game object movement speed.
+    public float rotationSpeed; // game object movement speed.
 
     public int PathLength => _path.Length;
 
@@ -96,16 +97,12 @@ public class PathFollower : MonoBehaviour
             // if object position not equal the current platform position move to position.
             transform.position = Vector3.Lerp(_startPosition, _currentPosition, _t);
 
-            var nextIndex = _currentPlatformIndex + _toForward;
-            if (nextIndex < _path.Length - 1)
+            // rotation
+            Vector3 movementDirection = (_currentPosition - transform.position).normalized;
+            if (movementDirection != Vector3.zero)
             {
-                var current = _path[_currentPlatformIndex];
-                var next = _path[_currentPlatformIndex + _toForward];
-
-                Vector3 movementDirection = (next.transform.position - current.transform.position).normalized;
-
                 var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720f * Time.fixedDeltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
             }
         }
         else
