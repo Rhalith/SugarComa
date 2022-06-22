@@ -4163,7 +4163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  gold: 0
+  gold: 50
   goblet: 0
   _gameController: {fileID: 1222331011}
   _gobletSelection: {fileID: 728202290}
@@ -11080,9 +11080,8 @@ MonoBehaviour:
   - {fileID: 1550813569}
   - {fileID: 860551921}
   _playerMovement: {fileID: 0}
-  _camera: {fileID: 0}
-  _transposer: {fileID: 0}
-  _cinemachineBrain: {fileID: 0}
+  _camera: {fileID: 21234647}
+  _cinemachineBrain: {fileID: 1919064173}
 --- !u!114 &1324557405 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
