@@ -14,23 +14,38 @@ public class GoalSelector : MonoBehaviour
 
     private void Start()
     {
-        RandomGoalSelect(true);
-        RandomGoalSelect(true);
+        SelectGoalOnStart();
+        SelectGoalOnStart();
     }
 
-    public void RandomGoalSelect(bool isStart = false)
+    public void RandomGoalSelect()
     {
-        int i = Random.Range(0, platforms.Count+1);
-        if (platforms[i].specification != PlatformSpecification.Goal)
+        int i = Random.Range(0, platforms.Count);
+        if (platforms[i].specification != PlatformSpecification.Goal && platforms[i].specification != PlatformSpecification.Selection)
         {
             platforms[i].specification = PlatformSpecification.Goal;
-            if(isStart == false) VirtualCameraLookTo(_camera, platforms[i].transform);
+            VirtualCameraLookTo(_camera, platforms[i].transform);
             print(platforms[i]);
             return;
         }
         else
         {
             RandomGoalSelect();
+        }
+    }
+
+    private void SelectGoalOnStart()
+    {
+        int i = Random.Range(0, platforms.Count);
+        if (platforms[i].specification != PlatformSpecification.Goal && platforms[i].specification != PlatformSpecification.Selection)
+        {
+            platforms[i].specification = PlatformSpecification.Goal;
+            print(platforms[i]);
+            return;
+        }
+        else
+        {
+            SelectGoalOnStart();
         }
     }
 
