@@ -6,6 +6,7 @@ public class GobletSelection : MonoBehaviour
     public GameController controller;
     public PlayerCollector player;
     public Button Goblet;
+    [SerializeField] GoalSelector _goalSelector;
     
     public void OpenGobletSelection()
     {
@@ -26,6 +27,7 @@ public class GobletSelection : MonoBehaviour
         player.gold -= 50;
         controller.ChangeText();
         gameObject.SetActive(false);
+        _goalSelector.RandomGoalSelect();
     }
 
     public void LeaveIt()

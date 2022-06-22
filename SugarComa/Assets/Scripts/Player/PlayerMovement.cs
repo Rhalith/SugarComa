@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
     public int maximumStep = 1;
     public int goalStep = 5;
 
-    [SerializeField] private Platform _current;
+    [SerializeField] public Platform _current;
     [SerializeField] private PathFinder _pathfinder;
 
     [Header("Status")]

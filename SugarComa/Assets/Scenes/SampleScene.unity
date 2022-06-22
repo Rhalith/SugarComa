@@ -5811,6 +5811,7 @@ MonoBehaviour:
   controller: {fileID: 1222331011}
   player: {fileID: 546016266}
   Goblet: {fileID: 1610670684}
+  _goalSelector: {fileID: 1297073928}
 --- !u!1001 &738847842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10478,6 +10479,7 @@ GameObject:
   - component: {fileID: 1297073925}
   - component: {fileID: 1297073927}
   - component: {fileID: 1297073926}
+  - component: {fileID: 1297073928}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -10907,6 +10909,112 @@ MonoBehaviour:
       - {fileID: 1014926672}
     - nodes:
       - {fileID: 978344282}
+--- !u!114 &1297073928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297073924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf5c8f25e9613e140af3b4b2d5d2fcf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platforms:
+  - {fileID: 1065546335}
+  - {fileID: 1507104787}
+  - {fileID: 431250705}
+  - {fileID: 1503077067}
+  - {fileID: 255713774}
+  - {fileID: 268216262}
+  - {fileID: 1490268595}
+  - {fileID: 1096198729}
+  - {fileID: 1960643306}
+  - {fileID: 440972938}
+  - {fileID: 1169476505}
+  - {fileID: 1342891436}
+  - {fileID: 1832348967}
+  - {fileID: 1351491524}
+  - {fileID: 1840953854}
+  - {fileID: 115451649}
+  - {fileID: 958543745}
+  - {fileID: 971805168}
+  - {fileID: 2043440282}
+  - {fileID: 1866807437}
+  - {fileID: 313759005}
+  - {fileID: 364429004}
+  - {fileID: 1666212171}
+  - {fileID: 560894706}
+  - {fileID: 1424425417}
+  - {fileID: 1628129476}
+  - {fileID: 1648547741}
+  - {fileID: 1702375342}
+  - {fileID: 147820758}
+  - {fileID: 2117532605}
+  - {fileID: 617755045}
+  - {fileID: 655786577}
+  - {fileID: 204892401}
+  - {fileID: 1943842376}
+  - {fileID: 1498080234}
+  - {fileID: 868211038}
+  - {fileID: 437661067}
+  - {fileID: 1976332720}
+  - {fileID: 1997190818}
+  - {fileID: 938034576}
+  - {fileID: 1090383566}
+  - {fileID: 487610347}
+  - {fileID: 918989728}
+  - {fileID: 1653293362}
+  - {fileID: 2022261464}
+  - {fileID: 978344282}
+  - {fileID: 1480494421}
+  - {fileID: 1562144476}
+  - {fileID: 1111349630}
+  - {fileID: 1701547594}
+  - {fileID: 1607495899}
+  - {fileID: 1609218134}
+  - {fileID: 2078666641}
+  - {fileID: 1331883071}
+  - {fileID: 1389759306}
+  - {fileID: 680619326}
+  - {fileID: 1396503020}
+  - {fileID: 1818767570}
+  - {fileID: 1053331113}
+  - {fileID: 1896962274}
+  - {fileID: 2076717060}
+  - {fileID: 1324557405}
+  - {fileID: 1881667126}
+  - {fileID: 2040452506}
+  - {fileID: 791971351}
+  - {fileID: 1967261775}
+  - {fileID: 1629119552}
+  - {fileID: 2146101510}
+  - {fileID: 657760328}
+  - {fileID: 1112657048}
+  - {fileID: 1446848768}
+  - {fileID: 1014926672}
+  - {fileID: 1672676749}
+  - {fileID: 1404538791}
+  - {fileID: 1022328578}
+  - {fileID: 154683934}
+  - {fileID: 2139420477}
+  - {fileID: 1045050400}
+  - {fileID: 1915970102}
+  - {fileID: 1969638673}
+  - {fileID: 418184850}
+  - {fileID: 1716384337}
+  - {fileID: 897760475}
+  - {fileID: 932580285}
+  - {fileID: 911733193}
+  - {fileID: 703531761}
+  - {fileID: 1082860030}
+  - {fileID: 1871924761}
+  - {fileID: 1438759168}
+  - {fileID: 825772371}
+  - {fileID: 1992281134}
+  - {fileID: 1550813569}
+  - {fileID: 860551921}
 --- !u!114 &1324557405 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -11027,7 +11135,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
       propertyPath: specification
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
       propertyPath: selectors.Array.size
