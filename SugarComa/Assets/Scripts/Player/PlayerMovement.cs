@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         else if (_playerInput.moveToBackStepPressed)
         {
             _moveStart = true;
-            _pathFollower.MoveLastPath(maximumStep, false);
+            _pathFollower.MoveLastPath(maximumStep, false, PlatformSpecification.Goal);
         }
         //just for open inventory, if you think we should declare new method, you can do.
         else if (_playerInput.openInventory)
@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         if (path.Length > 0)
         {
             _moveStart = true;
-            _pathFollower.StartFollow(path);
+            _pathFollower.StartFollow(path, PlatformSpecification.Goal);
         }
     }
 

@@ -6,7 +6,6 @@ public class PathFinder : MonoBehaviour
 {
     [SerializeField] Graph _graph;
 
-
     /// <summary>
     /// Finds and returns the best path between paths from the given source to the specifications.
     /// </summary>

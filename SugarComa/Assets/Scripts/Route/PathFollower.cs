@@ -17,13 +17,14 @@ public class PathFollower : MonoBehaviour
     private int _maxStep;
     private int _toForward;
     private bool _isToForward;
+    private PlatformSpecification _specification;
 
     [SerializeField] GameObject player;
     /// <summary>
     /// The movement starts on the given path.
     /// </summary>
     /// <param name="path"></param>
-    public void StartFollow(Platform[] path, int maxStep = -1, bool toForward = true)
+    public void StartFollow(Platform[] path, PlatformSpecification specification = PlatformSpecification.Empty, int maxStep = -1, bool toForward = true)
     {
         // if path exists
         if (path == null || path.Length == 0) return;
@@ -32,6 +33,7 @@ public class PathFollower : MonoBehaviour
         _step = -1;
         _maxStep = maxStep;
         _isToForward = toForward;
+        _specification = specification;
         if (toForward)
         {
             _toForward = 1;
@@ -53,7 +55,7 @@ public class PathFollower : MonoBehaviour
     /// </summary>
     /// <param name="maxStep"></param>
     /// <param name="toForward"></param>
-    public void MoveLastPath(int maxStep = -1, bool toForward = true)
+    public void MoveLastPath(int maxStep = -1, bool toForward = true, PlatformSpecification specification = PlatformSpecification.Empty)
     {
         // if path exists
         if (_path == null || _path.Length == 0) return;
@@ -62,6 +64,7 @@ public class PathFollower : MonoBehaviour
         _maxStep = maxStep;
         _isToForward = toForward;
         _toForward = toForward ? 1 : -1;
+        _specification = specification;
 
         NextPlatform();
 
@@ -92,6 +95,18 @@ public class PathFollower : MonoBehaviour
         {
             // if object position not equal the current platform position move to position.
             transform.position = Vector3.Lerp(_startPosition, _currentPosition, _t);
+
+            var nextIndex = _currentPlatformIndex + _toForward;
+            if (nextIndex < _path.Length - 1)
+            {
+                var current = _path[_currentPlatformIndex];
+                var next = _path[_currentPlatformIndex + _toForward];
+
+                Vector3 movementDirection = (next.transform.position - current.transform.position).normalized;
+
+                var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720f * Time.fixedDeltaTime);
+            }
         }
         else
         {
@@ -104,8 +119,16 @@ public class PathFollower : MonoBehaviour
     {
         bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
 
-        // if the step greater than maximum step, stop the movement.
-        if (_maxStep != -1) condition = condition && _step < _maxStep;
+        if (condition)
+        {
+            if (_currentPlatformIndex > 0 &&
+                _currentPlatformIndex < _path.Length - 1 &&
+                _specification == _path[_currentPlatformIndex].specification) condition = false;
+
+            // if the step greater than maximum step, stop the movement.
+            if (_maxStep != -1) condition = condition && _step < _maxStep;
+        }
+
 
         if (condition)
         {
