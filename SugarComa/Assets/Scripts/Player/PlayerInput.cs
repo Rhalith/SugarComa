@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool applySelectPressed;
 	[HideInInspector] public bool openInventory;
 	[HideInInspector] public bool closeUI;
+	[HideInInspector] public bool openMap;
 
 	private bool _readyToClear; // used to keep input in sync
 
@@ -47,6 +48,7 @@ public class PlayerInput : MonoBehaviour
 		applySelectPressed = false;
 		openInventory = false;
 		closeUI = false;
+		openMap = false;
 
 		_readyToClear = false;
 	}
@@ -63,5 +65,6 @@ public class PlayerInput : MonoBehaviour
 		applySelectPressed = applySelectPressed || Input.GetKeyDown(KeyCode.Return);
 		openInventory = openInventory || Input.GetKeyDown(KeyCode.I);
 		closeUI = closeUI || Input.GetKeyDown(KeyCode.Escape);
+		openMap = openMap || Input.GetKeyDown(KeyCode.M);
 	}
 }

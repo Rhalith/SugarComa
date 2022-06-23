@@ -16,21 +16,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private PlayerCollector _playerCollector;
     [SerializeField] private PlayerInventory _playerInventory;
+    [SerializeField] private MapCamera _mapCamera;
     private RouteSelectorDirection _selectorDirection;
+
+    private bool isUserInterfaceActive;
 
     private void FixedUpdate()
     {
         if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed) _currentStep = maximumStep;
 
-        if (!_current.HasSelector)
+        if (!_current.HasSelector && !isUserInterfaceActive)
         {
             if (!_pathFollower.isMoving) StartMove();
         }
-        else
+        else if (!isUserInterfaceActive)
         {
             ProcessSelect();
         }
-
+        ProcessUI();
         MoveOver();
     }
 
@@ -61,17 +64,27 @@ public class PlayerMovement : MonoBehaviour
             _moveStart = true;
             _pathFollower.MoveLastPath(maximumStep, false, PlatformSpecification.Goal);
         }
-        //just for open inventory, if you think we should declare new method, you can do.
-        else if (_playerInput.openInventory)
+    }
+
+    private void ProcessUI()
+    {
+        if (_playerInput.openInventory)
         {
             _playerInventory.OpenInventory();
+            isUserInterfaceActive = true;
         }
         else if (_playerInput.closeUI)
         {
             _playerInventory.CloseInventory();
+            _mapCamera.SetCameraPriority(_mapCamera._camera, _mapCamera._mainCamera.Priority - 1, true);
+            isUserInterfaceActive = false;
+        }
+        else if (_playerInput.openMap)
+        {
+            _mapCamera.SetCameraPriority(_mapCamera._camera, _mapCamera._mainCamera.Priority + 1);
+            isUserInterfaceActive = true;
         }
     }
-
     private void ProcessSelect()
     {
         if (_playerInput.selectLeftPressed) SelectPlatform(RouteSelectorDirection.Left);
