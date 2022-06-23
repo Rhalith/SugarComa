@@ -7,14 +7,19 @@ public class GameManager : MonoBehaviour
     private bool _isGameOver;
     private float _totalGameTime;
     [SerializeField] private SelectionMaterial _selectionMaterial;
-    [SerializeField] private PlatformMaterial _platformMaterial;
+    [SerializeField] private PlatformTexture _platformTexture;
+    [SerializeField] private GoldMeshes _goldMeshes;
+    [SerializeField] private HealMeshes _healMeshes;
+    [SerializeField] private RandomBoxMeshes _randomBoxMeshes;
+    [SerializeField] private TrapMeshes _trapMeshes;
+    [SerializeField] private JackpotMeshes _jackpotMeshes;
 
-    public static PlatformMaterial PlatformMaterial
+    public static PlatformTexture PlatformTexture
     {
         get
         {
             if (_instance == null) return null;
-            return _instance._platformMaterial;
+            return _instance._platformTexture;
         }
     }
 
@@ -27,6 +32,48 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static GoldMeshes GoldMeshes
+    {
+        get
+        {
+            if (_instance == null) return null;
+            return _instance._goldMeshes;
+        }
+    }
+    public static HealMeshes HealMeshes
+    {
+        get
+        {
+            if (_instance == null) return null;
+            return _instance._healMeshes;
+        }
+    }
+    public static RandomBoxMeshes RandomBoxMeshes
+    {
+        get
+        {
+            if (_instance == null) return null;
+            return _instance._randomBoxMeshes;
+        }
+    }
+
+    public static TrapMeshes TrapMeshes
+    {
+        get
+        {
+            if (_instance == null) return null;
+            return _instance._trapMeshes;
+        }
+    }
+
+    public static JackpotMeshes JackpotMeshes
+    {
+        get
+        {
+            if (_instance == null) return null;
+            return _instance._jackpotMeshes;
+        }
+    }
     public static bool IsGameOver
     {
         get

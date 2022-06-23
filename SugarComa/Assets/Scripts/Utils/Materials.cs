@@ -8,8 +8,7 @@ public class SelectionMaterial
 }
 
 [System.Serializable]
-public class PlatformMaterial
+public class PlatformTexture
 {
-    public Material goldMaterial;
-    public Material healMaterial;
+    public Texture texture;
 }

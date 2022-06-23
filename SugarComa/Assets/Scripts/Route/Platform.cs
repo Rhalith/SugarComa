@@ -9,6 +9,8 @@ public class Platform : MonoBehaviour
 
     private PlatformSpecification myspec;
 
+    private PlatformSpecSet _platformSpecSet;
+
     public RouteSelector selector;
 
     public bool HasSelector => selector != null && selector.HasSelector;
@@ -22,18 +24,9 @@ public class Platform : MonoBehaviour
 
     private void SetSpec()
     {
-        var renderer = GetComponent<Renderer>();
+        _platformSpecSet = new PlatformSpecSet();
+        _platformSpecSet.SetSpec(GetComponent<MeshFilter>(), GetComponent<Renderer>(), specification);
 
-        switch (specification)
-        {
-            case PlatformSpecification.Selection:
-                //TODO
-                break;
-            case PlatformSpecification.Gold: renderer.material = GameManager.PlatformMaterial.goldMaterial; break;
-            case PlatformSpecification.Heal: renderer.material = GameManager.PlatformMaterial.healMaterial; break;
-            default:
-                break;
-        }
     }
 
     public void ResetSpec()
