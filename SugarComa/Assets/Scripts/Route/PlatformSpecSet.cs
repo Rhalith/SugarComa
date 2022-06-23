@@ -24,7 +24,7 @@ public class PlatformSpecSet
     }
     private void GoldMeshChanger(MeshFilter filter, Renderer renderer)
     {
-        int i = Random.Range(0, 4);
+        int i = Random.Range(0, 3);
         switch (i)
         {
             case 1:
@@ -43,7 +43,7 @@ public class PlatformSpecSet
     }
     private void HealMeshChanger(MeshFilter filter, Renderer renderer)
     {
-        int i = Random.Range(0, 3);
+        int i = Random.Range(0, 2);
         switch (i)
         {
             case 1:
@@ -77,7 +77,7 @@ public class PlatformSpecSet
     }
     private void GiftMeshChanger(MeshFilter filter, Renderer renderer)
     {
-        int i = Random.Range(0, 3);
+        int i = Random.Range(0, 2);
         switch (i)
         {
             case 1:
