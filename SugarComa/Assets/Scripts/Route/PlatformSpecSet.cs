@@ -27,13 +27,13 @@ public class PlatformSpecSet
         int i = Random.Range(0, 3);
         switch (i)
         {
-            case 1:
+            case 0:
                 filter.mesh = GameManager.GoldMeshes.goldMesh1;
                 break;
-            case 2:
+            case 1:
                 filter.mesh = GameManager.GoldMeshes.goldMesh2;
                 break;
-            case 3:
+            case 2:
                 filter.mesh = GameManager.GoldMeshes.goldMesh3;
                 break;
             default:
@@ -46,10 +46,10 @@ public class PlatformSpecSet
         int i = Random.Range(0, 2);
         switch (i)
         {
-            case 1:
+            case 0:
                 filter.mesh = GameManager.HealMeshes.healMesh1;
                 break;
-            case 2:
+            case 1:
                 filter.mesh = GameManager.HealMeshes.healMesh2;
                 break;
             default:
@@ -77,14 +77,17 @@ public class PlatformSpecSet
     }
     private void GiftMeshChanger(MeshFilter filter, Renderer renderer)
     {
-        int i = Random.Range(0, 2);
+        int i = Random.Range(0, 3);
         switch (i)
         {
-            case 1:
+            case 0:
                 filter.mesh = GameManager.RandomBoxMeshes.randomBoxMesh1;
                 break;
-            case 2:
+            case 1:
                 filter.mesh = GameManager.RandomBoxMeshes.randomBoxMesh2;
+                break;
+            case 2:
+                filter.mesh = GameManager.RandomBoxMeshes.randomBoxMesh3;
                 break;
             default:
                 break;
