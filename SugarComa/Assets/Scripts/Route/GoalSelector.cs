@@ -15,7 +15,6 @@ public class GoalSelector : MonoBehaviour
     private void Start()
     {
         SelectGoalOnStart();
-        SelectGoalOnStart();
     }
 
     public void RandomGoalSelect()
