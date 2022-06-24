@@ -989,6 +989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -1461,6 +1462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -1557,6 +1559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -2183,6 +2186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -2465,6 +2469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -2622,6 +2627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -3166,6 +3172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -3748,6 +3755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -4345,6 +4353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -4512,6 +4521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -4875,6 +4885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -4971,6 +4982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -5156,6 +5168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -5760,6 +5773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -6153,6 +6167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -6471,6 +6486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -7768,6 +7784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -8187,6 +8204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -8556,6 +8574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -8789,6 +8808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -9219,6 +9239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -9315,6 +9336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -9573,6 +9595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -9758,6 +9781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -10114,6 +10138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -10141,6 +10166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -10719,6 +10745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -11409,6 +11436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -11589,6 +11617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -11774,6 +11803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -12029,6 +12059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -12276,6 +12307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -12645,6 +12677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -12810,6 +12843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -12982,6 +13016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -13158,6 +13193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -13466,6 +13502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -14343,6 +14380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -14585,6 +14623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -14764,6 +14803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -14855,6 +14895,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -15140,6 +15181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -15442,6 +15484,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -15533,6 +15576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -15937,6 +15981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -16033,6 +16078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -16055,6 +16101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -16151,6 +16198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -16318,6 +16366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -16414,6 +16463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -16578,7 +16628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1297073925
 Transform:
   m_ObjectHideFlags: 0
@@ -17298,6 +17348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -17640,6 +17691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -17736,6 +17788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -17763,6 +17816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -18028,6 +18082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -18061,6 +18116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -19042,6 +19098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -19408,6 +19465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -19491,6 +19549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -19587,6 +19646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -19854,6 +19914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -20097,6 +20158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -20199,6 +20261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -20364,6 +20427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -20647,6 +20711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -21132,6 +21197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -21472,6 +21538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -21563,6 +21630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -21909,6 +21977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -21931,6 +22000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -22027,6 +22097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -22309,6 +22380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -22426,6 +22498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -22453,6 +22526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -22615,6 +22689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -22777,6 +22852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -22937,6 +23013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -23096,6 +23173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -23276,6 +23354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -23395,6 +23474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -23422,6 +23502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -23609,6 +23690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -23797,6 +23879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -23819,6 +23902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -24153,6 +24237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -24397,6 +24482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -24811,6 +24897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -24822,12 +24909,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1297073925}
     m_Modifications:
     - target: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
+      propertyPath: isSelector
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
       propertyPath: selector.left
       value: 
       objectReference: {fileID: 1767254590}
     - target: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
       propertyPath: specification
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
       propertyPath: selector.right
@@ -25100,7 +25191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1970712951
 Transform:
   m_ObjectHideFlags: 0
@@ -25241,6 +25332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -25447,6 +25539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -25647,6 +25740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 4
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -25747,6 +25841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -25843,6 +25938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 5
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -26028,6 +26124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -26314,6 +26411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -26507,6 +26605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -26603,6 +26702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 7
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -26647,6 +26747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 1
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -26765,6 +26866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -26937,6 +27039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -26964,6 +27067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 8
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -27149,6 +27253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   specification: 0
+  isSelector: 0
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
