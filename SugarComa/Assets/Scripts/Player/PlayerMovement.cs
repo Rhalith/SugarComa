@@ -94,18 +94,25 @@ public class PlayerMovement : MonoBehaviour
         {
             var path = _pathfinder.ToSelector(_current, _currentStep, _selectorDirection);
             SelectPlatform(RouteSelectorDirection.None);
-            StartFollowPath(path);
+            StartFollowPath(path, true);
         }
     }
 
-    private void StartFollowPath(Platform[] path)
+    private void StartFollowPath(Platform[] path, bool isSelector = false)
     {
         if (path == null || _moveStart) return;
 
         if (path.Length > 0)
         {
             _moveStart = true;
-            _pathFollower.StartFollow(path, PlatformSpecification.Goal);
+            if (isSelector)
+            {
+                _pathFollower.StartFollow(path, PlatformSpecification.Goal);
+            }
+            else
+            {
+                _pathFollower.StartFollow(path, PlatformSpecification.Goal, _current.isSelector);
+            }
         }
     }
 
@@ -119,7 +126,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 _current = current;
                 _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
-                _playerCollector.CheckCurrentNode(_current);
+                if(_currentStep <= 0 || !_current.isSelector)
+                {
+                    _playerCollector.CheckCurrentNode(_current);
+                }
             } 
         }
     }

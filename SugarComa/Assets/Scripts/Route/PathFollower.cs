@@ -18,6 +18,7 @@ public class PathFollower : MonoBehaviour
     private int _maxStep;
     private int _toForward;
     private bool _isToForward;
+    private bool _isSelector;
     private PlatformSpecification _specification;
 
     [SerializeField] GameObject player;
@@ -25,7 +26,7 @@ public class PathFollower : MonoBehaviour
     /// The movement starts on the given path.
     /// </summary>
     /// <param name="path"></param>
-    public void StartFollow(Platform[] path, PlatformSpecification specification = PlatformSpecification.Empty, int maxStep = -1, bool toForward = true)
+    public void StartFollow(Platform[] path, PlatformSpecification specification = PlatformSpecification.Empty, bool isSelector = false, int maxStep = -1, bool toForward = true)
     {
         // if path exists
         if (path == null || path.Length == 0) return;
@@ -35,6 +36,7 @@ public class PathFollower : MonoBehaviour
         _maxStep = maxStep;
         _isToForward = toForward;
         _specification = specification;
+        _isSelector = isSelector;
         if (toForward)
         {
             _toForward = 1;
@@ -118,7 +120,7 @@ public class PathFollower : MonoBehaviour
 
         if (condition)
         {
-            if (_currentPlatformIndex > 0 &&
+            if (_isSelector || _currentPlatformIndex > 0 &&
                 _currentPlatformIndex < _path.Length - 1 &&
                 _specification == _path[_currentPlatformIndex].specification) condition = false;
 

@@ -11,6 +11,8 @@ public class Platform : MonoBehaviour
 
     private PlatformSpecSet _platformSpecSet;
 
+    public bool isSelector;
+
     public RouteSelector selector;
 
     public bool HasSelector => selector != null && selector.HasSelector;
