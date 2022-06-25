@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: teleport
   displayName: Teleport
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  icon: {fileID: 21300000, guid: e9bd2cb1289f7dc4cb90794950c3f739, type: 3}

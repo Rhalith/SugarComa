@@ -42,7 +42,8 @@ public class PlayerCollector : MonoBehaviour
 
     void AddItem()
     {
-        int i = Random.Range(1, 11);
+        //int i = Random.Range(1, 11);
+        int i = 8;
         switch (i)
         {
             case 1:

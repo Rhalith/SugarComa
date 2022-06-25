@@ -9,6 +9,8 @@ public class PlayerInventory : MonoBehaviour
     public GameObject inventoryUI;
     public List<InventoryItem> inventory { get; private set; }
 
+    public List<ItemObject> _items;
+
     private void Awake()
     {
         inventory = new List<InventoryItem>();
@@ -32,7 +34,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            InventoryItem newItem = new InventoryItem(refData);
+            InventoryItem newItem = new(refData);
             inventory.Add(newItem);
             _itemDictionary.Add(refData, newItem);
         }
@@ -55,6 +57,17 @@ public class PlayerInventory : MonoBehaviour
     public void OpenInventory()
     {
         inventoryUI.SetActive(true);
+        for (int i = 0; i < _items.Count; i++)
+        {
+            if(_items[i].CheckItemCount() <= 0)
+            {
+                _items[i]._button.interactable = false;
+            }
+            else
+            {
+                _items[i]._button.interactable = true;
+            }
+        }
     }
     public void CloseInventory()
     {
@@ -67,13 +80,13 @@ public class PlayerInventory : MonoBehaviour
 [Serializable]
 public class InventoryItem
 {
-    public InventoryItemData data { get; private set; }
+    public InventoryItemData Data { get; private set; }
 
     public int stackSize { get; private set; }
 
     public InventoryItem(InventoryItemData source)
     {
-        data = source;
+        Data = source;
         AddToStack();
     }
 

@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerCollector _playerCollector;
     [SerializeField] private PlayerInventory _playerInventory;
     [SerializeField] private MapCamera _mapCamera;
+    [SerializeField] private ItemPool _itemPool;
     private RouteSelectorDirection _selectorDirection;
 
     private bool isUserInterfaceActive;
@@ -73,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             _playerInventory.OpenInventory();
             isUserInterfaceActive = true;
         }
-        else if (_playerInput.closeUI)
+        else if (_playerInput.closeUI && !ItemPool._isItemUsing)
         {
             _playerInventory.CloseInventory();
             _mapCamera.SetCameraPriority(_mapCamera._camera, _mapCamera._mainCamera.Priority - 1, true);
@@ -83,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
         {
             _mapCamera.SetCameraPriority(_mapCamera._camera, _mapCamera._mainCamera.Priority + 1);
             isUserInterfaceActive = true;
+        }
+        else if (_playerInput.closeUI && ItemPool._isItemUsing)
+        {
+            _itemPool.CloseItem();
+            isUserInterfaceActive = false;
         }
     }
     private void ProcessSelect()
