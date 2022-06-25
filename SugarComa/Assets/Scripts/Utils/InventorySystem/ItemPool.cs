@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ItemPool : MonoBehaviour
 {
-    [SerializeField] List<GameObject> test;
+    [SerializeField] List<GameObject> _items;
 
-    [SerializeField] GameObject _playerInventory;
+    [SerializeField] public GameObject _playerInventory;
 
     public static bool _isItemUsing;
 
-    private GameObject _current;
+    public GameObject _current;
 
     public void UseItem(int index)
     {
-        _current = test[index];
-        test[index].SetActive(true);
+        _current = _items[index];
+        _items[index].SetActive(true);
         _playerInventory.SetActive(false);
         _isItemUsing = true;
     }
@@ -24,5 +24,14 @@ public class ItemPool : MonoBehaviour
     {
         _isItemUsing = false;
         _current.SetActive(false);
+    }
+
+    public void UseCurrentItem()
+    {
+        if (_current.GetComponent<BoxGloves>() != null)
+        {
+            _current.GetComponent<BoxGloves>().UseItem();
+        }
+
     }
 }

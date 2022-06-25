@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerItemUse : MonoBehaviour
 {
     [SerializeField] Transform playerTransform;
+    [SerializeField] ItemPool _itemPool;
+    [SerializeField] private PlayerInput _playerInput;
     [SerializeField] float speed;
     private Vector3 _rotationY;
     private bool isPosSet;
@@ -39,6 +41,11 @@ public class PlayerItemUse : MonoBehaviour
         if (ItemPool._isItemUsing)
         {
             FollowMouse();
+            if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)
+            {
+                _itemPool.UseCurrentItem();
+                _itemPool.CloseItem();
+            }
         }
         else
         {
@@ -46,4 +53,5 @@ public class PlayerItemUse : MonoBehaviour
             isPosSet=false;
         }
     }
+
 }

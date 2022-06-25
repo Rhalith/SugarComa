@@ -35,7 +35,10 @@ public class ItemObject : MonoBehaviour
 
     public void ChangeInventory(InventoryItem item)
     {
-        text.text = item.stackSize.ToString();
-        gameObject.GetComponent<Image>().sprite = item.Data.icon;
+        if(item != null)
+        {
+            text.text = item.stackSize.ToString();
+        }
+        gameObject.GetComponent<Image>().sprite = referenceItem.icon;
     }
 }

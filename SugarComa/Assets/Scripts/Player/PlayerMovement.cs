@@ -65,6 +65,10 @@ public class PlayerMovement : MonoBehaviour
             _moveStart = true;
             _pathFollower.MoveLastPath(maximumStep, false, PlatformSpecification.Goal);
         }
+        else if (_playerInput.closeUI)
+        {
+            _playerCollector.AddItem();
+        }
     }
 
     private void ProcessUI()

@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool openInventory;
 	[HideInInspector] public bool closeUI;
 	[HideInInspector] public bool openMap;
+	[HideInInspector] public bool useMouseItem;
 
 	private bool _readyToClear; // used to keep input in sync
 
@@ -66,5 +67,6 @@ public class PlayerInput : MonoBehaviour
 		openInventory = openInventory || Input.GetKeyDown(KeyCode.I);
 		closeUI = closeUI || Input.GetKeyDown(KeyCode.Escape);
 		openMap = openMap || Input.GetKeyDown(KeyCode.M);
+		useMouseItem = (useMouseItem || Input.GetMouseButtonDown(0)) && ItemPool._isItemUsing;
 	}
 }

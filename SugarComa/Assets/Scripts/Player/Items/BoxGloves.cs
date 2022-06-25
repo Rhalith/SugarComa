@@ -8,21 +8,31 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     [SerializeField] ItemObject _itemObject;
     [SerializeField] GameObject _player;
     [SerializeField] int damage;
+
+
+    private PlayerCollector otherPlayersCollector;
+
+    public bool isHitPlayer;
     public void DamageHealth(PlayerCollector playerCollector)
     {
-        playerCollector.health -= damage;
+        if(otherPlayersCollector != null) playerCollector.health -= damage;
     }
 
     public void UseItem()
     {
+        if (isHitPlayer)
+        {
+            DamageHealth(otherPlayersCollector);
+        }
         _itemObject.RemoveItem();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player") && other != _player)
-        {
-            DamageHealth(other.gameObject.GetComponent<PlayerCollector>());
-        }
+        if (other.gameObject.CompareTag("Player") && other != _player) isHitPlayer = true; otherPlayersCollector = other.GetComponent<PlayerCollector>(); 
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player") && other != _player) isHitPlayer = false; otherPlayersCollector = null;
     }
 }

@@ -7143,6 +7143,7 @@ MonoBehaviour:
   openInventory: 0
   closeUI: 0
   openMap: 0
+  useMouseItem: 0
 --- !u!114 &546016270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7180,6 +7181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 546016265}
+  _itemPool: {fileID: 978873989}
+  _playerInput: {fileID: 546016269}
   speed: 25
 --- !u!1 &548817697
 GameObject:
@@ -10809,6 +10812,7 @@ GameObject:
   - component: {fileID: 830253899}
   - component: {fileID: 830253898}
   - component: {fileID: 830253897}
+  - component: {fileID: 830253901}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -10896,6 +10900,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &830253901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830253896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2c89bcc486efd4babb203febad78c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 20
+  gold: 0
+  goblet: 0
+  _gameController: {fileID: 0}
+  _gobletSelection: {fileID: 0}
+  _playerInventory: {fileID: 0}
+  item:
+    shield: {fileID: 0}
+    car: {fileID: 0}
+    sapan: {fileID: 0}
+    teleport: {fileID: 0}
+    bee: {fileID: 0}
+    magnet: {fileID: 0}
+    randombox: {fileID: 0}
+    boxgloves: {fileID: 0}
+    healbox: {fileID: 0}
+    hook: {fileID: 0}
 --- !u!1 &835593407 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5120047951862333661, guid: b6b1931a4552daf43b2794863b253d2e, type: 3}
@@ -13192,9 +13225,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab09204275cb24749879daf331f49941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test:
+  _items:
   - {fileID: 1530858545}
   _playerInventory: {fileID: 978873987}
+  _current: {fileID: 0}
 --- !u!1 &996415430
 GameObject:
   m_ObjectHideFlags: 0
@@ -21339,6 +21373,7 @@ GameObject:
   - component: {fileID: 1530858549}
   - component: {fileID: 1530858548}
   - component: {fileID: 1530858547}
+  - component: {fileID: 1530858551}
   m_Layer: 0
   m_Name: BoksEldiveni
   m_TagString: Untagged
@@ -21376,6 +21411,7 @@ MonoBehaviour:
   _itemObject: {fileID: 740846259}
   _player: {fileID: 546016264}
   damage: 30
+  isHitPlayer: 0
 --- !u!65 &1530858548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21439,6 +21475,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530858545}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &1530858551
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530858545}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1531914362 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d5e09a52025652f41a45bbb2a61732dd, type: 3}

@@ -40,7 +40,7 @@ public class PlayerCollector : MonoBehaviour
         _gameController.ChangeText();
     }
 
-    void AddItem()
+    public void AddItem()
     {
         //int i = Random.Range(1, 11);
         int i = 8;
