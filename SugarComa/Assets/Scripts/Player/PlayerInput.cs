@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
 	[HideInInspector] public bool nextSelectionPressed;
-	[HideInInspector] public bool nextSelectionStepPressed;
+	public bool nextSelectionStepPressed;
 	[HideInInspector] public bool nextGoalPressed;
 	[HideInInspector] public bool nextGoalStepPressed;
 	[HideInInspector] public bool moveToBackStepPressed;

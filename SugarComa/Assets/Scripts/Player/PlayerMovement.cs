@@ -4,6 +4,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public int maximumStep = 1;
     public int goalStep = 5;
+    public bool isAnimationStopped;
+    public bool isRunningAnimation;
 
     [SerializeField] public Platform _current;
     [SerializeField] private PathFinder _pathfinder;
@@ -18,17 +20,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerInventory _playerInventory;
     [SerializeField] private MapCamera _mapCamera;
     [SerializeField] private ItemPool _itemPool;
+    [SerializeField] private PlayerAnimation _playerAnimation;
     private RouteSelectorDirection _selectorDirection;
 
-    private bool isUserInterfaceActive;
+    public bool isUserInterfaceActive;
 
     private void FixedUpdate()
     {
-        if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed) _currentStep = maximumStep;
-
-        if (!_current.HasSelector && !isUserInterfaceActive)
+        if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed && !isUserInterfaceActive)
         {
-            if (!_pathFollower.isMoving) StartMove();
+            _currentStep = maximumStep; 
+            if(!isAnimationStopped) _playerAnimation.RollDice();
+        } 
+
+        if (!_current.HasSelector && !isUserInterfaceActive && isAnimationStopped)
+        {
+            if (!_pathFollower.isMoving)
+            { 
+                if (!isRunningAnimation) _playerAnimation.StartRunning();
+                StartMove();
+                if (isAnimationStopped) _playerAnimation.SetIsAnimation();
+            }
         }
         else if (!isUserInterfaceActive)
         {
@@ -40,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartMove()
     {
-        if (_playerInput.nextSelectionStepPressed)
+        if (_playerInput.nextSelectionStepPressed || isRunningAnimation)
         {
             var path = _pathfinder.ToSelector(_current, _currentStep);
             StartFollowPath(path);
@@ -97,14 +109,17 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ProcessSelect()
     {
+        if (isRunningAnimation && _current.isSelector) _playerAnimation.StopRunning();
         if (_playerInput.selectLeftPressed) SelectPlatform(RouteSelectorDirection.Left);
         else if (_playerInput.selectRightPressed) SelectPlatform(RouteSelectorDirection.Right);
 
         if (_playerInput.applySelectPressed && _selectorDirection != RouteSelectorDirection.None)
         {
+            
             var path = _pathfinder.ToSelector(_current, _currentStep, _selectorDirection);
             SelectPlatform(RouteSelectorDirection.None);
             StartFollowPath(path, true);
+            if (!isRunningAnimation) _playerAnimation.ContinueRunning();
         }
     }
 
@@ -130,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_moveStart && !_pathFollower.isMoving)
         {
+            
             _moveStart = false;
             var current = _pathFollower.GetCurrentPlatform();
             if (current != null)
@@ -138,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
                 _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
                 if(_currentStep <= 0 || !_current.isSelector)
                 {
+                    _playerAnimation.StopRunning();
                     _playerCollector.CheckCurrentNode(_current);
                 }
             } 

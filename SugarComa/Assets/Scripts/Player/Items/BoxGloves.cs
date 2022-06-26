@@ -8,6 +8,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     [SerializeField] ItemObject _itemObject;
     [SerializeField] GameObject _player;
     [SerializeField] int damage;
+    [SerializeField] PlayerMovement _playerMovement;
 
 
     private PlayerCollector otherPlayersCollector;
@@ -25,6 +26,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
             DamageHealth(otherPlayersCollector);
         }
         _itemObject.RemoveItem();
+        _playerMovement.isUserInterfaceActive = false;
     }
 
     private void OnTriggerEnter(Collider other)
