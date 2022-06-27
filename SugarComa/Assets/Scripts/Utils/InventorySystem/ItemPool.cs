@@ -32,6 +32,5 @@ public class ItemPool : MonoBehaviour
         {
             _current.GetComponent<BoxGloves>().UseItem();
         }
-
     }
 }

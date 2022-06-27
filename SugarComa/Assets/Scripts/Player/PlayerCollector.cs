@@ -97,6 +97,11 @@ public class PlayerCollector : MonoBehaviour
         _gobletSelection.OpenGobletSelection();
     }
 
+    public void SetGameController(GameController gameController)
+    {
+        _gameController = gameController;
+    }
+
     [System.Serializable]
     public class Item
     {

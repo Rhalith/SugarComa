@@ -181,4 +181,19 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
+
+    public void SetPathFinder(PathFinder pathfinder)
+    {
+        _pathfinder = pathfinder;
+    }
+
+    public void SetCurrentPlatform(Platform platform)
+    {
+        _current = platform;
+    }
+
+    public void SetMapCamera(MapCamera mapCamera)
+    {
+        _mapCamera = mapCamera;
+    }
 }

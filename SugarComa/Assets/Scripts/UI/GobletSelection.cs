@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class GobletSelection : MonoBehaviour
 {
-    [SerializeField] GameController controller;
+    [SerializeField] GameController _gameController;
     [SerializeField] PlayerCollector player;
     [SerializeField] Button Goblet;
     [SerializeField] GoalSelector _goalSelector;
@@ -26,7 +26,7 @@ public class GobletSelection : MonoBehaviour
     {
         player.goblet++;
         player.gold -= 50;
-        controller.ChangeText();
+        _gameController.ChangeText();
         gameObject.SetActive(false);
         _playerMovement._current.ResetSpec();
         _goalSelector.RandomGoalSelect();
@@ -34,7 +34,16 @@ public class GobletSelection : MonoBehaviour
 
     public void LeaveIt()
     {
-        controller.ChangeText();
+        _gameController.ChangeText();
         gameObject.SetActive(false);
+    }
+    public void SetGameController(GameController gameController)
+    {
+        _gameController = gameController;
+    }
+
+    public void SetGoalSelector(GoalSelector goalSelector)
+    {
+        _goalSelector = goalSelector;
     }
 }

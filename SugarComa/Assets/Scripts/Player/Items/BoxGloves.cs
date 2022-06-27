@@ -31,10 +31,17 @@ public class BoxGloves : MonoBehaviour, IDamageItems
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && other != _player) isHitPlayer = true; otherPlayersCollector = other.GetComponent<PlayerCollector>(); 
+        if (other.gameObject.CompareTag("Player") && other != _player)
+        {
+            isHitPlayer = true; 
+            otherPlayersCollector = other.GetComponent<PlayerCollector>();
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && other != _player) isHitPlayer = false; otherPlayersCollector = null;
+        if (other.gameObject.CompareTag("Player") && other != _player)
+        {
+            isHitPlayer = false; otherPlayersCollector = null;
+        }
     }
 }
