@@ -3155,7 +3155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa9b95b9f62c014e9881ce19a88d2dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
+  _gameController: {fileID: 0}
   player: {fileID: 4120892788481720713}
   Goblet: {fileID: 4120892787399290847}
   _goalSelector: {fileID: 0}
@@ -3621,6 +3621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c619d688aebb04a8735dd892f80062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMyTurn: 0
   nextSelectionPressed: 0
   nextSelectionStepPressed: 0
   nextGoalPressed: 0
@@ -4820,6 +4821,7 @@ MonoBehaviour:
   _playerMovement: {fileID: 4120892788481720712}
   _playerCollector: {fileID: 4120892788481720713}
   _gobletSelection: {fileID: 4120892788315320753}
+  _playerInput: {fileID: 4120892788481720718}
 --- !u!1001 &4120892787257266383
 PrefabInstance:
   m_ObjectHideFlags: 0

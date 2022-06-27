@@ -7,4 +7,5 @@ public class ScriptKeeper : MonoBehaviour
     public PlayerMovement _playerMovement;
     public PlayerCollector _playerCollector;
     public GobletSelection _gobletSelection;
+    public PlayerInput _playerInput;
 }

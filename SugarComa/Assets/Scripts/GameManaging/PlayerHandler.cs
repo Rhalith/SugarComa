@@ -11,6 +11,8 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] GameController _gameController;
     [SerializeField] GoalSelector _goalSelector;
 
+    public PlayerInput currentPlayer;
+
     private GameObject _createdObject;
 
 
@@ -22,6 +24,7 @@ public class PlayerHandler : MonoBehaviour
         SetPlayerMovement(_createdObject, sckeeper);
         SetPlayerCollector(_createdObject, sckeeper);
         SetGobletSelection(_createdObject, sckeeper);
+        ChangeCurrentPlayer(currentPlayer, sckeeper._playerInput);
     }
 
     private void SetPlayerMovement(GameObject player, ScriptKeeper keeper)
@@ -40,6 +43,12 @@ public class PlayerHandler : MonoBehaviour
     {
         keeper._gobletSelection.SetGameController(_gameController);
         keeper._gobletSelection.SetGoalSelector(_goalSelector);
+    }
+
+    private void ChangeCurrentPlayer(PlayerInput currentPlayer, PlayerInput nextPlayer)
+    {
+        currentPlayer.isMyTurn = false;
+        nextPlayer.isMyTurn = true;
     }
 }
 

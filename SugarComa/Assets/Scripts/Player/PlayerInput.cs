@@ -3,8 +3,9 @@ using UnityEngine;
 [DefaultExecutionOrder(-100)]
 public class PlayerInput : MonoBehaviour
 {
+	public bool isMyTurn;
 	[HideInInspector] public bool nextSelectionPressed;
-	public bool nextSelectionStepPressed;
+	[HideInInspector] public bool nextSelectionStepPressed;
 	[HideInInspector] public bool nextGoalPressed;
 	[HideInInspector] public bool nextGoalStepPressed;
 	[HideInInspector] public bool moveToBackStepPressed;
@@ -25,7 +26,7 @@ public class PlayerInput : MonoBehaviour
 
 		if (GameManager.IsGameOver) return;
 
-		ProcessInputs();
+		if(isMyTurn) ProcessInputs();
 	}
 
 	void FixedUpdate()
