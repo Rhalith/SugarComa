@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ScriptKeeper : MonoBehaviour
 {
@@ -8,4 +9,7 @@ public class ScriptKeeper : MonoBehaviour
     public PlayerCollector _playerCollector;
     public GobletSelection _gobletSelection;
     public PlayerInput _playerInput;
+    public PlayerInventory _playerInventory;
+    public GameObject _currentUI;
+    public TMP_Text playerGold, playerHealth, playerGoblet;
 }

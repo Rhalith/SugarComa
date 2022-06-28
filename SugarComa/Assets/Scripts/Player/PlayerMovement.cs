@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] public Platform _current;
     [SerializeField] private PathFinder _pathfinder;
-
+    public GameController _gameController;
     [Header("Status")]
     [SerializeField] private int _currentStep;
 
@@ -195,5 +195,10 @@ public class PlayerMovement : MonoBehaviour
     public void SetMapCamera(MapCamera mapCamera)
     {
         _mapCamera = mapCamera;
+    }
+
+    public void SetGameController(GameController gameController)
+    {
+        _gameController = gameController;
     }
 }

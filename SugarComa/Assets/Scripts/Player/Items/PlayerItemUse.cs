@@ -38,7 +38,7 @@ public class PlayerItemUse : MonoBehaviour
     private void FixedUpdate()
     {
         KeepPosition();
-        if (ItemPool._isItemUsing)
+        if (ItemPool._isItemUsing && _playerInput.isMyTurn)
         {
             FollowMouse();
             if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)

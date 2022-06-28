@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BoxGloves : MonoBehaviour, IDamageItems
 {
-
     [SerializeField] ItemObject _itemObject;
     [SerializeField] GameObject _player;
     [SerializeField] int damage;
@@ -26,6 +25,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
             DamageHealth(otherPlayersCollector);
         }
         _itemObject.RemoveItem();
+        _playerMovement._gameController.ChangeInventory();
         _playerMovement.isUserInterfaceActive = false;
     }
 
@@ -33,8 +33,9 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     {
         if (other.gameObject.CompareTag("Player") && other != _player)
         {
-            isHitPlayer = true; 
-            otherPlayersCollector = other.GetComponent<PlayerCollector>();
+            isHitPlayer = true;
+            ScriptKeeper scriptKeeper = other.GetComponent<ScriptKeeper>();
+            otherPlayersCollector = scriptKeeper._playerCollector;
         }
     }
     private void OnTriggerExit(Collider other)

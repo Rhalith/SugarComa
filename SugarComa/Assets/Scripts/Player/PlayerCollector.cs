@@ -79,6 +79,7 @@ public class PlayerCollector : MonoBehaviour
             default:
                 break;
         }
+        _gameController.ChangeInventory();
     }
 
     void RandomJackpot(int value)

@@ -4,67 +4,72 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    public PlayerObjects playerObjects;
-
-    public Inventory inventory;
+    public PlayerHandler _playerHandler;
 
     readonly NotifyScript notifyScript = new();
 
-    private void Start()
-    {
-        TextChanger textChanger = new(playerObjects.playerGold, playerObjects.playerHealth,playerObjects.playerGoblet, playerObjects.playerCollector);
-        notifyScript.AddObserver(textChanger);
-
-        InstanceInventoryObjects();
-    }
+    private TextChanger _textChanger;
+    private InventoryChanger _inventoryChanger1, _inventoryChanger2, _inventoryChanger3, _inventoryChanger4, _inventoryChanger5, _inventoryChanger6, _inventoryChanger7, _inventoryChanger8, _inventoryChanger9, _inventoryChanger10;
 
     public void ChangeText()
     {
+        InstanceUIElements();
         notifyScript.Notify();
+        ClearUIObserver();
     }
 
     public void ChangeInventory()
     {
+        InstanceInventoryObjects();
         notifyScript.NotifyInventory();
+        ClearInventoryObserver();
     }
-
+    
+    private void InstanceUIElements()
+    {
+        _textChanger = new(_playerHandler.currentplayerGold, _playerHandler.currentplayerHealth, _playerHandler.currentplayerGoblet, _playerHandler.currentPlayerCollector);
+        notifyScript.AddObserver(_textChanger);
+    }
     private void InstanceInventoryObjects()
     {
-        InventoryChanger inventoryChanger = new(inventory._item); AddToObserver(inventoryChanger);
-        InventoryChanger inventoryChanger1 = new(inventory._item1); AddToObserver(inventoryChanger1);
-        InventoryChanger inventoryChanger2 = new(inventory._item2); AddToObserver(inventoryChanger2);
-        InventoryChanger inventoryChanger3 = new(inventory._item3); AddToObserver(inventoryChanger3);
-        InventoryChanger inventoryChanger4 = new(inventory._item4); AddToObserver(inventoryChanger4);
-        InventoryChanger inventoryChanger5 = new(inventory._item5); AddToObserver(inventoryChanger5);
-        InventoryChanger inventoryChanger6 = new(inventory._item6); AddToObserver(inventoryChanger6);
-        InventoryChanger inventoryChanger7 = new(inventory._item7); AddToObserver(inventoryChanger7);
-        InventoryChanger inventoryChanger8 = new(inventory._item8); AddToObserver(inventoryChanger8);
-        InventoryChanger inventoryChanger9 = new(inventory._item9); AddToObserver(inventoryChanger9);
+        _inventoryChanger1 = new(_playerHandler.currentPlayerInventory._items[0]); AddToObserver(_inventoryChanger1);
+        _inventoryChanger2 = new(_playerHandler.currentPlayerInventory._items[1]); AddToObserver(_inventoryChanger2);
+        _inventoryChanger3 = new(_playerHandler.currentPlayerInventory._items[2]); AddToObserver(_inventoryChanger3);
+        _inventoryChanger4 = new(_playerHandler.currentPlayerInventory._items[3]); AddToObserver(_inventoryChanger4);
+        _inventoryChanger5 = new(_playerHandler.currentPlayerInventory._items[4]); AddToObserver(_inventoryChanger5);
+        _inventoryChanger6 = new(_playerHandler.currentPlayerInventory._items[5]); AddToObserver(_inventoryChanger6);
+        _inventoryChanger7 = new(_playerHandler.currentPlayerInventory._items[6]); AddToObserver(_inventoryChanger7);
+        _inventoryChanger8 = new(_playerHandler.currentPlayerInventory._items[7]); AddToObserver(_inventoryChanger8);
+        _inventoryChanger9 = new(_playerHandler.currentPlayerInventory._items[8]); AddToObserver(_inventoryChanger9);
+        _inventoryChanger10 = new(_playerHandler.currentPlayerInventory._items[9]); AddToObserver(_inventoryChanger10);
     }
 
+    private void ClearUIObserver()
+    {
+        notifyScript.RemoveObserver(_textChanger);
+    }
+
+    private void ClearInventoryObserver()
+    {
+        RemoveFromObserver(_inventoryChanger1);
+        RemoveFromObserver(_inventoryChanger2);
+        RemoveFromObserver(_inventoryChanger3);
+        RemoveFromObserver(_inventoryChanger4);
+        RemoveFromObserver(_inventoryChanger5);
+        RemoveFromObserver(_inventoryChanger6);
+        RemoveFromObserver(_inventoryChanger7);
+        RemoveFromObserver(_inventoryChanger8);
+        RemoveFromObserver(_inventoryChanger9);
+        RemoveFromObserver(_inventoryChanger10);
+
+    }
     private void AddToObserver(InventoryChanger invchanger)
     {
         notifyScript.AddInventoryObserver(invchanger);
     }
-}
 
-[System.Serializable]
-public class PlayerObjects
-{
-    public PlayerCollector playerCollector;
-    public TMP_Text playerGold, playerHealth, playerGoblet;
-}
-[System.Serializable]
-public class Inventory
-{
-    public ItemObject _item;
-    public ItemObject _item1;
-    public ItemObject _item2;
-    public ItemObject _item3;
-    public ItemObject _item4;
-    public ItemObject _item5;
-    public ItemObject _item6;
-    public ItemObject _item7;
-    public ItemObject _item8;
-    public ItemObject _item9;
+    private void RemoveFromObserver(InventoryChanger invchanger)
+    {
+        notifyScript.RemoveInventoryObserver(invchanger);
+    }
 }

@@ -14,6 +14,6 @@ public class InventoryChanger : IObserver
 
     public void OnNotify()
     {
-        _item.OnAddItem();
+        _item.NotifyInventory();
     }
 }
