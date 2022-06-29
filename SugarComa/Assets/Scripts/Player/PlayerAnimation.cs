@@ -17,25 +17,30 @@ public class PlayerAnimation : MonoBehaviour
     {
 
         _animator.SetBool("idle", !_animator.GetBool("idle"));
+        _idle = !_idle;
     }
 
     private void RunSet()
     {
         _animator.SetBool("running", !_animator.GetBool("running"));
+        _run = !_run;
     }
 
     private void JumpSet()
     {
         _animator.SetBool("jump", !_animator.GetBool("jump"));
+        _jump = !_jump;
     }
 
     private void LandSet()
     {
         _animator.SetBool("landing", !_animator.GetBool("landing"));
+        _land = !_land;
     }
     private void SurpriseSet()
     {
         _animator.SetBool("surprised", !_animator.GetBool("surprised"));
+        _surprised = !_surprised;
     }
 
     //Jumping and rolling dice
@@ -71,6 +76,11 @@ public class PlayerAnimation : MonoBehaviour
     public void SetIsAnimation()
     {
         _playerMovement.isAnimationStopped = !_playerMovement.isAnimationStopped;
+    }
+
+    public void LandPlayer()
+    {
+        LandSet();
     }
 
     public void SetIsRunning(string value = "true")

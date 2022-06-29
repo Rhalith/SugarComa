@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Cinemachine;
 
 public class ScriptKeeper : MonoBehaviour
 {
@@ -12,4 +13,5 @@ public class ScriptKeeper : MonoBehaviour
     public PlayerInventory _playerInventory;
     public GameObject _currentUI;
     public TMP_Text playerGold, playerHealth, playerGoblet;
+    public CinemachineVirtualCamera _playerCamera;
 }

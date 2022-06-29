@@ -4839,6 +4839,7 @@ MonoBehaviour:
   playerGold: {fileID: 4120892787917468866}
   playerHealth: {fileID: 4120892787250652913}
   playerGoblet: {fileID: 4120892787186706926}
+  _playerCamera: {fileID: 4120892788676648186}
 --- !u!136 &174266826092860060
 CapsuleCollider:
   m_ObjectHideFlags: 0

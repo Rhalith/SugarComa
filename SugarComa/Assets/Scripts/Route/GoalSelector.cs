@@ -59,7 +59,7 @@ public class GoalSelector : MonoBehaviour
         CinemachineTransposer transposer = camera.AddCinemachineComponent<CinemachineTransposer>();
 
         transposer.m_FollowOffset = new Vector3(-9f, 5f, 0f);
-        camera.Priority = 6;
+        camera.Priority = 3;
 
     }
 

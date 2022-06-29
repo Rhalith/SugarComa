@@ -27,13 +27,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed && !isUserInterfaceActive)
+        if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed && !isUserInterfaceActive && _playerAnimation._land)
         {
             _currentStep = maximumStep; 
             if(!isAnimationStopped) _playerAnimation.RollDice();
         } 
 
-        if (!_current.HasSelector && !isUserInterfaceActive && isAnimationStopped)
+        if (!_current.HasSelector && !isUserInterfaceActive && isAnimationStopped )
         {
             if (!_pathFollower.isMoving)
             { 
