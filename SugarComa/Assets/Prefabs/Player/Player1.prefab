@@ -3167,6 +3167,8 @@ MonoBehaviour:
   Goblet: {fileID: 4120892787399290847}
   _goalSelector: {fileID: 0}
   _playerMovement: {fileID: 4120892788481720712}
+  _pathFinder: {fileID: 0}
+  _playerAnimation: {fileID: 4120892787933790877}
 --- !u!1 &4120892788379030898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3674,6 +3676,7 @@ MonoBehaviour:
   goalStep: 5
   isAnimationStopped: 0
   isRunningAnimation: 0
+  isDiceRolled: 0
   _current: {fileID: 0}
   _pathfinder: {fileID: 0}
   _gameController: {fileID: 0}
@@ -4833,6 +4836,7 @@ MonoBehaviour:
   _playerMovement: {fileID: 4120892788481720712}
   _playerCollector: {fileID: 4120892788481720713}
   _gobletSelection: {fileID: 4120892788315320753}
+  _goalSelector: {fileID: 0}
   _playerInput: {fileID: 4120892788481720718}
   _playerInventory: {fileID: 4120892788481720717}
   _currentUI: {fileID: 4120892787982766272}

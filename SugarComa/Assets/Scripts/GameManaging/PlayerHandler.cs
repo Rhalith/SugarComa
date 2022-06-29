@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour
 {
+    [SerializeField] CameraAnimations _cameraAnimations;
     [SerializeField] GameObject _playerPrefab;
     [SerializeField] Platform _startplatform;
     [SerializeField] PathFinder _pathFinder;
@@ -53,6 +54,7 @@ public class PlayerHandler : MonoBehaviour
         ChangeCurrentScripts(scriptKeeper._playerInput, scriptKeeper._playerCollector, scriptKeeper._playerInventory);
         ChangeCurrentUIElements(scriptKeeper.playerGold, scriptKeeper.playerHealth, scriptKeeper.playerGoblet);
         ChangeActiveUI(previousKeep._currentUI, scriptKeeper._currentUI);
+        ChangeCameraAnimations(scriptKeeper);
         ChangeCamPriority(previousKeep, scriptKeeper);
     }
     private void SetPlayerMovement(ScriptKeeper keeper)
@@ -72,6 +74,7 @@ public class PlayerHandler : MonoBehaviour
     {
         keeper._gobletSelection.SetGameController(_gameController);
         keeper._gobletSelection.SetGoalSelector(_goalSelector);
+        keeper._gobletSelection.SetPathFinder(_pathFinder);
     }
 
     private void ChangePlayingInput(PlayerInput currentInput, PlayerInput nextInput)
@@ -102,6 +105,11 @@ public class PlayerHandler : MonoBehaviour
     {
         current._playerCamera.Priority = 1;
         next._playerCamera.Priority = 2;
+    }
+
+    private void ChangeCameraAnimations(ScriptKeeper next)
+    {
+        _cameraAnimations.SetGobletSelection(next._gobletSelection);
     }
 }
 

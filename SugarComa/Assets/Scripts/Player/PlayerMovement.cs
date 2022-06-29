@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PathFinder _pathfinder;
     public GameController _gameController;
     [Header("Status")]
-    [SerializeField] private int _currentStep;
+    [SerializeField] public int _currentStep;
 
     private bool _moveStart;
     [SerializeField] private PathFollower _pathFollower;
@@ -30,20 +30,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed && !isUserInterfaceActive && _playerAnimation._land)
         {
-            _currentStep = maximumStep; 
-            if(!isAnimationStopped) RollDice();
-        } 
+            _currentStep = maximumStep;
+            if (!isAnimationStopped) RollDice();
+        }
 
         if (!_current.HasSelector && !isUserInterfaceActive && isAnimationStopped && isDiceRolled)
         {
             if (!_pathFollower.isMoving)
-            { 
+            {
                 if (!isRunningAnimation) _playerAnimation.StartRunning();
                 StartMove();
                 if (isAnimationStopped) _playerAnimation.SetIsAnimation();
             }
         }
-        else if (!isUserInterfaceActive && _current.isSelector && _currentStep>0)
+        else if (!isUserInterfaceActive && _current.isSelector && _currentStep > 0)
         {
             ProcessSelect();
         }
@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerInput.nextSelectionStepPressed || isRunningAnimation)
         {
-            var path = _pathfinder.ToSelector(_current, _currentStep);
+            var path = _pathfinder.ToSelector(_current, _currentStep);         
             StartFollowPath(path);
             isDiceRolled = false;
         }
@@ -135,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void StartFollowPath(Platform[] path, bool isSelector = false)
+    public void StartFollowPath(Platform[] path, bool isSelector = false)
     {
         if (path == null || _moveStart) return;
 
@@ -157,19 +157,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_moveStart && !_pathFollower.isMoving)
         {
-            
+
             _moveStart = false;
             var current = _pathFollower.GetCurrentPlatform();
             if (current != null)
             {
                 _current = current;
-                _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
-                if(_currentStep <= 0 || !_current.isSelector)
+                if(_current.GetPlatformSpec() != PlatformSpecification.Goal) _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
+                if (_currentStep <= 0 || !_current.isSelector)
                 {
                     _playerAnimation.StopRunning();
                     _playerCollector.CheckCurrentNode(_current);
                 }
-            } 
+            }
         }
     }
 

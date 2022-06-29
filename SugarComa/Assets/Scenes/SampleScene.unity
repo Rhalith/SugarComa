@@ -14157,6 +14157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac61eae3172c26e4b9aea973bc0215a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraAnimations: {fileID: 0}
   _playerPrefab: {fileID: 5242262645195583948, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
   _startplatform: {fileID: 1989628817}
   _pathFinder: {fileID: 1970712953}
@@ -22621,7 +22622,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 30.92
+  field of view: 31
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -22748,6 +22749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1938159820}
+  - component: {fileID: 1938159821}
   m_Layer: 0
   m_Name: CameraObjects
   m_TagString: Untagged
@@ -22774,6 +22776,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1938159821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938159819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e7096053af96d44ea9aa413c1a70b92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _goalSelector: {fileID: 1970712952}
 --- !u!1001 &1943842374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25290,7 +25305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
-  specification: 8
+  specification: 2
   isSelector: 0
   selector:
     left: {fileID: 0}
@@ -25887,6 +25902,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1222331011}
     - target: {fileID: 4120892788315320753, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: _pathFinder
+      value: 
+      objectReference: {fileID: 1970712953}
+    - target: {fileID: 4120892788315320753, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: _goalSelector
       value: 
       objectReference: {fileID: 1970712952}
@@ -25930,9 +25949,25 @@ PrefabInstance:
       propertyPath: isMyTurn
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4120892788481720719, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120892788676648185, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.482942
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120892788676648185, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.256612
+      objectReference: {fileID: 0}
     - target: {fileID: 4120892788676648185, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.00000044980044
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120892788676648186, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 5242262645195583948, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_Name

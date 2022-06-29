@@ -35,4 +35,9 @@ public class Platform : MonoBehaviour
     {
         specification = myspec;
     }
+
+    public PlatformSpecification GetPlatformSpec()
+    {
+        return myspec;
+    }
 }

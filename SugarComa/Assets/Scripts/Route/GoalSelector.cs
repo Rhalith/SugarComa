@@ -60,11 +60,10 @@ public class GoalSelector : MonoBehaviour
 
         transposer.m_FollowOffset = new Vector3(-9f, 5f, 0f);
         camera.Priority = 3;
-
     }
 
-    public void ResetCameraPriority(CinemachineVirtualCamera camera)
+    public void ResetGoalCameraPriority()
     {
-        camera.Priority = realPriority;
+        _camera.Priority = realPriority;
     }
 }

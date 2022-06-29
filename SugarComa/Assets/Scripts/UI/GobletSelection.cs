@@ -8,6 +8,8 @@ public class GobletSelection : MonoBehaviour
     [SerializeField] Button Goblet;
     [SerializeField] GoalSelector _goalSelector;
     [SerializeField] PlayerMovement _playerMovement;
+    [SerializeField] PathFinder _pathFinder;
+    [SerializeField] PlayerAnimation _playerAnimation;
 
     public void OpenGobletSelection()
     {
@@ -36,6 +38,7 @@ public class GobletSelection : MonoBehaviour
     {
         _gameController.ChangeText();
         gameObject.SetActive(false);
+        ContinueToMove();
     }
     public void SetGameController(GameController gameController)
     {
@@ -45,5 +48,17 @@ public class GobletSelection : MonoBehaviour
     public void SetGoalSelector(GoalSelector goalSelector)
     {
         _goalSelector = goalSelector;
+    }
+
+    public void SetPathFinder(PathFinder pathFinder)
+    {
+        _pathFinder = pathFinder;
+    }
+
+    public void ContinueToMove()
+    {
+        var path = _pathFinder.ToSelector(_playerMovement._current, _playerMovement._currentStep);
+        _playerMovement.StartFollowPath(path, true);
+        _playerAnimation.ContinueRunning();
     }
 }
