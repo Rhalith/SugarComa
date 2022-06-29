@@ -14163,7 +14163,6 @@ MonoBehaviour:
   _mapCamera: {fileID: 1716652755}
   _gameController: {fileID: 1222331011}
   _goalSelector: {fileID: 1970712952}
-  _currentUI: {fileID: 1357578400}
   _playerList:
   - {fileID: 4120892789009911172}
   currentPlayerInput: {fileID: 546016269}
@@ -16266,11 +16265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f865295e853426a45b5b68e22d79f4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1357578400 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4120892787982766272, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
-  m_PrefabInstance: {fileID: 4120892789009911171}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1358117434 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 52a1093fcf858444495d5381e820b659, type: 3}
@@ -25914,7 +25908,7 @@ PrefabInstance:
       objectReference: {fileID: 1970712953}
     - target: {fileID: 4120892788481720712, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: maximumStep
-      value: 2
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4120892788481720712, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: _gameController

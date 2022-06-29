@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public int goalStep = 5;
     public bool isAnimationStopped;
     public bool isRunningAnimation;
+    public bool isDiceRolled;
 
     [SerializeField] public Platform _current;
     [SerializeField] private PathFinder _pathfinder;
@@ -30,10 +31,10 @@ public class PlayerMovement : MonoBehaviour
         if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed && !isUserInterfaceActive && _playerAnimation._land)
         {
             _currentStep = maximumStep; 
-            if(!isAnimationStopped) _playerAnimation.RollDice();
+            if(!isAnimationStopped) RollDice();
         } 
 
-        if (!_current.HasSelector && !isUserInterfaceActive && isAnimationStopped )
+        if (!_current.HasSelector && !isUserInterfaceActive && isAnimationStopped && isDiceRolled)
         {
             if (!_pathFollower.isMoving)
             { 
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
                 if (isAnimationStopped) _playerAnimation.SetIsAnimation();
             }
         }
-        else if (!isUserInterfaceActive)
+        else if (!isUserInterfaceActive && _current.isSelector && _currentStep>0)
         {
             ProcessSelect();
         }
@@ -56,30 +57,34 @@ public class PlayerMovement : MonoBehaviour
         {
             var path = _pathfinder.ToSelector(_current, _currentStep);
             StartFollowPath(path);
+            isDiceRolled = false;
         }
         else if (_playerInput.nextSelectionPressed)
         {
             var path = _pathfinder.ToSelector(_current);
             StartFollowPath(path);
+            isDiceRolled = false;
+
         }
         else if (_playerInput.nextGoalPressed)
         {
             var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal);
             StartFollowPath(path);
+            isDiceRolled = false;
+
         }
         else if (_playerInput.nextGoalStepPressed)
         {
             var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal, goalStep);
             StartFollowPath(path);
+            isDiceRolled = false;
+
         }
         else if (_playerInput.moveToBackStepPressed)
         {
             _moveStart = true;
             _pathFollower.MoveLastPath(maximumStep, false, PlatformSpecification.Goal);
-        }
-        else if (_playerInput.closeUI)
-        {
-            _playerCollector.AddItem();
+            isDiceRolled = false;
         }
     }
 
@@ -109,16 +114,23 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ProcessSelect()
     {
-        if (isRunningAnimation && _current.isSelector) _playerAnimation.StopRunning();
-        if (_playerInput.selectLeftPressed) SelectPlatform(RouteSelectorDirection.Left);
-        else if (_playerInput.selectRightPressed) SelectPlatform(RouteSelectorDirection.Right);
+        if (isRunningAnimation) _playerAnimation.StopRunning();
+        if (_playerInput.selectLeftPressed && !isRunningAnimation) SelectPlatform(RouteSelectorDirection.Left);
+        else if (_playerInput.selectRightPressed && !isRunningAnimation) SelectPlatform(RouteSelectorDirection.Right);
 
         if (_playerInput.applySelectPressed && _selectorDirection != RouteSelectorDirection.None)
         {
-            
             var path = _pathfinder.ToSelector(_current, _currentStep, _selectorDirection);
             SelectPlatform(RouteSelectorDirection.None);
             StartFollowPath(path, true);
+            _current = path[0];
+            if (isAnimationStopped && !isRunningAnimation && isDiceRolled)
+            {
+                _playerAnimation.StartRunning();
+                _playerAnimation.SetIsAnimation();
+                isDiceRolled = false;
+                return;
+            }
             if (!isRunningAnimation) _playerAnimation.ContinueRunning();
         }
     }
@@ -180,6 +192,13 @@ public class PlayerMovement : MonoBehaviour
                 _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
                 break;
         }
+    }
+
+    private void RollDice()
+    {
+        _playerAnimation.RollDice();
+        isDiceRolled = true;
+        //maximumStep = Random.Range(1, 10);
     }
 
     public void SetPathFinder(PathFinder pathfinder)

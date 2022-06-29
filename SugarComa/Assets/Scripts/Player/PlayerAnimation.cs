@@ -53,24 +53,25 @@ public class PlayerAnimation : MonoBehaviour
     //After jumping start running
     public void StartRunning()
     {
+        SetIsRunning("true");
         JumpSet();
         RunSet();
-        SetIsRunning("true");
     }
 
     //If player stops
     public void StopRunning()
     {
+        SetIsRunning("false");
         RunSet();
         IdleSet();
-        SetIsRunning("false");
     }
 
     //If player is stopped in Selector and selected
     public void ContinueRunning()
     {
-        IdleSet();
+        SetIsRunning("true");
         RunSet();
+        IdleSet();
     }
 
     public void SetIsAnimation()
@@ -96,5 +97,4 @@ public class PlayerAnimation : MonoBehaviour
             return;
         }
     }
-
 }
