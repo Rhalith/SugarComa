@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoxGloves : MonoBehaviour, IDamageItems
@@ -9,10 +7,10 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     [SerializeField] int damage;
     [SerializeField] PlayerMovement _playerMovement;
 
-
     private PlayerCollector otherPlayersCollector;
 
     public bool isHitPlayer;
+
     public void DamageHealth(PlayerCollector playerCollector)
     {
         if(otherPlayersCollector != null) playerCollector.health -= damage;
@@ -25,7 +23,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
             DamageHealth(otherPlayersCollector);
         }
         _itemObject.RemoveItem();
-        _playerMovement._gameController.ChangeInventory();
+        _playerMovement.GameController.ChangeInventory();
         _playerMovement.isUserInterfaceActive = false;
     }
 
@@ -38,6 +36,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
             otherPlayersCollector = scriptKeeper._playerCollector;
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && other != _player)

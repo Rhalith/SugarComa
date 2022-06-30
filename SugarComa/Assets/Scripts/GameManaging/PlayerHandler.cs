@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[DefaultExecutionOrder(-101)]
 public class PlayerHandler : MonoBehaviour
 {
     [SerializeField] CameraAnimations _cameraAnimations;
@@ -59,10 +60,10 @@ public class PlayerHandler : MonoBehaviour
     }
     private void SetPlayerMovement(ScriptKeeper keeper)
     {
-        keeper._playerMovement.SetCurrentPlatform(_startplatform);
-        keeper._playerMovement.SetPathFinder(_pathFinder);
-        keeper._playerMovement.SetMapCamera(_mapCamera);
-        keeper._playerMovement.SetGameController(_gameController);
+        keeper._playerMovement.MapCamera = _mapCamera;
+        keeper._playerMovement.PathFinder = _pathFinder;
+        keeper._playerMovement.CurrentPlatform = _startplatform;
+        keeper._playerMovement.GameController = _gameController;
     }
 
     private void SetPlayerCollector(ScriptKeeper keeper)

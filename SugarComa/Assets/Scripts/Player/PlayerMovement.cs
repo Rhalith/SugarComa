@@ -2,29 +2,44 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public int maximumStep = 1;
-    public int goalStep = 5;
-    public bool isAnimationStopped;
-    public bool isRunningAnimation;
-    public bool isDiceRolled;
-
-    [SerializeField] public Platform _current;
-    [SerializeField] private PathFinder _pathfinder;
-    public GameController _gameController;
-    [Header("Status")]
-    [SerializeField] public int _currentStep;
-
+    #region Fields
     private bool _moveStart;
-    [SerializeField] private PathFollower _pathFollower;
-    [SerializeField] private PlayerInput _playerInput;
-    [SerializeField] private PlayerCollector _playerCollector;
-    [SerializeField] private PlayerInventory _playerInventory;
-    [SerializeField] private MapCamera _mapCamera;
-    [SerializeField] private ItemPool _itemPool;
-    [SerializeField] private PlayerAnimation _playerAnimation;
     private RouteSelectorDirection _selectorDirection;
 
+    public int goalStep = 5;
+    public int maximumStep = 1;
+    public bool isDiceRolled;
+    public bool isAnimationStopped;
+    public bool isRunningAnimation;
     public bool isUserInterfaceActive;
+    #endregion
+
+    #region Serialize Fields
+
+    [Header("Status")]
+    private int _currentStep;
+
+    [Header("Other Scripts")]
+    [SerializeField] private ItemPool _itemPool;
+    [SerializeField] private MapCamera _mapCamera;
+    [SerializeField] private PathFinder _pathfinder;
+    [SerializeField] private PathFollower _pathFollower;
+    [SerializeField] private PlayerInput _playerInput;
+    [SerializeField] private Platform _currentPlatform;
+    [SerializeField] private GameController _gameController;
+    [SerializeField] private PlayerCollector _playerCollector;
+    [SerializeField] private PlayerInventory _playerInventory;
+    [SerializeField] private PlayerAnimation _playerAnimation;
+    #endregion
+
+    #region Properties
+    
+    public int CurrentStep => _currentStep;
+    public MapCamera MapCamera { set => _mapCamera = value; }
+    public PathFinder PathFinder { set => _pathfinder = value; }
+    public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
+    public GameController GameController { get => _gameController; set => _gameController = value; }
+    #endregion
 
     private void FixedUpdate()
     {
@@ -34,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isAnimationStopped) RollDice();
         }
 
-        if (!_current.HasSelector && !isUserInterfaceActive && isAnimationStopped && isDiceRolled)
+        if (!_currentPlatform.HasSelector && !isUserInterfaceActive && isAnimationStopped && isDiceRolled)
         {
             if (!_pathFollower.isMoving)
             {
@@ -43,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
                 if (isAnimationStopped) _playerAnimation.SetIsAnimation();
             }
         }
-        else if (!isUserInterfaceActive && _current.isSelector && _currentStep > 0)
+        else if (!isUserInterfaceActive && _currentPlatform.isSelector && _currentStep > 0)
         {
             ProcessSelect();
         }
@@ -55,27 +70,27 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerInput.nextSelectionStepPressed || isRunningAnimation)
         {
-            var path = _pathfinder.ToSelector(_current, _currentStep);         
+            var path = _pathfinder.ToSelector(_currentPlatform, _currentStep);         
             StartFollowPath(path);
             isDiceRolled = false;
         }
         else if (_playerInput.nextSelectionPressed)
         {
-            var path = _pathfinder.ToSelector(_current);
+            var path = _pathfinder.ToSelector(_currentPlatform);
             StartFollowPath(path);
             isDiceRolled = false;
 
         }
         else if (_playerInput.nextGoalPressed)
         {
-            var path = _pathfinder.FindBest(_current, PlatformSpec.Goal);
+            var path = _pathfinder.FindBest(_currentPlatform, PlatformSpec.Goal);
             StartFollowPath(path);
             isDiceRolled = false;
 
         }
         else if (_playerInput.nextGoalStepPressed)
         {
-            var path = _pathfinder.FindBest(_current, PlatformSpec.Goal, goalStep);
+            var path = _pathfinder.FindBest(_currentPlatform, PlatformSpec.Goal, goalStep);
             StartFollowPath(path);
             isDiceRolled = false;
 
@@ -120,10 +135,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (_playerInput.applySelectPressed && _selectorDirection != RouteSelectorDirection.None)
         {
-            var path = _pathfinder.ToSelector(_current, _currentStep, _selectorDirection);
+            var path = _pathfinder.ToSelector(_currentPlatform, _currentStep, _selectorDirection);
             SelectPlatform(RouteSelectorDirection.None);
             StartFollowPath(path, true);
-            _current = path[0];
+            _currentPlatform = path[0];
             if (isAnimationStopped && !isRunningAnimation && isDiceRolled)
             {
                 _playerAnimation.StartRunning();
@@ -148,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                _pathFollower.StartFollow(path, PlatformSpec.Goal, _current.isSelector);
+                _pathFollower.StartFollow(path, PlatformSpec.Goal, _currentPlatform.isSelector);
             }
         }
     }
@@ -162,12 +177,12 @@ public class PlayerMovement : MonoBehaviour
             var current = _pathFollower.GetCurrentPlatform();
             if (current != null)
             {
-                _current = current;
-                if(_current.GetPlatformSpec() != PlatformSpec.Goal) _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
-                if (_currentStep <= 0 || !_current.isSelector)
+                this._currentPlatform = current;
+                if(this._currentPlatform.GetPlatformSpec() != PlatformSpec.Goal) _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
+                if (_currentStep <= 0 || !this._currentPlatform.isSelector)
                 {
                     _playerAnimation.StopRunning();
-                    _playerCollector.CheckCurrentNode(_current);
+                    _playerCollector.CheckCurrentNode(this._currentPlatform);
                 }
             }
         }
@@ -180,16 +195,16 @@ public class PlayerMovement : MonoBehaviour
         switch (direction)
         {
             case RouteSelectorDirection.Left:
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.greenMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
+                _currentPlatform.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.greenMaterial);
+                _currentPlatform.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
                 break;
             case RouteSelectorDirection.Right:
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.greenMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
+                _currentPlatform.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.greenMaterial);
+                _currentPlatform.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
                 break;
             default:
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
+                _currentPlatform.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
+                _currentPlatform.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
                 break;
         }
     }
@@ -199,25 +214,5 @@ public class PlayerMovement : MonoBehaviour
         _playerAnimation.RollDice();
         isDiceRolled = true;
         //maximumStep = Random.Range(1, 10);
-    }
-
-    public void SetPathFinder(PathFinder pathfinder)
-    {
-        _pathfinder = pathfinder;
-    }
-
-    public void SetCurrentPlatform(Platform platform)
-    {
-        _current = platform;
-    }
-
-    public void SetMapCamera(MapCamera mapCamera)
-    {
-        _mapCamera = mapCamera;
-    }
-
-    public void SetGameController(GameController gameController)
-    {
-        _gameController = gameController;
     }
 }

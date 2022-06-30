@@ -30,7 +30,7 @@ public class GobletSelection : MonoBehaviour
         player.gold -= 50;
         _gameController.ChangeText();
         gameObject.SetActive(false);
-        _playerMovement._current.ResetSpec();
+        _playerMovement.CurrentPlatform.ResetSpec();
         _goalSelector.RandomGoalSelect();
     }
 
@@ -57,7 +57,7 @@ public class GobletSelection : MonoBehaviour
 
     public void ContinueToMove()
     {
-        var path = _pathFinder.ToSelector(_playerMovement._current, _playerMovement._currentStep);
+        var path = _pathFinder.ToSelector(_playerMovement.CurrentPlatform, _playerMovement.CurrentStep);
         _playerMovement.StartFollowPath(path, true);
         _playerAnimation.ContinueRunning();
     }
