@@ -75,27 +75,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartMove()
     {
-        if (_playerInput.nextSelectionStepPressed)
+        if (_playerInput.nextSelectionStepPressed || !_playerAnimation.IsJumping) // space
         {
             _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep), PlatformSpec.Goal, _currentPlatform.HasSelector);
         }
-        else if (_playerInput.nextSelectionPressed)
+        else if (_playerInput.nextSelectionPressed) // X
         {
             _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform), PlatformSpec.Goal, _currentPlatform.HasSelector);
 
         }
-        else if (_playerInput.nextGoalPressed)
+        else if (_playerInput.nextGoalPressed) // C
         {
             _pathTracker.StartTracking(_pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal), PlatformSpec.Goal, _currentPlatform.HasSelector);
         }
-        else if (_playerInput.nextGoalStepPressed)
+        else if (_playerInput.nextGoalStepPressed) // V
         {
             _pathTracker.StartTracking(_pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal, goalStep), PlatformSpec.Goal, _currentPlatform.HasSelector);
         }
-        else if (_playerInput.moveToBackStepPressed)
+        else if (_playerInput.moveToBackStepPressed) // B
         {
             _pathTracker.RestartTracking(maximumStep, false, PlatformSpec.Goal);
         }
+        isDiceRolled = false;
     }
 
     private void ProcessUI()

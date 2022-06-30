@@ -25229,7 +25229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
-  spec: 0
+  spec: 2
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -25910,6 +25910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 7044238543435382551, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: _goalSelector
+      value: 
+      objectReference: {fileID: 1970712952}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
 --- !u!1 &4120892789009911172 stripped
