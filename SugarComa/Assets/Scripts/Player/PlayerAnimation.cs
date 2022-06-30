@@ -1,100 +1,77 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    public bool _idle;
-    public bool _jump;
-    public bool _run;
-    public bool _land;
-    public bool _surprised;
+    #region SerializeField
 
-    [SerializeField] Animator _animator;
-    [SerializeField] PlayerMovement _playerMovement;
+    [Header("Animation Flags")]
+    [SerializeField] private bool _jump;
+    [SerializeField] private bool _run;
+    [SerializeField] private bool _land;
+    [SerializeField] private bool _surprised;
 
-    private void IdleSet()
+    [Header("Other Scripts")]
+    [SerializeField] private Animator _animator;
+    #endregion
+
+    #region Properties
+
+    public bool IsLanding => _land;
+    public bool IsJumping => _jump;
+    public bool IsRunning => _run;
+    public bool IsSurprised => _surprised;
+    public bool IsIdle => !_run && !_land && !_jump && !_surprised;
+    #endregion
+
+    private void RunSet(int running)
     {
-
-        _animator.SetBool("idle", !_animator.GetBool("idle"));
-        _idle = !_idle;
+        _animator.SetBool("running", running != 0);
+        _run = running != 0;
     }
 
-    private void RunSet()
+    private void JumpSet(int jump)
     {
-        _animator.SetBool("running", !_animator.GetBool("running"));
-        _run = !_run;
+        _animator.SetBool("jump", jump != 0);
+        _jump = jump != 0;
     }
 
-    private void JumpSet()
+    private void LandSet(int landing)
     {
-        _animator.SetBool("jump", !_animator.GetBool("jump"));
-        _jump = !_jump;
+        _animator.SetBool("landing", landing != 0);
+        _land = landing != 0;
     }
-
-    private void LandSet()
+    private void SurpriseSet(int surprised)
     {
-        _animator.SetBool("landing", !_animator.GetBool("landing"));
-        _land = !_land;
-    }
-    private void SurpriseSet()
-    {
-        _animator.SetBool("surprised", !_animator.GetBool("surprised"));
-        _surprised = !_surprised;
+        _animator.SetBool("surprised", surprised != 0);
+        _surprised = surprised != 0;
     }
 
     //Jumping and rolling dice
     public void RollDice()
     {
-        IdleSet();
-        JumpSet();
+        JumpSet(1);
     }
 
     //After jumping start running
     public void StartRunning()
     {
-        SetIsRunning("true");
-        JumpSet();
-        RunSet();
+        RunSet(1);
     }
 
     //If player stops
     public void StopRunning()
     {
-        SetIsRunning("false");
-        RunSet();
-        IdleSet();
+        RunSet(0);
     }
 
     //If player is stopped in Selector and selected
     public void ContinueRunning()
     {
-        SetIsRunning("true");
-        RunSet();
-        IdleSet();
-    }
-
-    public void SetIsAnimation()
-    {
-        _playerMovement.isAnimationStopped = !_playerMovement.isAnimationStopped;
+        RunSet(1);
     }
 
     public void LandPlayer()
     {
-        LandSet();
-    }
-
-    public void SetIsRunning(string value = "true")
-    {
-        if (value.Equals("false"))
-        {
-            _playerMovement.isRunningAnimation = false;
-            return;
-        }
-        else
-        {
-            _playerMovement.isRunningAnimation = true;
-            return;
-        }
+        LandSet(1);
     }
 }

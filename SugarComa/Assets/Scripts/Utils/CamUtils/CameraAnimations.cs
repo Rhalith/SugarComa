@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraAnimations : MonoBehaviour
@@ -15,5 +13,4 @@ public class CameraAnimations : MonoBehaviour
         _gobletSelection.ContinueToMove();
         _goalSelector.ResetGoalCameraPriority();
     }
-    
 }

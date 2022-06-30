@@ -3,13 +3,29 @@ using UnityEngine.UI;
 
 public class GobletSelection : MonoBehaviour
 {
-    [SerializeField] GameController _gameController;
-    [SerializeField] PlayerCollector player;
-    [SerializeField] Button Goblet;
-    [SerializeField] GoalSelector _goalSelector;
-    [SerializeField] PlayerMovement _playerMovement;
-    [SerializeField] PathFinder _pathFinder;
-    [SerializeField] PlayerAnimation _playerAnimation;
+    #region Serialize Field
+
+    [SerializeField] private GameController _gameController;
+    [SerializeField] private PlayerCollector player;
+    [SerializeField] private Button Goblet;
+    [SerializeField] private GoalSelector _goalSelector;
+    [SerializeField] private PathFinder _pathFinder;
+    [SerializeField] private PlayerAnimation _playerAnimation;
+    #endregion
+
+    #region Properties
+
+    public GameController GameController { set { _gameController = value; } }
+    public GoalSelector GoalSelector { set {_goalSelector = value; } }
+    public PathFinder PathFinder { set { _pathFinder = value; } }
+    #endregion
+
+    #region Events
+
+    public delegate void GobletAction();
+    public event GobletAction OnTakeIt;
+    public event GobletAction OnLeaveIt;
+    #endregion
 
     public void OpenGobletSelection()
     {
@@ -30,7 +46,7 @@ public class GobletSelection : MonoBehaviour
         player.gold -= 50;
         _gameController.ChangeText();
         gameObject.SetActive(false);
-        _playerMovement.CurrentPlatform.ResetSpec();
+        OnTakeIt?.Invoke();
         _goalSelector.RandomGoalSelect();
     }
 
@@ -38,7 +54,7 @@ public class GobletSelection : MonoBehaviour
     {
         _gameController.ChangeText();
         gameObject.SetActive(false);
-        ContinueToMove();
+        OnLeaveIt?.Invoke();
     }
     public void SetGameController(GameController gameController)
     {
@@ -55,10 +71,11 @@ public class GobletSelection : MonoBehaviour
         _pathFinder = pathFinder;
     }
 
+    [System.Obsolete("Use player movement instead.")]
     public void ContinueToMove()
     {
-        var path = _pathFinder.ToSelector(_playerMovement.CurrentPlatform, _playerMovement.CurrentStep);
-        _playerMovement.StartFollowPath(path, true);
-        _playerAnimation.ContinueRunning();
+        // var path = _pathFinder.ToSelector(_playerMovement.CurrentPlatform, _playerMovement.CurrentStep);
+        // _playerMovement.StartFollowPath(path, true);
+        // _playerAnimation.ContinueRunning();
     }
 }
