@@ -14157,7 +14157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac61eae3172c26e4b9aea973bc0215a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraAnimations: {fileID: 0}
+  _cameraAnimations: {fileID: 1938159821}
   _playerPrefab: {fileID: 5242262645195583948, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
   _startplatform: {fileID: 1989628817}
   _pathFinder: {fileID: 1970712953}
@@ -25305,7 +25305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
-  specification: 2
+  specification: 7
   isSelector: 0
   selector:
     left: {fileID: 0}
@@ -25927,7 +25927,7 @@ PrefabInstance:
       objectReference: {fileID: 1970712953}
     - target: {fileID: 4120892788481720712, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: maximumStep
-      value: 9
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4120892788481720712, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: _gameController
