@@ -122,7 +122,7 @@ public class PathFollower : MonoBehaviour
         {
             if (_isSelector || _currentPlatformIndex > 0 &&
                 _currentPlatformIndex < _path.Length - 1 &&
-                _specification == _path[_currentPlatformIndex].specification) condition = false;
+                _specification == _path[_currentPlatformIndex].spec) condition = false;
 
             // if the step greater than maximum step, stop the movement.
             if (_maxStep != -1) condition = condition && _step < _maxStep;

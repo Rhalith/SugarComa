@@ -13,7 +13,7 @@ public class PlayerCollector : MonoBehaviour
 
     public void CheckCurrentNode(Platform platform)
     {
-        switch (platform.specification)
+        switch (platform.spec)
         {
             case PlatformSpec.Gold: AddGold(Random.Range(5, 8)); break;
             case PlatformSpec.Heal: AddHealth(5); break;

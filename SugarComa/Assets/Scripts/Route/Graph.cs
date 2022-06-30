@@ -90,7 +90,7 @@ public class Graph : MonoBehaviour
         for (int i = 0; i < keys.Length; ++i)
         {
             var key = keys[i];
-            if (key.specification == spec && !platforms.Contains(key)) platforms.Add(key);
+            if (key.spec == spec && !platforms.Contains(key)) platforms.Add(key);
         }
         return platforms.ToArray();
     }

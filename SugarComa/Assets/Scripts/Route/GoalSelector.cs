@@ -20,9 +20,9 @@ public class GoalSelector : MonoBehaviour
     public void RandomGoalSelect()
     {
         int i = Random.Range(0, platforms.Count);
-        if (platforms[i].specification != PlatformSpec.Goal && !platforms[i].isSelector)
+        if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].isSelector)
         {
-            platforms[i].specification = PlatformSpec.Goal;
+            platforms[i].spec = PlatformSpec.Goal;
             VirtualCameraLookTo(_camera, platforms[i].transform);
             print(platforms[i]);
             return;
@@ -36,9 +36,9 @@ public class GoalSelector : MonoBehaviour
     private void SelectGoalOnStart()
     {
         int i = Random.Range(0, platforms.Count);
-        if (platforms[i].specification != PlatformSpec.Goal && !platforms[i].isSelector)
+        if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].isSelector)
         {
-            platforms[i].specification = PlatformSpec.Goal;
+            platforms[i].spec = PlatformSpec.Goal;
             print(platforms[i]);
             return;
         }

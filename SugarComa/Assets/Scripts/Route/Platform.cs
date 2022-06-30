@@ -5,7 +5,7 @@ public class Platform : MonoBehaviour
     [HideInInspector] public Vector3 position; // game object position.
 
     [Tooltip("Özelliði yoksa boþ býrak!")]
-    public PlatformSpec specification;
+    public PlatformSpec spec;
 
     private PlatformSpec myspec;
 
@@ -19,7 +19,7 @@ public class Platform : MonoBehaviour
 
     private void Start()
     {
-        myspec = specification;
+        myspec = spec;
         position = transform.position;
         SetSpec();
     }
@@ -27,17 +27,35 @@ public class Platform : MonoBehaviour
     private void SetSpec()
     {
         _platformSpecSet = new PlatformSpecSet();
-        _platformSpecSet.SetSpec(GetComponent<MeshFilter>(), GetComponent<Renderer>(), specification);
-
+        _platformSpecSet.SetSpec(GetComponent<MeshFilter>(), GetComponent<Renderer>(), spec);
     }
 
     public void ResetSpec()
     {
-        specification = myspec;
+        spec = myspec;
     }
 
     public PlatformSpec GetPlatformSpec()
     {
         return myspec;
+    }
+
+    public void SetSelectorMaterials(RouteSelectorDirection direction)
+    {
+        switch (direction)
+        {
+            case RouteSelectorDirection.Left:
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.greenMaterial);
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
+                break;
+            case RouteSelectorDirection.Right:
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.greenMaterial);
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
+                break;
+            default:
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
+                break;
+        }
     }
 }
