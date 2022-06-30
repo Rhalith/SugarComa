@@ -12,7 +12,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="source"></param>
     /// <param name="spec"></param>
     /// <param name="take"></param>
-    public Platform[] FindBest(Platform source, PlatformSpecification spec, int take = -1)
+    public Platform[] FindBest(Platform source, PlatformSpec spec, int take = -1)
     {
         if (source == null || take == 0) return null;
 
@@ -55,7 +55,7 @@ public class PathFinder : MonoBehaviour
     /// <param name="source"></param>
     /// <param name="spec"></param>
     /// <param name="take"></param>
-    public List<Platform[]> GetPaths(Platform source, PlatformSpecification spec, int take = -1)
+    public List<Platform[]> GetPaths(Platform source, PlatformSpec spec, int take = -1)
     {
         if (source == null || take == 0) return null;
 

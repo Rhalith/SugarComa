@@ -15,11 +15,11 @@ public class PlayerCollector : MonoBehaviour
     {
         switch (platform.specification)
         {
-            case PlatformSpecification.Gold: AddGold(Random.Range(5, 8)); break;
-            case PlatformSpecification.Heal: AddHealth(5); break;
-            case PlatformSpecification.Gift: AddItem(); break;
-            case PlatformSpecification.Jackpot: RandomJackpot(5); break;
-            case PlatformSpecification.Goal: GobletSelection(); break;
+            case PlatformSpec.Gold: AddGold(Random.Range(5, 8)); break;
+            case PlatformSpec.Heal: AddHealth(5); break;
+            case PlatformSpec.Gift: AddItem(); break;
+            case PlatformSpec.Jackpot: RandomJackpot(5); break;
+            case PlatformSpec.Goal: GobletSelection(); break;
         }
     }
 

@@ -82,7 +82,7 @@ public class Graph : MonoBehaviour
     /// Find platforms by the give specification.
     /// </summary>
     /// <param name="spec"></param>
-    public Platform[] GetPlatformsBySpec(PlatformSpecification spec)
+    public Platform[] GetPlatformsBySpec(PlatformSpec spec)
     {
         var platforms = new List<Platform>();
 

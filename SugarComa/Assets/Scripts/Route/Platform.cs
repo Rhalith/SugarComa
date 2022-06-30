@@ -5,9 +5,9 @@ public class Platform : MonoBehaviour
     [HideInInspector] public Vector3 position; // game object position.
 
     [Tooltip("Özelliði yoksa boþ býrak!")]
-    public PlatformSpecification specification;
+    public PlatformSpec specification;
 
-    private PlatformSpecification myspec;
+    private PlatformSpec myspec;
 
     private PlatformSpecSet _platformSpecSet;
 
@@ -36,7 +36,7 @@ public class Platform : MonoBehaviour
         specification = myspec;
     }
 
-    public PlatformSpecification GetPlatformSpec()
+    public PlatformSpec GetPlatformSpec()
     {
         return myspec;
     }

@@ -1,4 +1,4 @@
-﻿public enum PlatformSpecification
+﻿public enum PlatformSpec
 {
     Empty,
     Gold,

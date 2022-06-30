@@ -68,14 +68,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (_playerInput.nextGoalPressed)
         {
-            var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal);
+            var path = _pathfinder.FindBest(_current, PlatformSpec.Goal);
             StartFollowPath(path);
             isDiceRolled = false;
 
         }
         else if (_playerInput.nextGoalStepPressed)
         {
-            var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal, goalStep);
+            var path = _pathfinder.FindBest(_current, PlatformSpec.Goal, goalStep);
             StartFollowPath(path);
             isDiceRolled = false;
 
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         else if (_playerInput.moveToBackStepPressed)
         {
             _moveStart = true;
-            _pathFollower.MoveLastPath(maximumStep, false, PlatformSpecification.Goal);
+            _pathFollower.MoveLastPath(maximumStep, false, PlatformSpec.Goal);
             isDiceRolled = false;
         }
     }
@@ -144,11 +144,11 @@ public class PlayerMovement : MonoBehaviour
             _moveStart = true;
             if (isSelector)
             {
-                _pathFollower.StartFollow(path, PlatformSpecification.Goal);
+                _pathFollower.StartFollow(path, PlatformSpec.Goal);
             }
             else
             {
-                _pathFollower.StartFollow(path, PlatformSpecification.Goal, _current.isSelector);
+                _pathFollower.StartFollow(path, PlatformSpec.Goal, _current.isSelector);
             }
         }
     }
@@ -163,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
             if (current != null)
             {
                 _current = current;
-                if(_current.GetPlatformSpec() != PlatformSpecification.Goal) _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
+                if(_current.GetPlatformSpec() != PlatformSpec.Goal) _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
                 if (_currentStep <= 0 || !_current.isSelector)
                 {
                     _playerAnimation.StopRunning();
