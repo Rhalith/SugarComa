@@ -2,40 +2,49 @@ using UnityEngine;
 
 public class PlayerCollector : MonoBehaviour
 {
+    #region Properties
     public int health;
     public int gold;
     public int goblet;
+    #endregion
 
+    #region SerializeFields
     [SerializeField] private GameController _gameController;
     [SerializeField] private GobletSelection _gobletSelection;
     [SerializeField] private PlayerInventory _playerInventory;
     [SerializeField] Item item;
-
+    #endregion
+    public GameController GameController {set => _gameController = value;}
     public void CheckCurrentNode(Platform platform)
     {
         switch (platform.spec)
         {
             case PlatformSpec.Gold: AddGold(Random.Range(5, 8)); break;
-            case PlatformSpec.Heal: AddHealth(5); break;
+            case PlatformSpec.Heal: AddHealth(); break;
             case PlatformSpec.Gift: AddItem(); break;
             case PlatformSpec.Jackpot: RandomJackpot(5); break;
             case PlatformSpec.Goal: GobletSelection(); break;
         }
     }
-
+    /// <summary>
+    /// Adding value to player's gold
+    /// </summary>
+    /// <param name="value"></param>
     void AddGold(int value)
     {
         gold += value;
         _gameController.ChangeText();
-        
     }
-    
-    void AddHealth(int value)
+    /// <summary>
+    /// Adding health, if value is null it will full the health.
+    /// </summary>
+    /// <param name="value"></param>
+    void AddHealth(int value = 25)
     {
         health += value;
-        if (health > 30)
+        if (health > 25)
         {
-            health = 30;
+            health = 25;
         }
         _gameController.ChangeText();
     }
@@ -96,11 +105,6 @@ public class PlayerCollector : MonoBehaviour
     void GobletSelection()
     {
         _gobletSelection.OpenGobletSelection();
-    }
-
-    public void SetGameController(GameController gameController)
-    {
-        _gameController = gameController;
     }
 
     [System.Serializable]

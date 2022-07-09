@@ -6,6 +6,7 @@ using UnityEngine;
 [DefaultExecutionOrder(-101)]
 public class PlayerHandler : MonoBehaviour
 {
+    #region SerializeFields
     [SerializeField] CameraAnimations _cameraAnimations;
     [SerializeField] GameObject _playerPrefab;
     [SerializeField] Platform _startplatform;
@@ -14,13 +15,14 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] GameController _gameController;
     [SerializeField] GoalSelector _goalSelector;
     [SerializeField] List<GameObject> _playerList;
+    #endregion
 
+    #region HideInInspectors
     [HideInInspector] public PlayerInput currentPlayerInput;
     [HideInInspector] public PlayerInventory currentPlayerInventory;
     [HideInInspector] public PlayerCollector currentPlayerCollector;
-
     [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
-
+    #endregion
     private GameObject _createdObject;
     public int whichPlayer;
 
@@ -68,14 +70,15 @@ public class PlayerHandler : MonoBehaviour
 
     private void SetPlayerCollector(ScriptKeeper keeper)
     {
-        keeper._playerCollector.SetGameController(_gameController);
+        keeper._playerCollector.GameController = _gameController;
     }
 
     private void SetGobletSelection(ScriptKeeper keeper)
     {
-        keeper._gobletSelection.SetGameController(_gameController);
-        keeper._gobletSelection.SetGoalSelector(_goalSelector);
-        keeper._gobletSelection.SetPathFinder(_pathFinder);
+        keeper._goalSelector = _goalSelector;
+        keeper._gobletSelection.GameController = _gameController;
+        keeper._gobletSelection.GoalSelector = _goalSelector;
+        keeper._gobletSelection.PathFinder = _pathFinder;
     }
 
     private void ChangePlayingInput(PlayerInput currentInput, PlayerInput nextInput)

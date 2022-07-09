@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class BoxGloves : MonoBehaviour, IDamageItems
 {
+    #region SerializeFields
     [SerializeField] ItemObject _itemObject;
     [SerializeField] GameObject _player;
     [SerializeField] int damage;
     [SerializeField] PlayerMovement _playerMovement;
+    #endregion
 
     private PlayerCollector otherPlayersCollector;
 
@@ -29,11 +31,10 @@ public class BoxGloves : MonoBehaviour, IDamageItems
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && other != _player)
+        if (other.gameObject.CompareTag("Player") && other.gameObject != _player)
         {
             isHitPlayer = true;
-            ScriptKeeper scriptKeeper = other.GetComponent<ScriptKeeper>();
-            otherPlayersCollector = scriptKeeper._playerCollector;
+            otherPlayersCollector = other.GetComponent<PlayerCollector>();
         }
     }
 

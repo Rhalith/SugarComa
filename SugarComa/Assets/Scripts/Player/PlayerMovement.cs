@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        _gameController.ChangeText();
         _pathTracker.OnTrackingStarted += OnTrackingStarted;
         _pathTracker.OnCurrentPlatformChanged += OnCurrentPlatformChanged;
         _pathTracker.OnTrackingStopped += OnTrackingStopped;

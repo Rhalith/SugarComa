@@ -56,20 +56,6 @@ public class GobletSelection : MonoBehaviour
         gameObject.SetActive(false);
         OnLeaveIt?.Invoke();
     }
-    public void SetGameController(GameController gameController)
-    {
-        _gameController = gameController;
-    }
-
-    public void SetGoalSelector(GoalSelector goalSelector)
-    {
-        _goalSelector = goalSelector;
-    }
-
-    public void SetPathFinder(PathFinder pathFinder)
-    {
-        _pathFinder = pathFinder;
-    }
 
     [System.Obsolete("Use player movement instead.")]
     public void ContinueToMove()
