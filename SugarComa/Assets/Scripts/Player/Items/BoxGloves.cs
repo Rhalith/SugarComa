@@ -15,7 +15,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
 
     public void DamageHealth(PlayerCollector playerCollector)
     {
-        if(otherPlayersCollector != null) playerCollector.health -= damage;
+        if(otherPlayersCollector != null) playerCollector.DamagePlayer(damage);
     }
 
     public void UseItem()

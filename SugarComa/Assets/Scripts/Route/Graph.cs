@@ -214,4 +214,8 @@ public class Graph : MonoBehaviour
     }
 
     [SerializeField] private PlatformDictionary _platforms;
+    [SerializeField] private Platform _topGrave, _bottomGrave;
+
+    public Platform TopGrave { get => _topGrave; }
+    public Platform BottomGrave { get => _bottomGrave; }
 }

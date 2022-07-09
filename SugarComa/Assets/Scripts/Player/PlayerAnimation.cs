@@ -9,9 +9,12 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private bool _run;
     [SerializeField] private bool _land;
     [SerializeField] private bool _surprised;
+    [SerializeField] private bool _dead;
 
     [Header("Other Scripts")]
     [SerializeField] private Animator _animator;
+    [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private ScriptKeeper _scriptKeeper;
     #endregion
 
     #region Properties
@@ -20,7 +23,8 @@ public class PlayerAnimation : MonoBehaviour
     public bool IsJumping => _jump;
     public bool IsRunning => _run;
     public bool IsSurprised => _surprised;
-    public bool IsIdle => !_run && !_land && !_jump && !_surprised;
+    public bool IsDead { get => _dead; set => _dead = value;}
+    public bool IsIdle => !_run && !_land && !_jump && !_surprised && !_dead;
     #endregion
 
     private void RunSet(int running)
@@ -44,6 +48,11 @@ public class PlayerAnimation : MonoBehaviour
     {
         _animator.SetBool("surprised", surprised != 0);
         _surprised = surprised != 0;
+    }
+    private void DeathSet(int dying)
+    {
+        _animator.SetBool("dead", dying != 0);
+        _dead = dying != 0;
     }
 
     //Jumping and rolling dice
@@ -74,4 +83,21 @@ public class PlayerAnimation : MonoBehaviour
     {
         LandSet(1);
     }
+    public void StartDeath()
+    {
+        DeathSet(1);
+        LandSet(0);
+    }
+    public void AfterDeath()
+    {
+        DeathSet(0);
+        _playerMovement.OnDeath();
+        LandSet(1);
+    }
+
+    public void SetCameraToBack()
+    {
+        _scriptKeeper._playerCamera.Priority = 1;
+    }
+
 }

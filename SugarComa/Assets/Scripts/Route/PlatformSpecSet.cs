@@ -13,9 +13,7 @@ public class PlatformSpecSet
                 break;
             case PlatformSpec.Gold: GoldMeshChanger(meshFilter, renderer); break;
             case PlatformSpec.Heal: HealMeshChanger(meshFilter, renderer); break;
-            case PlatformSpec.Trap_1: TrapMeshChanger(meshFilter, renderer, PlatformSpec.Trap_1); break;
-            case PlatformSpec.Trap_2: TrapMeshChanger(meshFilter, renderer, PlatformSpec.Trap_2); break;
-            case PlatformSpec.Trap_3: TrapMeshChanger(meshFilter, renderer, PlatformSpec.Trap_3); break;
+            case PlatformSpec.Trap: TrapMeshChanger(meshFilter, renderer); break;
             case PlatformSpec.Gift: GiftMeshChanger(meshFilter, renderer); break;
             case PlatformSpec.Jackpot: JackpotMeshChanger(meshFilter, renderer); break;
             default:
@@ -57,17 +55,18 @@ public class PlatformSpecSet
         }
         SetRendererMaterial(renderer);
     }
-    private void TrapMeshChanger(MeshFilter filter, Renderer renderer, PlatformSpec spec)
+    private void TrapMeshChanger(MeshFilter filter, Renderer renderer)
     {
-        switch (spec)
+        int i = Random.Range(0, 3);
+        switch (i)
         {
-            case PlatformSpec.Trap_1:
+            case 0:
                 filter.mesh = GameManager.TrapMeshes.trapMesh1;
                 break;
-            case PlatformSpec.Trap_2:
+            case 1:
                 filter.mesh = GameManager.TrapMeshes.trapMesh2;
                 break;
-            case PlatformSpec.Trap_3:
+            case 2:
                 filter.mesh = GameManager.TrapMeshes.trapMesh3;
                 break;
             default:

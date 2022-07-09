@@ -136,4 +136,11 @@ public class PathFinder : MonoBehaviour
         path.Remove(source);
         return result;
     }
+
+    public Platform ChooseGrave()
+    {
+        int i = Random.Range(0,2);
+        if (i == 0) return _graph.TopGrave;
+        return _graph.BottomGrave;
+    }
 }

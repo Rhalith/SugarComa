@@ -6,15 +6,20 @@ public class PlayerCollector : MonoBehaviour
     public int health;
     public int gold;
     public int goblet;
+    public bool isDead;
     #endregion
 
     #region SerializeFields
     [SerializeField] private GameController _gameController;
     [SerializeField] private GobletSelection _gobletSelection;
     [SerializeField] private PlayerInventory _playerInventory;
+    [SerializeField] private PlayerAnimation _playerAnimation;
+    [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private ScriptKeeper _scriptKeeper;
     [SerializeField] Item item;
     #endregion
     public GameController GameController {set => _gameController = value;}
+    public ScriptKeeper ScriptKeeper {get => _scriptKeeper;}
     public void CheckCurrentNode(Platform platform)
     {
         switch (platform.spec)
@@ -49,6 +54,16 @@ public class PlayerCollector : MonoBehaviour
         _gameController.ChangeText();
     }
 
+    public void DamagePlayer(int value)
+    {
+        health -= value;
+        if (health <= 0)
+        {
+            health = 0;
+            KillPlayer();
+        }
+        _gameController.ChangeText();
+    }
     public void AddItem()
     {
         //int i = Random.Range(1, 11);
@@ -102,6 +117,12 @@ public class PlayerCollector : MonoBehaviour
         }
     }
 
+    void KillPlayer()
+    {
+        _scriptKeeper._playerCamera.Priority = 3;
+        isDead = true;
+        _playerAnimation.StartDeath();
+    }
     void GobletSelection()
     {
         _gobletSelection.OpenGobletSelection();

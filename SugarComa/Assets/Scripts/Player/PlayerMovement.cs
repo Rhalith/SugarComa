@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     public int CurrentStep => _currentStep;
     public MapCamera MapCamera { set => _mapCamera = value; }
-    public PathFinder PathFinder { set => _pathFinder = value; }
+    public PathFinder PathFinder { get => _pathFinder; set => _pathFinder = value; }
     public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
     public GameController GameController { get => _gameController; set => _gameController = value; }
     #endregion
@@ -180,5 +180,13 @@ public class PlayerMovement : MonoBehaviour
         _playerAnimation.RollDice();
         isDiceRolled = true;
         //maximumStep = Random.Range(1, 10);
+    }
+
+    public void OnDeath()
+    {
+        Platform founded = _pathFinder.ChooseGrave();
+        _currentPlatform = founded;
+        gameObject.transform.position = new Vector3(founded.position.x, founded.position.y + 0.25f, founded.position.z);
+        _playerCollector.isDead = false;
     }
 }

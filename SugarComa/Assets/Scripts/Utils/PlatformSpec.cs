@@ -7,7 +7,6 @@
     Heal,
     Gift,
     Jackpot,
-    Trap_1,
-    Trap_2,
-    Trap_3
+    Trap,
+    Grave
 }

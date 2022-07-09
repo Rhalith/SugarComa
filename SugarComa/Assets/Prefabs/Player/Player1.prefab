@@ -3655,7 +3655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9974070897101b348bf858b0fcb40331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   rotationSpeed: 720
   isMoving: 0
   _currentPosition: {x: 0, y: 0, z: 0}
@@ -3702,9 +3702,13 @@ MonoBehaviour:
   health: 25
   gold: 50
   goblet: 0
+  isDead: 0
   _gameController: {fileID: 0}
   _gobletSelection: {fileID: 4120892788315320753}
   _playerInventory: {fileID: 4120892788481720717}
+  _playerAnimation: {fileID: 4120892787933790877}
+  _playerMovement: {fileID: 4120892788481720712}
+  _scriptKeeper: {fileID: 7044238543435382551}
   item:
     shield: {fileID: 4120892788247333579}
     car: {fileID: 4120892789015795017}
@@ -4989,7 +4993,10 @@ MonoBehaviour:
   _run: 0
   _land: 0
   _surprised: 0
+  _dead: 0
   _animator: {fileID: 4120892787933790878}
+  _playerMovement: {fileID: 4120892788481720712}
+  _scriptKeeper: {fileID: 7044238543435382551}
 --- !u!4 &4520175132031661860 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7fca060d96bb7b548af373fad492934c, type: 3}
