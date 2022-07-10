@@ -3673,7 +3673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentStep: 0
   goalStep: 5
-  maximumStep: 6
+  maximumStep: 3
   isDiceRolled: 0
   isUserInterfaceActive: 0
   _itemPool: {fileID: 4120892788034233094}

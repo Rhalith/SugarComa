@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public PathFinder PathFinder { get => _pathFinder; set => _pathFinder = value; }
     public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
     public GameController GameController { get => _gameController; set => _gameController = value; }
+    public PlayerCollector PlayerCollector { get => _playerCollector; }
     #endregion
 
     private void Start()
@@ -187,6 +188,5 @@ public class PlayerMovement : MonoBehaviour
         Platform founded = _pathFinder.ChooseGrave();
         _currentPlatform = founded;
         gameObject.transform.position = new Vector3(founded.position.x, founded.position.y + 0.25f, founded.position.z);
-        _playerCollector.isDead = false;
     }
 }

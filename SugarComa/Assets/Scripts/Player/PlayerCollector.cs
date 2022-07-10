@@ -120,8 +120,8 @@ public class PlayerCollector : MonoBehaviour
     void KillPlayer()
     {
         _scriptKeeper._playerCamera.Priority = 3;
-        isDead = true;
         _playerAnimation.StartDeath();
+        isDead = true;
     }
     void GobletSelection()
     {

@@ -23,7 +23,7 @@ public class PlayerAnimation : MonoBehaviour
     public bool IsJumping => _jump;
     public bool IsRunning => _run;
     public bool IsSurprised => _surprised;
-    public bool IsDead { get => _dead; set => _dead = value;}
+    public bool IsDead => _dead;
     public bool IsIdle => !_run && !_land && !_jump && !_surprised && !_dead;
     #endregion
 
@@ -43,6 +43,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         _animator.SetBool("landing", landing != 0);
         _land = landing != 0;
+        if(_playerMovement.PlayerCollector.isDead && landing == 0)
+        {
+            DeathSet(0);
+            _playerMovement.PlayerCollector.isDead = false;
+            _scriptKeeper._playerCamera.Priority = 1;
+        }
     }
     private void SurpriseSet(int surprised)
     {
@@ -86,18 +92,10 @@ public class PlayerAnimation : MonoBehaviour
     public void StartDeath()
     {
         DeathSet(1);
-        LandSet(0);
     }
     public void AfterDeath()
     {
-        DeathSet(0);
         _playerMovement.OnDeath();
-        LandSet(1);
-    }
-
-    public void SetCameraToBack()
-    {
-        _scriptKeeper._playerCamera.Priority = 1;
     }
 
 }
