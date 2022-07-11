@@ -43,11 +43,11 @@ public class PlayerItemUse : MonoBehaviour
             FollowMouse();
             if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)
             {
+                ItemUsing.BoxGlovesUsing = true;
                 _itemPool.UseCurrentItem();
-                _itemPool.CloseItem();
             }
         }
-        else
+        else if(!ItemPool._isItemUsing && !ItemUsing.BoxGlovesUsing)
         {
             playerTransform.eulerAngles = _rotationY;
             isPosSet=false;

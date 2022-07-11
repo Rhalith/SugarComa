@@ -15,6 +15,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private ScriptKeeper _scriptKeeper;
+    [SerializeField] private GameObject _boxGloves;
     #endregion
 
     #region Properties
@@ -98,4 +99,10 @@ public class PlayerAnimation : MonoBehaviour
         _playerMovement.OnDeath();
     }
 
+
+    public void SetGlovesOff()
+    {
+        _boxGloves.SetActive(false);
+        ItemUsing.BoxGlovesUsing = false;
+    }
 }

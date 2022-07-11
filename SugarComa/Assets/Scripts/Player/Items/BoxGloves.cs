@@ -3,15 +3,19 @@ using UnityEngine;
 public class BoxGloves : MonoBehaviour, IDamageItems
 {
     #region SerializeFields
+    [SerializeField] ItemPool _itemPool;
     [SerializeField] ItemObject _itemObject;
-    [SerializeField] GameObject _player;
+    [SerializeField] GameObject _player, _parent;
     [SerializeField] int damage;
     [SerializeField] PlayerMovement _playerMovement;
+    [SerializeField] BoxGlovesAnimation _boxGlovesAnimation;
+    [SerializeField] Animator _playerAnimator;
     #endregion
 
     private PlayerCollector otherPlayersCollector;
 
     public bool isHitPlayer;
+
 
     public void DamageHealth(PlayerCollector playerCollector)
     {
@@ -20,6 +24,17 @@ public class BoxGloves : MonoBehaviour, IDamageItems
 
     public void UseItem()
     {
+        _boxGlovesAnimation.HitAnimation();
+    }
+
+    public void TakeGlovesToPlayer()
+    {
+        ItemUsing.BoxGlovesUsing = true;
+        _playerAnimator.SetBool("boks", true);
+    }
+
+    public void TakeGlovesFromPlayer()
+    {
         if (isHitPlayer)
         {
             DamageHealth(otherPlayersCollector);
@@ -27,6 +42,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
         _itemObject.RemoveItem();
         _playerMovement.GameController.ChangeInventory();
         _playerMovement.isUserInterfaceActive = false;
+        _itemPool.CloseItem();
     }
 
     private void OnTriggerEnter(Collider other)
