@@ -43,16 +43,16 @@ public class Platform : MonoBehaviour
         switch (direction)
         {
             case RouteSelectorDirection.Left:
-                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.greenMaterial);
-                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.greenMaterial, GameManager.SelectionMaterial.selectedMesh);
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial, GameManager.SelectionMaterial.nonselectedMesh);
                 break;
             case RouteSelectorDirection.Right:
-                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.greenMaterial);
-                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.greenMaterial, GameManager.SelectionMaterial.selectedMesh);
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial, GameManager.SelectionMaterial.nonselectedMesh);
                 break;
             default:
-                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
-                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial, GameManager.SelectionMaterial.nonselectedMesh);
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial, GameManager.SelectionMaterial.nonselectedMesh);
                 break;
         }
     }

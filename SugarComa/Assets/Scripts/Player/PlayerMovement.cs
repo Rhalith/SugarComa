@@ -128,13 +128,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void ProcessSelect()
     {
-        if (_playerInput.selectLeftPressed) SelectPlatform(RouteSelectorDirection.Left);
-        else if (_playerInput.selectRightPressed) SelectPlatform(RouteSelectorDirection.Right);
+        var leftPlatform = _currentPlatform.selector.left;
+        var rightPlatform = _currentPlatform.selector.right;
+        _currentPlatform.selector.left.SetActive(true);
+        _currentPlatform.selector.right.SetActive(true);
+
+        if (_playerInput.selectLeftPressed && leftPlatform.activeInHierarchy) SelectPlatform(RouteSelectorDirection.Left);
+        else if (_playerInput.selectRightPressed && rightPlatform.activeInHierarchy) SelectPlatform(RouteSelectorDirection.Right);
 
         if (_playerInput.applySelectPressed && _selectorDirection != RouteSelectorDirection.None)
         {
             RouteSelectorDirection temp = _selectorDirection;
-            SelectPlatform(RouteSelectorDirection.None);
+            SelectPlatform(RouteSelectorDirection.None, leftPlatform, rightPlatform);
             _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep, temp), PlatformSpec.Goal);
         }
     }
@@ -170,10 +175,16 @@ public class PlayerMovement : MonoBehaviour
         _playerCollector.CheckCurrentNode(_currentPlatform);
     }
 
-    private void SelectPlatform(RouteSelectorDirection direction)
+    private void SelectPlatform(RouteSelectorDirection direction, GameObject left = null, GameObject right = null)
     {
         _selectorDirection = direction;
         _currentPlatform.SetSelectorMaterials(direction);
+        if(left != null || right != null)
+        {
+            left.SetActive(false);
+            right.SetActive(false);
+        }
+
     }
 
     private void RollDice()
