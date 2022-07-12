@@ -104,5 +104,13 @@ public class PlayerAnimation : MonoBehaviour
     {
         _boxGloves.SetActive(false);
         ItemUsing.BoxGlovesUsing = false;
+        _boxGloves.GetComponent<BoxGloves>()._hitBox.SetActive(false);
+    }
+
+    public void SetGlovesOn()
+    {
+        _boxGloves.SetActive(true);
+        ItemUsing.BoxGlovesUsing = true;
+        _boxGloves.GetComponent<BoxGloves>()._hitBox.SetActive(true);
     }
 }

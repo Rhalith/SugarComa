@@ -11,6 +11,7 @@ public class PlayerItemUse : MonoBehaviour
     [SerializeField] float speed;
     private Vector3 _rotationY;
     private bool isPosSet;
+    private bool isRotSet;
 
     private void KeepPosition()
     {
@@ -37,21 +38,43 @@ public class PlayerItemUse : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        KeepPosition();
         if (ItemPool._isItemUsing && _playerInput.isMyTurn)
         {
+            KeepPosition();
             FollowMouse();
             if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)
             {
                 ItemUsing.BoxGlovesUsing = true;
                 _itemPool.UseCurrentItem();
+                _playerInput.useMouseItem = false;
+                isRotSet = true;
             }
         }
-        else if(!ItemPool._isItemUsing && !ItemUsing.BoxGlovesUsing)
+        else if(!ItemPool._isItemUsing && !ItemUsing.BoxGlovesUsing && isRotSet)
         {
-            playerTransform.eulerAngles = _rotationY;
-            isPosSet=false;
+            if (isRotSet)
+            {
+                StartCoroutine(rotation());
+                isRotSet = false;
+            }
+            //playerTransform.eulerAngles = _rotationY;
+            isPosSet =false;
         }
+    }
+    //TODO fix it
+    private IEnumerator rotation()
+    {
+        while (true)
+        {
+            transform.Rotate(_rotationY * Time.deltaTime * 15f);
+            if (playerTransform.eulerAngles.y - _rotationY.y < 3f && playerTransform.eulerAngles.y - _rotationY.y > -3f)
+            {
+                StopAllCoroutines();
+            }
+                
+            yield return new WaitForSeconds(0.01f);
+        }
+
     }
 
 }

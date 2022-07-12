@@ -5,7 +5,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     #region SerializeFields
     [SerializeField] ItemPool _itemPool;
     [SerializeField] ItemObject _itemObject;
-    [SerializeField] GameObject _player, _parent;
+    [SerializeField] GameObject _player;
     [SerializeField] int damage;
     [SerializeField] PlayerMovement _playerMovement;
     [SerializeField] BoxGlovesAnimation _boxGlovesAnimation;
@@ -13,6 +13,8 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     #endregion
 
     private PlayerCollector otherPlayersCollector;
+
+    public GameObject _hitBox;
 
     public bool isHitPlayer;
 
@@ -24,6 +26,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
 
     public void UseItem()
     {
+        _hitBox.SetActive(false);
         _boxGlovesAnimation.HitAnimation();
     }
 
