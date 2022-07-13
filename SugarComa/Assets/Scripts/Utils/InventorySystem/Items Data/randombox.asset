@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: randombox
   displayName: "S\xFCrprizKutusu"
-  icon: {fileID: 21300000, guid: 0c860764d819f8f4da11c9df9d4a6090, type: 3}
+  icon: {fileID: 21300000, guid: 2f5f230628a248c40b4e3b8a105ed6a9, type: 3}
