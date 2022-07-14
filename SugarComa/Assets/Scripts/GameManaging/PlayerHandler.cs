@@ -15,6 +15,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] GameController _gameController;
     [SerializeField] GoalSelector _goalSelector;
     [SerializeField] List<GameObject> _playerList;
+    [SerializeField] Cinemachine.CinemachineBrain _cinemachineBrain;
     #endregion
 
     #region HideInInspectors
@@ -35,6 +36,7 @@ public class PlayerHandler : MonoBehaviour
         SetPlayerMovement(sckeeper);
         SetPlayerCollector(sckeeper);
         SetGobletSelection(sckeeper);
+        SetPlayerInput(sckeeper);
         ChangeCurrentPlayer();
     }
 
@@ -66,6 +68,11 @@ public class PlayerHandler : MonoBehaviour
         keeper._playerMovement.PathFinder = _pathFinder;
         keeper._playerMovement.CurrentPlatform = _startplatform;
         keeper._playerMovement.GameController = _gameController;
+    }
+
+    private void SetPlayerInput(ScriptKeeper keeper)
+    {
+        keeper._playerInput.CineMachineBrain = _cinemachineBrain;
     }
 
     private void SetPlayerCollector(ScriptKeeper keeper)

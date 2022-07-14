@@ -8,14 +8,32 @@ public class RagdollOnOff : MonoBehaviour
     [SerializeField] CapsuleCollider _mainCollider;
     [SerializeField] Collider[] _ragDollColliders;
     [SerializeField] Rigidbody[] _ragDollRigidBodies;
+    [SerializeField] GameObject currentBoxGloves;
+    [SerializeField] Rigidbody _currentRigidBody;
 
     void Awake()
     {
         RagDollOff();
     }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    print(other.gameObject.name);
+    //    if (other.gameObject.CompareTag("GlovesHit")) RagDollOn();
+    //}
 
-    void RagDollOn()
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject != currentBoxGloves)
+    //    {
+    //        print(collision.gameObject.name);
+    //        if (collision.gameObject.CompareTag("GlovesHit")) RagDollOn();
+    //    }
+    //}
+
+    public void RagDollOn()
     {
+        _playerAnimator.enabled = false;
+        _mainCollider.enabled = false;
         foreach (Collider collider in _ragDollColliders)
         {
             collider.enabled = true;
@@ -25,9 +43,7 @@ public class RagdollOnOff : MonoBehaviour
         {
             rb.isKinematic = false;
         }
-
-        _mainCollider.enabled = false;
-        _playerAnimator.enabled = false;
+        _currentRigidBody.isKinematic = true;
     }
 
     void RagDollOff()
@@ -44,5 +60,6 @@ public class RagdollOnOff : MonoBehaviour
 
         _mainCollider.enabled = true;
         _playerAnimator.enabled = true;
+        _currentRigidBody.isKinematic = false;
     }
 }

@@ -50,16 +50,16 @@ public class PlayerItemUse : MonoBehaviour
                 isRotSet = true;
             }
         }
-        else if(!ItemPool._isItemUsing && !ItemUsing.BoxGlovesUsing && isRotSet)
-        {
-            if (isRotSet)
-            {
-                StartCoroutine(rotation());
-                isRotSet = false;
-            }
-            //playerTransform.eulerAngles = _rotationY;
-            isPosSet =false;
-        }
+        //else if(!ItemPool._isItemUsing && !ItemUsing.BoxGlovesUsing && isRotSet)
+        //{
+        //    if (isRotSet)
+        //    {
+        //        StartCoroutine(rotation());
+        //        isRotSet = false;
+        //    }
+        //    //playerTransform.eulerAngles = _rotationY;
+        //    isPosSet =false;
+        //}
     }
     //TODO fix it
     private IEnumerator rotation()
