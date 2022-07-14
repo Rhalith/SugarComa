@@ -147,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
     private void GobletSelection_OnLeaveIt()
     {
         _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep), PlatformSpec.Goal);
+        isUserInterfaceActive=false;
     }
 
     private void GobletSelection_OnTakeIt()

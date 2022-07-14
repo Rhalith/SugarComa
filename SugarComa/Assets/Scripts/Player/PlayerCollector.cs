@@ -125,6 +125,7 @@ public class PlayerCollector : MonoBehaviour
     }
     void GobletSelection()
     {
+        _playerMovement.isUserInterfaceActive = true;
         _gobletSelection.OpenGobletSelection();
     }
 
