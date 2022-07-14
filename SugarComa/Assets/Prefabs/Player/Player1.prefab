@@ -5320,6 +5320,7 @@ MonoBehaviour:
   _playerMovement: {fileID: 4120892788481720712}
   _playerCollector: {fileID: 4120892788481720713}
   _gobletSelection: {fileID: 4120892788315320753}
+  _playerAnimation: {fileID: 4120892787933790877}
   _goalSelector: {fileID: 0}
   _playerInput: {fileID: 4120892788481720718}
   _playerInventory: {fileID: 4120892788481720717}
@@ -6017,6 +6018,7 @@ MonoBehaviour:
   _playerMovement: {fileID: 4120892788481720712}
   _scriptKeeper: {fileID: 7044238543435382551}
   _boxGloves: {fileID: 7937054991280826797}
+  _goalSelector: {fileID: 0}
 --- !u!4 &4520175132031661860 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7fca060d96bb7b548af373fad492934c, type: 3}

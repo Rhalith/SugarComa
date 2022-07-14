@@ -1,11 +1,26 @@
 fileFormatVersion: 2
-guid: 7b19ef90b382c484785b6ec955c2a53e
+guid: bfecab84809313c4c95a2abaede38e7b
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: 2999559887010941990
     second: chest|chestOpen
+  - first:
+      74: -5589847676608547824
+    second: chest|chestOpen.001
+  - first:
+      74: 6690859108405175801
+    second: chest|chestPlatformAction
+  - first:
+      74: 7756338622796375031
+    second: chest|chestPlatformAction.001
+  - first:
+      74: 1944626514182591845
+    second: chest|chestPlatformAction.002
+  - first:
+      74: -199911943278856501
+    second: chest|CylinderAction
   - first:
       74: 8621627082797298173
     second: chest|Empty.001Action
@@ -36,17 +51,49 @@ ModelImporter:
   - first:
       74: 5603684113489822323
     second: chest|TorusAction
-  externalObjects:
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: chestCol
-    second: {fileID: 2100000, guid: 0492a207054cff342a42904ae8a13b55, type: 2}
+      74: 1143741733588782784
+    second: chestPlatform.002|chestPlatformAction
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: chesttSign
-    second: {fileID: 2100000, guid: 410050fe3bdf1af40ac418b503cce91e, type: 2}
+      74: 8299319496940956774
+    second: chestPlatform.002|chestPlatformAction.001
+  - first:
+      74: -3042267801390155604
+    second: chestPlatform.002|chestPlatformAction.002
+  - first:
+      74: -3165215961422845894
+    second: chestPlatform.002|CylinderAction
+  - first:
+      74: -2681499067393683684
+    second: chestPlatform.002|Empty.001Action
+  - first:
+      74: -1159504355552132622
+    second: chestPlatform.002|JackpotDamage
+  - first:
+      74: 3534645666263323776
+    second: chestPlatform.002|JackpotGift
+  - first:
+      74: 5432687626530176043
+    second: chestPlatform.002|JackpotHeal
+  - first:
+      74: 1540166624914098278
+    second: chestPlatform.002|JackpotMoney
+  - first:
+      74: -921163756585683079
+    second: chestPlatform.002|Torus.001Action
+  - first:
+      74: -5469768838966855185
+    second: chestPlatform.002|Torus.002Action
+  - first:
+      74: 3472284045598844662
+    second: chestPlatform.002|Torus.003Action
+  - first:
+      74: -3771010652615233374
+    second: chestPlatform.002|Torus.004Action
+  - first:
+      74: 4144470559352957474
+    second: chestPlatform.002|TorusAction
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -99,7 +146,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 1
+        functionName: StartPlatformChangeAnimation
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

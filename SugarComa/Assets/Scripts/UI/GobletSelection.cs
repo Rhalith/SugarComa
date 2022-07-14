@@ -47,7 +47,7 @@ public class GobletSelection : MonoBehaviour
         _gameController.ChangeText();
         gameObject.SetActive(false);
         OnTakeIt?.Invoke();
-        _goalSelector.RandomGoalSelect();
+        _goalSelector.TakeGoblet();
     }
 
     public void LeaveIt()

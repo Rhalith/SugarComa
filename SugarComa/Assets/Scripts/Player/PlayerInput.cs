@@ -19,6 +19,11 @@ public class PlayerInput : MonoBehaviour
 
 	private bool _readyToClear; // used to keep input in sync
 
+	/// <summary>
+	/// if an animation or action will play to all players.
+	/// </summary>
+	public static bool canPlayersAct = true;
+
 
 	void Update()
 	{
@@ -26,7 +31,7 @@ public class PlayerInput : MonoBehaviour
 
 		if (GameManager.IsGameOver) return;
 
-		if(isMyTurn) ProcessInputs();
+		if(isMyTurn && canPlayersAct) ProcessInputs();
 	}
 
 	void FixedUpdate()

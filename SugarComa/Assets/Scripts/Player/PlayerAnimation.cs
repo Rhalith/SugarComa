@@ -16,6 +16,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private ScriptKeeper _scriptKeeper;
     [SerializeField] private GameObject _boxGloves;
+    [SerializeField] private GoalSelector _goalSelector;
     #endregion
 
     #region Properties
@@ -26,6 +27,8 @@ public class PlayerAnimation : MonoBehaviour
     public bool IsSurprised => _surprised;
     public bool IsDead => _dead;
     public bool IsIdle => !_run && !_land && !_jump && !_surprised && !_dead;
+
+    public GoalSelector GoalSelector { set => _goalSelector = value; }
     #endregion
 
     private void RunSet(int running)
@@ -49,6 +52,10 @@ public class PlayerAnimation : MonoBehaviour
             DeathSet(0);
             _playerMovement.PlayerCollector.isDead = false;
             _scriptKeeper._playerCamera.Priority = 1;
+        }
+        if (!GoalSelector.isAnyGoalPlatform && landing == 0)
+        {
+            _goalSelector.SelectGoalOnStart();
         }
     }
     private void SurpriseSet(int surprised)

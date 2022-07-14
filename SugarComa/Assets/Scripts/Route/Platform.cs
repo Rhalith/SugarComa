@@ -7,6 +7,9 @@ public class Platform : MonoBehaviour
     [Tooltip("Özelliði yoksa boþ býrak!")]
     public PlatformSpec spec;
 
+    [Tooltip("Sandýk nereye doðru gelecekse orayý seç!")]
+    public PlatformGoalSpec goalSpec;
+
     private PlatformSpec myspec;
 
     private PlatformSpecSet _platformSpecSet;
@@ -36,6 +39,12 @@ public class Platform : MonoBehaviour
     public PlatformSpec GetPlatformSpec()
     {
         return myspec;
+    }
+
+    public void ActivateMeshRenderer(bool isActive)
+    {
+        if (isActive) gameObject.GetComponent<MeshRenderer>().enabled = true;
+        else gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void SetSelectorMaterials(RouteSelectorDirection direction)

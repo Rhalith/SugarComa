@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RandomBoxMeshes _randomBoxMeshes;
     [SerializeField] private TrapMeshes _trapMeshes;
     [SerializeField] private JackpotMeshes _jackpotMeshes;
+    [SerializeField] private GoalObject _goalObject;
 
     public static PlatformTexture PlatformTexture
     {
@@ -72,6 +73,15 @@ public class GameManager : MonoBehaviour
         {
             if (_instance == null) return null;
             return _instance._jackpotMeshes;
+        }
+    }
+
+    public static GoalObject GoalObject
+    {
+        get
+        {
+            if (_instance == null) return null;
+            return _instance._goalObject;
         }
     }
     public static bool IsGameOver

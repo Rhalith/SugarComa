@@ -10,7 +10,6 @@ public class CameraAnimations : MonoBehaviour
     }
     public void AfterGoalSelector()
     {
-        _gobletSelection.ContinueToMove();
         _goalSelector.ResetGoalCameraPriority();
     }
 }

@@ -79,6 +79,7 @@ public class PlayerHandler : MonoBehaviour
         keeper._gobletSelection.GameController = _gameController;
         keeper._gobletSelection.GoalSelector = _goalSelector;
         keeper._gobletSelection.PathFinder = _pathFinder;
+        keeper._playerAnimation.GoalSelector = _goalSelector;
     }
 
     private void ChangePlayingInput(PlayerInput currentInput, PlayerInput nextInput)
