@@ -157,8 +157,8 @@ public class PathTracker : MonoBehaviour
         if (condition)
         {
             // platform is selector or current spec equals to the given spec then move is over.
-            if (_isSelector || (_currentPlatformIndex > 0 &&
-                _currentPlatformIndex < _path.Length - 1 &&
+            if (_isSelector || (_currentPlatformIndex >= 0 &&
+                _currentPlatformIndex < _path.Length &&
                 _spec == _path[_currentPlatformIndex].spec)) condition = false;
 
             // if the step greater than maximum step, stop the movement.
