@@ -25,14 +25,16 @@ public class SteamFriendsManager : MonoBehaviour
     {
         Texture2D texture = new Texture2D((int)image.Width, (int)image.Height);
 
-        for (int x = 0; x < image.Width; x++)
+        Color32[] pixels = new Color32[image.Width * image.Height];
+        for (int y = 0; y < image.Height; y++)
         {
-            for (int y = 0; y < image.Height; y++)
+            for (int x = 0; x < image.Width; x++)
             {
                 var p = image.GetPixel(x, y);
-                texture.SetPixel(x, (int)image.Height - y, new Color(p.r / 255.0f, p.g / 255.0f, p.b / 255.0f, p.a / 255.0f));
+                pixels[((int)image.Height - y - 1) * image.Width + x] = new Color32(p.r, p.g, p.b, p.a);
             }
         }
+        texture.SetPixels32(pixels);
         texture.Apply();
         return texture;
     }
@@ -53,7 +55,7 @@ public class SteamFriendsManager : MonoBehaviour
         var img = await SteamFriends.GetLargeAvatarAsync(id);
         f.GetComponentInChildren<RawImage>().texture = GetTextureFromImage(img.Value);
     }
-
+    
     public static async System.Threading.Tasks.Task<Texture2D> GetTextureFromSteamIdAsync(SteamId id)
     {
         var img = await SteamFriends.GetLargeAvatarAsync(SteamClient.SteamId);
@@ -65,7 +67,7 @@ public class SteamFriendsManager : MonoBehaviour
             for (int y = 0; y < image.Height; y++)
             {
                 var p = image.GetPixel(x, y);
-                texture.SetPixel(x, (int)image.Height - y, new Color(p.r / 255.0f, p.g / 255.0f, p.b / 255.0f, p.a / 255.0f));
+                texture.SetPixel(x, (int)image.Height - y, new Color32(p.r, p.g, p.b, p.a));
             }
         }
         texture.Apply();

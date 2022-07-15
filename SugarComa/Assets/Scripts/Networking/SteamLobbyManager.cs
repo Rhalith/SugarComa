@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class SteamLobbyManager : MonoBehaviour
 {
+    public UnityEngine.UI.Image panelImage;
     public static SteamManager SteamManager;
     public static Lobby currentLobby;
     public static bool UserInLobby;
@@ -30,6 +31,20 @@ public class SteamLobbyManager : MonoBehaviour
     private void Awake()
     {
         SteamManager = GetComponent<SteamManager>();
+        SteamServerManager.OnMessageReceived += this.SteamServerManager_OnMessageReceived;
+    }
+
+    private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] data)
+    {
+        string message = System.Text.Encoding.UTF8.GetString(data);
+        if (message == "Ready")
+        {
+            SteamServerManager.SendingMessages(steamid, "Ok");
+        }
+        else if (message == "Ok")
+        {
+            panelImage.color = UnityEngine.Color.green;
+        }
     }
 
     private void Start()
@@ -46,8 +61,28 @@ public class SteamLobbyManager : MonoBehaviour
         SteamFriends.OnGameLobbyJoinRequested += OnGameLobbyJoinRequestCallBack;
         SteamMatchmaking.OnLobbyInvite += OnLobbyInvite;
         
+        SteamMatchmaking.OnLobbyDataChanged += SteamMatchmaking_OnLobbyDataChanged;
+
         // SceneManager.sceneLoaded += OnSceneLoaded;
         // UpdateRichPresenceStatus(SceneManager.GetActiveScene().name);
+    }
+
+    public void SendToReady()
+    {
+        SteamServerManager.SendingMessages(currentLobby.Owner.Id, "Ready");
+    }
+
+    private void SteamMatchmaking_OnLobbyDataChanged(Lobby obj)
+    {
+        var x = obj.Data;
+        var y = obj.Owner;
+        var members = obj.Members;
+
+        foreach (var member in members)
+        {
+
+        }
+        throw new NotImplementedException();
     }
 
     void Update()
@@ -129,8 +164,18 @@ public class SteamLobbyManager : MonoBehaviour
     {
         try
         {
-            // For two players to send P2P packets to each other, they each must call this on the other player
-            SteamNetworking.AcceptP2PSessionWithUser(opponentId);
+            foreach (var member in currentLobby.Members)
+            {
+                if (!member.IsMe)
+                {
+                    // For each players to send P2P packets to each other, they each must call this on the other players
+                    SteamNetworking.AcceptP2PSessionWithUser(member.Id);
+                }
+                else
+                {
+
+                }
+            }
         }
         catch
         {
