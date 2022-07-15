@@ -30,6 +30,7 @@ public class RagdollOnOff : MonoBehaviour
     //    }
     //}
 
+
     public void RagDollOn()
     {
         _playerAnimator.enabled = false;
@@ -43,7 +44,8 @@ public class RagdollOnOff : MonoBehaviour
         {
             rb.isKinematic = false;
         }
-        _currentRigidBody.isKinematic = true;
+        StartCoroutine(forDeath());
+        //_currentRigidBody.isKinematic = true;
     }
 
     void RagDollOff()
@@ -60,6 +62,13 @@ public class RagdollOnOff : MonoBehaviour
 
         _mainCollider.enabled = true;
         _playerAnimator.enabled = true;
-        _currentRigidBody.isKinematic = false;
+        //_currentRigidBody.isKinematic = false;
+    }
+
+    IEnumerator forDeath()
+    {
+        yield return null;
+        yield return new WaitForSeconds(2f);
+        RagDollOff();
     }
 }

@@ -16,8 +16,14 @@ public class RDForBoxGloves : MonoBehaviour
         var rdof = collision.gameObject.GetComponent<RagdollOnOff>();
         if (rdof != null && rdof != ragdollOnOff)
         {
-            Vector3 direction = new Vector3(0, current.transform.eulerAngles.y, 0);
-            //collision.gameObject.GetComponent<Rigidbody>().AddForce(direction * 25f);
+
+            //ÇALIÞMIYOR BÝR TÜRLÜ :(
+            //Vector3 direction = new Vector3(0, current.transform.eulerAngles.y, 0);
+            //print(direction);
+            //collision.gameObject.GetComponent<Rigidbody>().AddForce(direction * 800f);
+            //print(collision.gameObject.GetComponent<Rigidbody>());
+
+
             //rdof.RagDollOn();
         }
     }

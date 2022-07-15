@@ -62,19 +62,19 @@ public class PlayerItemUse : MonoBehaviour
         //}
     }
     //TODO fix it
-    private IEnumerator rotation()
-    {
-        while (true)
-        {
-            transform.Rotate(_rotationY * Time.deltaTime * 15f);
-            if (playerTransform.eulerAngles.y - _rotationY.y < 3f && playerTransform.eulerAngles.y - _rotationY.y > -3f)
-            {
-                StopAllCoroutines();
-            }
+    //private IEnumerator rotation()
+    //{
+    //    while (true)
+    //    {
+    //        transform.Rotate(_rotationY * Time.deltaTime * 15f);
+    //        if (playerTransform.eulerAngles.y - _rotationY.y < 3f && playerTransform.eulerAngles.y - _rotationY.y > -3f)
+    //        {
+    //            StopAllCoroutines();
+    //        }
                 
-            yield return new WaitForSeconds(0.01f);
-        }
+    //        yield return new WaitForSeconds(0.01f);
+    //    }
 
-    }
+    //}
 
 }
