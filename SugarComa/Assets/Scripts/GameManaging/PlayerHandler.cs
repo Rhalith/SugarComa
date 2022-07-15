@@ -16,6 +16,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] GoalSelector _goalSelector;
     [SerializeField] List<GameObject> _playerList;
     [SerializeField] Cinemachine.CinemachineBrain _cinemachineBrain;
+    [SerializeField] GameObject _playerSpecCanvas;
     #endregion
 
     #region HideInInspectors
@@ -37,9 +38,14 @@ public class PlayerHandler : MonoBehaviour
         SetPlayerCollector(sckeeper);
         SetGobletSelection(sckeeper);
         SetPlayerInput(sckeeper);
+        setPlayerSpec(sckeeper, _playerList.IndexOf(_createdObject)+1);
         ChangeCurrentPlayer();
     }
 
+
+    /// <summary>
+    /// Knowing bug, eðer ilk oyuncu oynarken 3. oyuncuyu yaratýrsak kontrol 2. oyuncuya geçiyor.
+    /// </summary>
     public void ChangeCurrentPlayer()
     {
         ScriptKeeper previouskeep = null;
@@ -89,6 +95,10 @@ public class PlayerHandler : MonoBehaviour
         keeper._playerAnimation.GoalSelector = _goalSelector;
     }
 
+    private void setPlayerSpec(ScriptKeeper keeper, int index)
+    {
+        keeper._playerSpecSetter.SetParent(_playerSpecCanvas, index);
+    }
     private void ChangePlayingInput(PlayerInput currentInput, PlayerInput nextInput)
     {
         currentInput.isMyTurn = false;

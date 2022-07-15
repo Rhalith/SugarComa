@@ -23,6 +23,8 @@ public class GoalSelector : MonoBehaviour
     //TODO
     private GameObject _currentGoal;
 
+    private Platform _currentPlatform;
+
     /// <summary>
     /// if there is a goal platform in map
     /// </summary>
@@ -31,7 +33,7 @@ public class GoalSelector : MonoBehaviour
     public void RandomGoalSelect()
     {
         int i = Random.Range(0, platforms.Count);
-        if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].HasSelector)
+        if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].HasSelector && platforms[i] != _currentPlatform)
         {
             platforms[i].spec = PlatformSpec.Goal;
             CreateGoalObject(platforms[i]);
@@ -39,6 +41,7 @@ public class GoalSelector : MonoBehaviour
             print(platforms[i]);
             isAnyGoalPlatform = true;
             PlayerInput.canPlayersAct = false;
+            _currentPlatform = platforms[i];
             return;
         }
         else
@@ -58,6 +61,7 @@ public class GoalSelector : MonoBehaviour
             PlayerInput.canPlayersAct = false;
             print(platforms[i]);
             isAnyGoalPlatform = true;
+            _currentPlatform = platforms[i];
             return;
         }
         else

@@ -16,4 +16,5 @@ public class ScriptKeeper : MonoBehaviour
     public GameObject _currentUI;
     public TMP_Text playerGold, playerHealth, playerGoblet;
     public CinemachineVirtualCamera _playerCamera;
+    public PlayerSpecSetter _playerSpecSetter;
 }
