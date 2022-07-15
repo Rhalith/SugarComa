@@ -14338,7 +14338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   spec: 0
-  goalSpec: 6
+  goalSpec: 2
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -17731,7 +17731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   spec: 4
-  goalSpec: 6
+  goalSpec: 2
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
@@ -23682,7 +23682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   spec: 7
-  goalSpec: 6
+  goalSpec: 8
   selector:
     left: {fileID: 0}
     right: {fileID: 0}

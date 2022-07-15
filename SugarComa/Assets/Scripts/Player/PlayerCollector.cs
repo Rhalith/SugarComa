@@ -62,7 +62,7 @@ public class PlayerCollector : MonoBehaviour
             health = 0;
             KillPlayer();
         }
-        _gameController.ChangeText();
+        _gameController.ChangeText(_scriptKeeper);
     }
     public void AddItem()
     {

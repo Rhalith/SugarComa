@@ -11,11 +11,20 @@ public class GameController : MonoBehaviour
     private TextChanger _textChanger;
     private InventoryChanger _inventoryChanger1, _inventoryChanger2, _inventoryChanger3, _inventoryChanger4, _inventoryChanger5, _inventoryChanger6, _inventoryChanger7, _inventoryChanger8, _inventoryChanger9, _inventoryChanger10;
 
-    public void ChangeText()
+    public void ChangeText(ScriptKeeper keeper = null)
     {
-        InstanceUIElements();
-        notifyScript.Notify();
-        ClearUIObserver();
+        if(keeper != null)
+        {
+            InstanceUIElements(keeper);
+            notifyScript.Notify();
+            ClearUIObserver();
+        }
+        else
+        {
+            InstanceUIElements();
+            notifyScript.Notify();
+            ClearUIObserver();
+        }
     }
 
     public void ChangeInventory()
@@ -25,9 +34,16 @@ public class GameController : MonoBehaviour
         ClearInventoryObserver();
     }
     
-    private void InstanceUIElements()
+    private void InstanceUIElements(ScriptKeeper keeper = null)
     {
-        _textChanger = new(_playerHandler.currentplayerGold, _playerHandler.currentplayerHealth, _playerHandler.currentplayerGoblet, _playerHandler.currentPlayerCollector);
+        if(keeper != null)
+        {
+            _textChanger = new(keeper.playerGold, keeper.playerHealth, keeper.playerGoblet, keeper._playerCollector);
+        }
+        else
+        {
+            _textChanger = new(_playerHandler.currentplayerGold, _playerHandler.currentplayerHealth, _playerHandler.currentplayerGoblet, _playerHandler.currentPlayerCollector);
+        }
         notifyScript.AddObserver(_textChanger);
     }
     private void InstanceInventoryObjects()
