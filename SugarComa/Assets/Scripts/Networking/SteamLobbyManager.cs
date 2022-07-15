@@ -22,6 +22,7 @@ public class SteamLobbyManager : MonoBehaviour
     public SteamId OpponentSteamId { get; set; }
     
     private Friend lobbyPartner;
+    private GameObject localClientObj;
     public Friend LobbyPartner { get => lobbyPartner; set => lobbyPartner = value; }
     
     public Transform content;
@@ -54,44 +55,21 @@ public class SteamLobbyManager : MonoBehaviour
         SteamMatchmaking.OnLobbyCreated += OnLobbyCreatedCallBack;
         SteamMatchmaking.OnLobbyEntered += OnLobbyEnteredCallBack;
         SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoinedCallBack;
-        SteamMatchmaking.OnChatMessage += OnChatMessageCallBack;
         SteamMatchmaking.OnLobbyMemberDisconnected += OnLobbyMemberDisconnectedCallBack;
         SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberDisconnectedCallBack;
         SteamFriends.OnGameLobbyJoinRequested += OnGameLobbyJoinRequestCallBack;
-        SteamMatchmaking.OnLobbyInvite += OnLobbyInvite;
-        
-        SteamMatchmaking.OnLobbyDataChanged += SteamMatchmaking_OnLobbyDataChanged;
 
         // SceneManager.sceneLoaded += OnSceneLoaded;
-        // UpdateRichPresenceStatus(SceneManager.GetActiveScene().name);
     }
 
     public void SendToReady()
     {
-        SteamServerManager.SendingMessages(OpponentSteamId, "Ready");
-    }
-
-    private void SteamMatchmaking_OnLobbyDataChanged(Lobby obj)
-    {
-        var x = obj.Data;
-        var y = obj.Owner;
-        var members = obj.Members;
-
-        foreach (var member in members)
-        {
-
-        }
-        throw new NotImplementedException();
+        SteamServerManager.SendingMessages(currentLobby.Owner.Id, "Ready");
     }
 
     void Update()
     {
         SteamClient.RunCallbacks();
-    }
-    
-    void OnLobbyInvite(Friend friend, Lobby lobby)
-    {
-        Debug.Log($"{friend.Name} invited you to his lobby.");
     }
     
     private void OnLobbyGameCreatedCallBack(Lobby lobby, uint ip, ushort port, SteamId id)
@@ -116,20 +94,6 @@ public class SteamLobbyManager : MonoBehaviour
         {
             Destroy(inLobby[friend.Id]);
             inLobby.Remove(friend.Id);
-        }
-    }
-
-    void OnChatMessageCallBack(Lobby lobby, Friend friend, string message)
-    {
-        // Received chat message
-        if (friend.Id != SteamManager.PlayerSteamId)
-        {
-            Debug.Log($"incoming chat message from {friend.Name} : {message}");
-
-            // I used chat to setup game parameters on occasion like when player joined lobby with preselected playable bug family, prob not best way to do it
-            // But after host received player chat message I set off the OnLobbyGameCreated callback with lobby.SetGameServer(PlayerSteamId)
-            lobby.SetJoinable(false);
-            lobby.SetGameServer(SteamManager.PlayerSteamId);
         }
     }
 
@@ -198,6 +162,8 @@ public class SteamLobbyManager : MonoBehaviour
         obj.GetComponentInChildren<Text>().text = SteamClient.Name;
         obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(SteamClient.SteamId);
 
+        localClientObj = obj;
+
         foreach (var friend in currentLobby.Members)
         {
             if (friend.Id != SteamClient.SteamId)
@@ -250,18 +216,22 @@ public class SteamLobbyManager : MonoBehaviour
     {
         try
         {
+            Debug.Log("Client leaved the lobby");
             UserInLobby = false;
-            currentLobby.Leave();
-            OnLobbyLeave.Invoke();
+
             foreach (var user in inLobby.Values)
             {
                 Destroy(user);
             }
+
+            Destroy(localClientObj);
             inLobby.Clear();
+            currentLobby.Leave();
+            OnLobbyLeave.Invoke();
         }
         catch
         {
-
+            Debug.Log("Not Working!");
         }
     }
 }
