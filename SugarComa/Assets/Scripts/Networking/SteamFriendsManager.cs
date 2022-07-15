@@ -21,7 +21,7 @@ public class SteamFriendsManager : MonoBehaviour
 
     }
 
-    public static Texture2D GetTextureFromImage(Steamworks.Data.Image image)
+    public static Texture2D GetTextureFromImage(in Steamworks.Data.Image image)
     {
         Texture2D texture = new Texture2D((int)image.Width, (int)image.Height);
 

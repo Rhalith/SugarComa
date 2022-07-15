@@ -51,7 +51,6 @@ public class SteamLobbyManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
 
-        SteamMatchmaking.OnLobbyGameCreated += OnLobbyGameCreatedCallBack;
         SteamMatchmaking.OnLobbyCreated += OnLobbyCreatedCallBack;
         SteamMatchmaking.OnLobbyEntered += OnLobbyEnteredCallBack;
         SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoinedCallBack;
@@ -69,7 +68,7 @@ public class SteamLobbyManager : MonoBehaviour
 
     public void SendToReady()
     {
-        SteamServerManager.SendingMessages(currentLobby.Owner.Id, "Ready");
+        SteamServerManager.SendingMessages(OpponentSteamId, "Ready");
     }
 
     private void SteamMatchmaking_OnLobbyDataChanged(Lobby obj)
@@ -149,12 +148,12 @@ public class SteamLobbyManager : MonoBehaviour
                 if (friend.Id == id)
                 {
                     lobbyPartner = friend;
+                    OpponentSteamId = friend.Id;
+                    AcceptP2P(OpponentSteamId);
                     break;
                 }
             }
             currentLobby = joinedLobby;
-            OpponentSteamId = id;
-            AcceptP2P(OpponentSteamId);
             //SceneManager.LoadScene("Scene to load");
             currentLobby = joinedLobby;
         }
@@ -164,18 +163,7 @@ public class SteamLobbyManager : MonoBehaviour
     {
         try
         {
-            foreach (var member in currentLobby.Members)
-            {
-                if (!member.IsMe)
-                {
-                    // For each players to send P2P packets to each other, they each must call this on the other players
-                    SteamNetworking.AcceptP2PSessionWithUser(member.Id);
-                }
-                else
-                {
-
-                }
-            }
+            SteamNetworking.AcceptP2PSessionWithUser(opponentId);
         }
         catch
         {
@@ -209,8 +197,6 @@ public class SteamLobbyManager : MonoBehaviour
         GameObject obj = Instantiate(InLobbyFriend, content);
         obj.GetComponentInChildren<Text>().text = SteamClient.Name;
         obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(SteamClient.SteamId);
-
-        inLobby.Add(SteamClient.SteamId, obj);
 
         foreach (var friend in currentLobby.Members)
         {
@@ -278,6 +264,4 @@ public class SteamLobbyManager : MonoBehaviour
 
         }
     }
-
-
 }
