@@ -3,8 +3,9 @@ using UnityEngine;
 [DefaultExecutionOrder(-100)]
 public class PlayerInput : MonoBehaviour
 {
+	public bool isMyTurn;
 	[HideInInspector] public bool nextSelectionPressed;
-	public bool nextSelectionStepPressed;
+	[HideInInspector] public bool nextSelectionStepPressed;
 	[HideInInspector] public bool nextGoalPressed;
 	[HideInInspector] public bool nextGoalStepPressed;
 	[HideInInspector] public bool moveToBackStepPressed;
@@ -16,24 +17,43 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool openMap;
 	[HideInInspector] public bool useMouseItem;
 
+	[SerializeField] Cinemachine.CinemachineBrain cinemachineBrain;
+
 	private bool _readyToClear; // used to keep input in sync
+	private bool _clearNextTick = false;
 
+	/// <summary>
+	/// if an animation or action will play to all players.
+	/// </summary>
+	public static bool canPlayersAct = true;
 
+	public Cinemachine.CinemachineBrain CineMachineBrain { set => cinemachineBrain = value; }
 	void Update()
 	{
-		ClearInput();
+		_clearNextTick = false;
+
+		ClearInputs();
 
 		if (GameManager.IsGameOver) return;
 
-		ProcessInputs();
+		if(isMyTurn && canPlayersAct && !cinemachineBrain.IsBlending) ProcessInputs();
 	}
 
 	void FixedUpdate()
 	{
 		_readyToClear = true;
+
+		// make sure inputs cleared.
+		// only if fixed update being called more than update.
+		if (_clearNextTick)
+		{
+			ClearInputs();
+			_clearNextTick = false;
+		}
+		_clearNextTick = true;
 	}
 
-	void ClearInput()
+	void ClearInputs()
 	{
 		//If we're not ready to clear input, return
 		if (!_readyToClear) return;

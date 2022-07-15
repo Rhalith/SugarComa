@@ -12,18 +12,22 @@ public class ItemObject : MonoBehaviour
 
     [SerializeField] PlayerInventory playerInventory;
 
+    [SerializeField] PlayerMovement _playerMovement;
+
     public Button _button; 
     public void OnAddItem()
     {
         playerInventory.AddItem(referenceItem);
-        ChangeInventory(playerInventory.GetItem(referenceItem));
     }
     public void RemoveItem()
     {
         playerInventory.RemoveItem(referenceItem);
+    }
+    
+    public void NotifyInventory()
+    {
         ChangeInventory(playerInventory.GetItem(referenceItem));
     }
-
     public int CheckItemCount()
     {
         if(playerInventory.GetItem(referenceItem) == null)
@@ -38,6 +42,10 @@ public class ItemObject : MonoBehaviour
         if(item != null)
         {
             text.text = item.stackSize.ToString();
+        }
+        else
+        {
+            text.text = 0.ToString();
         }
         gameObject.GetComponent<Image>().sprite = referenceItem.icon;
     }

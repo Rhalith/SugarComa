@@ -3,11 +3,29 @@ using UnityEngine.UI;
 
 public class GobletSelection : MonoBehaviour
 {
-    [SerializeField] GameController controller;
-    [SerializeField] PlayerCollector player;
-    [SerializeField] Button Goblet;
-    [SerializeField] GoalSelector _goalSelector;
-    [SerializeField] PlayerMovement _playerMovement;
+    #region Serialize Field
+
+    [SerializeField] private GameController _gameController;
+    [SerializeField] private PlayerCollector player;
+    [SerializeField] private Button Goblet;
+    [SerializeField] private GoalSelector _goalSelector;
+    [SerializeField] private PathFinder _pathFinder;
+    [SerializeField] private PlayerAnimation _playerAnimation;
+    #endregion
+
+    #region Properties
+
+    public GameController GameController { set { _gameController = value; } }
+    public GoalSelector GoalSelector { set {_goalSelector = value; } }
+    public PathFinder PathFinder { set { _pathFinder = value; } }
+    #endregion
+
+    #region Events
+
+    public delegate void GobletAction();
+    public event GobletAction OnTakeIt;
+    public event GobletAction OnLeaveIt;
+    #endregion
 
     public void OpenGobletSelection()
     {
@@ -26,15 +44,24 @@ public class GobletSelection : MonoBehaviour
     {
         player.goblet++;
         player.gold -= 50;
-        controller.ChangeText();
+        _gameController.ChangeText();
         gameObject.SetActive(false);
-        _playerMovement._current.ResetSpec();
-        _goalSelector.RandomGoalSelect();
+        OnTakeIt?.Invoke();
+        _goalSelector.TakeGoblet();
     }
 
     public void LeaveIt()
     {
-        controller.ChangeText();
+        _gameController.ChangeText();
         gameObject.SetActive(false);
+        OnLeaveIt?.Invoke();
+    }
+
+    [System.Obsolete("Use player movement instead.")]
+    public void ContinueToMove()
+    {
+        // var path = _pathFinder.ToSelector(_playerMovement.CurrentPlatform, _playerMovement.CurrentStep);
+        // _playerMovement.StartFollowPath(path, true);
+        // _playerAnimation.ContinueRunning();
     }
 }

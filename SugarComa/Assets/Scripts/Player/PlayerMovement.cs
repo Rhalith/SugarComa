@@ -2,85 +2,103 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public int maximumStep = 1;
-    public int goalStep = 5;
-    public bool isAnimationStopped;
-    public bool isRunningAnimation;
+    #region Fields
 
-    [SerializeField] public Platform _current;
-    [SerializeField] private PathFinder _pathfinder;
+    private RouteSelectorDirection _selectorDirection;
+    #endregion
+
+    #region Serialize Fields
 
     [Header("Status")]
-    [SerializeField] private int _currentStep;
-
-    private bool _moveStart;
-    [SerializeField] private PathFollower _pathFollower;
-    [SerializeField] private PlayerInput _playerInput;
-    [SerializeField] private PlayerCollector _playerCollector;
-    [SerializeField] private PlayerInventory _playerInventory;
-    [SerializeField] private MapCamera _mapCamera;
-    [SerializeField] private ItemPool _itemPool;
-    [SerializeField] private PlayerAnimation _playerAnimation;
-    private RouteSelectorDirection _selectorDirection;
-
+    [SerializeField]  private int _currentStep;
+    public int goalStep = 5;
+    public int maximumStep = 1;
+    public bool isDiceRolled;
+    //public bool isAnimationStopped;
+    //public bool isRunningAnimation;
     public bool isUserInterfaceActive;
 
-    private void FixedUpdate()
-    {
-        if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed && !isUserInterfaceActive)
-        {
-            _currentStep = maximumStep; 
-            if(!isAnimationStopped) _playerAnimation.RollDice();
-        } 
+    [Header("Other Scripts")]
+    [SerializeField] private ItemPool _itemPool;
+    [SerializeField] private MapCamera _mapCamera;
+    [SerializeField] private PathFinder _pathFinder;
+    [SerializeField] private PathTracker _pathTracker;
+    [SerializeField] private PlayerInput _playerInput;
+    [SerializeField] private Platform _currentPlatform;
+    [SerializeField] private GameController _gameController;
+    [SerializeField] private PlayerCollector _playerCollector;
+    [SerializeField] private PlayerInventory _playerInventory;
+    [SerializeField] private PlayerAnimation _playerAnimation;
+    [SerializeField] private GobletSelection _gobletSelection;
+    #endregion
 
-        if (!_current.HasSelector && !isUserInterfaceActive && isAnimationStopped)
+    #region Properties
+
+    public int CurrentStep => _currentStep;
+    public MapCamera MapCamera { set => _mapCamera = value; }
+    public PathFinder PathFinder { get => _pathFinder; set => _pathFinder = value; }
+    public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
+    public GameController GameController { get => _gameController; set => _gameController = value; }
+    public PlayerCollector PlayerCollector { get => _playerCollector; }
+    #endregion
+
+    private void Start()
+    {
+        _gameController.ChangeText();
+        _pathTracker.OnTrackingStarted += OnTrackingStarted;
+        _pathTracker.OnCurrentPlatformChanged += OnCurrentPlatformChanged;
+        _pathTracker.OnTrackingStopped += OnTrackingStopped;
+
+        // TODO
+        _gobletSelection.OnTakeIt += GobletSelection_OnTakeIt;
+        _gobletSelection.OnLeaveIt += GobletSelection_OnLeaveIt;
+    }
+
+    private void Update()
+    {
+        if (!isUserInterfaceActive && _playerAnimation.IsIdle)
         {
-            if (!_pathFollower.isMoving)
-            { 
-                if (!isRunningAnimation) _playerAnimation.StartRunning();
+            if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed)
+            {
+                _currentStep = maximumStep;
+                RollDice();
+            }
+            else if (!_currentPlatform.HasSelector && isDiceRolled && !_pathTracker.isMoving)
+            {
                 StartMove();
-                if (isAnimationStopped) _playerAnimation.SetIsAnimation();
+            }
+            else if (_currentStep > 0)
+            {
+                ProcessSelect();
             }
         }
-        else if (!isUserInterfaceActive)
-        {
-            ProcessSelect();
-        }
         ProcessUI();
-        MoveOver();
     }
 
     private void StartMove()
     {
-        if (_playerInput.nextSelectionStepPressed || isRunningAnimation)
+        if (_playerInput.nextSelectionStepPressed || !_playerAnimation.IsJumping) // space
         {
-            var path = _pathfinder.ToSelector(_current, _currentStep);
-            StartFollowPath(path);
+            _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep), PlatformSpec.Goal, _currentPlatform.HasSelector);
         }
-        else if (_playerInput.nextSelectionPressed)
+        else if (_playerInput.nextSelectionPressed) // X
         {
-            var path = _pathfinder.ToSelector(_current);
-            StartFollowPath(path);
+            _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform), PlatformSpec.Goal, _currentPlatform.HasSelector);
+
         }
-        else if (_playerInput.nextGoalPressed)
+        else if (_playerInput.nextGoalPressed) // C
         {
-            var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal);
-            StartFollowPath(path);
+            _pathTracker.StartTracking(_pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal), PlatformSpec.Goal, _currentPlatform.HasSelector);
         }
-        else if (_playerInput.nextGoalStepPressed)
+        else if (_playerInput.nextGoalStepPressed) // V
         {
-            var path = _pathfinder.FindBest(_current, PlatformSpecification.Goal, goalStep);
-            StartFollowPath(path);
+            _pathTracker.StartTracking(_pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal, goalStep), PlatformSpec.Goal, _currentPlatform.HasSelector);
         }
-        else if (_playerInput.moveToBackStepPressed)
+        else if (_playerInput.moveToBackStepPressed) // B
         {
-            _moveStart = true;
-            _pathFollower.MoveLastPath(maximumStep, false, PlatformSpecification.Goal);
+            _pathTracker.RestartTracking(maximumStep, false, PlatformSpec.Goal);
         }
-        else if (_playerInput.closeUI)
-        {
-            _playerCollector.AddItem();
-        }
+        isDiceRolled = false;
     }
 
     private void ProcessUI()
@@ -107,78 +125,80 @@ public class PlayerMovement : MonoBehaviour
             isUserInterfaceActive = false;
         }
     }
+
     private void ProcessSelect()
     {
-        if (isRunningAnimation && _current.isSelector) _playerAnimation.StopRunning();
-        if (_playerInput.selectLeftPressed) SelectPlatform(RouteSelectorDirection.Left);
-        else if (_playerInput.selectRightPressed) SelectPlatform(RouteSelectorDirection.Right);
+        var leftPlatform = _currentPlatform.selector.left;
+        var rightPlatform = _currentPlatform.selector.right;
+        _currentPlatform.selector.left.SetActive(true);
+        _currentPlatform.selector.right.SetActive(true);
+
+        if (_playerInput.selectLeftPressed && leftPlatform.activeInHierarchy) SelectPlatform(RouteSelectorDirection.Left);
+        else if (_playerInput.selectRightPressed && rightPlatform.activeInHierarchy) SelectPlatform(RouteSelectorDirection.Right);
 
         if (_playerInput.applySelectPressed && _selectorDirection != RouteSelectorDirection.None)
         {
-            
-            var path = _pathfinder.ToSelector(_current, _currentStep, _selectorDirection);
-            SelectPlatform(RouteSelectorDirection.None);
-            StartFollowPath(path, true);
-            if (!isRunningAnimation) _playerAnimation.ContinueRunning();
+            RouteSelectorDirection temp = _selectorDirection;
+            SelectPlatform(RouteSelectorDirection.None, leftPlatform, rightPlatform);
+            _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep, temp), PlatformSpec.Goal);
         }
     }
 
-    private void StartFollowPath(Platform[] path, bool isSelector = false)
+    private void GobletSelection_OnLeaveIt()
     {
-        if (path == null || _moveStart) return;
-
-        if (path.Length > 0)
-        {
-            _moveStart = true;
-            if (isSelector)
-            {
-                _pathFollower.StartFollow(path, PlatformSpecification.Goal);
-            }
-            else
-            {
-                _pathFollower.StartFollow(path, PlatformSpecification.Goal, _current.isSelector);
-            }
-        }
+        _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep), PlatformSpec.Goal);
+        isUserInterfaceActive=false;
     }
 
-    private void MoveOver()
+    private void GobletSelection_OnTakeIt()
     {
-        if (_moveStart && !_pathFollower.isMoving)
+        _currentPlatform.ResetSpec();
+    }
+
+    private void OnTrackingStarted()
+    {
+        _playerAnimation.StartRunning();
+    }
+
+    private void OnCurrentPlatformChanged()
+    {
+        var current = _pathTracker.CurrentPlatform;
+        if (current != null)
         {
-            
-            _moveStart = false;
-            var current = _pathFollower.GetCurrentPlatform();
-            if (current != null)
-            {
-                _current = current;
-                _currentStep -= Mathf.Min(_currentStep, _pathFollower.PathLength);
-                if(_currentStep <= 0 || !_current.isSelector)
-                {
-                    _playerAnimation.StopRunning();
-                    _playerCollector.CheckCurrentNode(_current);
-                }
-            } 
+            _currentPlatform = current;
+            _currentStep -= 1;
         }
     }
 
-    private void SelectPlatform(RouteSelectorDirection direction)
+    private void OnTrackingStopped()
+    {
+        _playerAnimation.StopRunning();
+        _playerCollector.CheckCurrentNode(_currentPlatform);
+    }
+
+    private void SelectPlatform(RouteSelectorDirection direction, GameObject left = null, GameObject right = null)
     {
         _selectorDirection = direction;
-
-        switch (direction)
+        _currentPlatform.SetSelectorMaterials(direction);
+        if(left != null || right != null)
         {
-            case RouteSelectorDirection.Left:
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.greenMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
-                break;
-            case RouteSelectorDirection.Right:
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.greenMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
-                break;
-            default:
-                _current.selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial);
-                _current.selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial);
-                break;
+            left.SetActive(false);
+            right.SetActive(false);
         }
+
+    }
+
+    private void RollDice()
+    {
+        _playerAnimation.RollDice();
+        isDiceRolled = true;
+        //maximumStep = Random.Range(1, 10);
+    }
+
+    public void OnDeath()
+    {
+        Platform founded = _pathFinder.ChooseGrave();
+        _currentPlatform = founded;
+        gameObject.transform.position = new Vector3(founded.position.x, founded.position.y + 0.25f, founded.position.z);
     }
 }

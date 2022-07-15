@@ -37,3 +37,11 @@ public class JackpotMeshes
     public Mesh jackpotMesh;
 }
 
+[System.Serializable]
+
+public class GoalObject
+{
+    public GameObject goalChestObject;
+    //public GameObject goalAnimationObject; not necessary right now
+}
+

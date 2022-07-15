@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class PlatformSpecSet
 {
-    public void SetSpec(MeshFilter meshFilter, Renderer renderer, PlatformSpecification specification)
+    public void SetSpec(MeshFilter meshFilter, Renderer renderer, PlatformSpec specification)
     {
         switch (specification)
         {
-            case PlatformSpecification.Selection:
+            case PlatformSpec.Selection:
                 //TODO
                 break;
-            case PlatformSpecification.Gold: GoldMeshChanger(meshFilter, renderer); break;
-            case PlatformSpecification.Heal: HealMeshChanger(meshFilter, renderer); break;
-            case PlatformSpecification.Trap_1: TrapMeshChanger(meshFilter, renderer, PlatformSpecification.Trap_1); break;
-            case PlatformSpecification.Trap_2: TrapMeshChanger(meshFilter, renderer, PlatformSpecification.Trap_2); break;
-            case PlatformSpecification.Trap_3: TrapMeshChanger(meshFilter, renderer, PlatformSpecification.Trap_3); break;
-            case PlatformSpecification.Gift: GiftMeshChanger(meshFilter, renderer); break;
-            case PlatformSpecification.Jackpot: JackpotMeshChanger(meshFilter, renderer); break;
+            case PlatformSpec.Gold: GoldMeshChanger(meshFilter, renderer); break;
+            case PlatformSpec.Heal: HealMeshChanger(meshFilter, renderer); break;
+            case PlatformSpec.Trap: TrapMeshChanger(meshFilter, renderer); break;
+            case PlatformSpec.Gift: GiftMeshChanger(meshFilter, renderer); break;
+            case PlatformSpec.Jackpot: JackpotMeshChanger(meshFilter, renderer); break;
             default:
                 break;
         }
@@ -57,17 +55,18 @@ public class PlatformSpecSet
         }
         SetRendererMaterial(renderer);
     }
-    private void TrapMeshChanger(MeshFilter filter, Renderer renderer, PlatformSpecification spec)
+    private void TrapMeshChanger(MeshFilter filter, Renderer renderer)
     {
-        switch (spec)
+        int i = Random.Range(0, 3);
+        switch (i)
         {
-            case PlatformSpecification.Trap_1:
+            case 0:
                 filter.mesh = GameManager.TrapMeshes.trapMesh1;
                 break;
-            case PlatformSpecification.Trap_2:
+            case 1:
                 filter.mesh = GameManager.TrapMeshes.trapMesh2;
                 break;
-            case PlatformSpecification.Trap_3:
+            case 2:
                 filter.mesh = GameManager.TrapMeshes.trapMesh3;
                 break;
             default:

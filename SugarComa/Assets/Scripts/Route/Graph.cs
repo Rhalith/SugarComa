@@ -82,7 +82,7 @@ public class Graph : MonoBehaviour
     /// Find platforms by the give specification.
     /// </summary>
     /// <param name="spec"></param>
-    public Platform[] GetPlatformsBySpec(PlatformSpecification spec)
+    public Platform[] GetPlatformsBySpec(PlatformSpec spec)
     {
         var platforms = new List<Platform>();
 
@@ -90,7 +90,7 @@ public class Graph : MonoBehaviour
         for (int i = 0; i < keys.Length; ++i)
         {
             var key = keys[i];
-            if (key.specification == spec && !platforms.Contains(key)) platforms.Add(key);
+            if (key.spec == spec && !platforms.Contains(key)) platforms.Add(key);
         }
         return platforms.ToArray();
     }
@@ -214,4 +214,8 @@ public class Graph : MonoBehaviour
     }
 
     [SerializeField] private PlatformDictionary _platforms;
+    [SerializeField] private Platform _topGrave, _bottomGrave;
+
+    public Platform TopGrave { get => _topGrave; }
+    public Platform BottomGrave { get => _bottomGrave; }
 }

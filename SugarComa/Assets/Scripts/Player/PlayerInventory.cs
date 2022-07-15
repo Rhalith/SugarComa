@@ -45,7 +45,6 @@ public class PlayerInventory : MonoBehaviour
         if (_itemDictionary.TryGetValue(refData, out InventoryItem value))
         {
             value.RemoveFromStack();
-
             if(value.stackSize == 0)
             {
                 inventory.Remove(value);

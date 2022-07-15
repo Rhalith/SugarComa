@@ -5,13 +5,14 @@ public class Platform : MonoBehaviour
     [HideInInspector] public Vector3 position; // game object position.
 
     [Tooltip("Özelliði yoksa boþ býrak!")]
-    public PlatformSpecification specification;
+    public PlatformSpec spec;
 
-    private PlatformSpecification myspec;
+    [Tooltip("Sandýk nereye doðru gelecekse orayý seç!")]
+    public PlatformGoalSpec goalSpec;
+
+    private PlatformSpec myspec;
 
     private PlatformSpecSet _platformSpecSet;
-
-    public bool isSelector;
 
     public RouteSelector selector;
 
@@ -19,7 +20,7 @@ public class Platform : MonoBehaviour
 
     private void Start()
     {
-        myspec = specification;
+        myspec = spec;
         position = transform.position;
         SetSpec();
     }
@@ -27,12 +28,41 @@ public class Platform : MonoBehaviour
     private void SetSpec()
     {
         _platformSpecSet = new PlatformSpecSet();
-        _platformSpecSet.SetSpec(GetComponent<MeshFilter>(), GetComponent<Renderer>(), specification);
-
+        _platformSpecSet.SetSpec(GetComponent<MeshFilter>(), GetComponent<Renderer>(), spec);
     }
 
     public void ResetSpec()
     {
-        specification = myspec;
+        spec = myspec;
+    }
+
+    public PlatformSpec GetPlatformSpec()
+    {
+        return myspec;
+    }
+
+    public void ActivateMeshRenderer(bool isActive)
+    {
+        if (isActive) gameObject.GetComponent<MeshRenderer>().enabled = true;
+        else gameObject.GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    public void SetSelectorMaterials(RouteSelectorDirection direction)
+    {
+        switch (direction)
+        {
+            case RouteSelectorDirection.Left:
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.greenMaterial, GameManager.SelectionMaterial.selectedMesh);
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial, GameManager.SelectionMaterial.nonselectedMesh);
+                break;
+            case RouteSelectorDirection.Right:
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.greenMaterial, GameManager.SelectionMaterial.selectedMesh);
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial, GameManager.SelectionMaterial.nonselectedMesh);
+                break;
+            default:
+                selector.SetMaterial(RouteSelectorDirection.Left, GameManager.SelectionMaterial.redMaterial, GameManager.SelectionMaterial.nonselectedMesh);
+                selector.SetMaterial(RouteSelectorDirection.Right, GameManager.SelectionMaterial.redMaterial, GameManager.SelectionMaterial.nonselectedMesh);
+                break;
+        }
     }
 }
