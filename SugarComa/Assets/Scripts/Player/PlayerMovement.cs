@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -30,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerInventory _playerInventory;
     [SerializeField] private PlayerAnimation _playerAnimation;
     [SerializeField] private GobletSelection _gobletSelection;
+    [SerializeField] private TMPro.TMP_Text _diceText;
+    [SerializeField] private GameObject _dice;
     #endregion
 
     #region Properties
@@ -40,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
     public GameController GameController { get => _gameController; set => _gameController = value; }
     public PlayerCollector PlayerCollector { get => _playerCollector; }
+
+    public TMPro.TMP_Text DiceText { get => _diceText; }
     #endregion
 
     private void Start()
@@ -60,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed)
             {
-                _currentStep = maximumStep;
                 RollDice();
             }
             else if (!_currentPlatform.HasSelector && isDiceRolled && !_pathTracker.isMoving)
@@ -99,8 +103,17 @@ public class PlayerMovement : MonoBehaviour
             _pathTracker.RestartTracking(maximumStep, false, PlatformSpec.Goal);
         }
         isDiceRolled = false;
+        IEnumerator waitForCloseText()
+        {
+            yield return null;
+            yield return new WaitForSeconds(0.5f);
+            _diceText.enabled = false;
+        }
+        StartCoroutine(waitForCloseText());
+        
     }
 
+    
     private void ProcessUI()
     {
         if (_playerInput.openInventory)
@@ -175,6 +188,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerAnimation.StopRunning();
         _playerCollector.CheckCurrentNode(_currentPlatform);
+        if(!_currentPlatform.HasSelector && _currentPlatform.spec != PlatformSpec.Goal) _dice.SetActive(true);
+
     }
 
     private void SelectPlatform(RouteSelectorDirection direction, GameObject left = null, GameObject right = null)
@@ -191,9 +206,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void RollDice()
     {
+        _currentStep = Random.Range(1, 10);
         _playerAnimation.RollDice();
         isDiceRolled = true;
-        //maximumStep = Random.Range(1, 10);
+        _diceText.text = _currentStep.ToString();
     }
 
     public void OnDeath()

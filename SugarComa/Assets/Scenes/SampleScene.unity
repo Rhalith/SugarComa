@@ -28593,7 +28593,7 @@ PrefabInstance:
       objectReference: {fileID: 1970712953}
     - target: {fileID: 4120892788481720712, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: maximumStep
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4120892788481720712, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: _pathTracker
@@ -28641,7 +28641,7 @@ PrefabInstance:
       objectReference: {fileID: 1919064173}
     - target: {fileID: 4120892788481720719, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: speed
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4120892788536326169, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_IsActive
@@ -29082,6 +29082,10 @@ PrefabInstance:
     - target: {fileID: 7950660926971598830, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986056786197168510, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8191668297466021192, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

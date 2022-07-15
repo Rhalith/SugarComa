@@ -103,6 +103,8 @@ public class PlayerHandler : MonoBehaviour
     {
         currentInput.isMyTurn = false;
         nextInput.isMyTurn = true;
+        currentInput.Dice.SetActive(false);
+        nextInput.Dice.SetActive(true);
     }
 
     private void ChangeCurrentScripts(PlayerInput nextInput, PlayerCollector nextCollector, PlayerInventory nextInventory)

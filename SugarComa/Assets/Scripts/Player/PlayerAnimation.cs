@@ -20,6 +20,7 @@ public class PlayerAnimation : MonoBehaviour
     #endregion
 
     #region Properties
+    [SerializeField] GameObject _dice;
 
     public bool IsLanding => _land;
     public bool IsJumping => _jump;
@@ -41,6 +42,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         _animator.SetBool("jump", jump != 0);
         _jump = jump != 0;
+        if(jump == 0)
+        {
+            _dice.SetActive(false);
+            _playerMovement.DiceText.enabled = true;
+        }
+        
     }
 
     private void LandSet(int landing)
@@ -56,6 +63,7 @@ public class PlayerAnimation : MonoBehaviour
         if (!GoalSelector.isAnyGoalPlatform && landing == 0)
         {
             _goalSelector.SelectGoalOnStart();
+            _dice.SetActive(true);
         }
     }
     private void SurpriseSet(int surprised)

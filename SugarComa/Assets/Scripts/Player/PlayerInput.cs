@@ -18,6 +18,7 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool useMouseItem;
 
 	[SerializeField] Cinemachine.CinemachineBrain cinemachineBrain;
+	[SerializeField] GameObject _dice;
 
 	private bool _readyToClear; // used to keep input in sync
 	private bool _clearNextTick = false;
@@ -28,6 +29,7 @@ public class PlayerInput : MonoBehaviour
 	public static bool canPlayersAct = true;
 
 	public Cinemachine.CinemachineBrain CineMachineBrain { set => cinemachineBrain = value; }
+	public GameObject Dice { get => _dice; }
 	void Update()
 	{
 		_clearNextTick = false;
@@ -36,7 +38,10 @@ public class PlayerInput : MonoBehaviour
 
 		if (GameManager.IsGameOver) return;
 
-		if(isMyTurn && canPlayersAct && !cinemachineBrain.IsBlending) ProcessInputs();
+		if(isMyTurn && canPlayersAct && !cinemachineBrain.IsBlending) 
+        {
+			ProcessInputs();
+		}
 	}
 
 	void FixedUpdate()
