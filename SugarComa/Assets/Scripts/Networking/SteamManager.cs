@@ -116,7 +116,7 @@ public class SteamManager : MonoBehaviour
         }
         try
         {
-            SteamNetworking.CloseP2PSessionWithUser(LobbyManager.OpponentSteamId);
+            SteamNetworking.CloseP2PSessionWithUser(SteamClient.SteamId);
         }
         catch
         {

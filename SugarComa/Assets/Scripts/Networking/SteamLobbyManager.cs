@@ -19,7 +19,6 @@ public class SteamLobbyManager : MonoBehaviour
     public UnityEvent OnLobbyLeave;
     
     public GameObject InLobbyFriend;
-    public SteamId OpponentSteamId { get; set; }
     
     private Friend lobbyPartner;
     private GameObject localClientObj;
@@ -67,27 +66,9 @@ public class SteamLobbyManager : MonoBehaviour
         SteamServerManager.SendingMessages(currentLobby.Owner.Id, "Ready");
     }
 
-    private void SteamMatchmaking_OnLobbyDataChanged(Lobby obj)
-    {
-        var x = obj.Data;
-        var y = obj.Owner;
-        var members = obj.Members;
-
-        foreach (var member in members)
-        {
-
-        }
-        throw new NotImplementedException();
-    }
-
     void Update()
     {
         SteamClient.RunCallbacks();
-    }
-    
-    private void OnLobbyGameCreatedCallBack(Lobby lobby, uint ip, ushort port, SteamId id)
-    {
-
     }
 
     private async void OnLobbyMemberJoinedCallBack(Lobby lobby, Friend friend)
@@ -96,7 +77,15 @@ public class SteamLobbyManager : MonoBehaviour
         GameObject obj = Instantiate(InLobbyFriend, content);
         obj.GetComponentInChildren<Text>().text = friend.Name;
         obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id);
-        inLobby.TryAdd(friend.Id, obj);
+        
+        if(inLobby.TryAdd(friend.Id, obj))
+        {
+            AcceptP2P(friend.Id);
+        }
+        else
+        {
+            Destroy(obj);
+        }
     }
 
     void OnLobbyMemberDisconnectedCallBack(Lobby lobby, Friend friend)
@@ -125,22 +114,19 @@ public class SteamLobbyManager : MonoBehaviour
                 if (friend.Id == id)
                 {
                     lobbyPartner = friend;
-                    OpponentSteamId = friend.Id;
-                    AcceptP2P(OpponentSteamId);
+                    AcceptP2P(friend.Id);
                     break;
                 }
             }
             currentLobby = joinedLobby;
-            //SceneManager.LoadScene("Scene to load");
-            currentLobby = joinedLobby;
         }
     }
     
-    private void AcceptP2P(SteamId opponentId)
+    private void AcceptP2P(SteamId friendId)
     {
         try
         {
-            SteamNetworking.AcceptP2PSessionWithUser(opponentId);
+            SteamNetworking.AcceptP2PSessionWithUser(friendId);
         }
         catch
         {
