@@ -18,7 +18,6 @@ public class SteamFriendsManager : MonoBehaviour
         InitFriendsAsync();
         var img = await SteamFriends.GetLargeAvatarAsync(SteamClient.SteamId);
         pp.texture = GetTextureFromImage(img.Value);
-
     }
 
     public static Texture2D GetTextureFromImage(in Steamworks.Data.Image image)
@@ -58,18 +57,22 @@ public class SteamFriendsManager : MonoBehaviour
     
     public static async System.Threading.Tasks.Task<Texture2D> GetTextureFromSteamIdAsync(SteamId id)
     {
-        var img = await SteamFriends.GetLargeAvatarAsync(SteamClient.SteamId);
-        Steamworks.Data.Image image = img.Value;
-        Texture2D texture = new Texture2D((int)image.Width, (int)image.Height);
+        // TODO 
+        var img = await SteamFriends.GetLargeAvatarAsync(id);
+        if (!img.HasValue) return Texture2D.redTexture;
 
-        for (int x = 0; x < image.Width; x++)
+        Texture2D texture = new Texture2D((int)img.Value.Width, (int)img.Value.Height);
+
+        Color32[] pixels = new Color32[img.Value.Width * img.Value.Height];
+        for (int y = 0; y < img.Value.Height; y++)
         {
-            for (int y = 0; y < image.Height; y++)
+            for (int x = 0; x < img.Value.Width; x++)
             {
-                var p = image.GetPixel(x, y);
-                texture.SetPixel(x, (int)image.Height - y, new Color32(p.r, p.g, p.b, p.a));
+                var p = img.Value.GetPixel(x, y);
+                pixels[((int)img.Value.Height - y - 1) * img.Value.Width + x] = new Color32(p.r, p.g, p.b, p.a);
             }
         }
+        texture.SetPixels32(pixels);
         texture.Apply();
         return texture;
     }

@@ -52,6 +52,7 @@ public class SteamLobbyManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         SteamMatchmaking.OnLobbyCreated += OnLobbyCreatedCallBack;
+
         SteamMatchmaking.OnLobbyEntered += OnLobbyEnteredCallBack;
         SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoinedCallBack;
         SteamMatchmaking.OnChatMessage += OnChatMessageCallBack;
@@ -59,8 +60,6 @@ public class SteamLobbyManager : MonoBehaviour
         SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberDisconnectedCallBack;
         SteamFriends.OnGameLobbyJoinRequested += OnGameLobbyJoinRequestCallBack;
         SteamMatchmaking.OnLobbyInvite += OnLobbyInvite;
-        
-        SteamMatchmaking.OnLobbyDataChanged += SteamMatchmaking_OnLobbyDataChanged;
 
         // SceneManager.sceneLoaded += OnSceneLoaded;
         // UpdateRichPresenceStatus(SceneManager.GetActiveScene().name);
@@ -68,20 +67,7 @@ public class SteamLobbyManager : MonoBehaviour
 
     public void SendToReady()
     {
-        SteamServerManager.SendingMessages(OpponentSteamId, "Ready");
-    }
-
-    private void SteamMatchmaking_OnLobbyDataChanged(Lobby obj)
-    {
-        var x = obj.Data;
-        var y = obj.Owner;
-        var members = obj.Members;
-
-        foreach (var member in members)
-        {
-
-        }
-        throw new NotImplementedException();
+        SteamServerManager.SendingMessages(currentLobby.Owner.Id, "Ready");
     }
 
     void Update()
@@ -93,11 +79,6 @@ public class SteamLobbyManager : MonoBehaviour
     {
         Debug.Log($"{friend.Name} invited you to his lobby.");
     }
-    
-    private void OnLobbyGameCreatedCallBack(Lobby lobby, uint ip, ushort port, SteamId id)
-    {
-
-    }
 
     private async void OnLobbyMemberJoinedCallBack(Lobby lobby, Friend friend)
     {
@@ -105,7 +86,7 @@ public class SteamLobbyManager : MonoBehaviour
         GameObject obj = Instantiate(InLobbyFriend, content);
         obj.GetComponentInChildren<Text>().text = friend.Name;
         obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id);
-        inLobby.Add(friend.Id, obj);
+        inLobby.TryAdd(friend.Id, obj);
     }
 
     void OnLobbyMemberDisconnectedCallBack(Lobby lobby, Friend friend)
@@ -184,7 +165,7 @@ public class SteamLobbyManager : MonoBehaviour
         }
     }
 
-    async void OnLobbyEnteredCallBack(Lobby lobby)
+    void OnLobbyEnteredCallBack(Lobby lobby)
     {
         Debug.Log("Client joined the lobby");
         UserInLobby = true;
@@ -196,7 +177,10 @@ public class SteamLobbyManager : MonoBehaviour
 
         GameObject obj = Instantiate(InLobbyFriend, content);
         obj.GetComponentInChildren<Text>().text = SteamClient.Name;
-        obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(SteamClient.SteamId);
+
+        List<Task<Texture2D>> tasks = new List<Task<Texture2D>>(currentLobby.MemberCount - 1);
+        // TODO remove. use steam friends manager pp.
+        tasks.Add(SteamFriendsManager.GetTextureFromSteamIdAsync(SteamClient.SteamId));
 
         foreach (var friend in currentLobby.Members)
         {
@@ -204,10 +188,18 @@ public class SteamLobbyManager : MonoBehaviour
             {
                 GameObject obj2 = Instantiate(InLobbyFriend, content);
                 obj2.GetComponentInChildren<Text>().text = friend.Name;
-                obj2.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id);
-
-                inLobby.Add(friend.Id, obj2);
+                tasks.Add(SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id));
+                inLobby.TryAdd(friend.Id, obj2);
             }
+        }
+        Task.WaitAll(tasks.ToArray());
+
+        int i = 1;
+        obj.GetComponentInChildren<RawImage>().texture = tasks[0].Result;
+        foreach (var member in inLobby)
+        {
+            member.Value.GetComponentInChildren<RawImage>().texture = tasks[i].Result;
+            i++;
         }
         OnLobbyJoined.Invoke();
     }

@@ -65,11 +65,10 @@ public class SteamServerManager : MonoBehaviour
     // Receiving data packages
     void ReceivingMessages()
     {
-        
         while ( SteamNetworking.IsP2PPacketAvailable() )
         {
             var packet = SteamNetworking.ReadP2PPacket();
-            if ( packet.HasValue )
+            if (packet != null && packet.HasValue)
             {
                 OnMessageReceived?.Invoke(packet.Value.SteamId, packet.Value.Data);
 
