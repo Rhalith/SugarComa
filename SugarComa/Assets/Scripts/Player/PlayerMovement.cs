@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 StartMove();
             }
-            else if (_currentStep > 0)
+            else if (_currentStep > 0 && _currentPlatform.HasSelector)
             {
                 ProcessSelect();
             }
@@ -151,8 +151,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void GobletSelection_OnTakeIt()
-    {
+    { 
         _currentPlatform.ResetSpec();
+        isUserInterfaceActive = false;
     }
 
     private void OnTrackingStarted()
