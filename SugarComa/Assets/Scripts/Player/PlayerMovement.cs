@@ -161,6 +161,18 @@ public class PlayerMovement : MonoBehaviour
     { 
         _currentPlatform.ResetSpec();
         isUserInterfaceActive = false;
+        PlayerInput.canPlayersAct = true;
+        _dice.SetActive(true);
+        _currentStep = 0;
+        //TODO
+        //if (_currentStep > 0)
+        //{
+        //    _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep), PlatformSpec.Goal);
+        //}
+        //else
+        //{
+        //    _dice.SetActive(true);
+        //}
     }
 
     private void OnTrackingStarted()

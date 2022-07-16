@@ -1784,6 +1784,7 @@ GameObject:
   - component: {fileID: 4120892787399290845}
   - component: {fileID: 4120892787399290846}
   - component: {fileID: 4120892787399290847}
+  - component: {fileID: 4167073434889986357}
   m_Layer: 5
   m_Name: Takeit
   m_TagString: Untagged
@@ -1906,6 +1907,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4167073434889986357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4120892787399290841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7718505efbee8e842895746f93dcf028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4120892787443858288
 GameObject:
   m_ObjectHideFlags: 0
@@ -2817,6 +2830,7 @@ GameObject:
   - component: {fileID: 4120892787976488907}
   - component: {fileID: 4120892787976488900}
   - component: {fileID: 4120892787976488901}
+  - component: {fileID: 3040037617876327963}
   m_Layer: 5
   m_Name: Leaveit
   m_TagString: Untagged
@@ -2939,6 +2953,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3040037617876327963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4120892787976488903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7718505efbee8e842895746f93dcf028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4120892787982766272
 GameObject:
   m_ObjectHideFlags: 0

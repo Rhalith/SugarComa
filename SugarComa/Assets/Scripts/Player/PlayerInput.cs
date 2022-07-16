@@ -37,7 +37,6 @@ public class PlayerInput : MonoBehaviour
 		ClearInputs();
 
 		if (GameManager.IsGameOver) return;
-
 		if(isMyTurn && canPlayersAct && !cinemachineBrain.IsBlending) 
         {
 			ProcessInputs();
