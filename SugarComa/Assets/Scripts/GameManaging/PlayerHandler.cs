@@ -28,8 +28,16 @@ public class PlayerHandler : MonoBehaviour
     private GameObject _createdObject;
     public int whichPlayer;
 
+    private bool isFirst = true;
+
     public void CreatePlayer()
     {
+        if (isFirst)
+        {
+            _playerList[0].SetActive(true);
+            isFirst = false;
+            return;
+        }
         _createdObject = Instantiate(_playerPrefab);
         _createdObject.transform.position = new Vector3(0, 0, 0);
         _playerList.Add(_createdObject);

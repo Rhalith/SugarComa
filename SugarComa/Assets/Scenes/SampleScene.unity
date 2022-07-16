@@ -197,7 +197,7 @@ Transform:
   m_Children:
   - {fileID: 2013690745}
   m_Father: {fileID: 1938159820}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 28.232, y: 90, z: 0}
 --- !u!1001 &27835888
 PrefabInstance:
@@ -22573,7 +22573,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716652753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5655844, y: -2.7671008, z: 0.23766708}
+  m_LocalPosition: {x: 2.74, y: -2.7671008, z: 4.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24671,13 +24671,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908571786}
   m_LocalRotation: {x: 0.23405725, y: 0.667246, z: -0.23405725, w: 0.667246}
-  m_LocalPosition: {x: -12.124708, y: 8.185133, z: 0.2376666}
+  m_LocalPosition: {x: -10.950291, y: 8.185132, z: 4.6599984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1031060057}
   m_Father: {fileID: 1938159820}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1911485500 stripped
 MonoBehaviour:
@@ -24727,8 +24727,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919064169}
-  m_LocalRotation: {x: 0.11984472, y: 0.69687676, z: -0.11984471, w: 0.6968768}
-  m_LocalPosition: {x: -5.180643, y: 1.2844737, z: -5.9023333}
+  m_LocalRotation: {x: 0.23405725, y: 0.667246, z: -0.23405725, w: 0.667246}
+  m_LocalPosition: {x: -10.950291, y: 8.185132, z: 4.6599984}
   m_LocalScale: {x: 0.22000006, y: 0.22, z: 0.22000003}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24768,7 +24768,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 31
+  field of view: 30.92
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -24920,8 +24920,8 @@ Transform:
   - {fileID: 1604228224}
   - {fileID: 1753433175}
   - {fileID: 1919064170}
-  - {fileID: 21234648}
   - {fileID: 1908571788}
+  - {fileID: 21234648}
   - {fileID: 1716652758}
   - {fileID: 296142991}
   m_Father: {fileID: 0}
@@ -29010,7 +29010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5242262645195583948, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5327772178185391657, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_LocalScale.x
