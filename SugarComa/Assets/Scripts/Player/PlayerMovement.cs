@@ -104,13 +104,6 @@ public class PlayerMovement : MonoBehaviour
             _pathTracker.RestartTracking(maximumStep, false, PlatformSpec.Goal);
         }
         isDiceRolled = false;
-        IEnumerator waitForCloseText()
-        {
-            yield return null;
-            yield return new WaitForSeconds(0.5f);
-            _diceText.enabled = false;
-        }
-        StartCoroutine(waitForCloseText());
         
     }
 
@@ -189,7 +182,15 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerAnimation.StopRunning();
         _playerCollector.CheckCurrentNode(_currentPlatform);
-        if(!_currentPlatform.HasSelector && _currentPlatform.spec != PlatformSpec.Goal) _dice.SetActive(true);
+        //if((_currentPlatform.HasSelector && _currentStep <= 0) || _currentPlatform.spec != PlatformSpec.Goal) _dice.SetActive(true);
+        if (_currentPlatform.HasSelector)
+        {
+            if(_currentStep <= 0) _dice.SetActive(true);
+        }
+        else if (_currentPlatform.spec != PlatformSpec.Goal)
+        {
+            _dice.SetActive(true);
+        }
 
     }
 

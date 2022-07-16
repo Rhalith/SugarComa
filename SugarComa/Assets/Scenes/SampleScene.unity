@@ -24641,7 +24641,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 0
+  m_Priority: 1
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 1716652758}
   m_Follow: {fileID: 1716652758}
@@ -28162,6 +28162,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2465981854881630097, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2800568867772316370, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}

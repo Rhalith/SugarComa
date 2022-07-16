@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
@@ -46,6 +47,13 @@ public class PlayerAnimation : MonoBehaviour
         {
             _dice.SetActive(false);
             _playerMovement.DiceText.enabled = true;
+            IEnumerator waitForCloseText()
+            {
+                yield return null;
+                yield return new WaitForSeconds(0.5f);
+                _playerMovement.DiceText.enabled = false;
+            }
+            StartCoroutine(waitForCloseText());
         }
         
     }
