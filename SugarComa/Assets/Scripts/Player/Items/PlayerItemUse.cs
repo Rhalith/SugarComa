@@ -24,12 +24,11 @@ public class PlayerItemUse : MonoBehaviour
 
     private void FollowMouse()
     {
-        Plane plane = new Plane(Vector3.up, transform.position);
+        Plane plane = new(Vector3.up, transform.position);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        float hitdist;
 
-        if(plane.Raycast(ray, out hitdist))
+        if (plane.Raycast(ray, out float hitdist))
         {
             Vector3 targetpoint = ray.GetPoint(hitdist);
             Quaternion targetrotation = Quaternion.LookRotation(targetpoint - transform.position);

@@ -7,13 +7,13 @@ public class PlayerInventory : MonoBehaviour
     private Dictionary<InventoryItemData, InventoryItem> _itemDictionary;
 
     public GameObject inventoryUI;
-    public List<InventoryItem> inventory { get; private set; }
+    public List<InventoryItem> Inventory;
 
     public List<ItemObject> _items;
 
     private void Awake()
     {
-        inventory = new List<InventoryItem>();
+        Inventory = new List<InventoryItem>();
         _itemDictionary = new Dictionary<InventoryItemData, InventoryItem>();
     }
 
@@ -35,7 +35,7 @@ public class PlayerInventory : MonoBehaviour
         else
         {
             InventoryItem newItem = new(refData);
-            inventory.Add(newItem);
+            Inventory.Add(newItem);
             _itemDictionary.Add(refData, newItem);
         }
     }
@@ -47,7 +47,7 @@ public class PlayerInventory : MonoBehaviour
             value.RemoveFromStack();
             if(value.stackSize == 0)
             {
-                inventory.Remove(value);
+                Inventory.Remove(value);
                 _itemDictionary.Remove(refData);
             }
         }
