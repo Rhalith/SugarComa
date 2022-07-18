@@ -7,7 +7,7 @@ public class PlayerInventory : MonoBehaviour
     private Dictionary<InventoryItemData, InventoryItem> _itemDictionary;
 
     public GameObject inventoryUI;
-    public List<InventoryItem> Inventory;
+    public List<InventoryItem> Inventory { get; private set; }
 
     public List<ItemObject> _items;
 
