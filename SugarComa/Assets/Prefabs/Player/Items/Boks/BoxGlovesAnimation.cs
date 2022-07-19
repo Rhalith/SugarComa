@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoxGlovesAnimation : MonoBehaviour
@@ -14,7 +12,7 @@ public class BoxGlovesAnimation : MonoBehaviour
     /// <param name="i"></param>
     private void HitSet(int i)
     {
-        _animator.SetBool("hit", i !=0);
+        _animator.SetBool("hit", i != 0);
     }
     /// <summary>
     /// Triggers the hit animation.
@@ -33,5 +31,5 @@ public class BoxGlovesAnimation : MonoBehaviour
         HitSet(0);
         _boxGloves.TakeGlovesFromPlayer();
     }
-    
+
 }

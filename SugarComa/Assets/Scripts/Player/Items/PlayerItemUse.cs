@@ -1,6 +1,3 @@
-using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerItemUse : MonoBehaviour
@@ -20,7 +17,7 @@ public class PlayerItemUse : MonoBehaviour
     {
         if (!isPosSet)
         {
-            _rotationY = new Vector3(playerTransform.eulerAngles.x,playerTransform.eulerAngles.y, playerTransform.eulerAngles.z);
+            _rotationY = new Vector3(playerTransform.eulerAngles.x, playerTransform.eulerAngles.y, playerTransform.eulerAngles.z);
             isPosSet = true;
         }
     }
@@ -73,7 +70,7 @@ public class PlayerItemUse : MonoBehaviour
     //        {
     //            StopAllCoroutines();
     //        }
-                
+
     //        yield return new WaitForSeconds(0.01f);
     //    }
 

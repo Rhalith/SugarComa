@@ -32,18 +32,24 @@ public class PlayerAnimation : MonoBehaviour
 
     public GoalSelector GoalSelector { set => _goalSelector = value; }
     #endregion
-
+    /// <summary>
+    /// Triggers running animation.
+    /// </summary>
+    /// <param name="running"></param>
     private void RunSet(int running)
     {
         _animator.SetBool("running", running != 0);
         _run = running != 0;
     }
-
+    /// <summary>
+    /// Triggers jump animation.
+    /// </summary>
+    /// <param name="jump"></param>
     private void JumpSet(int jump)
     {
         _animator.SetBool("jump", jump != 0);
         _jump = jump != 0;
-        if(jump == 0)
+        if (jump == 0)
         {
             _dice.SetActive(false);
             _playerMovement.DiceText.enabled = true;
@@ -55,14 +61,17 @@ public class PlayerAnimation : MonoBehaviour
             }
             StartCoroutine(waitForCloseText());
         }
-        
-    }
 
+    }
+    /// <summary>
+    /// Triggers landing animation.
+    /// </summary>
+    /// <param name="landing"></param>
     private void LandSet(int landing)
     {
         _animator.SetBool("landing", landing != 0);
         _land = landing != 0;
-        if(_playerMovement.PlayerCollector.isDead && landing == 0)
+        if (_playerMovement.PlayerCollector.isDead && landing == 0)
         {
             DeathSet(0);
             _playerMovement.PlayerCollector.isDead = false;
@@ -74,62 +83,92 @@ public class PlayerAnimation : MonoBehaviour
             _dice.SetActive(true);
         }
     }
+    /// <summary>
+    /// Triggers surprise animation.
+    /// </summary>
+    /// <param name="surprised"></param>
     private void SurpriseSet(int surprised)
     {
         _animator.SetBool("surprised", surprised != 0);
         _surprised = surprised != 0;
     }
+
+    /// <summary>
+    /// Triggers death animation.
+    /// </summary>
+    /// <param name="dying"></param>
+    /// TODO
     private void DeathSet(int dying)
     {
         _animator.SetBool("dead", dying != 0);
         _dead = dying != 0;
     }
 
-    //Jumping and rolling dice
+    /// <summary>
+    /// Jumping and rolling dice
+    /// </summary>
     public void RollDice()
     {
         JumpSet(1);
     }
 
-    //After jumping start running
+    /// <summary>
+    /// After jumping start running
+    /// </summary>
     public void StartRunning()
     {
         RunSet(1);
     }
 
-    //If player stops
+    /// <summary>
+    /// If player stops
+    /// </summary>
     public void StopRunning()
     {
         RunSet(0);
     }
 
-    //If player is stopped in Selector and selected
+    /// <summary>
+    /// If player is stopped in Selector and selected a way
+    /// </summary>
     public void ContinueRunning()
     {
         RunSet(1);
     }
-
+    /// <summary>
+    /// When player landed.
+    /// </summary>
     public void LandPlayer()
     {
         LandSet(1);
     }
+    /// <summary>
+    /// When death start.
+    /// </summary>
     public void StartDeath()
     {
         DeathSet(1);
     }
+    /// <summary>
+    /// When death animation ends. Invokes in death animation.
+    /// </summary>
     public void AfterDeath()
     {
         _playerMovement.OnDeath();
     }
 
-
+    /// <summary>
+    /// Set box gloves off, Invokes at the start of "BoxGlovesLeaving" animation.
+    /// </summary>
     public void SetGlovesOff()
     {
         _boxGloves.SetActive(false);
         ItemUsing.BoxGlovesUsing = false;
         _boxGloves.GetComponent<BoxGloves>()._hitBox.SetActive(false);
     }
-
+    /// <summary>
+    /// Set box gloves on, Invokes at the end of "BoxGlovesTaking" animation.
+    /// </summary>
     public void SetGlovesOn()
     {
         _boxGloves.SetActive(true);

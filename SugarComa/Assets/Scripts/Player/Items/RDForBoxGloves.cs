@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RDForBoxGloves : MonoBehaviour
@@ -11,6 +9,7 @@ public class RDForBoxGloves : MonoBehaviour
     {
         ragdollOnOff = current.GetComponent<RagdollOnOff>();
     }
+    //TODO
     private void OnCollisionEnter(Collision collision)
     {
         var rdof = collision.gameObject.GetComponent<RagdollOnOff>();

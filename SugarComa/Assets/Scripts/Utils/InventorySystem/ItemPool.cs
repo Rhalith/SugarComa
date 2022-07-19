@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,7 +37,7 @@ public class ItemPool : MonoBehaviour
     private void CloseAllItems()
     {
         _playerAnimator.SetBool("itemUsing", false);
-        if(ItemUsing.BoxGlovesUsing) _playerAnimator.SetBool("boks", false);
+        if (ItemUsing.BoxGlovesUsing) _playerAnimator.SetBool("boks", false);
     }
 }
 

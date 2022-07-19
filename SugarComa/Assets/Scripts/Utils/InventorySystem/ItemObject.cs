@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +12,7 @@ public class ItemObject : MonoBehaviour
 
     [SerializeField] PlayerMovement _playerMovement;
 
-    public Button _button; 
+    public Button _button;
     public void OnAddItem()
     {
         playerInventory.AddItem(referenceItem);
@@ -23,14 +21,14 @@ public class ItemObject : MonoBehaviour
     {
         playerInventory.RemoveItem(referenceItem);
     }
-    
+
     public void NotifyInventory()
     {
         ChangeInventory(playerInventory.GetItem(referenceItem));
     }
     public int CheckItemCount()
     {
-        if(playerInventory.GetItem(referenceItem) == null)
+        if (playerInventory.GetItem(referenceItem) == null)
         {
             return 0;
         }
@@ -39,7 +37,7 @@ public class ItemObject : MonoBehaviour
 
     public void ChangeInventory(InventoryItem item)
     {
-        if(item != null)
+        if (item != null)
         {
             text.text = item.stackSize.ToString();
         }
