@@ -42,10 +42,13 @@ public class SteamFriendsManager : MonoBehaviour
     {
         foreach (var friend in SteamFriends.GetFriends())
         {
-            GameObject f = Instantiate(friendObj, friendsContent);
-            f.GetComponentInChildren<Text>().text = friend.Name;
-            f.GetComponent<FriendObject>().steamid = friend.Id;
-            AssingFriendImage(f, friend.Id);
+            if (friend.IsOnline)
+            {
+                GameObject f = Instantiate(friendObj, friendsContent);
+                f.GetComponentInChildren<Text>().text = friend.Name;
+                f.GetComponent<FriendObject>().steamid = friend.Id;
+                AssingFriendImage(f, friend.Id);
+            }
         }
     }
 

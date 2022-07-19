@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 using Steamworks;
@@ -7,6 +9,11 @@ using Steamworks.Data;
 
 public class SteamServerManager : MonoBehaviour
 {
+    public struct TempStruct
+    {
+        public Vector3 direction;
+    }
+    
     public delegate void MessageReceivedHandler(SteamId steamid, byte[] data);
     public static event MessageReceivedHandler OnMessageReceived;
 
@@ -15,6 +22,7 @@ public class SteamServerManager : MonoBehaviour
     
     void Awake()
     {
+        DontDestroyOnLoad(this);
         // Check every 0.05 seconds for new packets
         InvokeRepeating(nameof(ReceivingMessages), 0f, 0.05f);
         steamLobbyManager = steamManager.GetComponent<SteamLobbyManager>();
@@ -36,27 +44,13 @@ public class SteamServerManager : MonoBehaviour
     //    }
     //}
     
-    public static void SendingMessages(SteamId targetSteamId, string message)
+    public static void SendingMessages(SteamId targetSteamId, byte[] mydata)
     {
         if (SteamLobbyManager.UserInLobby)
         {
-            byte[] mydata = Encoding.UTF8.GetBytes(message);
-
             var sent = SteamNetworking.SendP2PPacket( targetSteamId, mydata );
             
-            /*
-            if (!sent)
-            {
-                var sent2 = SteamNetworking.SendP2PPacket( targetSteamId, mydata );
-                if (!sent2)
-                {
-                    thingsThatFailedToSend.Add(mydata);
-                }
-            }
-            */
-            
-            Debug.Log($"is message sent: {sent}," +
-                $"Owner: {SteamLobbyManager.currentLobby.Owner.Id}" +
+            Debug.Log($"Sending\nOwner: {SteamLobbyManager.currentLobby.Owner.Id}" +
                 $"LobbyPartner: {steamLobbyManager.LobbyPartner.Id}" +
                 $"target: {targetSteamId}");
         }
@@ -72,13 +66,40 @@ public class SteamServerManager : MonoBehaviour
             {
                 OnMessageReceived?.Invoke(packet.Value.SteamId, packet.Value.Data);
 
-                Debug.Log($"OnMessageReceived:" +
-                    $"Owner: {SteamLobbyManager.currentLobby.Owner.Id}" +
+                Debug.Log($"Receiving\nOwner: {SteamLobbyManager.currentLobby.Owner.Id}" +
                     $"LobbyPartner: {steamLobbyManager.LobbyPartner.Id}" +
                     $"target: {packet.Value.SteamId}");
-                //HandleMessageFrom( packet.Value.SteamId, packet.Value.Data );
+                HandleMessageFrom( packet.Value.SteamId, packet.Value.Data );
             }
         }
     }
 
+    void HandleMessageFrom(SteamId steamId, byte[] data)
+    {
+        TempStruct temp = Deserialize<TempStruct>(data);
+        PlayerMovement.SetDirection(temp.direction);
+    }
+    
+    public static byte[] Serialize<T>(T s)
+        where T : struct
+    {
+        var size = Marshal.SizeOf(typeof(T));
+        var array = new byte[size];
+        var ptr = Marshal.AllocHGlobal(size);
+        Marshal.StructureToPtr(s, ptr, true);
+        Marshal.Copy(ptr, array, 0, size);
+        Marshal.FreeHGlobal(ptr);
+        return array;
+    }
+
+    public static T Deserialize<T>(byte[] array)
+        where T : struct
+    {
+        var size = Marshal.SizeOf(typeof(T));
+        var ptr = Marshal.AllocHGlobal(size);
+        Marshal.Copy(array, 0, ptr, size);
+        var s = (T)Marshal.PtrToStructure(ptr, typeof(T));
+        Marshal.FreeHGlobal(ptr);
+        return s;
+    }
 }

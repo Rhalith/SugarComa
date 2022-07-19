@@ -3,15 +3,17 @@ using Steamworks.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SteamLobbyManager : MonoBehaviour
 {
     public UnityEngine.UI.Image panelImage;
-    public static SteamManager SteamManager;
+    public static SteamManager steamManager;
     public static Lobby currentLobby;
     public static bool UserInLobby;
     public UnityEvent OnLobbyCreated;
@@ -30,27 +32,13 @@ public class SteamLobbyManager : MonoBehaviour
 
     private void Awake()
     {
-        SteamManager = GetComponent<SteamManager>();
+        DontDestroyOnLoad(this);
+        steamManager = GetComponent<SteamManager>();
         SteamServerManager.OnMessageReceived += this.SteamServerManager_OnMessageReceived;
-    }
-
-    private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] data)
-    {
-        string message = System.Text.Encoding.UTF8.GetString(data);
-        if (message == "Ready")
-        {
-            SteamServerManager.SendingMessages(steamid, "Ok");
-        }
-        else if (message == "Ok")
-        {
-            panelImage.color = UnityEngine.Color.green;
-        }
     }
 
     private void Start()
     {
-        DontDestroyOnLoad(this);
-
         SteamMatchmaking.OnLobbyCreated += OnLobbyCreatedCallBack;
 
         SteamMatchmaking.OnLobbyEntered += OnLobbyEnteredCallBack;
@@ -59,11 +47,6 @@ public class SteamLobbyManager : MonoBehaviour
         SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberDisconnectedCallBack;
         SteamFriends.OnGameLobbyJoinRequested += OnGameLobbyJoinRequestCallBack;
         // SceneManager.sceneLoaded += OnSceneLoaded
-    }
-
-    public void SendToReady()
-    {
-        SteamServerManager.SendingMessages(currentLobby.Owner.Id, "Ready");
     }
 
     void Update()
@@ -75,6 +58,8 @@ public class SteamLobbyManager : MonoBehaviour
     {
         Debug.Log($"{friend.Name} joined the lobby");
         GameObject obj = Instantiate(InLobbyFriend, content);
+        obj.GetComponent<LobbyFriendObject>().steamid = friend.Id;
+        obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
         obj.GetComponentInChildren<Text>().text = friend.Name;
         obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id);
         
@@ -85,6 +70,28 @@ public class SteamLobbyManager : MonoBehaviour
         else
         {
             Destroy(obj);
+        }
+    }
+
+    public void SendToReady()
+    {
+        SteamServerManager.SendingMessages(currentLobby.Owner.Id, Encoding.UTF8.GetBytes("Ready"));
+    }
+
+    // String - byte[] düzenlemelerini yap...
+    
+    
+    private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] data)
+    {
+        string message = System.Text.Encoding.UTF8.GetString(data);
+        if (message == "Ready")
+        {
+            SteamServerManager.SendingMessages(steamid, Encoding.UTF8.GetBytes("Ok"));
+        }
+        else if (message == "Ok")
+        {
+            panelImage.color = UnityEngine.Color.green;
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
@@ -158,6 +165,8 @@ public class SteamLobbyManager : MonoBehaviour
         inLobby.Clear();
 
         GameObject obj = Instantiate(InLobbyFriend, content);
+        obj.GetComponent<LobbyFriendObject>().steamid = steamManager.PlayerSteamId;
+        obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
         obj.GetComponentInChildren<Text>().text = SteamClient.Name;
 
         List<Task<Texture2D>> tasks = new List<Task<Texture2D>>(currentLobby.MemberCount - 1);
@@ -172,6 +181,8 @@ public class SteamLobbyManager : MonoBehaviour
             {
                 GameObject obj2 = Instantiate(InLobbyFriend, content);
                 obj2.GetComponentInChildren<Text>().text = friend.Name;
+                obj2.GetComponent<LobbyFriendObject>().steamid = friend.Id;
+                obj2.GetComponent<LobbyFriendObject>().CheckIfOwner();
                 tasks.Add(SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id));
                 inLobby.TryAdd(friend.Id, obj2);
             }
