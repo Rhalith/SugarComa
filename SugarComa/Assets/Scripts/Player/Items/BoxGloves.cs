@@ -18,24 +18,31 @@ public class BoxGloves : MonoBehaviour, IDamageItems
 
     public bool isHitPlayer;
 
-
     public void DamageHealth(PlayerCollector playerCollector)
     {
         if(otherPlayersCollector != null) playerCollector.DamagePlayer(damage);
     }
 
+    /// <summary>
+    /// Use box gloves.
+    /// </summary>
     public void UseItem()
     {
         _hitBox.SetActive(false);
         _boxGlovesAnimation.HitAnimation();
     }
-
+    /// <summary>
+    /// Triggers to player taking box gloves animation. Using on boks eldiveni button in User Interface gameObject.
+    /// </summary>
     public void TakeGlovesToPlayer()
     {
         ItemUsing.BoxGlovesUsing = true;
         _playerAnimator.SetBool("boks", true);
     }
 
+    /// <summary>
+    /// If player is in hitbox damage it and removes item from inventory. 
+    /// </summary>
     public void TakeGlovesFromPlayer()
     {
         if (isHitPlayer)

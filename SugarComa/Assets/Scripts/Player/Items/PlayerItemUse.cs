@@ -13,6 +13,9 @@ public class PlayerItemUse : MonoBehaviour
     private bool isPosSet;
     private bool isRotSet;
 
+    /// <summary>
+    /// Keep first position before using item.
+    /// </summary>
     private void KeepPosition()
     {
         if (!isPosSet)
@@ -39,14 +42,14 @@ public class PlayerItemUse : MonoBehaviour
     {
         if (ItemPool._isItemUsing && _playerInput.isMyTurn)
         {
-            KeepPosition();
-            FollowMouse();
-            if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)
+            if (ItemUsing.BoxGlovesUsing)
             {
-                ItemUsing.BoxGlovesUsing = true;
-                _itemPool.UseCurrentItem();
-                _playerInput.useMouseItem = false;
-                isRotSet = true;
+                OnBoxGlovesUsing();
+            }
+            //TODO
+            else
+            {
+
             }
         }
         //else if(!ItemPool._isItemUsing && !ItemUsing.BoxGlovesUsing && isRotSet)
@@ -75,5 +78,16 @@ public class PlayerItemUse : MonoBehaviour
     //    }
 
     //}
-
+    private void OnBoxGlovesUsing()
+    {
+        KeepPosition();
+        FollowMouse();
+        if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)
+        {
+            ItemUsing.BoxGlovesUsing = true;
+            _itemPool.UseCurrentItem();
+            _playerInput.useMouseItem = false;
+            isRotSet = true;
+        }
+    }
 }

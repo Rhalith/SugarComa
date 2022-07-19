@@ -8,7 +8,6 @@ public class BoxGlovesAnimation : MonoBehaviour
     [SerializeField] Animator _animator;
     [SerializeField] BoxGloves _boxGloves;
 
-    private bool isHit = false;
     /// <summary>
     /// 1 for hit, 0 for reset.
     /// </summary>
@@ -17,28 +16,21 @@ public class BoxGlovesAnimation : MonoBehaviour
     {
         _animator.SetBool("hit", i !=0);
     }
-
+    /// <summary>
+    /// Triggers the hit animation.
+    /// </summary>
     public void HitAnimation()
     {
-        if (!isHit)
-        {
-            print("first");
-            HitSet(1);
-            isHit = true;
-        }
-        else
-        {
-            print("second");
-            HitSet(0);
-            isHit = false;
-            
-        }
+        HitSet(1);
     }
-
+    /// <summary>
+    /// It is using at the end of BoxHit animation.
+    /// </summary>
     public void BoxGlovesUsed()
     {
         _playerAnimator.SetBool("itemUsing", false);
         _playerAnimator.SetBool("boks", false);
+        HitSet(0);
         _boxGloves.TakeGlovesFromPlayer();
     }
     
