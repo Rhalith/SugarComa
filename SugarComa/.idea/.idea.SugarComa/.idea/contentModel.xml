@@ -24,6 +24,7 @@
           </e>
           <e p="TempScripts" t="Include">
             <e p="PlayerMovement.cs" t="Include" />
+            <e p="TempStructScript.cs" t="Include" />
           </e>
         </e>
         <e p="TextMesh Pro" t="Include">

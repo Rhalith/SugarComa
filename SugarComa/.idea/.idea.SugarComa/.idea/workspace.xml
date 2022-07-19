@@ -21,15 +21,13 @@
   <component name="ChangeListManager">
     <list default="true" id="145a2e84-2b96-4c0a-9c14-0533ea960364" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Networking/LobbyFriend.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Networking/LobbyFriend.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/LobbyScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/LobbyScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/FriendObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/FriendObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamFriendsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamFriendsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,15 +41,18 @@
     <setting file="file://$PROJECT_DIR$/../../../../SteamNetworking-master/Assets/Scripts/Networking/NetworkObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../SteamNetworking-master/Assets/Scripts/Networking/NetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TempScripts/TempStructScript.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking/SteamFriendsManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TempScripts/TempStructScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking/SteamManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" />
       </list>
     </option>
   </component>
@@ -100,7 +101,7 @@
       <workItem from="1657974185763" duration="2410000" />
       <workItem from="1658139265950" duration="1748000" />
       <workItem from="1658169031519" duration="5188000" />
-      <workItem from="1658221107648" duration="2225000" />
+      <workItem from="1658221107648" duration="6576000" />
     </task>
     <servers />
   </component>
