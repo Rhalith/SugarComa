@@ -19,16 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="145a2e84-2b96-4c0a-9c14-0533ea960364" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/FriendObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/FriendObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" afterDir="false" />
-    </list>
+    <list default="true" id="145a2e84-2b96-4c0a-9c14-0533ea960364" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,7 +92,7 @@
       <workItem from="1657974185763" duration="2410000" />
       <workItem from="1658139265950" duration="1748000" />
       <workItem from="1658169031519" duration="5188000" />
-      <workItem from="1658221107648" duration="6576000" />
+      <workItem from="1658221107648" duration="7170000" />
     </task>
     <servers />
   </component>

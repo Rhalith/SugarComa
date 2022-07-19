@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using System.Text;
 using Steamworks;
 using TempScripts;
 using UnityEngine;
@@ -69,9 +70,16 @@ namespace Networking
 
         void HandleMessageFrom(SteamId steamId, byte[] data)
         {
+            // for string test 
+            string message = Encoding.UTF8.GetString(data);
+            Debug.Log($"user {steamId}'s message is {message}");
+            
+            /*
+            // for struct test 
             TempStructScript.TempStruct temp = Deserialize<TempStructScript.TempStruct>(data);
             Debug.Log($"User {temp.id} move to {temp.dirStr}");
             PlayerMovement.SetDirection(temp.direction);
+            */
         }
     
         public static byte[] Serialize<T>(T s)

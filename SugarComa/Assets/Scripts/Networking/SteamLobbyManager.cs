@@ -90,7 +90,7 @@ namespace Networking
             else if (message == "Ok")
             {
                 panelImage.color = UnityEngine.Color.green;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
 
