@@ -3,17 +3,19 @@ using UnityEngine;
 
 namespace TempScripts
 {
-    public class TempStructScript : MonoBehaviour
+    public class PlayerInfo : MonoBehaviour
     {
         // Böyle kullanmada artık data kalma muhabbeti olur mu??
+        
+        // Mesajlar için enum açabilirsin..
     
-        public struct TempStruct
+        public struct Info
         {
             public SteamId id;
             public Vector3 direction;
             public string dirStr;
         }
 
-        public static TempStruct temp = new TempStruct();
+        public static Info playerInfo = new Info();
     }
 }

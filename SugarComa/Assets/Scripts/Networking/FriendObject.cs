@@ -8,7 +8,7 @@ public class FriendObject : MonoBehaviour
 {
     public SteamId steamid;
 
-    public async void Invite()
+    public async void InviteAsync()
     {
         if (SteamLobbyManager.UserInLobby)
         {

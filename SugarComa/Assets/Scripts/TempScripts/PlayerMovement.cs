@@ -9,20 +9,22 @@ namespace TempScripts
         private bool isMoved = false;
         private static bool canMove = false;
         private static Vector3 moveDirection;
-    
-        private SteamManager steamManager;
-        private SteamServerManager serverManager;
-        TempStructScript.TempStruct temp;
+        PlayerInfo.Info playerInfo;
+
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private SteamManager steamManager;
+        [SerializeField] private SteamServerManager serverManager;
 
         private void Awake()
         {
-            steamManager = GameObject.Find("SteamManager").GetComponent<SteamManager>();
-            serverManager = GameObject.Find("ServerManager").GetComponent<SteamServerManager>();
+            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         }
 
         private void Start()
         {
-            temp.id = steamManager.PlayerSteamId;
+            steamManager = gameManager.steamManager;
+            serverManager = gameManager.serverManager;
+            playerInfo.id = steamManager.PlayerSteamId;
         }
 
         void Update()
@@ -32,29 +34,29 @@ namespace TempScripts
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     isMoved = true;
-                    temp.direction = Vector3.left * movementSpeed;
-                    temp.dirStr = "left";
+                    playerInfo.direction = Vector3.left * movementSpeed;
+                    playerInfo.dirStr = "left";
                 }
         
                 if (Input.GetKeyDown(KeyCode.D))
                 {
                     isMoved = true;
-                    temp.direction = Vector3.right * movementSpeed;
-                    temp.dirStr = "right";
+                    playerInfo.direction = Vector3.right * movementSpeed;
+                    playerInfo.dirStr = "right";
                 }
         
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     isMoved = true;
-                    temp.direction = Vector3.up * movementSpeed;
-                    temp.dirStr = "up";
+                    playerInfo.direction = Vector3.up * movementSpeed;
+                    playerInfo.dirStr = "up";
                 }
         
                 if (Input.GetKeyDown(KeyCode.S))
                 {
                     isMoved = true;
-                    temp.direction = Vector3.down * movementSpeed;
-                    temp.dirStr = "down";
+                    playerInfo.direction = Vector3.down * movementSpeed;
+                    playerInfo.dirStr = "down";
                 }
             }
 
@@ -77,7 +79,7 @@ namespace TempScripts
 
         void SendMoveDirection()
         {
-            SteamServerManager.SendingMessages(steamManager.PlayerSteamId, SteamServerManager.Serialize(temp));
+            SteamServerManager.SendingMessages(steamManager.PlayerSteamId, SteamServerManager.Serialize(playerInfo));
         }
 
         public static void SetDirection(Vector3 direction)

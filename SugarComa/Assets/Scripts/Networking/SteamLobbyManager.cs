@@ -57,10 +57,12 @@ namespace Networking
         {
             Debug.Log($"{friend.Name} joined the lobby");
             GameObject obj = Instantiate(InLobbyFriend, content);
+            // Bu kısım ayrı bir fonksiyona dönüştürülebilir...
             obj.GetComponent<LobbyFriendObject>().steamid = friend.Id;
             obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
             obj.GetComponentInChildren<Text>().text = friend.Name;
             obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id);
+            inLobby.TryAdd(friend.Id, obj);
         
             if(inLobby.TryAdd(friend.Id, obj))
             {
@@ -72,14 +74,24 @@ namespace Networking
             }
         }
 
-        public void SendToReady()
+        public void SendReadyToAll()
         {
-            SteamServerManager.SendingMessages(currentLobby.Owner.Id, Encoding.UTF8.GetBytes("Ready"));
+            foreach (var user in inLobby.Values)
+            {
+                SteamServerManager.SendingMessages(user.GetComponent<LobbyFriendObject>().steamid, Encoding.UTF8.GetBytes("Ready"));
+            }
         }
+        
+        // Bu değişiklikler için observer pattern kullanabilir miyiz?
 
-        // String - byte[] düzenlemelerini yap...
-    
-    
+        public void SendUnreadyToAll()
+        {
+            foreach (var user in inLobby.Values)
+            {
+                SteamServerManager.SendingMessages(user.GetComponent<LobbyFriendObject>().steamid, Encoding.UTF8.GetBytes("Unready"));
+            }
+        }
+        
         private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] data)
         {
             string message = System.Text.Encoding.UTF8.GetString(data);
@@ -87,9 +99,18 @@ namespace Networking
             {
                 SteamServerManager.SendingMessages(steamid, Encoding.UTF8.GetBytes("Ok"));
             }
+            else if (message == "Unready")
+            {
+                SteamServerManager.SendingMessages(steamid, Encoding.UTF8.GetBytes("Ok"));
+            }
             else if (message == "Ok")
             {
-                panelImage.color = UnityEngine.Color.green;
+                if(panelImage.color != UnityEngine.Color.green)
+                    panelImage.color = UnityEngine.Color.green;
+                else
+                    panelImage.color = UnityEngine.Color.red;
+                
+                // Check if everybody ready, then start a count down, then load scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
@@ -167,6 +188,7 @@ namespace Networking
             obj.GetComponent<LobbyFriendObject>().steamid = steamManager.PlayerSteamId;
             obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
             obj.GetComponentInChildren<Text>().text = SteamClient.Name;
+            inLobby.TryAdd(steamManager.PlayerSteamId, obj);
 
             List<Task<Texture2D>> tasks = new List<Task<Texture2D>>(currentLobby.MemberCount - 1);
             // TODO remove. use steam friends manager pp.
@@ -188,8 +210,7 @@ namespace Networking
             }
             Task.WaitAll(tasks.ToArray());
 
-            int i = 1;
-            obj.GetComponentInChildren<RawImage>().texture = tasks[0].Result;
+            int i = 0;
             foreach (var member in inLobby)
             {
                 member.Value.GetComponentInChildren<RawImage>().texture = tasks[i].Result;

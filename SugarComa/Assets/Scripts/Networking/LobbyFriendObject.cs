@@ -9,6 +9,7 @@ public class LobbyFriendObject : MonoBehaviour
 {
     public SteamId steamid;
     public bool isOwner = false;
+    public bool isReady = false;
 
     public void CheckIfOwner()
     {
@@ -17,8 +18,8 @@ public class LobbyFriendObject : MonoBehaviour
             isOwner = true;
         }
     }
-    
-    public async void Kick()
+
+    public async void KickAsync()
     {
         // Kick Function
         Debug.Log("Kicked " + steamid);

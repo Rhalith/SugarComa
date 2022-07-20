@@ -23,8 +23,9 @@
             <e p="SteamServerManager.cs" t="Include" />
           </e>
           <e p="TempScripts" t="Include">
+            <e p="GameManager.cs" t="Include" />
+            <e p="PlayerInfo.cs" t="Include" />
             <e p="PlayerMovement.cs" t="Include" />
-            <e p="TempStructScript.cs" t="Include" />
           </e>
         </e>
         <e p="TextMesh Pro" t="Include">
