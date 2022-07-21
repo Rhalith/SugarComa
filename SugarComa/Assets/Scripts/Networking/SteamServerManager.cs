@@ -1,6 +1,6 @@
 using Steamworks;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Networking
@@ -14,7 +14,6 @@ namespace Networking
         public delegate void MessageReceivedHandler(SteamId steamid, byte[] buffer);
         public delegate void GameStartedHandler();
         public event MessageReceivedHandler OnMessageReceived;
-        public event GameStartedHandler OnGameStarted;
 
         private void Awake()
         {
@@ -27,16 +26,6 @@ namespace Networking
             _instance = this;
             DontDestroyOnLoad(this);
             InvokeRepeating(nameof(ReceivingMessages), 0, 0.05f);
-        }
-
-        // For now i'll use a button instead of check if everybody ready.
-        public void CreateServer()
-        {
-            if (SteamLobbyManager.Instance.playerInfos.Any((playerInfo) => !playerInfo.Value.IsReady))
-                return;
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            OnGameStarted?.Invoke();
         }
     
         public bool SendingMessage(SteamId targetSteamId, byte[] buffer)

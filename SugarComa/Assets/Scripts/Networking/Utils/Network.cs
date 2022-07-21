@@ -9,6 +9,7 @@ public enum MessageType : byte
 {
     Ready,
     UnReady,
+    StartGame,
     InputDown
 }
 

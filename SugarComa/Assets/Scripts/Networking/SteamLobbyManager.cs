@@ -1,11 +1,12 @@
 ﻿using Steamworks;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.UI;
 using Steamworks.Data;
 using UnityEngine.Events;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using UnityEngine.SceneManagement;
 
 namespace Networking
 {
@@ -43,25 +44,56 @@ namespace Networking
             _instance = this;
             DontDestroyOnLoad(this);
             steamManager = GetComponent<SteamManager>();
-            SteamServerManager.Instance.OnMessageReceived += SteamServerManager_OnMessageReceived;
-            SteamServerManager.Instance.OnGameStarted += Instance_OnGameStarted;
-        }
 
-        private void Instance_OnGameStarted()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= SteamServerManager_OnMessageReceived;
-            SteamServerManager.Instance.OnGameStarted -= Instance_OnGameStarted;
+            SceneManager.activeSceneChanged += SceneManager_ActiveSceneChanged;
+            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
 
         private void Start()
         {
+            #region Lobby Events
             SteamMatchmaking.OnLobbyCreated += OnLobbyCreatedCallBack;
-
             SteamMatchmaking.OnLobbyEntered += OnLobbyEnteredCallBack;
             SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoinedCallBack;
             SteamMatchmaking.OnLobbyMemberDisconnected += OnLobbyMemberDisconnectedCallBack;
             SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberDisconnectedCallBack;
             SteamFriends.OnGameLobbyJoinRequested += OnGameLobbyJoinRequestCallBack;
+            #endregion
+        }
+
+        private void SceneManager_ActiveSceneChanged(Scene arg0, Scene arg1)
+        {
+            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+
+            SceneManager.activeSceneChanged -= SceneManager_ActiveSceneChanged;
+
+            #region Lobby Events
+            SteamMatchmaking.OnLobbyCreated -= OnLobbyCreatedCallBack;
+            SteamMatchmaking.OnLobbyEntered -= OnLobbyEnteredCallBack;
+            SteamMatchmaking.OnLobbyMemberJoined -= OnLobbyMemberJoinedCallBack;
+            SteamMatchmaking.OnLobbyMemberDisconnected -= OnLobbyMemberDisconnectedCallBack;
+            SteamMatchmaking.OnLobbyMemberLeave -= OnLobbyMemberDisconnectedCallBack;
+            SteamFriends.OnGameLobbyJoinRequested -= OnGameLobbyJoinRequestCallBack;
+            #endregion
+        }
+
+        // For now i'll use a button instead of check if everybody ready.
+        public void StartGame()
+        {
+            if (Instance.playerInfos.Any((playerInfo) => !playerInfo.Value.IsReady))
+                return;
+
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.StartGame)));
+
+            if (result)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
+
+        private void OnGameStarted()
+        {
         }
 
         void Update()
@@ -104,7 +136,7 @@ namespace Networking
             }
         }
         
-        private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] buffer)
+        private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
             if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
             {
@@ -125,6 +157,11 @@ namespace Networking
                         playerInfos[steamid].IsReady = false;
                         // inLobby[steamid].active = green;
                         //panelImage.color = UnityEngine.Color.red;
+                    }
+                    break;
+                case MessageType.StartGame:
+                    {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                     }
                     break;
                 default:
@@ -180,6 +217,8 @@ namespace Networking
 
         async void OnLobbyEnteredCallBack(Lobby lobby)
         {
+            currentLobby = lobby;
+
             Debug.Log("Client joined the lobby");
             UserInLobby = true;
             foreach (var user in inLobby.Values)
@@ -190,18 +229,21 @@ namespace Networking
 
             await CreatePlayer(steamManager.PlayerSteamId, SteamClient.Name);
 
-            List<Task<bool>> tasks = new List<Task<bool>>(currentLobby.MemberCount - 1);
+            OnLobbyJoined.Invoke();
+
+            int count = currentLobby.MemberCount - 1;
+            if (count <= 0) return;
+
+            List<Task<bool>> tasks = new List<Task<bool>>(count);
             foreach (var friend in currentLobby.Members)
             {
                 if (friend.Id != SteamClient.SteamId)
                 {
                     tasks.Add(CreatePlayer(friend.Id, friend.Name));
-                    currentLobby = lobby;
                     AcceptP2P(friend.Id);
                 }
             }
             Task.WaitAll(tasks.ToArray());
-            OnLobbyJoined.Invoke();
         }
     
         public async void CreateLobbyAsync()
