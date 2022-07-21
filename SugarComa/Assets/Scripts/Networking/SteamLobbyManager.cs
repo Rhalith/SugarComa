@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using Button = UnityEngine.UIElements.Button;
 
 namespace Networking
 {
@@ -15,8 +16,8 @@ namespace Networking
         private static SteamLobbyManager _instance;
         public static SteamLobbyManager Instance => _instance;
 
+        public GameObject startGameButton;
         public Transform content;
-        public UnityEngine.UI.Image panelImage;
         public static SteamManager steamManager;
         public static Lobby currentLobby;
         public static bool UserInLobby;
@@ -119,7 +120,7 @@ namespace Networking
             if (result)
             {
                 playerInfos[SteamManager.Instance.PlayerSteamId].IsReady = true;
-                panelImage.color = UnityEngine.Color.green;
+                inLobby[SteamManager.Instance.PlayerSteamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
             }
         }
         
@@ -132,7 +133,7 @@ namespace Networking
             if (result)
             {
                 playerInfos[SteamManager.Instance.PlayerSteamId].IsReady = false;
-                panelImage.color = UnityEngine.Color.red;
+                inLobby[SteamManager.Instance.PlayerSteamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
             }
         }
         
@@ -173,6 +174,10 @@ namespace Networking
         {
             Debug.Log($"{friend.Name} left the lobby");
             Debug.Log($"New lobby owner is {currentLobby.Owner}");
+
+            if (SteamManager.Instance.PlayerSteamId == currentLobby.Owner.Id)
+                startGameButton.SetActive(true);
+            
             if (inLobby.TryGetValue(friend.Id, out GameObject gameObject))
             {
                 Destroy(gameObject);
@@ -211,6 +216,7 @@ namespace Networking
             else
             {
                 OnLobbyCreated.Invoke();
+                startGameButton.SetActive(true);
                 Debug.Log("lobby creation result ok");
             }
         }

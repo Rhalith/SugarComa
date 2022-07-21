@@ -20,10 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="145a2e84-2b96-4c0a-9c14-0533ea960364" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SugarComa/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Networking/LobbyFriend.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Networking/LobbyFriend.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,8 +37,8 @@
     <setting file="file://$PROJECT_DIR$/../../../../SteamNetworking-master/Assets/Scripts/Networking/NetworkObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TempScripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/C4094EC9-F20D-4E6C-B519-37772BA9FB62/7a/5d971b57/NativeInputSystem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../SteamNetworking-master/Assets/Scripts/Networking/NetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F1212AD1-DEC4-4CE7-B714-7976B91869C3/5e/bbd8167b/UnitySynchronizationContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs" root0="SKIP_HIGHLIGHTING" />
@@ -52,9 +52,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/TempScripts/TempStructScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking/LobbyFriendObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TempScripts/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TempScripts/PlayerMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking/SteamLobbyManager.cs" />
       </list>
     </option>
   </component>
@@ -83,10 +83,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="15240">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="15240" />
+      <option name="pid" />
       <option name="selectedOptions">
         <set />
       </option>
@@ -112,6 +112,8 @@
       <workItem from="1658312002506" duration="6352000" />
       <workItem from="1658330601676" duration="583000" />
       <workItem from="1658406390109" duration="2451000" />
+      <workItem from="1658436016438" duration="1000" />
+      <workItem from="1658436056182" duration="376000" />
     </task>
     <servers />
   </component>
@@ -208,50 +210,5 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1658328418013" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs</url>
-          <line>45</line>
-          <properties documentPath="C:\Users\kara-\Desktop\Game Dev Apps\Unity Projects\SugarComa\SugarComa\Assets\Scripts\Networking\SteamServerManager.cs" initialLine="45">
-            <startOffsets>
-              <option value="1586" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1587" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs</url>
-          <line>50</line>
-          <properties documentPath="C:\Users\kara-\Desktop\Game Dev Apps\Unity Projects\SugarComa\SugarComa\Assets\Scripts\Networking\SteamServerManager.cs" initialLine="50">
-            <startOffsets>
-              <option value="1754" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1809" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Networking/SteamServerManager.cs</url>
-          <line>67</line>
-          <properties documentPath="C:\Users\kara-\Desktop\Game Dev Apps\Unity Projects\SugarComa\SugarComa\Assets\Scripts\Networking\SteamServerManager.cs" initialLine="67">
-            <startOffsets>
-              <option value="2404" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2471" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
