@@ -1,93 +1,69 @@
-using System.Text;
 using Networking;
 using UnityEngine;
 
-namespace TempScripts
+public class PlayerMovement : MonoBehaviour
 {
-    public class PlayerMovement : MonoBehaviour
+    public float movementSpeed = 1f;
+    private static bool canMove = false;
+    private static Vector3 moveDirection;
+
+    private void Start()
     {
-        public float movementSpeed = 1f;
-        private bool isMoved = false;
-        private static bool canMove = false;
-        private static Vector3 moveDirection;
-        PlayerInfo.Info playerInfo;
+        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+    }
 
-        [SerializeField] private GameManager gameManager;
-        [SerializeField] private SteamManager steamManager;
-        [SerializeField] private SteamServerManager serverManager;
-
-        private void Awake()
+    void Update()
+    {
+        if (!canMove)
         {
-            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        }
-
-        private void Start()
-        {
-            steamManager = gameManager.steamManager;
-            serverManager = gameManager.serverManager;
-            playerInfo.id = steamManager.PlayerSteamId;
-        }
-
-        void Update()
-        {
-            if (!canMove)
+            if (Input.GetKeyDown(KeyCode.A))
             {
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    isMoved = true;
-                    playerInfo.direction = Vector3.left * movementSpeed;
-                    playerInfo.dirStr = "left";
-                }
-        
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    isMoved = true;
-                    playerInfo.direction = Vector3.right * movementSpeed;
-                    playerInfo.dirStr = "right";
-                }
-        
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    isMoved = true;
-                    playerInfo.direction = Vector3.up * movementSpeed;
-                    playerInfo.dirStr = "up";
-                }
-        
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    isMoved = true;
-                    playerInfo.direction = Vector3.down * movementSpeed;
-                    playerInfo.dirStr = "down";
-                }
+                NetworkData networkData =
+                    new NetworkData(MessageType.InputDown, Vector3.left * movementSpeed, Direction.Left);
+                SendMoveDirection(networkData);
             }
-
-            // Çok fazla çağırılırsa crash verdiriyor...
-            // diye düşünüyordum ama buttonların kilitlerini kaldırınca
-            // 2k-3k kez sending ve receiving yapmasına rağmen crash vermedi.
-            // Başka bir neden var ama henüz bulamadım.
-            if (isMoved)
+        
+            if (Input.GetKeyDown(KeyCode.D))
             {
-                isMoved = false;
-                SendMoveDirection();
+                NetworkData networkData =
+                    new NetworkData(MessageType.InputDown, Vector3.right * movementSpeed, Direction.Right);
+                SendMoveDirection(networkData);
             }
-
-            if (canMove)
+        
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                transform.Translate(moveDirection);
-                canMove = false;
+                NetworkData networkData =
+                    new NetworkData(MessageType.InputDown, Vector3.up * movementSpeed, Direction.Up);
+                SendMoveDirection(networkData);
+            }
+        
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                NetworkData networkData =
+                    new NetworkData(MessageType.InputDown, Vector3.down * movementSpeed, Direction.Down);
+                SendMoveDirection(networkData);
             }
         }
-
-        void SendMoveDirection()
+        else
         {
-            // Struct iletirken crash veriyor...
-            SteamServerManager.SendingMessageToAll(SteamServerManager.Serialize(playerInfo));
+            transform.Translate(moveDirection);
+            canMove = false;
         }
+    }
 
-        public static void SetDirection(Vector3 direction)
-        {
-            moveDirection = direction;
-            canMove = true;
-        }
+    void SendMoveDirection(in NetworkData networkData)
+    {
+        // Struct iletirken crash veriyor...
+        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
+    }
+
+
+    private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+    {
+        if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
+            return;
+
+        moveDirection = networkData.position;
+        canMove = true;
     }
 }

@@ -1,64 +1,72 @@
-using System.Runtime.InteropServices;
-using System.Text;
 using Steamworks;
-using TempScripts;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 namespace Networking
 {
+    [DefaultExecutionOrder(-100)]
     public class SteamServerManager : MonoBehaviour
     {
-        public delegate void MessageReceivedHandler(SteamId steamid, byte[] data);
-        public static event MessageReceivedHandler OnMessageReceived;
+        public static SteamServerManager _instance;
+        public static SteamServerManager Instance => _instance;
 
-        public static SteamLobbyManager steamLobbyManager;
-        public GameObject steamManager;
-    
-        void Awake()
+        public delegate void MessageReceivedHandler(SteamId steamid, byte[] buffer);
+        public delegate void GameStartedHandler();
+        public event MessageReceivedHandler OnMessageReceived;
+        public event GameStartedHandler OnGameStarted;
+
+        private void Awake()
         {
+            if (_instance != null && _instance != this)
+            {
+                DestroyImmediate(this);
+                return;
+            }
+
+            _instance = this;
             DontDestroyOnLoad(this);
-            // Check every 0.05 seconds for new packets
-            InvokeRepeating(nameof(ReceivingMessages), 0f, 0.05f);
-            steamLobbyManager = steamManager.GetComponent<SteamLobbyManager>();
+            InvokeRepeating(nameof(ReceivingMessages), 0, 0.05f);
         }
-        
-        
+
         // For now i'll use a button instead of check if everybody ready.
-        public static void CreateServer()
+        public void CreateServer()
         {
+            if (SteamLobbyManager.Instance.playerInfos.Any((playerInfo) => !playerInfo.Value.IsReady))
+                return;
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            OnGameStarted?.Invoke();
         }
     
-        public static void SendingMessages(SteamId targetSteamId, byte[] mydata)
+        public bool SendingMessage(SteamId targetSteamId, byte[] buffer)
         {
             if (SteamLobbyManager.UserInLobby)
             {
-                var sent = SteamNetworking.SendP2PPacket( targetSteamId, mydata );
-            
-                Debug.Log($"Sending\nOwner: {SteamLobbyManager.currentLobby.Owner.Id}" +
-                          $"LobbyPartner: {steamLobbyManager.LobbyPartner.Id}" +
-                          $"target: {targetSteamId}");
+                return SteamNetworking.SendP2PPacket(targetSteamId, buffer);
             }
+            return false;
         }
-        
-        public static void SendingMessageToAll(byte[] mydata)
+
+        public bool SendingMessageToAll(byte[] buffer)
         {
             if (SteamLobbyManager.UserInLobby)
             {
-                foreach (var id in steamLobbyManager.inLobby.Keys)
+                bool[] response = new bool[SteamLobbyManager.Instance.MemberCount];
+
+                int index = 0;
+                foreach (var id in SteamLobbyManager.Instance.playerInfos.Keys)
                 {
-                    var sent = SteamNetworking.SendP2PPacket( id, mydata );
-            
-                    Debug.Log($"Sending\nOwner: {SteamLobbyManager.currentLobby.Owner.Id}" +
-                              $"LobbyPartner: {steamLobbyManager.LobbyPartner.Id}" +
-                              $"target: {id}");
+                    response[index] = SteamNetworking.SendP2PPacket(id, buffer);
                 }
+
+                return response.All(res => res);
             }
+            return false;
         }
     
         // Receiving data packages
-        void ReceivingMessages()
+        private void ReceivingMessages()
         {
             try
             {
@@ -68,11 +76,7 @@ namespace Networking
                     if (packet != null && packet.HasValue)
                     {
                         OnMessageReceived?.Invoke(packet.Value.SteamId, packet.Value.Data);
-
-                        Debug.Log($"Receiving\nOwner: {SteamLobbyManager.currentLobby.Owner.Id}" +
-                                  $"LobbyPartner: {steamLobbyManager.LobbyPartner.Id}" +
-                                  $"target: {packet.Value.SteamId}");
-                        HandleMessageFrom(packet.Value.SteamId, packet.Value.Data);
+                        //HandleMessageFrom(packet.Value.SteamId, packet.Value.Data);
                     }
                 }
             }
@@ -82,42 +86,35 @@ namespace Networking
             }
         }
 
-        void HandleMessageFrom(SteamId steamId, byte[] data)
-        {
-            /*
-            // for string test 
-            string message = Encoding.UTF8.GetString(data);
-            Debug.Log($"user {steamId}'s message is {message}");
-            PlayerMovement.SetDirection(Vector3.left);
-            */
-            
-            // for struct test 
-            PlayerInfo.Info playerInfo = Deserialize<PlayerInfo.Info>(data);
-            Debug.Log($"User {playerInfo.id} move to {playerInfo.dirStr}");
-            PlayerMovement.SetDirection(playerInfo.direction);
-        }
-    
-        public static byte[] Serialize<T>(T s)
-            where T : struct
-        {
-            var size = Marshal.SizeOf(typeof(T));
-            var array = new byte[size];
-            var ptr = Marshal.AllocHGlobal(size);
-            Marshal.StructureToPtr(s, ptr, true);
-            Marshal.Copy(ptr, array, 0, size);
-            Marshal.FreeHGlobal(ptr);
-            return array;
-        }
+        // paramter: , bool makeSureSendAll = false
+        //if (makeSureSendAll)
+        //{
+        //    while (response.Any(res => !res))
+        //    {
+        //        for (int i = 0; i < response.Length; i++)
+        //        {
+        //            if (!response[i])
+        //            {
+        //                var element = SteamLobbyManager.Instance.playerInfos.ElementAt(i);
+        //                response[i] = SteamNetworking.SendP2PPacket(element.Key, buffer);
+        //            }
+        //        }
+        //    }
+        //}
 
-        public static T Deserialize<T>(byte[] array)
-            where T : struct
-        {
-            var size = Marshal.SizeOf(typeof(T));
-            var ptr = Marshal.AllocHGlobal(size);
-            Marshal.Copy(array, 0, ptr, size);
-            var s = (T)Marshal.PtrToStructure(ptr, typeof(T));
-            Marshal.FreeHGlobal(ptr);
-            return s;
-        }
+        //void HandleMessageFrom(SteamId steamId, byte[] data)
+        //{
+        //    /*
+        //    // for string test 
+        //    string message = Encoding.UTF8.GetString(data);
+        //    Debug.Log($"user {steamId}'s message is {message}");
+        //    PlayerMovement.SetDirection(Vector3.left);
+        //    */
+
+        //    // for struct test 
+        //    //PlayerInfo.Info playerInfo = Deserialize<PlayerInfo.Info>(data);
+        //    //Debug.Log($"User {playerInfo.id} move to {playerInfo.dirStr}");
+        //    //PlayerMovement.SetDirection(playerInfo.direction);
+        //}
     }
 }

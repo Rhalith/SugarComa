@@ -1,21 +1,16 @@
 using Steamworks;
 using UnityEngine;
-
-namespace TempScripts
+public class PlayerInfo
 {
-    public class PlayerInfo : MonoBehaviour
+    public PlayerInfo(SteamId steamId, string name, Texture2D texture)
     {
-        // Böyle kullanmada artık data kalma muhabbeti olur mu??
-        
-        // Mesajlar için enum açabilirsin..
-    
-        public struct Info
-        {
-            public SteamId id;
-            public Vector3 direction;
-            public string dirStr;
-        }
-
-        public static Info playerInfo = new Info();
+        SteamId = steamId;
+        Name = name;
+        Texture = texture;
     }
+
+    public SteamId SteamId { get; set; }
+    public string Name { get; set; }
+    public Texture2D Texture { get; set; }
+    public bool IsReady { get; set; }
 }

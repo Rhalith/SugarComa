@@ -1,52 +1,35 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Steamworks;
-using Steamworks.Data;
+﻿using Steamworks;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Steamworks.Data;
+using UnityEngine.Events;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Networking
 {
-    public class PlayerData
-    {
-        public PlayerData(SteamId steamId, string name, Texture2D texture)
-        {
-            SteamId = steamId;
-            Name = name;
-            Texture = texture;
-        }
-
-        public SteamId SteamId { get; set; }
-        public string Name { get; set; }
-        public Texture2D Texture { get; set; }
-    }
-
-
     public class SteamLobbyManager : MonoBehaviour
     {
         private static SteamLobbyManager _instance;
         public static SteamLobbyManager Instance => _instance;
 
+        public Transform content;
         public UnityEngine.UI.Image panelImage;
         public static SteamManager steamManager;
         public static Lobby currentLobby;
         public static bool UserInLobby;
+
+        #region Events
+
         public UnityEvent OnLobbyCreated;
         public UnityEvent OnLobbyJoined;
         public UnityEvent OnLobbyLeave;
-    
-        public GameObject InLobbyFriend;
-    
-        private Friend lobbyPartner;
-        private GameObject localClientObj;
-        public Friend LobbyPartner { get => lobbyPartner; set => lobbyPartner = value; }
-    
-        public Transform content;
+        #endregion
 
-        public Dictionary<SteamId, PlayerData> playerInfos = new Dictionary<SteamId, PlayerData>();
+        public GameObject InLobbyFriend;
+        public int MemberCount => currentLobby.MemberCount;
+        public Dictionary<SteamId, PlayerInfo> playerInfos = new Dictionary<SteamId, PlayerInfo>();
         public Dictionary<SteamId, GameObject> inLobby = new Dictionary<SteamId, GameObject>();
 
         private void Awake()
@@ -60,7 +43,14 @@ namespace Networking
             _instance = this;
             DontDestroyOnLoad(this);
             steamManager = GetComponent<SteamManager>();
-            SteamServerManager.OnMessageReceived += this.SteamServerManager_OnMessageReceived;
+            SteamServerManager.Instance.OnMessageReceived += SteamServerManager_OnMessageReceived;
+            SteamServerManager.Instance.OnGameStarted += Instance_OnGameStarted;
+        }
+
+        private void Instance_OnGameStarted()
+        {
+            SteamServerManager.Instance.OnMessageReceived -= SteamServerManager_OnMessageReceived;
+            SteamServerManager.Instance.OnGameStarted -= Instance_OnGameStarted;
         }
 
         private void Start()
@@ -92,36 +82,53 @@ namespace Networking
 
         public void SendReadyToAll()
         {
-            SteamServerManager.SendingMessageToAll(Encoding.UTF8.GetBytes("Ready"));
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Ready)));
+            if (result)
+            {
+                playerInfos[SteamManager.Instance.PlayerSteamId].IsReady = true;
+                panelImage.color = UnityEngine.Color.green;
+            }
         }
         
         // Bu değişiklikler için observer pattern kullanabilir miyiz?
 
         public void SendUnreadyToAll()
         {
-            SteamServerManager.SendingMessageToAll(Encoding.UTF8.GetBytes("Unready"));
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.UnReady)));
+            if (result)
+            {
+                playerInfos[SteamManager.Instance.PlayerSteamId].IsReady = false;
+                panelImage.color = UnityEngine.Color.red;
+            }
         }
         
-        private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] data)
+        private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] buffer)
         {
-            string message = Encoding.UTF8.GetString(data);
-            if (message == "Ready")
+            if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
             {
-                SteamServerManager.SendingMessages(steamid, Encoding.UTF8.GetBytes("Ok"));
+                return;
             }
-            else if (message == "Unready")
+
+            switch (networkData.type)
             {
-                SteamServerManager.SendingMessages(steamid, Encoding.UTF8.GetBytes("Ok"));
-            }
-            else if (message == "Ok")
-            {
-                if(panelImage.color != UnityEngine.Color.green)
-                    panelImage.color = UnityEngine.Color.green;
-                else
-                    panelImage.color = UnityEngine.Color.red;
-                
-                // Check if everybody ready, then start a count down, then load scene
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                case MessageType.Ready:
+                    {
+                        playerInfos[steamid].IsReady = true;
+                        // inLobby[steamid].active = green;
+                        // panelImage.color = UnityEngine.Color.green;
+                    }
+                    break;
+                case MessageType.UnReady:
+                    {
+                        playerInfos[steamid].IsReady = false;
+                        // inLobby[steamid].active = green;
+                        //panelImage.color = UnityEngine.Color.red;
+                    }
+                    break;
+                default:
+                    throw new System.Exception();
             }
         }
 
@@ -143,20 +150,6 @@ namespace Networking
             if (joinedLobbySuccess != RoomEnter.Success)
             {
                 Debug.Log("failed to join lobby : " + joinedLobbySuccess);
-            }
-            else
-            {
-                // This was hacky, I didn't have clean way of getting lobby host steam id when joining lobby from game invite from friend 
-                foreach (Friend friend in SteamFriends.GetFriends())
-                {
-                    if (friend.Id == id)
-                    {
-                        lobbyPartner = friend;
-                        AcceptP2P(friend.Id);
-                        break;
-                    }
-                }
-                currentLobby = joinedLobby;
             }
         }
     
@@ -203,6 +196,8 @@ namespace Networking
                 if (friend.Id != SteamClient.SteamId)
                 {
                     tasks.Add(CreatePlayer(friend.Id, friend.Name));
+                    currentLobby = lobby;
+                    AcceptP2P(friend.Id);
                 }
             }
             Task.WaitAll(tasks.ToArray());
@@ -254,8 +249,6 @@ namespace Networking
                 {
                     Destroy(user);
                 }
-
-                Destroy(localClientObj);
                 inLobby.Clear();
                 currentLobby.Leave();
                 OnLobbyLeave.Invoke();
@@ -270,7 +263,7 @@ namespace Networking
         {
             Texture2D texture2D = await SteamFriendsManager.GetTextureFromSteamIdAsync(id);
 
-            PlayerData playerInfo = new PlayerData(id, name, texture2D);
+            PlayerInfo playerInfo = new PlayerInfo(id, name, texture2D);
             GameObject obj = Instantiate(InLobbyFriend, content);
             obj.GetComponent<LobbyFriendObject>().steamid = playerInfo.SteamId;
             obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
