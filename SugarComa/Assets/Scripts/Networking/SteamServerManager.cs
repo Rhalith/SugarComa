@@ -1,7 +1,6 @@
 using Steamworks;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Networking
 {
