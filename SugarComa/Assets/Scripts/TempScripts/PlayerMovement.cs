@@ -4,50 +4,46 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed = 1f;
-    private static bool canMove = false;
-    private static Vector3 moveDirection;
 
     private void Start()
     {
         SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
     }
 
+    private void OnDestroy()
+    {
+        SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+    }
+
     void Update()
     {
-        if (!canMove)
+        Vector3 position = transform.position;
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                NetworkData networkData =
-                    new NetworkData(MessageType.InputDown, Vector3.left * movementSpeed, Direction.Left);
-                SendMoveDirection(networkData);
-            }
-        
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                NetworkData networkData =
-                    new NetworkData(MessageType.InputDown, Vector3.right * movementSpeed, Direction.Right);
-                SendMoveDirection(networkData);
-            }
-        
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                NetworkData networkData =
-                    new NetworkData(MessageType.InputDown, Vector3.up * movementSpeed, Direction.Up);
-                SendMoveDirection(networkData);
-            }
-        
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                NetworkData networkData =
-                    new NetworkData(MessageType.InputDown, Vector3.down * movementSpeed, Direction.Down);
-                SendMoveDirection(networkData);
-            }
+            position += Vector3.left * movementSpeed;
         }
-        else
+
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            transform.Translate(moveDirection);
-            canMove = false;
+            position += Vector3.right * movementSpeed;
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            position += Vector3.up * movementSpeed;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            position += Vector3.down * movementSpeed;
+        }
+
+        if (transform.position != position)
+        {
+            NetworkData networkData =
+                new NetworkData(MessageType.InputDown, position);
+            SendMoveDirection(networkData);
+            transform.position = position;
         }
     }
 
@@ -57,13 +53,11 @@ public class PlayerMovement : MonoBehaviour
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
     }
 
-
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
     {
         if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
             return;
 
-        moveDirection = networkData.position;
-        canMove = true;
+        GameManager.Instance.playerList[steamid].transform.position = networkData.position;
     }
 }

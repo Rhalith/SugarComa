@@ -64,7 +64,7 @@ namespace Networking
 
         private void SceneManager_ActiveSceneChanged(Scene arg0, Scene arg1)
         {
-            if (arg1.buildIndex == -1) return;
+            if (arg1.buildIndex == 0) return;
 
             SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
 

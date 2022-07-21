@@ -1,9 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 using UnityEngine;
-public enum Direction : byte
-{
-    Left, Right, Up, Down
-}
 
 public enum MessageType : byte
 {
@@ -24,7 +20,6 @@ public struct NetworkData
     public readonly int id;
     public MessageType type;
     public Vector3 position;
-    public Direction direction;
     
     public NetworkData(MessageType type)
     {
@@ -32,15 +27,13 @@ public struct NetworkData
 
         this.type = type;
         position = Vector3.zero;
-        direction = Direction.Left;
     }
 
-    public NetworkData(MessageType type, Vector3 position, Direction direction)
+    public NetworkData(MessageType type, Vector3 position)
     {
         id = NetworkId.NetworkDataId;
 
         this.type = type;
         this.position = position;
-        this.direction = direction;
     }
 }

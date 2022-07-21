@@ -1,36 +1,40 @@
 using Networking;
+using Steamworks;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace TempScripts
+public class GameManager : MonoBehaviour
 {
-    public class GameManager : MonoBehaviour
+    private static GameManager _instance;
+    public static GameManager Instance => _instance;
+
+    public GameObject playerPref;
+    public GameObject playersParentObj;
+    public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
+
+    void Awake()
     {
-        public GameObject steamManagerObject;
-        public SteamManager steamManager;
-        public SteamServerManager serverManager;
-
-        public GameObject playerPref;
-        public GameObject playersParentObj;
-    
-        void Awake()
+        if (_instance != null && _instance != this)
         {
-            steamManagerObject = GameObject.Find("SteamManager");
-            steamManager = steamManagerObject.GetComponent<SteamManager>();
-            serverManager = GameObject.Find("ServerManager").GetComponent<SteamServerManager>();
+            DestroyImmediate(this);
+            return;
         }
 
-        void Start()
-        {
-            SpawnPlayers();
-            SteamLobbyManager.Instance.inLobby.Clear();
-        }
+        _instance = this;
+    }
 
-        void SpawnPlayers()
+    void Start()
+    {
+        SpawnPlayers();
+        SteamLobbyManager.Instance.inLobby.Clear();
+    }
+
+    void SpawnPlayers()
+    {
+        foreach (var id in SteamLobbyManager.Instance.inLobby.Keys)
         {
-            foreach (var friendObj in SteamLobbyManager.Instance.inLobby.Values)
-            {
-                GameObject obj = Instantiate(playerPref, playersParentObj.transform);
-            }
+            GameObject obj = Instantiate(playerPref, playersParentObj.transform);
+            if (id != SteamManager.Instance.PlayerSteamId) playerList.Add(id, obj);
         }
     }
 }
