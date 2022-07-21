@@ -1,3 +1,4 @@
+using System.Text;
 using Networking;
 using UnityEngine;
 
@@ -79,7 +80,8 @@ namespace TempScripts
 
         void SendMoveDirection()
         {
-            SteamServerManager.SendingMessages(steamManager.PlayerSteamId, SteamServerManager.Serialize(playerInfo));
+            // Struct iletirken crash veriyor...
+            SteamServerManager.SendingMessageToAll(SteamServerManager.Serialize(playerInfo));
         }
 
         public static void SetDirection(Vector3 direction)

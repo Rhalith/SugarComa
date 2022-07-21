@@ -76,20 +76,14 @@ namespace Networking
 
         public void SendReadyToAll()
         {
-            foreach (var user in inLobby.Values)
-            {
-                SteamServerManager.SendingMessages(user.GetComponent<LobbyFriendObject>().steamid, Encoding.UTF8.GetBytes("Ready"));
-            }
+            SteamServerManager.SendingMessageToAll(Encoding.UTF8.GetBytes("Ready"));
         }
         
         // Bu değişiklikler için observer pattern kullanabilir miyiz?
 
         public void SendUnreadyToAll()
         {
-            foreach (var user in inLobby.Values)
-            {
-                SteamServerManager.SendingMessages(user.GetComponent<LobbyFriendObject>().steamid, Encoding.UTF8.GetBytes("Unready"));
-            }
+            SteamServerManager.SendingMessageToAll(Encoding.UTF8.GetBytes("Unready"));
         }
         
         private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] data)

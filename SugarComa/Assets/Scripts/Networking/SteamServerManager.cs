@@ -41,6 +41,21 @@ namespace Networking
                           $"target: {targetSteamId}");
             }
         }
+        
+        public static void SendingMessageToAll(byte[] mydata)
+        {
+            if (SteamLobbyManager.UserInLobby)
+            {
+                foreach (var id in steamLobbyManager.inLobby.Keys)
+                {
+                    var sent = SteamNetworking.SendP2PPacket( id, mydata );
+            
+                    Debug.Log($"Sending\nOwner: {SteamLobbyManager.currentLobby.Owner.Id}" +
+                              $"LobbyPartner: {steamLobbyManager.LobbyPartner.Id}" +
+                              $"target: {id}");
+                }
+            }
+        }
     
         // Receiving data packages
         void ReceivingMessages()
@@ -66,13 +81,13 @@ namespace Networking
             // for string test 
             string message = Encoding.UTF8.GetString(data);
             Debug.Log($"user {steamId}'s message is {message}");
+            PlayerMovement.SetDirection(Vector3.left);
             */
             
             // for struct test 
             PlayerInfo.Info playerInfo = Deserialize<PlayerInfo.Info>(data);
             Debug.Log($"User {playerInfo.id} move to {playerInfo.dirStr}");
             PlayerMovement.SetDirection(playerInfo.direction);
-            
         }
     
         public static byte[] Serialize<T>(T s)
