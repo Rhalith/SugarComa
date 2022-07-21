@@ -60,18 +60,25 @@ namespace Networking
         // Receiving data packages
         void ReceivingMessages()
         {
-            while ( SteamNetworking.IsP2PPacketAvailable() )
+            try
             {
-                var packet = SteamNetworking.ReadP2PPacket();
-                if (packet != null && packet.HasValue)
+                while (SteamNetworking.IsP2PPacketAvailable())
                 {
-                    OnMessageReceived?.Invoke(packet.Value.SteamId, packet.Value.Data);
+                    var packet = SteamNetworking.ReadP2PPacket();
+                    if (packet != null && packet.HasValue)
+                    {
+                        OnMessageReceived?.Invoke(packet.Value.SteamId, packet.Value.Data);
 
-                    Debug.Log($"Receiving\nOwner: {SteamLobbyManager.currentLobby.Owner.Id}" +
-                              $"LobbyPartner: {steamLobbyManager.LobbyPartner.Id}" +
-                              $"target: {packet.Value.SteamId}");
-                    HandleMessageFrom( packet.Value.SteamId, packet.Value.Data );
+                        Debug.Log($"Receiving\nOwner: {SteamLobbyManager.currentLobby.Owner.Id}" +
+                                  $"LobbyPartner: {steamLobbyManager.LobbyPartner.Id}" +
+                                  $"target: {packet.Value.SteamId}");
+                        HandleMessageFrom(packet.Value.SteamId, packet.Value.Data);
+                    }
                 }
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e.Message);
             }
         }
 

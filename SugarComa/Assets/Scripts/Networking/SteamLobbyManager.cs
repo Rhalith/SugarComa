@@ -10,8 +10,26 @@ using UnityEngine.UI;
 
 namespace Networking
 {
+    public class PlayerData
+    {
+        public PlayerData(SteamId steamId, string name, Texture2D texture)
+        {
+            SteamId = steamId;
+            Name = name;
+            Texture = texture;
+        }
+
+        public SteamId SteamId { get; set; }
+        public string Name { get; set; }
+        public Texture2D Texture { get; set; }
+    }
+
+
     public class SteamLobbyManager : MonoBehaviour
     {
+        private static SteamLobbyManager _instance;
+        public static SteamLobbyManager Instance => _instance;
+
         public UnityEngine.UI.Image panelImage;
         public static SteamManager steamManager;
         public static Lobby currentLobby;
@@ -28,10 +46,18 @@ namespace Networking
     
         public Transform content;
 
+        public Dictionary<SteamId, PlayerData> playerInfos = new Dictionary<SteamId, PlayerData>();
         public Dictionary<SteamId, GameObject> inLobby = new Dictionary<SteamId, GameObject>();
 
         private void Awake()
         {
+            if (_instance != null && _instance != this)
+            {
+                DestroyImmediate(this);
+                return;
+            }
+
+            _instance = this;
             DontDestroyOnLoad(this);
             steamManager = GetComponent<SteamManager>();
             SteamServerManager.OnMessageReceived += this.SteamServerManager_OnMessageReceived;
@@ -56,21 +82,11 @@ namespace Networking
         private async void OnLobbyMemberJoinedCallBack(Lobby lobby, Friend friend)
         {
             Debug.Log($"{friend.Name} joined the lobby");
-            GameObject obj = Instantiate(InLobbyFriend, content);
             // Bu kısım ayrı bir fonksiyona dönüştürülebilir...
-            obj.GetComponent<LobbyFriendObject>().steamid = friend.Id;
-            obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
-            obj.GetComponentInChildren<Text>().text = friend.Name;
-            obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id);
-            inLobby.TryAdd(friend.Id, obj);
-        
-            if(inLobby.TryAdd(friend.Id, obj))
+
+            if (await CreatePlayer(friend.Id, friend.Name))
             {
                 AcceptP2P(friend.Id);
-            }
-            else
-            {
-                Destroy(obj);
             }
         }
 
@@ -88,7 +104,7 @@ namespace Networking
         
         private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] data)
         {
-            string message = System.Text.Encoding.UTF8.GetString(data);
+            string message = Encoding.UTF8.GetString(data);
             if (message == "Ready")
             {
                 SteamServerManager.SendingMessages(steamid, Encoding.UTF8.GetBytes("Ok"));
@@ -117,6 +133,7 @@ namespace Networking
             {
                 Destroy(gameObject);
                 inLobby.Remove(friend.Id);
+                playerInfos.Remove(friend.Id);
             }
         }
 
@@ -168,7 +185,7 @@ namespace Networking
             }
         }
 
-        void OnLobbyEnteredCallBack(Lobby lobby)
+        async void OnLobbyEnteredCallBack(Lobby lobby)
         {
             Debug.Log("Client joined the lobby");
             UserInLobby = true;
@@ -178,38 +195,17 @@ namespace Networking
             }
             inLobby.Clear();
 
-            GameObject obj = Instantiate(InLobbyFriend, content);
-            obj.GetComponent<LobbyFriendObject>().steamid = steamManager.PlayerSteamId;
-            obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
-            obj.GetComponentInChildren<Text>().text = SteamClient.Name;
-            inLobby.TryAdd(steamManager.PlayerSteamId, obj);
+            await CreatePlayer(steamManager.PlayerSteamId, SteamClient.Name);
 
-            List<Task<Texture2D>> tasks = new List<Task<Texture2D>>(currentLobby.MemberCount - 1);
-            // TODO remove. use steam friends manager pp.
-            tasks.Add(SteamFriendsManager.GetTextureFromSteamIdAsync(SteamClient.SteamId));
-
-            localClientObj = obj;
-
+            List<Task<bool>> tasks = new List<Task<bool>>(currentLobby.MemberCount - 1);
             foreach (var friend in currentLobby.Members)
             {
                 if (friend.Id != SteamClient.SteamId)
                 {
-                    GameObject obj2 = Instantiate(InLobbyFriend, content);
-                    obj2.GetComponentInChildren<Text>().text = friend.Name;
-                    obj2.GetComponent<LobbyFriendObject>().steamid = friend.Id;
-                    obj2.GetComponent<LobbyFriendObject>().CheckIfOwner();
-                    tasks.Add(SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id));
-                    inLobby.TryAdd(friend.Id, obj2);
+                    tasks.Add(CreatePlayer(friend.Id, friend.Name));
                 }
             }
             Task.WaitAll(tasks.ToArray());
-
-            int i = 0;
-            foreach (var member in inLobby)
-            {
-                member.Value.GetComponentInChildren<RawImage>().texture = tasks[i].Result;
-                i++;
-            }
             OnLobbyJoined.Invoke();
         }
     
@@ -269,5 +265,27 @@ namespace Networking
                 Debug.Log("Not Working!");
             }
         }
+
+        private async Task<bool> CreatePlayer(SteamId id, string name)
+        {
+            Texture2D texture2D = await SteamFriendsManager.GetTextureFromSteamIdAsync(id);
+
+            PlayerData playerInfo = new PlayerData(id, name, texture2D);
+            GameObject obj = Instantiate(InLobbyFriend, content);
+            obj.GetComponent<LobbyFriendObject>().steamid = playerInfo.SteamId;
+            obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
+            obj.GetComponentInChildren<Text>().text = name;
+            obj.GetComponentInChildren<RawImage>().texture = playerInfo.Texture;
+
+            if (!inLobby.TryAdd(playerInfo.SteamId, obj))
+            {
+                Destroy(obj);
+                return false;
+            }
+
+            playerInfos.Add(playerInfo.SteamId, playerInfo);
+            return true;
+        }
+
     }
 }

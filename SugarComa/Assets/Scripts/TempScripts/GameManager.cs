@@ -7,7 +7,6 @@ namespace TempScripts
     {
         public GameObject steamManagerObject;
         public SteamManager steamManager;
-        public SteamLobbyManager lobbyManager;
         public SteamServerManager serverManager;
 
         public GameObject playerPref;
@@ -17,18 +16,18 @@ namespace TempScripts
         {
             steamManagerObject = GameObject.Find("SteamManager");
             steamManager = steamManagerObject.GetComponent<SteamManager>();
-            lobbyManager = steamManagerObject.GetComponent<SteamLobbyManager>();
             serverManager = GameObject.Find("ServerManager").GetComponent<SteamServerManager>();
         }
 
         void Start()
         {
             SpawnPlayers();
+            SteamLobbyManager.Instance.inLobby.Clear();
         }
 
         void SpawnPlayers()
         {
-            foreach (var friendObj in lobbyManager.inLobby.Values)
+            foreach (var friendObj in SteamLobbyManager.Instance.inLobby.Values)
             {
                 GameObject obj = Instantiate(playerPref, playersParentObj.transform);
             }
