@@ -64,6 +64,8 @@ namespace Networking
 
         private void SceneManager_ActiveSceneChanged(Scene arg0, Scene arg1)
         {
+            if (arg0.name == null) return;
+
             SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
 
             SceneManager.activeSceneChanged -= SceneManager_ActiveSceneChanged;
@@ -93,9 +95,6 @@ namespace Networking
             }
         }
 
-        private void OnGameStarted()
-        {
-        }
 
         void Update()
         {
@@ -149,6 +148,7 @@ namespace Networking
                 case MessageType.Ready:
                     {
                         playerInfos[steamid].IsReady = true;
+                        inLobby[steamid].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
                         // inLobby[steamid].active = green;
                         // panelImage.color = UnityEngine.Color.green;
                     }
@@ -156,6 +156,7 @@ namespace Networking
                 case MessageType.UnReady:
                     {
                         playerInfos[steamid].IsReady = false;
+                        inLobby[steamid].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
                         // inLobby[steamid].active = green;
                         //panelImage.color = UnityEngine.Color.red;
                     }
@@ -177,7 +178,6 @@ namespace Networking
 
             if (SteamManager.Instance.PlayerSteamId == currentLobby.Owner.Id)
                 startGameButton.SetActive(true);
-            
             if (inLobby.TryGetValue(friend.Id, out GameObject gameObject))
             {
                 Destroy(gameObject);
@@ -297,7 +297,9 @@ namespace Networking
                 {
                     Destroy(user);
                 }
+                startGameButton.SetActive(false);
                 inLobby.Clear();
+                playerInfos.Clear();
                 currentLobby.Leave();
                 OnLobbyLeave.Invoke();
             }

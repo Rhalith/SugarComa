@@ -41,12 +41,16 @@ namespace Networking
         {
             if (SteamLobbyManager.UserInLobby)
             {
-                bool[] response = new bool[SteamLobbyManager.Instance.MemberCount];
+                bool[] response = new bool[SteamLobbyManager.Instance.MemberCount - 1];
 
                 int index = 0;
                 foreach (var id in SteamLobbyManager.Instance.playerInfos.Keys)
                 {
-                    response[index] = SteamNetworking.SendP2PPacket(id, buffer);
+                    if (id != SteamManager.Instance.PlayerSteamId)
+                    {
+                        response[index] = SteamNetworking.SendP2PPacket(id, buffer);
+                        index++;
+                    }
                 }
 
                 return response.All(res => res);
