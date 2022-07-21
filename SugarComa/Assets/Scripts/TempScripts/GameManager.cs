@@ -1,7 +1,7 @@
 using Networking;
 using Steamworks;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,12 +22,32 @@ public class GameManager : MonoBehaviour
         }
 
         _instance = this;
+        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+    }
+
+    private void OnMessageReceived(SteamId steamid, byte[] buffer)
+    {
+        if (NetworkHelper.TryGetNetworkData(buffer, out NetworkData data) && data.type == MessageType.Exit)
+        {
+            if (playerList.TryGetValue(steamid, out GameObject gameObject))
+            {
+                Destroy(gameObject);
+                playerList.Remove(steamid);
+                SteamLobbyManager.Instance.playerInfos.Remove(steamid);
+            }
+        }
     }
 
     void Start()
     {
         SpawnPlayers();
         SteamLobbyManager.Instance.inLobby.Clear();
+    }
+
+    private void OnApplicationQuit()
+    {
+        byte[] buffer = NetworkHelper.Serialize(new NetworkData(MessageType.Exit));
+        SteamServerManager.Instance.SendingMessageToAll(buffer);
     }
 
     void SpawnPlayers()

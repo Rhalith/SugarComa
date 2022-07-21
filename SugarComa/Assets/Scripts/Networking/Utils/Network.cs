@@ -6,7 +6,8 @@ public enum MessageType : byte
     Ready,
     UnReady,
     StartGame,
-    InputDown
+    InputDown,
+    Exit
 }
 
 public static class NetworkId

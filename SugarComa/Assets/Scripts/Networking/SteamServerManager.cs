@@ -40,7 +40,7 @@ namespace Networking
         {
             if (SteamLobbyManager.UserInLobby)
             {
-                bool[] response = new bool[SteamLobbyManager.Instance.MemberCount - 1];
+                bool[] response = new bool[SteamLobbyManager.Instance.playerInfos.Count - 1];
 
                 int index = 0;
                 foreach (var id in SteamLobbyManager.Instance.playerInfos.Keys)

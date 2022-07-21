@@ -74,8 +74,6 @@ namespace Networking
             SteamMatchmaking.OnLobbyCreated -= OnLobbyCreatedCallBack;
             SteamMatchmaking.OnLobbyEntered -= OnLobbyEnteredCallBack;
             SteamMatchmaking.OnLobbyMemberJoined -= OnLobbyMemberJoinedCallBack;
-            SteamMatchmaking.OnLobbyMemberDisconnected -= OnLobbyMemberDisconnectedCallBack;
-            SteamMatchmaking.OnLobbyMemberLeave -= OnLobbyMemberDisconnectedCallBack;
             SteamFriends.OnGameLobbyJoinRequested -= OnGameLobbyJoinRequestCallBack;
             #endregion
         }
