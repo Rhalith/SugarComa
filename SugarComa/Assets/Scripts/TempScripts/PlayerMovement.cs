@@ -58,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
         if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
             return;
 
-        GameManager.Instance.playerList[steamid].transform.position = networkData.position;
+        if (networkData.type == MessageType.InputDown)
+        {
+            GameManager.Instance.playerList[steamid].transform.position = networkData.position;
+        }
     }
 }

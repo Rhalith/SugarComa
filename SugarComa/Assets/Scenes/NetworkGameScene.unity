@@ -249,11 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c2d13cd2175b64298c61946f7b116c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  steamManagerObject: {fileID: 0}
-  steamManager: {fileID: 0}
-  lobbyManager: {fileID: 0}
-  serverManager: {fileID: 0}
   playerPref: {fileID: 3924035330744247309, guid: 1d3ff06114de9fb40bb48001d7cacbbc, type: 3}
+  remotePlayerPref: {fileID: 3924035330744247309, guid: 67e1d2de83b9d2742b4e78e158faac8a, type: 3}
   playersParentObj: {fileID: 1214206099}
 --- !u!4 &344114442
 Transform:

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => _instance;
 
     public GameObject playerPref;
+    public GameObject remotePlayerPref;
     public GameObject playersParentObj;
     public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
 
@@ -33,8 +34,16 @@ public class GameManager : MonoBehaviour
     {
         foreach (var id in SteamLobbyManager.Instance.inLobby.Keys)
         {
-            GameObject obj = Instantiate(playerPref, playersParentObj.transform);
-            if (id != SteamManager.Instance.PlayerSteamId) playerList.Add(id, obj);
+
+            if (id != SteamManager.Instance.PlayerSteamId)
+            {
+                GameObject obj = Instantiate(remotePlayerPref, playersParentObj.transform);
+                playerList.Add(id, obj);
+            }
+            else
+            {
+                Instantiate(playerPref, playersParentObj.transform);
+            }
         }
     }
 }
