@@ -8,8 +8,9 @@ namespace Networking
 {
     public class SteamManager : MonoBehaviour
     {
-        public static SteamLobbyManager LobbyManager;
-        public static SteamManager Instance;
+        private static SteamManager _instance;
+        public static SteamManager Instance => _instance;
+
         public uint appId;
     
         private bool isItHost = false;
@@ -28,41 +29,39 @@ namespace Networking
 
         private void Awake()
         {
-            if (Instance == null)
+            if (_instance != null && _instance != this)
             {
-                isItHost = true;
-                DontDestroyOnLoad(gameObject);
-                Instance = this;
-                LobbyManager = GetComponent<SteamLobbyManager>();
-                PlayerName = "";
-                try
-                {
-                    // Create client 
-                    SteamClient.Init(appId, true);
-
-                    if (!SteamClient.IsValid)
-                    {
-                        Debug.Log("Steam client not valid");
-                        throw new Exception();
-                    }
-
-                    PlayerName = SteamClient.Name;
-                    PlayerSteamId = SteamClient.SteamId;
-                    playerSteamIdString = PlayerSteamId.ToString();
-                    connectedToSteam = true;
-                    Debug.Log("Steam initialized: " + PlayerName);
-                }
-                catch (Exception e)
-                {
-                    connectedToSteam = false;
-                    playerSteamIdString = "NoSteamId";
-                    Debug.Log("Error connecting to Steam");
-                    Debug.Log(e);
-                }
+                DestroyImmediate(this);
+                return;
             }
-            else if (Instance != this)
+
+            isItHost = true;
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+            PlayerName = "";
+            try
             {
-                Destroy(gameObject);
+                // Create client 
+                SteamClient.Init(appId, true);
+
+                if (!SteamClient.IsValid)
+                {
+                    Debug.Log("Steam client not valid");
+                    throw new Exception();
+                }
+
+                PlayerName = SteamClient.Name;
+                PlayerSteamId = SteamClient.SteamId;
+                playerSteamIdString = PlayerSteamId.ToString();
+                connectedToSteam = true;
+                Debug.Log("Steam initialized: " + PlayerName);
+            }
+            catch (Exception e)
+            {
+                connectedToSteam = false;
+                playerSteamIdString = "NoSteamId";
+                Debug.Log("Error connecting to Steam");
+                Debug.Log(e);
             }
         }
     

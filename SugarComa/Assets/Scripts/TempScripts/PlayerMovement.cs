@@ -1,93 +1,66 @@
-using System.Text;
 using Networking;
 using UnityEngine;
 
-namespace TempScripts
+public class PlayerMovement : MonoBehaviour
 {
-    public class PlayerMovement : MonoBehaviour
+    public float movementSpeed = 1f;
+
+    private void Start()
     {
-        public float movementSpeed = 1f;
-        private bool isMoved = false;
-        private static bool canMove = false;
-        private static Vector3 moveDirection;
-        PlayerInfo.Info playerInfo;
+        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+    }
 
-        [SerializeField] private GameManager gameManager;
-        [SerializeField] private SteamManager steamManager;
-        [SerializeField] private SteamServerManager serverManager;
+    private void OnDestroy()
+    {
+        SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+    }
 
-        private void Awake()
+    void Update()
+    {
+        Vector3 position = transform.position;
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+            position += Vector3.left * movementSpeed;
         }
 
-        private void Start()
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            steamManager = gameManager.steamManager;
-            serverManager = gameManager.serverManager;
-            playerInfo.id = steamManager.PlayerSteamId;
+            position += Vector3.right * movementSpeed;
         }
 
-        void Update()
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            if (!canMove)
-            {
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    isMoved = true;
-                    playerInfo.direction = Vector3.left * movementSpeed;
-                    playerInfo.dirStr = "left";
-                }
-        
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    isMoved = true;
-                    playerInfo.direction = Vector3.right * movementSpeed;
-                    playerInfo.dirStr = "right";
-                }
-        
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    isMoved = true;
-                    playerInfo.direction = Vector3.up * movementSpeed;
-                    playerInfo.dirStr = "up";
-                }
-        
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    isMoved = true;
-                    playerInfo.direction = Vector3.down * movementSpeed;
-                    playerInfo.dirStr = "down";
-                }
-            }
-
-            // Çok fazla çağırılırsa crash verdiriyor...
-            // diye düşünüyordum ama buttonların kilitlerini kaldırınca
-            // 2k-3k kez sending ve receiving yapmasına rağmen crash vermedi.
-            // Başka bir neden var ama henüz bulamadım.
-            if (isMoved)
-            {
-                isMoved = false;
-                SendMoveDirection();
-            }
-
-            if (canMove)
-            {
-                transform.Translate(moveDirection);
-                canMove = false;
-            }
+            position += Vector3.up * movementSpeed;
         }
 
-        void SendMoveDirection()
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            // Struct iletirken crash veriyor...
-            SteamServerManager.SendingMessageToAll(SteamServerManager.Serialize(playerInfo));
+            position += Vector3.down * movementSpeed;
         }
 
-        public static void SetDirection(Vector3 direction)
+        if (transform.position != position)
         {
-            moveDirection = direction;
-            canMove = true;
+            NetworkData networkData =
+                new NetworkData(MessageType.InputDown, position);
+            SendMoveDirection(networkData);
+            transform.position = position;
+        }
+    }
+
+    void SendMoveDirection(in NetworkData networkData)
+    {
+        // Struct iletirken crash veriyor...
+        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
+    }
+
+    private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+    {
+        if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
+            return;
+
+        if (networkData.type == MessageType.InputDown)
+        {
+            GameManager.Instance.playerList[steamid].transform.position = networkData.position;
         }
     }
 }

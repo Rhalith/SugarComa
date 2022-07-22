@@ -1,36 +1,68 @@
 using Networking;
+using Steamworks;
 using UnityEngine;
+using System.Collections.Generic;
 
-namespace TempScripts
+public class GameManager : MonoBehaviour
 {
-    public class GameManager : MonoBehaviour
+    private static GameManager _instance;
+    public static GameManager Instance => _instance;
+
+    public GameObject playerPref;
+    public GameObject remotePlayerPref;
+    public GameObject playersParentObj;
+    public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
+
+    void Awake()
     {
-        public GameObject steamManagerObject;
-        public SteamManager steamManager;
-        public SteamLobbyManager lobbyManager;
-        public SteamServerManager serverManager;
-
-        public GameObject playerPref;
-        public GameObject playersParentObj;
-    
-        void Awake()
+        if (_instance != null && _instance != this)
         {
-            steamManagerObject = GameObject.Find("SteamManager");
-            steamManager = steamManagerObject.GetComponent<SteamManager>();
-            lobbyManager = steamManagerObject.GetComponent<SteamLobbyManager>();
-            serverManager = GameObject.Find("ServerManager").GetComponent<SteamServerManager>();
+            DestroyImmediate(this);
+            return;
         }
 
-        void Start()
-        {
-            SpawnPlayers();
-        }
+        _instance = this;
+        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+    }
 
-        void SpawnPlayers()
+    private void OnMessageReceived(SteamId steamid, byte[] buffer)
+    {
+        if (NetworkHelper.TryGetNetworkData(buffer, out NetworkData data) && data.type == MessageType.Exit)
         {
-            foreach (var friendObj in lobbyManager.inLobby.Values)
+            if (playerList.TryGetValue(steamid, out GameObject gameObject))
             {
-                GameObject obj = Instantiate(playerPref, playersParentObj.transform);
+                Destroy(gameObject);
+                playerList.Remove(steamid);
+                SteamLobbyManager.Instance.playerInfos.Remove(steamid);
+            }
+        }
+    }
+
+    void Start()
+    {
+        SpawnPlayers();
+        SteamLobbyManager.Instance.inLobby.Clear();
+    }
+
+    private void OnApplicationQuit()
+    {
+        byte[] buffer = NetworkHelper.Serialize(new NetworkData(MessageType.Exit));
+        SteamServerManager.Instance.SendingMessageToAll(buffer);
+    }
+
+    void SpawnPlayers()
+    {
+        foreach (var id in SteamLobbyManager.Instance.inLobby.Keys)
+        {
+
+            if (id != SteamManager.Instance.PlayerSteamId)
+            {
+                GameObject obj = Instantiate(remotePlayerPref, playersParentObj.transform);
+                playerList.Add(id, obj);
+            }
+            else
+            {
+                Instantiate(playerPref, playersParentObj.transform);
             }
         }
     }

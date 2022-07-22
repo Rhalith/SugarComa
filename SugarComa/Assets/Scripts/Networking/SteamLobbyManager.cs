@@ -1,52 +1,98 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Steamworks;
-using Steamworks.Data;
+﻿using Steamworks;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+using System.Linq;
 using UnityEngine.UI;
+using Steamworks.Data;
+using UnityEngine.Events;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using Button = UnityEngine.UIElements.Button;
 
 namespace Networking
 {
     public class SteamLobbyManager : MonoBehaviour
     {
-        public UnityEngine.UI.Image panelImage;
+        private static SteamLobbyManager _instance;
+        public static SteamLobbyManager Instance => _instance;
+
+        public GameObject startGameButton;
+        public Transform content;
         public static SteamManager steamManager;
         public static Lobby currentLobby;
         public static bool UserInLobby;
+
+        #region Events
+
         public UnityEvent OnLobbyCreated;
         public UnityEvent OnLobbyJoined;
         public UnityEvent OnLobbyLeave;
-    
-        public GameObject InLobbyFriend;
-    
-        private Friend lobbyPartner;
-        private GameObject localClientObj;
-        public Friend LobbyPartner { get => lobbyPartner; set => lobbyPartner = value; }
-    
-        public Transform content;
+        #endregion
 
+        public GameObject InLobbyFriend;
+        public int MemberCount => currentLobby.MemberCount;
+        public Dictionary<SteamId, PlayerInfo> playerInfos = new Dictionary<SteamId, PlayerInfo>();
         public Dictionary<SteamId, GameObject> inLobby = new Dictionary<SteamId, GameObject>();
 
         private void Awake()
         {
+            if (_instance != null && _instance != this)
+            {
+                DestroyImmediate(this);
+                return;
+            }
+
+            _instance = this;
             DontDestroyOnLoad(this);
             steamManager = GetComponent<SteamManager>();
-            SteamServerManager.OnMessageReceived += this.SteamServerManager_OnMessageReceived;
+
+            SceneManager.activeSceneChanged += SceneManager_ActiveSceneChanged;
+            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
 
         private void Start()
         {
+            #region Lobby Events
             SteamMatchmaking.OnLobbyCreated += OnLobbyCreatedCallBack;
-
             SteamMatchmaking.OnLobbyEntered += OnLobbyEnteredCallBack;
             SteamMatchmaking.OnLobbyMemberJoined += OnLobbyMemberJoinedCallBack;
             SteamMatchmaking.OnLobbyMemberDisconnected += OnLobbyMemberDisconnectedCallBack;
             SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberDisconnectedCallBack;
             SteamFriends.OnGameLobbyJoinRequested += OnGameLobbyJoinRequestCallBack;
+            #endregion
         }
+
+        private void SceneManager_ActiveSceneChanged(Scene arg0, Scene arg1)
+        {
+            if (arg1.buildIndex == 0) return;
+
+            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+
+            SceneManager.activeSceneChanged -= SceneManager_ActiveSceneChanged;
+
+            #region Lobby Events
+            SteamMatchmaking.OnLobbyCreated -= OnLobbyCreatedCallBack;
+            SteamMatchmaking.OnLobbyEntered -= OnLobbyEnteredCallBack;
+            SteamMatchmaking.OnLobbyMemberJoined -= OnLobbyMemberJoinedCallBack;
+            SteamFriends.OnGameLobbyJoinRequested -= OnGameLobbyJoinRequestCallBack;
+            #endregion
+        }
+
+        // For now i'll use a button instead of check if everybody ready.
+        public void StartGame()
+        {
+            if (Instance.playerInfos.Any((playerInfo) => !playerInfo.Value.IsReady))
+                return;
+
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.StartGame)));
+
+            if (result)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
+
 
         void Update()
         {
@@ -56,56 +102,70 @@ namespace Networking
         private async void OnLobbyMemberJoinedCallBack(Lobby lobby, Friend friend)
         {
             Debug.Log($"{friend.Name} joined the lobby");
-            GameObject obj = Instantiate(InLobbyFriend, content);
             // Bu kısım ayrı bir fonksiyona dönüştürülebilir...
-            obj.GetComponent<LobbyFriendObject>().steamid = friend.Id;
-            obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
-            obj.GetComponentInChildren<Text>().text = friend.Name;
-            obj.GetComponentInChildren<RawImage>().texture = await SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id);
-            inLobby.TryAdd(friend.Id, obj);
-        
-            if(inLobby.TryAdd(friend.Id, obj))
+
+            if (await CreatePlayer(friend.Id, friend.Name))
             {
                 AcceptP2P(friend.Id);
-            }
-            else
-            {
-                Destroy(obj);
             }
         }
 
         public void SendReadyToAll()
         {
-            SteamServerManager.SendingMessageToAll(Encoding.UTF8.GetBytes("Ready"));
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Ready)));
+            if (result)
+            {
+                playerInfos[SteamManager.Instance.PlayerSteamId].IsReady = true;
+                inLobby[SteamManager.Instance.PlayerSteamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
+            }
         }
         
         // Bu değişiklikler için observer pattern kullanabilir miyiz?
 
         public void SendUnreadyToAll()
         {
-            SteamServerManager.SendingMessageToAll(Encoding.UTF8.GetBytes("Unready"));
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.UnReady)));
+            if (result)
+            {
+                playerInfos[SteamManager.Instance.PlayerSteamId].IsReady = false;
+                inLobby[SteamManager.Instance.PlayerSteamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
+            }
         }
         
-        private void SteamServerManager_OnMessageReceived(SteamId steamid, byte[] data)
+        private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
-            string message = System.Text.Encoding.UTF8.GetString(data);
-            if (message == "Ready")
+            if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
             {
-                SteamServerManager.SendingMessages(steamid, Encoding.UTF8.GetBytes("Ok"));
+                return;
             }
-            else if (message == "Unready")
+
+            switch (networkData.type)
             {
-                SteamServerManager.SendingMessages(steamid, Encoding.UTF8.GetBytes("Ok"));
-            }
-            else if (message == "Ok")
-            {
-                if(panelImage.color != UnityEngine.Color.green)
-                    panelImage.color = UnityEngine.Color.green;
-                else
-                    panelImage.color = UnityEngine.Color.red;
-                
-                // Check if everybody ready, then start a count down, then load scene
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                case MessageType.Ready:
+                    {
+                        playerInfos[steamid].IsReady = true;
+                        inLobby[steamid].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
+                        // inLobby[steamid].active = green;
+                        // panelImage.color = UnityEngine.Color.green;
+                    }
+                    break;
+                case MessageType.UnReady:
+                    {
+                        playerInfos[steamid].IsReady = false;
+                        inLobby[steamid].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
+                        // inLobby[steamid].active = green;
+                        //panelImage.color = UnityEngine.Color.red;
+                    }
+                    break;
+                case MessageType.StartGame:
+                    {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    }
+                    break;
+                default:
+                    throw new System.Exception();
             }
         }
 
@@ -113,10 +173,14 @@ namespace Networking
         {
             Debug.Log($"{friend.Name} left the lobby");
             Debug.Log($"New lobby owner is {currentLobby.Owner}");
+
+            if (SteamManager.Instance.PlayerSteamId == currentLobby.Owner.Id)
+                startGameButton.SetActive(true);
             if (inLobby.TryGetValue(friend.Id, out GameObject gameObject))
             {
                 Destroy(gameObject);
                 inLobby.Remove(friend.Id);
+                playerInfos.Remove(friend.Id);
             }
         }
 
@@ -126,20 +190,6 @@ namespace Networking
             if (joinedLobbySuccess != RoomEnter.Success)
             {
                 Debug.Log("failed to join lobby : " + joinedLobbySuccess);
-            }
-            else
-            {
-                // This was hacky, I didn't have clean way of getting lobby host steam id when joining lobby from game invite from friend 
-                foreach (Friend friend in SteamFriends.GetFriends())
-                {
-                    if (friend.Id == id)
-                    {
-                        lobbyPartner = friend;
-                        AcceptP2P(friend.Id);
-                        break;
-                    }
-                }
-                currentLobby = joinedLobby;
             }
         }
     
@@ -164,12 +214,15 @@ namespace Networking
             else
             {
                 OnLobbyCreated.Invoke();
+                startGameButton.SetActive(true);
                 Debug.Log("lobby creation result ok");
             }
         }
 
-        void OnLobbyEnteredCallBack(Lobby lobby)
+        async void OnLobbyEnteredCallBack(Lobby lobby)
         {
+            currentLobby = lobby;
+
             Debug.Log("Client joined the lobby");
             UserInLobby = true;
             foreach (var user in inLobby.Values)
@@ -178,39 +231,23 @@ namespace Networking
             }
             inLobby.Clear();
 
-            GameObject obj = Instantiate(InLobbyFriend, content);
-            obj.GetComponent<LobbyFriendObject>().steamid = steamManager.PlayerSteamId;
-            obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
-            obj.GetComponentInChildren<Text>().text = SteamClient.Name;
-            inLobby.TryAdd(steamManager.PlayerSteamId, obj);
+            await CreatePlayer(steamManager.PlayerSteamId, SteamClient.Name);
 
-            List<Task<Texture2D>> tasks = new List<Task<Texture2D>>(currentLobby.MemberCount - 1);
-            // TODO remove. use steam friends manager pp.
-            tasks.Add(SteamFriendsManager.GetTextureFromSteamIdAsync(SteamClient.SteamId));
+            OnLobbyJoined.Invoke();
 
-            localClientObj = obj;
+            int count = currentLobby.MemberCount - 1;
+            if (count <= 0) return;
 
+            List<Task<bool>> tasks = new List<Task<bool>>(count);
             foreach (var friend in currentLobby.Members)
             {
                 if (friend.Id != SteamClient.SteamId)
                 {
-                    GameObject obj2 = Instantiate(InLobbyFriend, content);
-                    obj2.GetComponentInChildren<Text>().text = friend.Name;
-                    obj2.GetComponent<LobbyFriendObject>().steamid = friend.Id;
-                    obj2.GetComponent<LobbyFriendObject>().CheckIfOwner();
-                    tasks.Add(SteamFriendsManager.GetTextureFromSteamIdAsync(friend.Id));
-                    inLobby.TryAdd(friend.Id, obj2);
+                    tasks.Add(CreatePlayer(friend.Id, friend.Name));
+                    AcceptP2P(friend.Id);
                 }
             }
             Task.WaitAll(tasks.ToArray());
-
-            int i = 0;
-            foreach (var member in inLobby)
-            {
-                member.Value.GetComponentInChildren<RawImage>().texture = tasks[i].Result;
-                i++;
-            }
-            OnLobbyJoined.Invoke();
         }
     
         public async void CreateLobbyAsync()
@@ -258,9 +295,9 @@ namespace Networking
                 {
                     Destroy(user);
                 }
-
-                Destroy(localClientObj);
+                startGameButton.SetActive(false);
                 inLobby.Clear();
+                playerInfos.Clear();
                 currentLobby.Leave();
                 OnLobbyLeave.Invoke();
             }
@@ -269,5 +306,27 @@ namespace Networking
                 Debug.Log("Not Working!");
             }
         }
+
+        private async Task<bool> CreatePlayer(SteamId id, string name)
+        {
+            Texture2D texture2D = await SteamFriendsManager.GetTextureFromSteamIdAsync(id);
+
+            PlayerInfo playerInfo = new PlayerInfo(id, name, texture2D);
+            GameObject obj = Instantiate(InLobbyFriend, content);
+            obj.GetComponent<LobbyFriendObject>().steamid = playerInfo.SteamId;
+            obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
+            obj.GetComponentInChildren<Text>().text = name;
+            obj.GetComponentInChildren<RawImage>().texture = playerInfo.Texture;
+
+            if (!inLobby.TryAdd(playerInfo.SteamId, obj))
+            {
+                Destroy(obj);
+                return false;
+            }
+
+            playerInfos.Add(playerInfo.SteamId, playerInfo);
+            return true;
+        }
+
     }
 }

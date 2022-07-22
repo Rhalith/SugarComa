@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Networking;
+﻿using Networking;
 using UnityEngine;
 using Steamworks;
-using UnityEngine.UIElements;
 
 public class LobbyFriendObject : MonoBehaviour
 {
@@ -19,7 +16,7 @@ public class LobbyFriendObject : MonoBehaviour
         }
     }
 
-    public async void KickAsync()
+    public void KickAsync()
     {
         // Kick Function
         Debug.Log("Kicked " + steamid);

@@ -21,6 +21,10 @@
             <e p="SteamLobbyManager.cs" t="Include" />
             <e p="SteamManager.cs" t="Include" />
             <e p="SteamServerManager.cs" t="Include" />
+            <e p="Utils" t="Include">
+              <e p="Network.cs" t="Include" />
+              <e p="NetworkHelper.cs" t="Include" />
+            </e>
           </e>
           <e p="TempScripts" t="Include">
             <e p="GameManager.cs" t="Include" />
