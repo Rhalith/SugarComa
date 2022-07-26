@@ -6,6 +6,9 @@ using UnityEngine;
 [DefaultExecutionOrder(-101)]
 public class PlayerHandler : MonoBehaviour
 {
+    private static PlayerHandler _instance;
+    public static PlayerHandler Instance => _instance;
+
     #region SerializeFields
     [SerializeField] CameraAnimations _cameraAnimations;
     [SerializeField] GameObject _playerPrefab;
@@ -27,23 +30,39 @@ public class PlayerHandler : MonoBehaviour
     #endregion
     private GameObject _createdObject;
     public int whichPlayer;
+    public List<Steamworks.SteamId> _playerIdList;
 
     private bool isFirst = true;
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            DestroyImmediate(this);
+            return;
+        }
+
+        _instance = this;
+
+        _playerIdList = new List<Steamworks.SteamId>();
+    }
 
     /// <summary>
     /// Creates player.
     /// </summary>
-    public void CreatePlayer()
+    public GameObject CreatePlayer(Steamworks.SteamId id)
     {
         if (isFirst)
         {
             _playerList[0].SetActive(true);
+            _playerIdList.Add(id);
             isFirst = false;
-            return;
+            return _playerList[0];
         }
         _createdObject = Instantiate(_playerPrefab);
         _createdObject.transform.position = new Vector3(0, 0, 0);
         _playerList.Add(_createdObject);
+        _playerIdList.Add(id);
         ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
         SetPlayerMovement(sckeeper);
         SetPlayerCollector(sckeeper);
@@ -51,13 +70,15 @@ public class PlayerHandler : MonoBehaviour
         SetPlayerInput(sckeeper);
         SetPlayerSpec(sckeeper, _playerList.IndexOf(_createdObject)+1);
         ChangeCurrentPlayer();
+
+        return _createdObject;
     }
 
 
     /// <summary>
     /// Changes current player.
     /// </summary>
-    public void ChangeCurrentPlayer() ///Knowing bug, eðer ilk oyuncu oynarken 3. oyuncuyu yaratýrsak kontrol 2. oyuncuya geçiyor.
+    public void ChangeCurrentPlayer() ///Knowing bug, eÄŸer ilk oyuncu oynarken 3. oyuncuyu yaratÄ±rsak kontrol 2. oyuncuya geÃ§iyor.
     {
         ScriptKeeper previouskeep = null;
         if (_playerList.Count > 0)

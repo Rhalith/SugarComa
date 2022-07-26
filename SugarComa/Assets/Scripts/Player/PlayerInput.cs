@@ -1,3 +1,4 @@
+using Networking;
 using UnityEngine;
 
 [DefaultExecutionOrder(-100)]
@@ -36,8 +37,12 @@ public class PlayerInput : MonoBehaviour
 
 		ClearInputs();
 
+		// Last Check: Checks if it is this client's own object
+		// We can create 2 object, one for client's own player object, one for remote player object for other clients movements.
+		// After that we won't need that check any more
 		if (GameManager.IsGameOver) return;
-		if(isMyTurn && canPlayersAct && !cinemachineBrain.IsBlending) 
+		if(isMyTurn && canPlayersAct && !cinemachineBrain.IsBlending 
+			&& PlayerHandler.Instance._playerIdList[0] == SteamManager.Instance.PlayerSteamId)
         {
 			ProcessInputs();
 		}

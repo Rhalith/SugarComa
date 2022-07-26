@@ -8,10 +8,9 @@ public class NetworkManager : MonoBehaviour
     private static NetworkManager _instance;
     public static NetworkManager Instance => _instance;
 
-    public GameObject playerPref;
-    public GameObject remotePlayerPref;
-    public GameObject playersParentObj;
     public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
+
+    public PlayerHandler playerHandler;
 
     void Awake()
     {
@@ -57,12 +56,11 @@ public class NetworkManager : MonoBehaviour
 
             if (id != SteamManager.Instance.PlayerSteamId)
             {
-                GameObject obj = Instantiate(remotePlayerPref, playersParentObj.transform);
-                playerList.Add(id, obj);
+                playerList.Add(id, playerHandler.CreatePlayer(id));
             }
             else
             {
-                Instantiate(playerPref, playersParentObj.transform);
+                playerHandler.CreatePlayer(id);
             }
         }
     }

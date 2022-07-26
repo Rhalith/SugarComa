@@ -21,6 +21,7 @@ public struct NetworkData
     public readonly int id;
     public MessageType type;
     public Vector3 position;
+    public Quaternion rotation;
     
     public NetworkData(MessageType type)
     {
@@ -28,6 +29,7 @@ public struct NetworkData
 
         this.type = type;
         position = Vector3.zero;
+        rotation = Quaternion.identity;
     }
 
     public NetworkData(MessageType type, Vector3 position)
@@ -36,5 +38,15 @@ public struct NetworkData
 
         this.type = type;
         this.position = position;
+        rotation = Quaternion.identity;
+    }
+
+    public NetworkData(MessageType type, Vector3 position, Quaternion rotation)
+    {
+        id = NetworkId.NetworkDataId;
+
+        this.type = type;
+        this.position = position;
+        this.rotation = rotation;
     }
 }

@@ -1,3 +1,5 @@
+using Networking;
+using System.Collections;
 using UnityEngine;
 
 public class PathTracker : MonoBehaviour
@@ -68,6 +70,16 @@ public class PathTracker : MonoBehaviour
     public event TrackerAction OnTrackingStopped;
     #endregion
 
+    private void Start()
+    {
+        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+    }
+
+    private void OnDestroy()
+    {
+        SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+    }
+    
     /// <summary>
     /// Tracking starts on the given path.
     /// </summary>
@@ -124,6 +136,9 @@ public class PathTracker : MonoBehaviour
         OnTrackingStarted?.Invoke();
     }
 
+    
+    // Multiplayer hareket için burayı kullanıyoz, ayrı bir fonksiyon açılabilir.
+    
     private void Update()
     {
         if (!isMoving) return;
@@ -132,6 +147,7 @@ public class PathTracker : MonoBehaviour
 
         if (transform.position != _currentPosition)
         {
+            // Smooth tracking
             // if object position not equal the current platform position move to position.
             transform.position = Vector3.Lerp(_startPosition, _currentPosition, _t);
 
@@ -142,6 +158,10 @@ public class PathTracker : MonoBehaviour
                 var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
             }
+
+            NetworkData networkData =
+                new NetworkData(MessageType.InputDown, transform.position, transform.rotation);
+            SendMoveDirection(networkData);
         }
         else
         {
@@ -149,7 +169,57 @@ public class PathTracker : MonoBehaviour
             NextPlatform();
         }
     }
+    
 
+    void SendMoveDirection(in NetworkData networkData)
+    {
+        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
+    }
+
+    private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+    {
+        if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
+            return;
+
+        if (networkData.type == MessageType.InputDown)
+        {
+            // Burası için bir Asenkron task açılabilir şu anlık enumarator ile yapıyorum.
+            StartCoroutine(MoveRemotePlayer(steamid, networkData));
+        }
+    }
+
+    private IEnumerator MoveRemotePlayer(Steamworks.SteamId steamId, NetworkData networkData)
+    {
+        float tempT = 0;
+        Transform playerTransform = NetworkManager.Instance.playerList[steamId].transform;
+        Vector3 tempStartPos = playerTransform.position;
+        while (playerTransform.position != _currentPosition)
+        {
+            tempT += Time.deltaTime * speed;
+
+            // Smooth tracking
+            // if object position not equal the current platform position move to position.
+            playerTransform.position = Vector3.Lerp(tempStartPos, networkData.position, tempT);
+
+            // rotation
+            Vector3 movementDirection = (networkData.position - playerTransform.position).normalized;
+            if (movementDirection != Vector3.zero)
+            {
+                var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+                playerTransform.rotation = 
+                    Quaternion.RotateTowards(playerTransform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            }
+
+            // Eşitleme yapılamazsa aç
+            /*
+            NetworkManager.Instance.playerList[steamId].transform.position = playerTransform.position;
+            NetworkManager.Instance.playerList[steamId].transform.rotation = playerTransform.rotation;
+            */
+            // hareket etmiyorsa bunda sıkıntı olabilir, return'ü düzelt
+            yield return null;
+        }
+    }
+    
     private void NextPlatform()
     {
         bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;

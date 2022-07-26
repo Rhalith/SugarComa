@@ -78,22 +78,6 @@ namespace Networking
             }
         }
 
-        // paramter: , bool makeSureSendAll = false
-        //if (makeSureSendAll)
-        //{
-        //    while (response.Any(res => !res))
-        //    {
-        //        for (int i = 0; i < response.Length; i++)
-        //        {
-        //            if (!response[i])
-        //            {
-        //                var element = SteamLobbyManager.Instance.playerInfos.ElementAt(i);
-        //                response[i] = SteamNetworking.SendP2PPacket(element.Key, buffer);
-        //            }
-        //        }
-        //    }
-        //}
-
         //void HandleMessageFrom(SteamId steamId, byte[] data)
         //{
         //    /*
@@ -104,7 +88,7 @@ namespace Networking
         //    */
 
         //    // for struct test 
-        //    //PlayerInfo.Info playerInfo = Deserialize<PlayerInfo.Info>(data);
+        //    //LobbyPlayerInfo.Info playerInfo = Deserialize<LobbyPlayerInfo.Info>(data);
         //    //Debug.Log($"User {playerInfo.id} move to {playerInfo.dirStr}");
         //    //PlayerMovement.SetDirection(playerInfo.direction);
         //}

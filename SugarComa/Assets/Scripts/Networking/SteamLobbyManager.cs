@@ -31,7 +31,7 @@ namespace Networking
 
         public GameObject InLobbyFriend;
         public int MemberCount => currentLobby.MemberCount;
-        public Dictionary<SteamId, PlayerInfo> playerInfos = new Dictionary<SteamId, PlayerInfo>();
+        public Dictionary<SteamId, LobbyPlayerInfo> playerInfos = new Dictionary<SteamId, LobbyPlayerInfo>();
         public Dictionary<SteamId, GameObject> inLobby = new Dictionary<SteamId, GameObject>();
 
         private void Awake()
@@ -311,7 +311,7 @@ namespace Networking
         {
             Texture2D texture2D = await SteamFriendsManager.GetTextureFromSteamIdAsync(id);
 
-            PlayerInfo playerInfo = new PlayerInfo(id, name, texture2D);
+            LobbyPlayerInfo playerInfo = new LobbyPlayerInfo(id, name, texture2D);
             GameObject obj = Instantiate(InLobbyFriend, content);
             obj.GetComponent<LobbyFriendObject>().steamid = playerInfo.SteamId;
             obj.GetComponent<LobbyFriendObject>().CheckIfOwner();

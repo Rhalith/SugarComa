@@ -1,8 +1,8 @@
 using Steamworks;
 using UnityEngine;
-public class PlayerInfo
+public class LobbyPlayerInfo
 {
-    public PlayerInfo(SteamId steamId, string name, Texture2D texture)
+    public LobbyPlayerInfo(SteamId steamId, string name, Texture2D texture)
     {
         SteamId = steamId;
         Name = name;
