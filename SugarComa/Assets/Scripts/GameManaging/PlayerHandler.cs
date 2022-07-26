@@ -33,7 +33,7 @@ public class PlayerHandler : MonoBehaviour
     private GameObject _createdObject;
     public int whichPlayer;
     public List<Steamworks.SteamId> _playerIdList;
-    public Steamworks.SteamId[] _playerQueue;
+    //public Steamworks.SteamId[] _playerQueue;
 
     private bool isFirst = true;
 
@@ -93,7 +93,7 @@ public class PlayerHandler : MonoBehaviour
                new NetworkData(MessageType.UpdateQueue, _playerIdList);
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
 
-        _playerQueue = _playerIdList.ToArray();
+        //_playerQueue = _playerIdList.ToArray();
     }
 
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
@@ -103,7 +103,7 @@ public class PlayerHandler : MonoBehaviour
 
         if (networkData.type == MessageType.UpdateQueue)
         {
-            _playerQueue = networkData.playerIdArr;
+            //_playerQueue = networkData.playerIdArr;
         }
     }
 
@@ -118,10 +118,10 @@ public class PlayerHandler : MonoBehaviour
             whichPlayer++;
 
             // 3 tane liste var düzenlenmesi lazım... 1.GameObject List, 2.IdList, 3.IdListByQueue
-            previouskeep = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer - 1])].GetComponent<ScriptKeeper>();
+            previouskeep = _playerList[whichPlayer - 1].GetComponent<ScriptKeeper>();
             if (whichPlayer > _playerList.Count - 1) whichPlayer = 0;
 
-            ScriptKeeper scKeeper = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer])].GetComponent<ScriptKeeper>();
+            ScriptKeeper scKeeper = _playerList[whichPlayer - 1].GetComponent<ScriptKeeper>();
             ChangeCurrentSpecs(scKeeper, previouskeep);
         }
     }
