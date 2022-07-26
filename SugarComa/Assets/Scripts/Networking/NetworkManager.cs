@@ -8,6 +8,7 @@ public class NetworkManager : MonoBehaviour
     private static NetworkManager _instance;
     public static NetworkManager Instance => _instance;
 
+    // Ayrý bir yerde tutulabilir.
     public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
 
     public PlayerHandler playerHandler;
@@ -41,6 +42,7 @@ public class NetworkManager : MonoBehaviour
     {
         SpawnPlayers();
         SteamLobbyManager.Instance.inLobby.Clear();
+        playerHandler.UpdateTurnQueue();
     }
 
     private void OnApplicationQuit()

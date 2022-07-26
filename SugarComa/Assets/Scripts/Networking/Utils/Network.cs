@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public enum MessageType : byte
@@ -7,6 +8,8 @@ public enum MessageType : byte
     UnReady,
     StartGame,
     InputDown,
+    TurnOver,
+    UpdateQueue,
     Exit
 }
 
@@ -22,7 +25,8 @@ public struct NetworkData
     public MessageType type;
     public Vector3 position;
     public Quaternion rotation;
-    
+    public Steamworks.SteamId[] playerIdArr;
+
     public NetworkData(MessageType type)
     {
         id = NetworkId.NetworkDataId;
@@ -30,6 +34,7 @@ public struct NetworkData
         this.type = type;
         position = Vector3.zero;
         rotation = Quaternion.identity;
+        playerIdArr = new Steamworks.SteamId[1];
     }
 
     public NetworkData(MessageType type, Vector3 position)
@@ -39,6 +44,7 @@ public struct NetworkData
         this.type = type;
         this.position = position;
         rotation = Quaternion.identity;
+        playerIdArr = new Steamworks.SteamId[1];
     }
 
     public NetworkData(MessageType type, Vector3 position, Quaternion rotation)
@@ -48,5 +54,16 @@ public struct NetworkData
         this.type = type;
         this.position = position;
         this.rotation = rotation;
+        playerIdArr = new Steamworks.SteamId[1];
+    }
+
+    public NetworkData(MessageType type, List<Steamworks.SteamId> _playerIdList)
+    {
+        id = NetworkId.NetworkDataId;
+
+        this.type = type;
+        position = Vector3.zero;
+        rotation = Quaternion.identity;
+        playerIdArr = _playerIdList.ToArray();
     }
 }

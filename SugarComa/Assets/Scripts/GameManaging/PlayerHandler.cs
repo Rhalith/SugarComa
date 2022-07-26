@@ -1,3 +1,4 @@
+using Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,7 @@ public class PlayerHandler : MonoBehaviour
     #region SerializeFields
     [SerializeField] CameraAnimations _cameraAnimations;
     [SerializeField] GameObject _playerPrefab;
+    [SerializeField] GameObject playerParent;
     [SerializeField] Platform _startplatform;
     [SerializeField] PathFinder _pathFinder;
     [SerializeField] MapCamera _mapCamera;
@@ -31,6 +33,7 @@ public class PlayerHandler : MonoBehaviour
     private GameObject _createdObject;
     public int whichPlayer;
     public List<Steamworks.SteamId> _playerIdList;
+    public Steamworks.SteamId[] _playerQueue;
 
     private bool isFirst = true;
 
@@ -47,19 +50,29 @@ public class PlayerHandler : MonoBehaviour
         _playerIdList = new List<Steamworks.SteamId>();
     }
 
+    private void Start()
+    {
+        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+    }
+
+    private void OnDestroy()
+    {
+        SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+    }
+
     /// <summary>
     /// Creates player.
     /// </summary>
     public GameObject CreatePlayer(Steamworks.SteamId id)
     {
-        if (isFirst)
+        if (isFirst && SteamManager.Instance.PlayerSteamId == id)
         {
             _playerList[0].SetActive(true);
             _playerIdList.Add(id);
             isFirst = false;
             return _playerList[0];
         }
-        _createdObject = Instantiate(_playerPrefab);
+        _createdObject = Instantiate(_playerPrefab, playerParent.transform);
         _createdObject.transform.position = new Vector3(0, 0, 0);
         _playerList.Add(_createdObject);
         _playerIdList.Add(id);
@@ -69,11 +82,30 @@ public class PlayerHandler : MonoBehaviour
         SetGobletSelection(sckeeper);
         SetPlayerInput(sckeeper);
         SetPlayerSpec(sckeeper, _playerList.IndexOf(_createdObject)+1);
-        ChangeCurrentPlayer();
+        //ChangeCurrentPlayer();
 
         return _createdObject;
     }
 
+    public void UpdateTurnQueue()
+    {
+        NetworkData networkData =
+               new NetworkData(MessageType.UpdateQueue, _playerIdList);
+        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
+
+        _playerQueue = _playerIdList.ToArray();
+    }
+
+    private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+    {
+        if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
+            return;
+
+        if (networkData.type == MessageType.UpdateQueue)
+        {
+            _playerQueue = networkData.playerIdArr;
+        }
+    }
 
     /// <summary>
     /// Changes current player.
@@ -81,14 +113,17 @@ public class PlayerHandler : MonoBehaviour
     public void ChangeCurrentPlayer() ///Knowing bug, eğer ilk oyuncu oynarken 3. oyuncuyu yaratırsak kontrol 2. oyuncuya geçiyor.
     {
         ScriptKeeper previouskeep = null;
-        if (_playerList.Count > 0)
+        if (_playerList.Count > 1)
         {
             whichPlayer++;
-            previouskeep = _playerList[whichPlayer - 1].GetComponent<ScriptKeeper>();
+
+            // 3 tane liste var düzenlenmesi lazım... 1.GameObject List, 2.IdList, 3.IdListByQueue
+            previouskeep = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer - 1])].GetComponent<ScriptKeeper>();
             if (whichPlayer > _playerList.Count - 1) whichPlayer = 0;
+
+            ScriptKeeper scKeeper = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer])].GetComponent<ScriptKeeper>();
+            ChangeCurrentSpecs(scKeeper, previouskeep);
         }
-        ScriptKeeper scKeeper = _playerList[whichPlayer].GetComponent<ScriptKeeper>();
-        ChangeCurrentSpecs(scKeeper, previouskeep);
     }
 
     /// <summary>

@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!isUserInterfaceActive && _playerAnimation.IsIdle)
+        if (!isUserInterfaceActive && _playerAnimation.IsIdle && _playerInput.isMyTurn)
         {
             if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed)
             {
@@ -195,15 +195,21 @@ public class PlayerMovement : MonoBehaviour
         _playerAnimation.StopRunning();
         _playerCollector.CheckCurrentNode(_currentPlatform);
         //if((_currentPlatform.HasSelector && _currentStep <= 0) || _currentPlatform.spec != PlatformSpec.Goal) _dice.SetActive(true);
-        if (_currentPlatform.HasSelector)
-        {
-            if(_currentStep <= 0) _dice.SetActive(true);
-        }
-        else if (_currentPlatform.spec != PlatformSpec.Goal)
-        {
-            _dice.SetActive(true);
-        }
 
+        // Düzenle
+        if(_currentStep <= 0)
+            PlayerHandler.Instance.ChangeCurrentPlayer();
+        else
+        {
+            if (_currentPlatform.HasSelector)
+            {
+                if (_currentStep <= 0) _dice.SetActive(true);
+            }
+            else if (_currentPlatform.spec != PlatformSpec.Goal)
+            {
+                _dice.SetActive(true);
+            }
+        }
     }
 
     private void SelectPlatform(RouteSelectorDirection direction, GameObject left = null, GameObject right = null)

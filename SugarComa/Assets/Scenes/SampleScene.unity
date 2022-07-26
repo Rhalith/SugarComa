@@ -174,7 +174,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1190722, y: 1}
+    m_SensorSize: {x: 1.7773196, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -15485,6 +15485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraAnimations: {fileID: 1938159821}
   _playerPrefab: {fileID: 5242262645195583948, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+  playerParent: {fileID: 1711480455}
   _startplatform: {fileID: 1989628817}
   _pathFinder: {fileID: 1970712953}
   _mapCamera: {fileID: 1716652755}
@@ -17361,7 +17362,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1222331013}
         m_TargetAssemblyTypeName: PlayerHandler, Assembly-CSharp
-        m_MethodName: CreatePlayer
+        m_MethodName: TCreatePlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -24735,7 +24736,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1190722, y: 1}
+    m_SensorSize: {x: 1.7773196, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -28875,7 +28876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4120892788676648186, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_Priority
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4120892788676648186, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_Lens.FieldOfView
