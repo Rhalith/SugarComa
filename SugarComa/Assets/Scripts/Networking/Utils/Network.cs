@@ -26,7 +26,6 @@ public struct NetworkData
     public MessageType type;
     public Vector3 position;
     public Quaternion rotation;
-    public byte[] steamId;
 
     public NetworkData(MessageType type)
     {
@@ -35,7 +34,6 @@ public struct NetworkData
         this.type = type;
         position = Vector3.zero;
         rotation = Quaternion.identity;
-        steamId = new byte[Marshal.SizeOf<ulong>()*NetworkManager.MaxPlayerCount];
     }
 
     public NetworkData(MessageType type, Vector3 position)
@@ -45,7 +43,6 @@ public struct NetworkData
         this.type = type;
         this.position = position;
         rotation = Quaternion.identity;
-        steamId = new byte[Marshal.SizeOf<ulong>() * NetworkManager.MaxPlayerCount];
     }
 
     public NetworkData(MessageType type, Vector3 position, Quaternion rotation)
@@ -55,7 +52,6 @@ public struct NetworkData
         this.type = type;
         this.position = position;
         this.rotation = rotation;
-        steamId = new byte[Marshal.SizeOf<ulong>() * NetworkManager.MaxPlayerCount];
     }
 }
 
