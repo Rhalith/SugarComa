@@ -59,12 +59,12 @@ public struct NetworkData
     }
 }
 
-[StructLayout(LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct PlayerListNetworkData
 {
-    public readonly int id;
-    public MessageType type;
-    public byte[] playerList;
+    [FieldOffset(0)]public byte[] playerList;
+    [FieldOffset(64)] public readonly int id;
+    [FieldOffset(68)] public MessageType type;
 
     public PlayerListNetworkData(MessageType type)
     {
