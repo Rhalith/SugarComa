@@ -33,7 +33,7 @@ public class PlayerHandler : MonoBehaviour
     private GameObject _createdObject;
     public int whichPlayer;
     public List<Steamworks.SteamId> _playerIdList;
-    //public Steamworks.SteamId[] _playerQueue;
+    public Steamworks.SteamId[] _playerQueue;
 
     private bool isFirst = true;
 
@@ -89,21 +89,21 @@ public class PlayerHandler : MonoBehaviour
 
     public void UpdateTurnQueue()
     {
-        NetworkData networkData =
-               new NetworkData(MessageType.UpdateQueue, _playerIdList);
-        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
+        PlayerListNetworkData playerListData =
+               new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerIdList.ToArray()));
+        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
 
-        //_playerQueue = _playerIdList.ToArray();
+        _playerQueue = _playerIdList.ToArray();
     }
 
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
     {
-        if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
-            return;
-
-        if (networkData.type == MessageType.UpdateQueue)
+        if (NetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
         {
-            //_playerQueue = networkData.playerIdArr;
+            if (playerListData.type == MessageType.UpdateQueue)
+            {
+                _playerQueue = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
+            }
         }
     }
 
@@ -118,10 +118,10 @@ public class PlayerHandler : MonoBehaviour
             whichPlayer++;
 
             // 3 tane liste var düzenlenmesi lazım... 1.GameObject List, 2.IdList, 3.IdListByQueue
-            previouskeep = _playerList[whichPlayer - 1].GetComponent<ScriptKeeper>();
+            previouskeep = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer - 1])].GetComponent<ScriptKeeper>();
             if (whichPlayer > _playerList.Count - 1) whichPlayer = 0;
 
-            ScriptKeeper scKeeper = _playerList[whichPlayer - 1].GetComponent<ScriptKeeper>();
+            ScriptKeeper scKeeper = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer])].GetComponent<ScriptKeeper>();
             ChangeCurrentSpecs(scKeeper, previouskeep);
         }
     }

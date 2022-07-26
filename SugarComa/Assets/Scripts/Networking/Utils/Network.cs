@@ -16,6 +16,7 @@ public enum MessageType : byte
 public static class NetworkId
 {
     public static readonly int NetworkDataId = Animator.StringToHash("NetworkData");
+    public static readonly int PlayerListNetworkDataId = Animator.StringToHash("PlayerListNetworkData");
 }
 
 [StructLayout(LayoutKind.Sequential)]
@@ -25,7 +26,7 @@ public struct NetworkData
     public MessageType type;
     public Vector3 position;
     public Quaternion rotation;
-    //public Steamworks.SteamId[] playerIdArr;
+    public byte[] steamId;
 
     public NetworkData(MessageType type)
     {
@@ -34,7 +35,7 @@ public struct NetworkData
         this.type = type;
         position = Vector3.zero;
         rotation = Quaternion.identity;
-        //playerIdArr = new Steamworks.SteamId[1];
+        steamId = new byte[Marshal.SizeOf<ulong>()*NetworkManager.MaxPlayerCount];
     }
 
     public NetworkData(MessageType type, Vector3 position)
@@ -44,7 +45,7 @@ public struct NetworkData
         this.type = type;
         this.position = position;
         rotation = Quaternion.identity;
-        //playerIdArr = new Steamworks.SteamId[1];
+        steamId = new byte[Marshal.SizeOf<ulong>() * NetworkManager.MaxPlayerCount];
     }
 
     public NetworkData(MessageType type, Vector3 position, Quaternion rotation)
@@ -54,16 +55,30 @@ public struct NetworkData
         this.type = type;
         this.position = position;
         this.rotation = rotation;
-        //playerIdArr = new Steamworks.SteamId[1];
+        steamId = new byte[Marshal.SizeOf<ulong>() * NetworkManager.MaxPlayerCount];
     }
+}
 
-    public NetworkData(MessageType type, List<Steamworks.SteamId> _playerIdList)
+[StructLayout(LayoutKind.Sequential)]
+public struct PlayerListNetworkData
+{
+    public readonly int id;
+    public MessageType type;
+    public byte[] playerList;
+
+    public PlayerListNetworkData(MessageType type)
     {
-        id = NetworkId.NetworkDataId;
+        id = NetworkId.PlayerListNetworkDataId;
 
         this.type = type;
-        position = Vector3.zero;
-        rotation = Quaternion.identity;
-        //playerIdArr = _playerIdList.ToArray();
+        playerList = new byte[Marshal.SizeOf<ulong>() * NetworkManager.MaxPlayerCount];
+    }
+
+    public PlayerListNetworkData(MessageType type, byte[] steamId)
+    {
+        id = NetworkId.PlayerListNetworkDataId;
+
+        this.type = type;
+        this.playerList = steamId;
     }
 }
