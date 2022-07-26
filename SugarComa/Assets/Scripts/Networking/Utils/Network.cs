@@ -58,6 +58,7 @@ public struct NetworkData
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct PlayerListNetworkData
 {
+    [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 64)]
     [FieldOffset(0)]public byte[] playerList;
     [FieldOffset(64)] public readonly int id;
     [FieldOffset(68)] public MessageType type;

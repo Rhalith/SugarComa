@@ -183,12 +183,20 @@ public class PlayerMovement : MonoBehaviour
     private void OnCurrentPlatformChanged()
     {
         var current = _pathTracker.CurrentPlatform;
-        if (current != null)
+        if (current != null && _pathTracker.Next != null)
         {
+            NetworkData networkData =
+                new NetworkData(MessageType.InputDown, _pathTracker.Next.position);
+
             _currentPlatform = current;
             _currentStep -= 1;
         }
     }
+    // |
+    // playerremotemovement scripti yaz, player tracker alsýn, oncurrentplatformchanged eventi çalýþsýn yukardakinin aynýsý, 
+
+
+
 
     private void OnTrackingStopped()
     {

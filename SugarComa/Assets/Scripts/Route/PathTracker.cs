@@ -1,5 +1,6 @@
 using Networking;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PathTracker : MonoBehaviour
@@ -35,6 +36,7 @@ public class PathTracker : MonoBehaviour
     /// </summary>
     public Platform CurrentPlatform
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
         {
             // if there is no path
@@ -46,6 +48,21 @@ public class PathTracker : MonoBehaviour
             return _path[_currentPlatformIndex];
         }
     }
+
+    public Platform Next
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get
+        {
+            // if there is no path
+            if (_path == null || _path.Length == 0) return null;
+
+            if (_currentPlatformIndex <= -1 || _currentPlatformIndex >= _path.Length-1) return null;
+
+            return _path[_currentPlatformIndex+1];
+        }
+    }
+
     public int PathLength => _path.Length;
 
     #endregion
@@ -170,11 +187,20 @@ public class PathTracker : MonoBehaviour
         }
     }
     
+    /// //////////////////////////////////////////////////////////////////
+    /// 
+    // yeni scripte taşı
+    // remote movement...
 
+
+    // bunu onplatformchanged'da çağır
     void SendMoveDirection(in NetworkData networkData)
     {
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
     }
+
+    // yeni scripte startposition aç bi tane, currentposition da next platformun değeri
+    // start pos 
 
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
     {
@@ -183,43 +209,37 @@ public class PathTracker : MonoBehaviour
 
         if (networkData.type == MessageType.InputDown)
         {
-            // Burası için bir Asenkron task açılabilir şu anlık enumarator ile yapıyorum.
-            StartCoroutine(MoveRemotePlayer(steamid, networkData));
-        }
-    }
+            _t = 0; 
+            _startPosition = transform.position;
+            _currentPosition = networkData.position;
 
-    private IEnumerator MoveRemotePlayer(Steamworks.SteamId steamId, NetworkData networkData)
-    {
-        float tempT = 0;
-        Transform playerTransform = NetworkManager.Instance.playerList[steamId].transform;
-        Vector3 tempStartPos = playerTransform.position;
-        while (playerTransform.position != _currentPosition)
-        {
-            tempT += Time.deltaTime * speed;
 
-            // Smooth tracking
-            // if object position not equal the current platform position move to position.
-            playerTransform.position = Vector3.Lerp(tempStartPos, networkData.position, tempT);
 
-            // rotation
-            Vector3 movementDirection = (networkData.position - playerTransform.position).normalized;
-            if (movementDirection != Vector3.zero)
+
+
+
+            /////// scriptin içindeki update'e al şurayı aşağıyı
+            ///
+            if (transform.position != _currentPosition)
             {
-                var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-                playerTransform.rotation = 
-                    Quaternion.RotateTowards(playerTransform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-            }
+                _t += Time.deltaTime * speed;
+                // Smooth tracking
+                // if object position not equal the current platform position move to position.
+                transform.position = Vector3.Lerp(_startPosition, _currentPosition, _t);
 
-            // Eşitleme yapılamazsa aç
-            /*
-            NetworkManager.Instance.playerList[steamId].transform.position = playerTransform.position;
-            NetworkManager.Instance.playerList[steamId].transform.rotation = playerTransform.rotation;
-            */
-            // hareket etmiyorsa bunda sıkıntı olabilir, return'ü düzelt
-            yield return null;
+                // rotation
+                Vector3 movementDirection = (_currentPosition - transform.position).normalized;
+                if (movementDirection != Vector3.zero)
+                {
+                    var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+                }
+            }
         }
     }
-    
+    /// ////////////////////////////////////////////
+    /// 
+
     private void NextPlatform()
     {
         bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
