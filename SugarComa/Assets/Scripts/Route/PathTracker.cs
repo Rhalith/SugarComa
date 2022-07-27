@@ -86,16 +86,6 @@ public class PathTracker : MonoBehaviour
     /// </summary>
     public event TrackerAction OnTrackingStopped;
     #endregion
-
-    private void Start()
-    {
-        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-    }
-
-    private void OnDestroy()
-    {
-        SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-    }
     
     /// <summary>
     /// Tracking starts on the given path.
@@ -175,10 +165,6 @@ public class PathTracker : MonoBehaviour
                 var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
             }
-
-            NetworkData networkData =
-                new NetworkData(MessageType.InputDown, transform.position, transform.rotation);
-            SendMoveDirection(networkData);
         }
         else
         {
@@ -187,59 +173,6 @@ public class PathTracker : MonoBehaviour
         }
     }
     
-    /// //////////////////////////////////////////////////////////////////
-    /// 
-    // yeni scripte taşı
-    // remote movement...
-
-
-    // bunu onplatformchanged'da çağır
-    void SendMoveDirection(in NetworkData networkData)
-    {
-        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
-    }
-
-    // yeni scripte startposition aç bi tane, currentposition da next platformun değeri
-    // start pos 
-
-    private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
-    {
-        if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
-            return;
-
-        if (networkData.type == MessageType.InputDown)
-        {
-            _t = 0; 
-            _startPosition = transform.position;
-            _currentPosition = networkData.position;
-
-
-
-
-
-
-            /////// scriptin içindeki update'e al şurayı aşağıyı
-            ///
-            if (transform.position != _currentPosition)
-            {
-                _t += Time.deltaTime * speed;
-                // Smooth tracking
-                // if object position not equal the current platform position move to position.
-                transform.position = Vector3.Lerp(_startPosition, _currentPosition, _t);
-
-                // rotation
-                Vector3 movementDirection = (_currentPosition - transform.position).normalized;
-                if (movementDirection != Vector3.zero)
-                {
-                    var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-                }
-            }
-        }
-    }
-    /// ////////////////////////////////////////////
-    /// 
-
     private void NextPlatform()
     {
         bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;

@@ -59,6 +59,16 @@ public class PlayerMovement : MonoBehaviour
         _gobletSelection.OnTakeIt += GobletSelection_OnTakeIt;
         _gobletSelection.OnLeaveIt += GobletSelection_OnLeaveIt;
     }
+    private void OnDestroy()
+    {
+        _pathTracker.OnTrackingStarted -= OnTrackingStarted;
+        _pathTracker.OnCurrentPlatformChanged -= OnCurrentPlatformChanged;
+        _pathTracker.OnTrackingStopped -= OnTrackingStopped;
+
+        // TODO
+        _gobletSelection.OnTakeIt -= GobletSelection_OnTakeIt;
+        _gobletSelection.OnLeaveIt -= GobletSelection_OnLeaveIt;
+    }
 
     private void Update()
     {
@@ -192,11 +202,6 @@ public class PlayerMovement : MonoBehaviour
             _currentStep -= 1;
         }
     }
-    // |
-    // playerremotemovement scripti yaz, player tracker alsýn, oncurrentplatformchanged eventi çalýþsýn yukardakinin aynýsý, 
-
-
-
 
     private void OnTrackingStopped()
     {
