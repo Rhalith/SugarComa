@@ -2,28 +2,22 @@ using UnityEngine;
 
 public class RDForBoxGloves : MonoBehaviour
 {
-    [SerializeField] GameObject current;
-    RagdollOnOff ragdollOnOff;
-
-    private void Start()
-    {
-        ragdollOnOff = current.GetComponent<RagdollOnOff>();
-    }
+    [SerializeField] RagdollOnOff current;
     //TODO
     private void OnCollisionEnter(Collision collision)
     {
+        print(collision.gameObject.name);
         var rdof = collision.gameObject.GetComponent<RagdollOnOff>();
-        if (rdof != null && rdof != ragdollOnOff)
+        if (rdof != null && rdof != current)
         {
-
-            //ÇALIÞMIYOR BÝR TÜRLÜ :(
+            print("test");
+            //ÇALIÞMIYOR BÝR TÜRLÜ: (
             //Vector3 direction = new Vector3(0, current.transform.eulerAngles.y, 0);
             //print(direction);
             //collision.gameObject.GetComponent<Rigidbody>().AddForce(direction * 800f);
             //print(collision.gameObject.GetComponent<Rigidbody>());
 
-
-            //rdof.RagDollOn();
+            rdof.RagDollOn();
         }
     }
 }
