@@ -4412,6 +4412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cd10638ae9da0468eabbd689827cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _impulseSource: {fileID: 3402094004238756316}
   _playerAnimator: {fileID: 4120892787933790878}
   _playerMovement: {fileID: 4120892788481720712}
   _mainCollider: {fileID: 2808706967063836918}
@@ -4453,7 +4454,6 @@ MonoBehaviour:
   - {fileID: 8330724335543476460}
   - {fileID: 6101235435520606968}
   - {fileID: 5946461737529730546}
-  currentBoxGloves: {fileID: 7751568950644553385}
   _currentRigidBody: {fileID: 5019937161402794153}
 --- !u!54 &5019937161402794153
 Rigidbody:
@@ -4677,6 +4677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4120892788676648185}
   - component: {fileID: 4120892788676648186}
+  - component: {fileID: 4192704790670423602}
   m_Layer: 0
   m_Name: PlayerCam
   m_TagString: Untagged
@@ -4739,6 +4740,29 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 4120892789004359609}
+--- !u!114 &4192704790670423602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4120892788676648187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
+  m_UseCameraSpace: 1
+  m_ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &4120892788742707362
 GameObject:
   m_ObjectHideFlags: 0
@@ -6106,6 +6130,7 @@ GameObject:
   - component: {fileID: 633465052718449280}
   - component: {fileID: 2091604899017228276}
   - component: {fileID: 4890767000196359077}
+  - component: {fileID: 3402094004238756316}
   m_Layer: 0
   m_Name: Tip
   m_TagString: GlovesHit
@@ -6154,6 +6179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   current: {fileID: 3724299034251395028}
+  impactForce: 40
 --- !u!54 &4890767000196359077
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6170,6 +6196,59 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &3402094004238756316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751568950644553385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: -1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -0.1, z: 0}
 --- !u!1 &7755278540377684912
 GameObject:
   m_ObjectHideFlags: 0

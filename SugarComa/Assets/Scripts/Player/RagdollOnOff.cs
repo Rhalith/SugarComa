@@ -1,36 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine; using Cinemachine;
 
 public class RagdollOnOff : MonoBehaviour
 {
+    [SerializeField] CinemachineImpulseSource _impulseSource;
     [SerializeField] Animator _playerAnimator;
     [SerializeField] PlayerMovement _playerMovement;
     [SerializeField] CapsuleCollider _mainCollider;
     [SerializeField] Collider[] _ragDollColliders;
     [SerializeField] Rigidbody[] _ragDollRigidBodies;
     [SerializeField] Transform[] _ragDollTransforms;
-    [SerializeField] GameObject currentBoxGloves;
     [SerializeField] Rigidbody _currentRigidBody;
     void Awake()
     {
         RagDollOff();
-
-    }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    print(other.gameObject.name);
-    //    if (other.gameObject.CompareTag("GlovesHit")) RagDollOn();
-    //}
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        print(collision.gameObject.name);
-        if (collision.gameObject != currentBoxGloves)
-        {
-            print(collision.gameObject.name);
-            if (collision.gameObject.CompareTag("GlovesHit")) RagDollOn();
-        }
     }
 
     public void ResetPlayerPosition()
@@ -61,6 +45,7 @@ public class RagdollOnOff : MonoBehaviour
         {
             rb.isKinematic = false;
         }
+        _impulseSource.GenerateImpulse();
         StartCoroutine(ForDeath());
         //_currentRigidBody.isKinematic = true;
     }

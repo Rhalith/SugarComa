@@ -28220,6 +28220,10 @@ PrefabInstance:
       propertyPath: current
       value: 
       objectReference: {fileID: 1296561377}
+    - target: {fileID: 2091604899017228276, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: impactForce
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2171387548003917513, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -29047,6 +29051,14 @@ PrefabInstance:
     - target: {fileID: 4876183028178940603, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 1.9035906
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890767000196359077, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890767000196359077, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5060512930456588129, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
       propertyPath: m_RootOrder
