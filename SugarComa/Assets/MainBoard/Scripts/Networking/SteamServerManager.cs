@@ -2,7 +2,7 @@ using Steamworks;
 using System.Linq;
 using UnityEngine;
 
-namespace Networking
+namespace Assets.MainBoard.Scripts.Networking
 {
     [DefaultExecutionOrder(-100)]
     public class SteamServerManager : MonoBehaviour
@@ -26,7 +26,7 @@ namespace Networking
             DontDestroyOnLoad(this);
             InvokeRepeating(nameof(ReceivingMessages), 0, 0.05f);
         }
-    
+
         public bool SendingMessage(SteamId targetSteamId, byte[] buffer)
         {
             if (SteamLobbyManager.UserInLobby)
@@ -56,7 +56,7 @@ namespace Networking
             }
             return false;
         }
-    
+
         // Receiving data packages
         private void ReceivingMessages()
         {

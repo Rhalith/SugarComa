@@ -4,7 +4,7 @@ using Steamworks.Data;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Networking
+namespace Assets.MainBoard.Scripts.Networking
 {
     public class SteamManager : MonoBehaviour
     {
@@ -12,19 +12,19 @@ namespace Networking
         public static SteamManager Instance => _instance;
 
         public uint appId;
-    
+
         private bool isItHost = false;
         private bool applicationHasQuit;
         public string PlayerName { get; set; }
         public SteamId PlayerSteamId { get; set; }
         private string playerSteamIdString;
         public string PlayerSteamIdString { get => playerSteamIdString; }
-    
+
         private bool connectedToSteam = false;
-    
+
         public Lobby currentLobby;
         private Lobby hostedMultiplayerLobby;
-    
+
         public UnityEvent OnSteamFailed;
 
         private void Awake()
@@ -64,7 +64,7 @@ namespace Networking
                 Debug.Log(e);
             }
         }
-    
+
         public bool ConnectedToSteam()
         {
             return connectedToSteam;
@@ -93,7 +93,7 @@ namespace Networking
                 GameCleanup();
             }
         }
-    
+
         // Place where you can update saves, etc. on sudden game quit as well
         private void GameCleanup()
         {
@@ -104,7 +104,7 @@ namespace Networking
                 SteamClient.Shutdown();
             }
         }
-    
+
         public void leaveLobby()
         {
             try

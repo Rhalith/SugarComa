@@ -1,16 +1,22 @@
+using Assets.MainBoard.Scripts.Route;
+using Assets.MainBoard.Scripts.UI;
 using UnityEngine;
 
-//TODO
-public class CameraAnimations : MonoBehaviour
+namespace Assets.MainBoard.Scripts.Utils.CamUtils
 {
-    GobletSelection _gobletSelection;
-    [SerializeField] GoalSelector _goalSelector;
-    //public void SetGobletSelection(GobletSelection gobletSelection)
-    //{
-    //    _gobletSelection = gobletSelection;
-    //}
-    public void AfterGoalSelector()
+
+    //TODO
+    public class CameraAnimations : MonoBehaviour
     {
-        _goalSelector.ResetGoalCameraPriority();
+        GobletSelection _gobletSelection;
+        [SerializeField] GoalSelector _goalSelector;
+        //public void SetGobletSelection(GobletSelection gobletSelection)
+        //{
+        //    _gobletSelection = gobletSelection;
+        //}
+        public void AfterGoalSelector()
+        {
+            _goalSelector.ResetGoalCameraPriority();
+        }
     }
 }

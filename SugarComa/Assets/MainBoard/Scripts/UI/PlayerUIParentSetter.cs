@@ -1,25 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; using TMPro;
+using UnityEngine;
+using TMPro;
 
-public class PlayerUIParentSetter : MonoBehaviour
+namespace Assets.MainBoard.Scripts.UI
 {
-    [SerializeField] TMP_Text playerText;
-
-    public GameObject parent;
-
-    private void Start()
+    public class PlayerUIParentSetter : MonoBehaviour
     {
-        if(parent!= null) gameObject.transform.parent = parent.transform;
-    }
-    public void SetParent(GameObject parent, int index)
-    {
-        gameObject.transform.parent = parent.transform;
-        ChangePlayerName(playerText, index);
-    }
+        [SerializeField] TMP_Text playerText;
 
-    private void ChangePlayerName(TMP_Text player, int index)
-    {
-        player.text = "Player " + index;
+        public GameObject parent;
+
+        private void Start()
+        {
+            if (parent != null) gameObject.transform.parent = parent.transform;
+        }
+        public void SetParent(GameObject parent, int index)
+        {
+            gameObject.transform.parent = parent.transform;
+            ChangePlayerName(playerText, index);
+        }
+
+        private void ChangePlayerName(TMP_Text player, int index)
+        {
+            player.text = "Player " + index;
+        }
     }
 }

@@ -1,38 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; using Cinemachine;
+using UnityEngine;
+using Cinemachine;
 
-public class MapCamera : MonoBehaviour
+namespace Assets.MainBoard.Scripts.Utils.CamUtils
 {
-    [SerializeField] public CinemachineVirtualCamera _camera, _mainCamera;
-    [SerializeField] CharacterController _controller;
-
-    [SerializeField] Transform _player;
-
-    [SerializeField] float speed = 6f;
-
-    public void SetCameraPriority(CinemachineVirtualCamera camera, int value, bool isClose = false)
+    public class MapCamera : MonoBehaviour
     {
-        if(!isClose) GoToPlayer();
-        camera.Priority = value;
-    }
+        [SerializeField] public CinemachineVirtualCamera _camera, _mainCamera;
+        [SerializeField] CharacterController _controller;
 
-    private void FixedUpdate()
-    {
-        if(_camera.Priority > _mainCamera.Priority)
+        [SerializeField] Transform _player;
+
+        [SerializeField] float speed = 6f;
+
+        public void SetCameraPriority(CinemachineVirtualCamera camera, int value, bool isClose = false)
         {
-            float vertical = Input.GetAxisRaw("Horizontal");
-            float horizontal = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontal, 0f, -vertical).normalized;
+            if (!isClose) GoToPlayer();
+            camera.Priority = value;
+        }
 
-            if(direction.magnitude >= 0.1f)
+        private void FixedUpdate()
+        {
+            if (_camera.Priority > _mainCamera.Priority)
             {
-                _controller.Move(direction.normalized * speed * Time.deltaTime);
+                float vertical = Input.GetAxisRaw("Horizontal");
+                float horizontal = Input.GetAxisRaw("Vertical");
+                Vector3 direction = new Vector3(horizontal, 0f, -vertical).normalized;
+
+                if (direction.magnitude >= 0.1f)
+                {
+                    _controller.Move(direction.normalized * speed * Time.deltaTime);
+                }
             }
         }
-    }
-    private void GoToPlayer()
-    {
-        transform.position = _player.transform.position;
+        private void GoToPlayer()
+        {
+            transform.position = _player.transform.position;
+        }
     }
 }

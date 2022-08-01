@@ -1,90 +1,95 @@
+using Assets.MainBoard.Scripts.Player.Movement;
+using Assets.MainBoard.Scripts.Utils.InventorySystem;
 using UnityEngine;
 
-public class PlayerItemUse : MonoBehaviour
+namespace Assets.MainBoard.Scripts.Player.Items
 {
-    [SerializeField] Transform playerTransform;
-    [SerializeField] ItemPool _itemPool;
-    [SerializeField] private PlayerInput _playerInput;
-    [SerializeField] float speed;
-    private Vector3 _rotationY;
-    private bool isPosSet;
-    private bool isRotSet;
-
-    /// <summary>
-    /// Keep first position before using item.
-    /// </summary>
-    private void KeepPosition()
+    public class PlayerItemUse : MonoBehaviour
     {
-        if (!isPosSet)
-        {
-            _rotationY = new Vector3(playerTransform.eulerAngles.x, playerTransform.eulerAngles.y, playerTransform.eulerAngles.z);
-            isPosSet = true;
-        }
-    }
+        [SerializeField] Transform playerTransform;
+        [SerializeField] ItemPool _itemPool;
+        [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] float speed;
+        private Vector3 _rotationY;
+        private bool isPosSet;
+        private bool isRotSet;
 
-    private void FollowMouse()
-    {
-        Plane plane = new(Vector3.up, transform.position);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-
-        if (plane.Raycast(ray, out float hitdist))
+        /// <summary>
+        /// Keep first position before using item.
+        /// </summary>
+        private void KeepPosition()
         {
-            Vector3 targetpoint = ray.GetPoint(hitdist);
-            Quaternion targetrotation = Quaternion.LookRotation(targetpoint - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetrotation, speed * Time.deltaTime);
-        }
-    }
-    private void FixedUpdate()
-    {
-        if (ItemPool._isItemUsing && _playerInput.isMyTurn)
-        {
-            if (ItemUsing.BoxGlovesUsing)
+            if (!isPosSet)
             {
-                OnBoxGlovesUsing();
-            }
-            //TODO
-            else
-            {
-
+                _rotationY = new Vector3(playerTransform.eulerAngles.x, playerTransform.eulerAngles.y, playerTransform.eulerAngles.z);
+                isPosSet = true;
             }
         }
-        //else if(!ItemPool._isItemUsing && !ItemUsing.BoxGlovesUsing && isRotSet)
+
+        private void FollowMouse()
+        {
+            Plane plane = new(Vector3.up, transform.position);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+
+            if (plane.Raycast(ray, out float hitdist))
+            {
+                Vector3 targetpoint = ray.GetPoint(hitdist);
+                Quaternion targetrotation = Quaternion.LookRotation(targetpoint - transform.position);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetrotation, speed * Time.deltaTime);
+            }
+        }
+        private void FixedUpdate()
+        {
+            if (ItemPool._isItemUsing && _playerInput.isMyTurn)
+            {
+                if (ItemUsing.BoxGlovesUsing)
+                {
+                    OnBoxGlovesUsing();
+                }
+                //TODO
+                else
+                {
+
+                }
+            }
+            //else if(!ItemPool._isItemUsing && !ItemUsing.BoxGlovesUsing && isRotSet)
+            //{
+            //    if (isRotSet)
+            //    {
+            //        StartCoroutine(rotation());
+            //        isRotSet = false;
+            //    }
+            //    //playerTransform.eulerAngles = _rotationY;
+            //    isPosSet =false;
+            //}
+        }
+        //TODO fix it
+        //private IEnumerator rotation()
         //{
-        //    if (isRotSet)
+        //    while (true)
         //    {
-        //        StartCoroutine(rotation());
-        //        isRotSet = false;
+        //        transform.Rotate(_rotationY * Time.deltaTime * 15f);
+        //        if (playerTransform.eulerAngles.y - _rotationY.y < 3f && playerTransform.eulerAngles.y - _rotationY.y > -3f)
+        //        {
+        //            StopAllCoroutines();
+        //        }
+
+        //        yield return new WaitForSeconds(0.01f);
         //    }
-        //    //playerTransform.eulerAngles = _rotationY;
-        //    isPosSet =false;
+
         //}
-    }
-    //TODO fix it
-    //private IEnumerator rotation()
-    //{
-    //    while (true)
-    //    {
-    //        transform.Rotate(_rotationY * Time.deltaTime * 15f);
-    //        if (playerTransform.eulerAngles.y - _rotationY.y < 3f && playerTransform.eulerAngles.y - _rotationY.y > -3f)
-    //        {
-    //            StopAllCoroutines();
-    //        }
-
-    //        yield return new WaitForSeconds(0.01f);
-    //    }
-
-    //}
-    private void OnBoxGlovesUsing()
-    {
-        KeepPosition();
-        FollowMouse();
-        if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)
+        private void OnBoxGlovesUsing()
         {
-            ItemUsing.BoxGlovesUsing = true;
-            _itemPool.UseCurrentItem();
-            _playerInput.useMouseItem = false;
-            isRotSet = true;
+            KeepPosition();
+            FollowMouse();
+            if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)
+            {
+                ItemUsing.BoxGlovesUsing = true;
+                _itemPool.UseCurrentItem();
+                _playerInput.useMouseItem = false;
+                isRotSet = true;
+            }
         }
     }
 }

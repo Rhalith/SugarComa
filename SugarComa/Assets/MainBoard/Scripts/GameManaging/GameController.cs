@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Assets.MainBoard.Scripts.Player.Utils;
+using Assets.MainBoard.Scripts.UI;
+using Assets.MainBoard.Scripts.Utils.InventorySystem;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {

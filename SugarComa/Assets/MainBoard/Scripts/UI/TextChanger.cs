@@ -1,32 +1,35 @@
+using Assets.MainBoard.Scripts.Player.Movement;
 using TMPro;
-
-public interface IObserver
+namespace Assets.MainBoard.Scripts.UI
 {
-    void OnNotify();
-}
-
-public class TextChanger : IObserver
-{
-    public PlayerCollector player;
-    public TMP_Text playerGold, playerHealth, playerGoblet;
-
-    public TextChanger(TMP_Text playerGold, TMP_Text playerHealth,TMP_Text playerGoblet, PlayerCollector player)
+    public interface IObserver
     {
-        this.playerGold = playerGold;
-        this.playerHealth = playerHealth;
-        this.playerGoblet = playerGoblet;
-        this.player = player;
+        void OnNotify();
     }
 
-    void ChangeText()
+    public class TextChanger : IObserver
     {
-        playerGold.text = "Gold: " + player.gold.ToString();
-        playerHealth.text = "Health: " + player.health.ToString();
-        playerGoblet.text = "Goblet: " + player.goblet.ToString();
-    }
+        public PlayerCollector player;
+        public TMP_Text playerGold, playerHealth, playerGoblet;
 
-    public void OnNotify()
-    {
-        ChangeText();
+        public TextChanger(TMP_Text playerGold, TMP_Text playerHealth,TMP_Text playerGoblet, PlayerCollector player)
+        {
+            this.playerGold = playerGold;
+            this.playerHealth = playerHealth;
+            this.playerGoblet = playerGoblet;
+            this.player = player;
+        }
+
+        void ChangeText()
+        {
+            playerGold.text = "Gold: " + player.gold.ToString();
+            playerHealth.text = "Health: " + player.health.ToString();
+            playerGoblet.text = "Goblet: " + player.goblet.ToString();
+        }
+
+        public void OnNotify()
+        {
+            ChangeText();
+        }
     }
 }

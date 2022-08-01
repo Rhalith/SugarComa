@@ -1,47 +1,51 @@
+using Assets.MainBoard.Scripts.Player.Items.BoxGloves;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPool : MonoBehaviour
+namespace Assets.MainBoard.Scripts.Utils.InventorySystem
 {
-    [SerializeField] List<GameObject> _items;
-    [SerializeField] Animator _playerAnimator;
-    [SerializeField] public GameObject _playerInventory;
-
-    public static bool _isItemUsing;
-
-    public GameObject _current;
-
-    public void UseItem(int index)
+    public class ItemPool : MonoBehaviour
     {
-        _current = _items[index];
-        _items[index].SetActive(true);
-        _playerInventory.SetActive(false);
-        _isItemUsing = true;
-        _playerAnimator.SetBool("itemUsing", true);
-    }
+        [SerializeField] List<GameObject> _items;
+        [SerializeField] Animator _playerAnimator;
+        [SerializeField] public GameObject _playerInventory;
 
-    public void CloseItem()
-    {
-        _isItemUsing = false;
-        CloseAllItems();
-    }
+        public static bool _isItemUsing;
 
-    public void UseCurrentItem()
-    {
-        if (_current.GetComponent<BoxGloves>() != null)
+        public GameObject _current;
+
+        public void UseItem(int index)
         {
-            _current.GetComponent<BoxGloves>().UseItem();
+            _current = _items[index];
+            _items[index].SetActive(true);
+            _playerInventory.SetActive(false);
+            _isItemUsing = true;
+            _playerAnimator.SetBool("itemUsing", true);
+        }
+
+        public void CloseItem()
+        {
+            _isItemUsing = false;
+            CloseAllItems();
+        }
+
+        public void UseCurrentItem()
+        {
+            if (_current.GetComponent<BoxGloves>() != null)
+            {
+                _current.GetComponent<BoxGloves>().UseItem();
+            }
+        }
+
+        private void CloseAllItems()
+        {
+            _playerAnimator.SetBool("itemUsing", false);
+            if (ItemUsing.BoxGlovesUsing) _playerAnimator.SetBool("boks", false);
         }
     }
 
-    private void CloseAllItems()
+    public class ItemUsing
     {
-        _playerAnimator.SetBool("itemUsing", false);
-        if (ItemUsing.BoxGlovesUsing) _playerAnimator.SetBool("boks", false);
+        public static bool BoxGlovesUsing;
     }
-}
-
-public class ItemUsing
-{
-    public static bool BoxGlovesUsing;
 }

@@ -1,19 +1,23 @@
+using Assets.MainBoard.Scripts.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class InventoryChanger : IObserver
+namespace Assets.MainBoard.Scripts.Utils.InventorySystem
 {
-    public ItemObject _item;
-
-    public InventoryChanger(ItemObject item)
+    public class InventoryChanger : IObserver
     {
-        this._item = item;
-    }
+        public ItemObject _item;
 
-    public void OnNotify()
-    {
-        _item.NotifyInventory();
+        public InventoryChanger(ItemObject item)
+        {
+            _item = item;
+        }
+
+        public void OnNotify()
+        {
+            _item.NotifyInventory();
+        }
     }
 }

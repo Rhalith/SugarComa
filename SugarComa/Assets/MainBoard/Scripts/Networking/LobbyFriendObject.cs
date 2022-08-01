@@ -1,25 +1,27 @@
-﻿using Networking;
-using UnityEngine;
+﻿using UnityEngine;
 using Steamworks;
 
-public class LobbyFriendObject : MonoBehaviour
+namespace Assets.MainBoard.Scripts.Networking
 {
-    public SteamId steamid;
-    public bool isOwner = false;
-    public bool isReady = false;
-
-    public void CheckIfOwner()
+    public class LobbyFriendObject : MonoBehaviour
     {
-        if (steamid == SteamLobbyManager.currentLobby.Owner.Id)
+        public SteamId steamid;
+        public bool isOwner = false;
+        public bool isReady = false;
+
+        public void CheckIfOwner()
         {
-            isOwner = true;
+            if (steamid == SteamLobbyManager.currentLobby.Owner.Id)
+            {
+                isOwner = true;
+            }
         }
-    }
 
-    public void KickAsync()
-    {
-        // Kick Function
-        Debug.Log("Kicked " + steamid);
+        public void KickAsync()
+        {
+            // Kick Function
+            Debug.Log("Kicked " + steamid);
+        }
+
     }
-    
 }

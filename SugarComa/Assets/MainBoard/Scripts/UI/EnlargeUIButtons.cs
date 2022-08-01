@@ -3,26 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EnlargeUIButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+namespace Assets.MainBoard.Scripts.UI
 {
-
-    Vector3 cachedScale;
-
-    void Start()
+    public class EnlargeUIButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
 
-        cachedScale = transform.localScale;
-    }
+        Vector3 cachedScale;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
+        void Start()
+        {
 
-        transform.localScale *= 1.25f;
-    }
+            cachedScale = transform.localScale;
+        }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
+        public void OnPointerEnter(PointerEventData eventData)
+        {
 
-        transform.localScale = cachedScale;
+            transform.localScale *= 1.25f;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+
+            transform.localScale = cachedScale;
+        }
     }
 }

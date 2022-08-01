@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 using Button = UnityEngine.UIElements.Button;
 using Assets.MainBoard.Scripts.Networking.Utils;
 
-namespace Networking
+namespace Assets.MainBoard.Scripts.Networking
 {
     public class SteamLobbyManager : MonoBehaviour
     {
@@ -121,7 +121,7 @@ namespace Networking
                 inLobby[SteamManager.Instance.PlayerSteamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
             }
         }
-        
+
         // Bu değişiklikler için observer pattern kullanabilir miyiz?
 
         public void SendUnreadyToAll()
@@ -134,7 +134,7 @@ namespace Networking
                 inLobby[SteamManager.Instance.PlayerSteamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
             }
         }
-        
+
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
             if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
@@ -193,7 +193,7 @@ namespace Networking
                 Debug.Log("failed to join lobby : " + joinedLobbySuccess);
             }
         }
-    
+
         private void AcceptP2P(SteamId friendId)
         {
             try
@@ -250,7 +250,7 @@ namespace Networking
             }
             Task.WaitAll(tasks.ToArray());
         }
-    
+
         public async void CreateLobbyAsync()
         {
             bool result = await CreateLobby();
@@ -278,7 +278,7 @@ namespace Networking
 
                 return true;
             }
-            catch(System.Exception exception)
+            catch (System.Exception exception)
             {
                 Debug.Log("Failed to create multiplayer lobby : " + exception);
                 return false;

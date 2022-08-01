@@ -1,22 +1,27 @@
-public interface IItems
-{
-    public void UseItem();
-}
+using Assets.MainBoard.Scripts.Player.Movement;
 
-public interface IDamageItems : IItems
+namespace Assets.MainBoard.Scripts.Player.Items
 {
-    /// <summary>
-    /// Decreases player health.
-    /// </summary>
-    /// <param name="playerCollector"></param>
-    public void DamageHealth(PlayerCollector playerCollector);
-}
+    public interface IItems
+    {
+        public void UseItem();
+    }
 
-public interface IHealerItems : IItems
-{
-    /// <summary>
-    /// Increases player health.
-    /// </summary>
-    /// <param name="playerCollector"></param>
-    public void HealerHealth(PlayerCollector playerCollector);
+    public interface IDamageItems : IItems
+    {
+        /// <summary>
+        /// Decreases player health.
+        /// </summary>
+        /// <param name="playerCollector"></param>
+        public void DamageHealth(PlayerCollector playerCollector);
+    }
+
+    public interface IHealerItems : IItems
+    {
+        /// <summary>
+        /// Increases player health.
+        /// </summary>
+        /// <param name="playerCollector"></param>
+        public void HealerHealth(PlayerCollector playerCollector);
+    }
 }
