@@ -48,7 +48,11 @@ namespace Assets.MainBoard.Scripts.Networking
             SteamLobbyManager.Instance.inLobby.Clear();
 
             if(SteamManager.Instance.PlayerSteamId == SteamLobbyManager.currentLobby.Owner.Id)
+            {
+                playerHandler.currentPlayerInput.isMyTurn = true;
+                playerHandler.currentPlayerInput.Dice.SetActive(true);
                 playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
+            }
         }
 
         private void OnApplicationQuit()
