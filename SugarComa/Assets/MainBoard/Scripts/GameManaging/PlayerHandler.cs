@@ -29,19 +29,19 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [SerializeField] GoalSelector _goalSelector;
         [SerializeField] Cinemachine.CinemachineBrain _cinemachineBrain;
         [SerializeField] GameObject _playerSpecCanvas;
+        [SerializeField] MapCamera _mapCam;
         #endregion
 
         #region HideInInspectors
         [HideInInspector] public PlayerInput currentPlayerInput;
         [HideInInspector] public PlayerInventory currentPlayerInventory;
-        [HideInInspector] public PlayerCollector currentPlayerCollector;
+        public PlayerCollector currentPlayerCollector;
         [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
         #endregion
 
         public int whichPlayer;
-        private GameObject _createdObject;
         public Steamworks.SteamId[] _playerQueue;
-
+        private GameObject _createdObject;
         private int playerCount;
 
         void Awake()
@@ -74,20 +74,26 @@ namespace Assets.MainBoard.Scripts.GameManaging
             if (SteamManager.Instance.PlayerSteamId == id)
             {
                 _createdObject = Instantiate(_playerPrefab, playerParent.transform);
-            }
+                _mapCam.mainCamera = _createdObject.transform.GetChild(0).GetComponent<Cinemachine.CinemachineVirtualCamera>();
+
+                _createdObject.transform.position = new Vector3(0, 0, 0);
+
+                _mapCam.player = _createdObject.transform.GetChild(1).transform;
+            }   
             else
             {
                 _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
+
+                _createdObject.transform.position = new Vector3(0, 0, 0);
             }
 
-            _createdObject.transform.position = new Vector3(0, 0, 0);
             ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
             SetPlayerMovement(sckeeper);
             SetPlayerCollector(sckeeper);
             SetGobletSelection(sckeeper);
             SetPlayerInput(sckeeper);
             SetPlayerSpec(sckeeper, ++playerCount);
-
+            ChangeCurrentPlayer();
             return _createdObject;
         }
 
@@ -132,6 +138,13 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 ScriptKeeper currentScKeeper = currentObj.GetComponent<ScriptKeeper>();
 
                 ChangeCurrentSpecs(currentScKeeper, previousScKeep);
+            }
+            else
+            {
+                GameObject currentObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer).Value;
+                ScriptKeeper currentScKeeper = currentObj.GetComponent<ScriptKeeper>();
+
+                ChangeCurrentSpecs(currentScKeeper, currentScKeeper);
             }
         }
 
@@ -214,7 +227,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="index"></param>
         private void SetPlayerSpec(ScriptKeeper keeper, int index)
         {
-            keeper._playerSpecSetter.SetParent(_playerSpecCanvas, index);
+            keeper._playerUIParentSetter.SetParent(_playerSpecCanvas, index);
         }
         /// <summary>
         /// Activates next player's input and dice.

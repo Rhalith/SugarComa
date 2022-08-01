@@ -7,11 +7,10 @@ namespace Assets.MainBoard.Scripts.Utils.CamUtils
 {
     public class MapCamera : MonoBehaviour
     {
-        [SerializeField] public CinemachineVirtualCamera _camera, _mainCamera;
+        public CinemachineVirtualCamera cam, mainCamera;
+        public Transform player;
+
         [SerializeField] CharacterController _controller;
-
-        [SerializeField] Transform _player;
-
         [SerializeField] float speed = 6f;
 
         public void SetCameraPriority(CinemachineVirtualCamera camera, int value, bool isClose = false)
@@ -22,7 +21,7 @@ namespace Assets.MainBoard.Scripts.Utils.CamUtils
 
         private void FixedUpdate()
         {
-            if (_camera.Priority > _mainCamera.Priority)
+            if (cam.Priority > mainCamera.Priority)
             {
                 float vertical = Input.GetAxisRaw("Horizontal");
                 float horizontal = Input.GetAxisRaw("Vertical");
@@ -36,7 +35,7 @@ namespace Assets.MainBoard.Scripts.Utils.CamUtils
         }
         private void GoToPlayer()
         {
-            transform.position = _player.transform.position;
+            transform.position = player.transform.position;
         }
     }
 }

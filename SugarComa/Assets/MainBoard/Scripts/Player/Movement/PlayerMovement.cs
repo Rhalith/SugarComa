@@ -128,12 +128,12 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             else if (_playerInput.closeUI && !ItemPool._isItemUsing)
             {
                 _playerInventory.CloseInventory();
-                _mapCamera.SetCameraPriority(_mapCamera._camera, _mapCamera._mainCamera.Priority - 1, true);
+                _mapCamera.SetCameraPriority(_mapCamera.cam, _mapCamera.mainCamera.Priority - 1, true);
                 isUserInterfaceActive = false;
             }
             else if (_playerInput.openMap)
             {
-                _mapCamera.SetCameraPriority(_mapCamera._camera, _mapCamera._mainCamera.Priority + 1);
+                _mapCamera.SetCameraPriority(_mapCamera.cam, _mapCamera.mainCamera.Priority + 1);
                 isUserInterfaceActive = true;
             }
             else if (_playerInput.closeUI && ItemPool._isItemUsing)
@@ -218,7 +218,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             _playerCollector.CheckCurrentNode(_currentPlatform);
             //if((_currentPlatform.HasSelector && _currentStep <= 0) || _currentPlatform.spec != PlatformSpec.Goal) _dice.SetActive(true);
 
-            // Düzenle
+            // DÃ¼zenle
             /*
             if(_currentStep <= 0)
                 PlayerHandler.Instance.ChangeCurrentPlayer();
