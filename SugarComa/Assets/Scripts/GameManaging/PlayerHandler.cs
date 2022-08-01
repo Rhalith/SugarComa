@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 [DefaultExecutionOrder(-101)]
 public class PlayerHandler : MonoBehaviour
@@ -84,17 +85,15 @@ public class PlayerHandler : MonoBehaviour
         return _createdObject;
     }
 
-    public void UpdateTurnQueue()
+    //TODO: System memory dll kullanılabilir performans'ı arttırmak için...
+    public void UpdateTurnQueue(Steamworks.SteamId[] _playerList)
     {
-
-
         // Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
+        _playerQueue = _playerList;
 
         PlayerListNetworkData playerListData =
-               new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerList.Keys)));
+               new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerList));
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
-
-        _playerQueue = _playerIdList.ToArray();
     }
 
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
@@ -113,17 +112,20 @@ public class PlayerHandler : MonoBehaviour
     /// </summary>
     public void ChangeCurrentPlayer() ///Knowing bug, eğer ilk oyuncu oynarken 3. oyuncuyu yaratırsak kontrol 2. oyuncuya geçiyor.
     {
-        ScriptKeeper previouskeep = null;
+        ScriptKeeper previousScKeep = null;
         if (playerCount > 1)
         {
             whichPlayer++;
 
-            // 3 tane liste var düzenlenmesi lazım... 1.GameObject List, 2.IdList, 3.IdListByQueue
-            previouskeep = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer - 1])].GetComponent<ScriptKeeper>();
-            if (whichPlayer > _playerList.Count - 1) whichPlayer = 0;
+            GameObject prevObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer-1).Value;
+            previousScKeep = prevObj.GetComponent<ScriptKeeper>();
 
-            ScriptKeeper scKeeper = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer])].GetComponent<ScriptKeeper>();
-            ChangeCurrentSpecs(scKeeper, previouskeep);
+            if (whichPlayer > playerCount - 1) whichPlayer = 0;
+
+            GameObject currentObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer).Value;
+            ScriptKeeper currentScKeeper = currentObj.GetComponent<ScriptKeeper>();
+
+            ChangeCurrentSpecs(currentScKeeper, previousScKeep);
         }
     }
 

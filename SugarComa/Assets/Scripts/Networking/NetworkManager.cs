@@ -2,6 +2,7 @@ using Networking;
 using Steamworks;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class NetworkManager : MonoBehaviour
     {
         SpawnPlayers();
         SteamLobbyManager.Instance.inLobby.Clear();
-        playerHandler.UpdateTurnQueue();
+        playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
     }
 
     private void OnApplicationQuit()
