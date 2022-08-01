@@ -186,21 +186,11 @@ public class PathTracker : MonoBehaviour
             NextPlatform();
         }
     }
-    
-    /// //////////////////////////////////////////////////////////////////
-    /// 
-    // yeni scripte taşı
-    // remote movement...
 
-
-    // bunu onplatformchanged'da çağır
     void SendMoveDirection(in NetworkData networkData)
     {
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
     }
-
-    // yeni scripte startposition aç bi tane, currentposition da next platformun değeri
-    // start pos 
 
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
     {

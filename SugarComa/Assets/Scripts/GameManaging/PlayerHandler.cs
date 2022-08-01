@@ -87,8 +87,29 @@ public class PlayerHandler : MonoBehaviour
         return _createdObject;
     }
 
+    public void CreatePlayerS()
+    {
+        if (isFirst)
+        {
+            _playerList[0].SetActive(true);
+            isFirst = false;
+        }
+        _createdObject = Instantiate(_playerPrefab, playerParent.transform);
+        _createdObject.transform.position = new Vector3(0, 0, 0);
+        _playerList.Add(_createdObject);
+        ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
+        SetPlayerMovement(sckeeper);
+        SetPlayerCollector(sckeeper);
+        SetGobletSelection(sckeeper);
+        SetPlayerInput(sckeeper);
+        SetPlayerSpec(sckeeper, _playerList.IndexOf(_createdObject) + 1);
+        //ChangeCurrentPlayer();
+    }
+
     public void UpdateTurnQueue()
     {
+        // Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
+
         PlayerListNetworkData playerListData =
                new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerIdList.ToArray()));
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));

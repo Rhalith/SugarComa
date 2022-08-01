@@ -29,6 +29,8 @@ public static class NetworkHelper
     public static byte[] SteamIdToByteArray(Steamworks.SteamId[] idArr)
     {
         int size = Marshal.SizeOf<ulong>();
+
+        // MaxPlayerCount'a göre değil de lobideki oyuncu sayısına göre ayarlansa?...
         byte[] bytes = new byte[size * NetworkManager.MaxPlayerCount];
 
         for (int i = 0; i < NetworkManager.MaxPlayerCount; i++)
