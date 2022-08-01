@@ -18,13 +18,10 @@ public class RemotePlayerMovement : MonoBehaviour
     private void Start()
     {
         _pathTracker.OnCurrentPlatformChanged += OnCurrentPlatformChanged;
-        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-
     }
     private void OnDestroy()
     {
         _pathTracker.OnCurrentPlatformChanged -= OnCurrentPlatformChanged;
-        SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
     }
 
     void Update()
@@ -62,6 +59,11 @@ public class RemotePlayerMovement : MonoBehaviour
             _currentStep -= 1;
         }
     }
+    // |
+    // playerremotemovement scripti yaz, player tracker alsýn, oncurrentplatformchanged eventi çalýþsýn yukardakinin aynýsý, 
+
+    // yeni scripte startposition aç bi tane, currentposition da next platformun deðeri
+    // start pos 
 
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
     {
@@ -76,6 +78,7 @@ public class RemotePlayerMovement : MonoBehaviour
         }
     }
 
+    // bunu onplatformchanged'da çaðýr
     void SendMoveDirection(in NetworkData networkData)
     {
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
