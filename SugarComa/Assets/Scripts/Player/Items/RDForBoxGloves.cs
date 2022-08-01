@@ -2,28 +2,25 @@ using UnityEngine;
 
 public class RDForBoxGloves : MonoBehaviour
 {
-    [SerializeField] GameObject current;
-    RagdollOnOff ragdollOnOff;
-
-    private void Start()
-    {
-        ragdollOnOff = current.GetComponent<RagdollOnOff>();
-    }
-    //TODO
+    [SerializeField] RagdollOnOff current;
+    [SerializeField] float impactForce = 40f;
     private void OnCollisionEnter(Collision collision)
     {
-        var rdof = collision.gameObject.GetComponent<RagdollOnOff>();
-        if (rdof != null && rdof != ragdollOnOff)
+        print(collision.gameObject.name);
+        RagdollOnOff rdof = collision.gameObject.GetComponent<RagdollOnOff>();
+        if (rdof != null && rdof != current)
         {
+            rdof.RagDollOn();
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
 
-            //ÇALIÞMIYOR BÝR TÜRLÜ :(
-            //Vector3 direction = new Vector3(0, current.transform.eulerAngles.y, 0);
-            //print(direction);
-            //collision.gameObject.GetComponent<Rigidbody>().AddForce(direction * 800f);
-            //print(collision.gameObject.GetComponent<Rigidbody>());
-
-
-            //rdof.RagDollOn();
+            foreach (Collider nearby in colliders)
+            {
+                Rigidbody rig = nearby.GetComponent<Rigidbody>();
+                if (rig != null)
+                {
+                    rig.AddForce(current.transform.forward * impactForce, ForceMode.Impulse);
+                }
+            }
         }
     }
 }

@@ -92,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartMove()
     {
+        _currentPlatform.isPlayerInPlatform = false;
         if (_playerInput.nextSelectionStepPressed || !_playerAnimation.IsJumping) // space
         {
             _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep), PlatformSpec.Goal, _currentPlatform.HasSelector);
@@ -114,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
             _pathTracker.RestartTracking(maximumStep, false, PlatformSpec.Goal);
         }
         isDiceRolled = false;
-        
     }
 
     
@@ -163,6 +163,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void GobletSelection_OnLeaveIt()
     {
+        _currentPlatform.isPlayerInPlatform = false;
         _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep), PlatformSpec.Goal);
         isUserInterfaceActive=false;
     }

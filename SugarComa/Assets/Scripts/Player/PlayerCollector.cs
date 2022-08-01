@@ -30,6 +30,7 @@ public class PlayerCollector : MonoBehaviour
             case PlatformSpec.Jackpot: RandomJackpot(5); break;
             case PlatformSpec.Goal: GobletSelection(); break;
         }
+        platform.isPlayerInPlatform = true;
     }
     /// <summary>
     /// Adding value to player's gold

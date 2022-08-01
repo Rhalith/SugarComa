@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BoxGloves : MonoBehaviour, IDamageItems
@@ -12,7 +13,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     [SerializeField] Animator _playerAnimator;
     #endregion
 
-    private PlayerCollector otherPlayersCollector;
+    public List<PlayerCollector> otherPlayersCollector;
 
     public GameObject _hitBox;
 
@@ -20,7 +21,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
 
     public void DamageHealth(PlayerCollector playerCollector)
     {
-        if(otherPlayersCollector != null) playerCollector.DamagePlayer(damage);
+        if(playerCollector != null) playerCollector.DamagePlayer(damage);
     }
 
     /// <summary>
@@ -47,8 +48,12 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     {
         if (isHitPlayer)
         {
-            DamageHealth(otherPlayersCollector);
+            foreach (var playerCollector in otherPlayersCollector)
+            {
+                DamageHealth(playerCollector);
+            }
         }
+        otherPlayersCollector.Clear();
         _itemObject.RemoveItem();
         _playerMovement.GameController.ChangeInventory();
         _playerMovement.isUserInterfaceActive = false;
@@ -59,8 +64,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     {
         if (other.gameObject.CompareTag("Player") && other.gameObject != _player)
         {
-            isHitPlayer = true;
-            otherPlayersCollector = other.GetComponent<PlayerCollector>();
+            isHitPlayer = true; otherPlayersCollector.Add(other.GetComponent<PlayerCollector>());
         }
     }
 
@@ -68,7 +72,7 @@ public class BoxGloves : MonoBehaviour, IDamageItems
     {
         if (other.gameObject.CompareTag("Player") && other != _player)
         {
-            isHitPlayer = false; otherPlayersCollector = null;
+            isHitPlayer = false; otherPlayersCollector.Remove(other.GetComponent<PlayerCollector>());
         }
     }
 }

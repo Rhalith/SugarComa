@@ -16,6 +16,8 @@ public class Platform : MonoBehaviour
 
     public RouteSelector selector;
 
+    public bool isPlayerInPlatform;
+
     public bool HasSelector => selector != null && selector.HasSelector;
 
     private void Start()

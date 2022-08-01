@@ -18,6 +18,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private ScriptKeeper _scriptKeeper;
     [SerializeField] private GameObject _boxGloves;
     [SerializeField] private GoalSelector _goalSelector;
+    [SerializeField] private RagdollOnOff _ragdollOnOff;
     #endregion
 
     #region Properties

@@ -33,7 +33,7 @@ public class GoalSelector : MonoBehaviour
     public void RandomGoalSelect()
     {
         int i = Random.Range(0, platforms.Count);
-        if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].HasSelector && platforms[i] != _currentPlatform)
+        if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].HasSelector && platforms[i] != _currentPlatform && !platforms[i].isPlayerInPlatform)
         {
             platforms[i].spec = PlatformSpec.Goal;
             CreateGoalObject(platforms[i]);
@@ -53,7 +53,7 @@ public class GoalSelector : MonoBehaviour
     public void SelectGoalOnStart()
     {
         int i = Random.Range(0, platforms.Count);
-        if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].HasSelector)
+        if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].HasSelector && !platforms[i].isPlayerInPlatform)
         {
             platforms[i].spec = PlatformSpec.Goal;
             CreateGoalObject(platforms[i]);
