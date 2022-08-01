@@ -57,6 +57,5 @@ namespace Assets.MainBoard.Scripts.Player
                 _nextPosition = networkData.position;
             }
         }
-
     }
 }

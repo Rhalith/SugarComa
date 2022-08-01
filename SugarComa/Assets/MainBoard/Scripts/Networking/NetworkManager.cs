@@ -46,8 +46,9 @@ namespace Assets.MainBoard.Scripts.Networking
         {
             SpawnPlayers();
             SteamLobbyManager.Instance.inLobby.Clear();
-            playerHandler.ChangeCurrentPlayer();
-            playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
+
+            if(SteamManager.Instance.PlayerSteamId == SteamLobbyManager.currentLobby.Owner.Id)
+                playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
         }
 
         private void OnApplicationQuit()

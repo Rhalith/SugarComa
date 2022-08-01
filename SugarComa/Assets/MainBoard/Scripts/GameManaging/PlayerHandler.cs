@@ -79,6 +79,16 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 _createdObject.transform.position = new Vector3(0, 0, 0);
 
                 _mapCam.player = _createdObject.transform.GetChild(1).transform;
+
+
+                ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
+                SetPlayerInput(sckeeper);
+                SetPlayerCollector(sckeeper);
+                ChangeCurrentScripts(sckeeper._playerInput, sckeeper._playerCollector, sckeeper._playerInventory);
+                ChangeCurrentUIElements(sckeeper.playerGold, sckeeper.playerHealth, sckeeper.playerGoblet);
+                SetPlayerMovement(sckeeper);
+                SetGobletSelection(sckeeper);
+                SetPlayerSpec(sckeeper, ++playerCount);
             }   
             else
             {
@@ -87,12 +97,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 _createdObject.transform.position = new Vector3(0, 0, 0);
             }
 
-            ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
-            SetPlayerMovement(sckeeper);
-            SetPlayerCollector(sckeeper);
-            SetGobletSelection(sckeeper);
-            SetPlayerInput(sckeeper);
-            SetPlayerSpec(sckeeper, ++playerCount);
             return _createdObject;
         }
 
@@ -114,6 +118,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 if (playerListData.type == MessageType.UpdateQueue)
                 {
                     _playerQueue = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
+
+                    ChangeCurrentPlayer();
                 }
             }
             else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
@@ -129,27 +135,19 @@ namespace Assets.MainBoard.Scripts.GameManaging
         {
             // SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
 
-            // TODO
-            if (playerCount > 1)
+            if(_playerQueue[whichPlayer] == SteamManager.Instance.PlayerSteamId)
             {
-                whichPlayer++;
-
-                GameObject prevObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer - 1).Value;
-                ScriptKeeper previousScKeep = prevObj.GetComponent<ScriptKeeper>();
-
-                if (whichPlayer > playerCount - 1) whichPlayer = 0;
-
-                GameObject currentObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer).Value;
-                ScriptKeeper currentScKeeper = currentObj.GetComponent<ScriptKeeper>();
-
-                ChangeCurrentSpecs(currentScKeeper, previousScKeep);
+                currentPlayerInput.isMyTurn = true;
+                currentPlayerInput.Dice.SetActive(true);
             }
             else
             {
-                GameObject currentObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer).Value;
-                ScriptKeeper currentScKeeper = currentObj.GetComponent<ScriptKeeper>();
-                ChangeCurrentSpecs(currentScKeeper, currentScKeeper);
+                currentPlayerInput.isMyTurn = false;
+                currentPlayerInput.Dice.SetActive(false);
             }
+
+            whichPlayer++;
+            if (whichPlayer > playerCount - 1) whichPlayer = 0;
         }
 
         /// <summary>
@@ -160,7 +158,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         private void ChangeCurrentSpecs(ScriptKeeper scriptKeeper, ScriptKeeper previousKeep)
         {
             ChangePlayingInput(previousKeep._playerInput, scriptKeeper._playerInput);
-            ChangeCurrentScripts(scriptKeeper._playerInput, scriptKeeper._playerCollector, scriptKeeper._playerInventory);
+            
             ChangeUISpecs(scriptKeeper, previousKeep);
             ChangeCamSpecs(scriptKeeper, previousKeep);
         }
