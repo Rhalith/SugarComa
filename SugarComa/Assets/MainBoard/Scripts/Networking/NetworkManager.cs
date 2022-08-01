@@ -49,6 +49,7 @@ namespace Assets.MainBoard.Scripts.Networking
         {
             SpawnPlayers();
             SteamLobbyManager.Instance.inLobby.Clear();
+            playerHandler.ChangeCurrentPlayer();
             playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
         }
 
@@ -62,15 +63,7 @@ namespace Assets.MainBoard.Scripts.Networking
         {
             foreach (var id in SteamLobbyManager.Instance.inLobby.Keys)
             {
-
-                if (id != SteamManager.Instance.PlayerSteamId)
-                {
-                    playerList.Add(id, playerHandler.CreatePlayer(id));
-                }
-                else
-                {
-                    playerHandler.CreatePlayer(id);
-                }
+                 playerList.Add(id, playerHandler.CreatePlayer(id));
             }
         }
     }

@@ -33,10 +33,10 @@ namespace Assets.MainBoard.Scripts.GameManaging
         #endregion
 
         #region HideInInspectors
-        [HideInInspector] public PlayerInput currentPlayerInput;
-        [HideInInspector] public PlayerInventory currentPlayerInventory;
+        public PlayerInput currentPlayerInput;
+        public PlayerInventory currentPlayerInventory;
         public PlayerCollector currentPlayerCollector;
-        [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
+        public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
         #endregion
 
         public int whichPlayer;
@@ -93,7 +93,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
             SetGobletSelection(sckeeper);
             SetPlayerInput(sckeeper);
             SetPlayerSpec(sckeeper, ++playerCount);
-            ChangeCurrentPlayer();
             return _createdObject;
         }
 
@@ -143,7 +142,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
             {
                 GameObject currentObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer).Value;
                 ScriptKeeper currentScKeeper = currentObj.GetComponent<ScriptKeeper>();
-
                 ChangeCurrentSpecs(currentScKeeper, currentScKeeper);
             }
         }
