@@ -10,9 +10,10 @@ public class NetworkManager : MonoBehaviour
     private static NetworkManager _instance;
     public static NetworkManager Instance => _instance;
 
+    // MaxPlayerCount...
     public const int MaxPlayerCount = 2;
 
-    // Ayrı bir yerde tutulabilir.
+    // AyrÄ± bir yerde tutulabilir.
     public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
 
     public PlayerHandler playerHandler;

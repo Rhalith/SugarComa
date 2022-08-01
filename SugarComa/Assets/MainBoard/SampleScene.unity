@@ -712,6 +712,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &73240680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1354,6 +1355,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &112899113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1634,6 +1636,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &139395552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1735,6 +1738,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &147820756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2186,6 +2190,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &204892399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2380,6 +2385,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &212729243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2546,6 +2552,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &242042248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2972,6 +2979,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &286080269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3574,6 +3582,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &312526865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4196,6 +4205,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &351129977 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4120892788676648186, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
@@ -4308,6 +4318,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &364209378 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7937054991280826797, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
@@ -4934,6 +4945,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 1017703440}
     right: {fileID: 1985932879}
+  isPlayerInPlatform: 0
 --- !u!1001 &417417866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5039,6 +5051,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &418113888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5307,6 +5320,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &427180183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5917,6 +5931,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &482622819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6289,6 +6304,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &509870369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6616,6 +6632,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &524878154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7693,6 +7710,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &654753471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8021,6 +8039,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &692784104
 GameObject:
   m_ObjectHideFlags: 0
@@ -8504,6 +8523,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &720447402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8696,6 +8716,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &738847842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9246,6 +9267,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &764877037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9355,6 +9377,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &784138905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9533,6 +9556,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 898585503}
     right: {fileID: 372065889}
+  isPlayerInPlatform: 0
 --- !u!1001 &791971349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9727,6 +9751,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &797859979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10174,6 +10199,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &826309262 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b8c1586e0f997ef49b6b019b3b91465e, type: 3}
@@ -10213,6 +10239,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &846669739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10667,6 +10694,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &897760473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11595,6 +11623,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &938034574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11784,6 +11813,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &958543743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11974,6 +12004,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &965018875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12234,6 +12265,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &978344282 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -12350,6 +12382,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1006600429
 GameObject:
   m_ObjectHideFlags: 0
@@ -12923,6 +12956,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1034932627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13105,6 +13139,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &1045050400 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -13144,6 +13179,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1052957436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13341,6 +13377,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1057986039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13580,6 +13617,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1082860028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14432,6 +14470,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &1127070017 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4120892787917468866, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
@@ -14549,6 +14588,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1135258326 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5120047951862333661, guid: b6b1931a4552daf43b2794863b253d2e, type: 3}
@@ -14741,6 +14781,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1163899946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14849,6 +14890,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1169476503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15042,6 +15084,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1190851385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15220,6 +15263,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1207414552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15320,6 +15364,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 432425097}
     right: {fileID: 418113889}
+  isPlayerInPlatform: 0
 --- !u!1001 &1216489238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15484,7 +15529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraAnimations: {fileID: 1938159821}
-  _playerPrefab: {fileID: 5242262645195583948, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
+  _playerPrefab: {fileID: 5242262645195583948, guid: b018bb6e13390ec469bef60b6b0d05af, type: 3}
   playerParent: {fileID: 1711480455}
   _startplatform: {fileID: 1989628817}
   _pathFinder: {fileID: 1970712953}
@@ -15771,6 +15816,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1250499468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15876,6 +15922,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1255490348 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b8c1586e0f997ef49b6b019b3b91465e, type: 3}
@@ -15899,6 +15946,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 82461102}
     right: {fileID: 1651837022}
+  isPlayerInPlatform: 0
 --- !u!1001 &1262172227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16000,6 +16048,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1262850225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16101,6 +16150,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1269394509 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e17ceb326b28b0649a7735ec7a8b7c7f, type: 3}
@@ -16277,6 +16327,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1283692995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16378,6 +16429,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &1290310092 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4120892788315320753, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
@@ -17362,7 +17414,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1222331013}
         m_TargetAssemblyTypeName: PlayerHandler, Assembly-CSharp
-        m_MethodName: TCreatePlayer
+        m_MethodName: CreatePlayerS
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17530,6 +17582,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1342891434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17814,6 +17867,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1364368353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17915,6 +17969,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1368470412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b8c1586e0f997ef49b6b019b3b91465e, type: 3}
@@ -17943,6 +17998,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1375397955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18221,6 +18277,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 797859980}
     right: {fileID: 1760115956}
+  isPlayerInPlatform: 0
 --- !u!114 &1396503020 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -18255,6 +18312,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1403826402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19145,6 +19203,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1498080232
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19520,6 +19579,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1519251618
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19604,6 +19664,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1530516298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19713,6 +19774,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1544913289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19993,6 +20055,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 1670230046}
     right: {fileID: 1617221050}
+  isPlayerInPlatform: 0
 --- !u!1001 &1574580601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20253,6 +20316,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &1577538980 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -20368,6 +20432,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1596720437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20558,6 +20623,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1604228219
 GameObject:
   m_ObjectHideFlags: 0
@@ -20891,6 +20957,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1617221049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21321,6 +21388,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1648547739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21603,6 +21671,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1663238958
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21707,6 +21776,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1666212169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22144,6 +22214,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1686954696 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 47faccc2e0e6f18478ba555471011b1b, type: 3}
@@ -22167,6 +22238,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1689555361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22268,6 +22340,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1691553879 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 47faccc2e0e6f18478ba555471011b1b, type: 3}
@@ -22563,6 +22636,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1711480455
 GameObject:
   m_ObjectHideFlags: 0
@@ -22727,6 +22801,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 381456224}
     right: {fileID: 415221966}
+  isPlayerInPlatform: 0
 --- !u!1 &1729720472 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 52a1093fcf858444495d5381e820b659, type: 3}
@@ -22755,6 +22830,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1739061636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23182,6 +23258,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1767254589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23357,6 +23434,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1801424723
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23538,6 +23616,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &1810688882 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4120892787250652913, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
@@ -23572,6 +23651,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1818767568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23765,6 +23845,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1832348965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23885,6 +23966,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1834243969 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 52a1093fcf858444495d5381e820b659, type: 3}
@@ -23913,6 +23995,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1839676116
 GameObject:
   m_ObjectHideFlags: 0
@@ -24008,6 +24091,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1840953852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24209,6 +24293,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1864528709 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b8c1586e0f997ef49b6b019b3b91465e, type: 3}
@@ -24232,6 +24317,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1864867905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24578,6 +24664,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &1896962274 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -24690,6 +24777,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &1908571786
 GameObject:
   m_ObjectHideFlags: 0
@@ -25134,6 +25222,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &1960643304
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26055,6 +26144,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 1353929198}
     right: {fileID: 751897682}
+  isPlayerInPlatform: 0
 --- !u!114 &1976332720 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -26251,6 +26341,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 1
 --- !u!1001 &1992281132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26452,6 +26543,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 1322923258}
     right: {fileID: 78113440}
+  isPlayerInPlatform: 0
 --- !u!114 &2007914458 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -26553,6 +26645,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &2022016883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26662,6 +26755,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &2022261462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26856,6 +26950,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &2040065946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27050,6 +27145,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &2043440280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27244,6 +27340,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &2056510825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27349,6 +27446,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!54 &2064268528 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 7845881933032584898, guid: 26dd033aa78e1ab40bf1de97e691f2f9, type: 3}
@@ -27399,6 +27497,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!114 &2076717060 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3132957263323239633, guid: e158895e6c977c244b9cc5ad29cdfeea, type: 3}
@@ -27522,6 +27621,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &2087545320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27635,6 +27735,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &2103919512 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 52a1093fcf858444495d5381e820b659, type: 3}
@@ -27663,6 +27764,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1001 &2117532603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27853,6 +27955,7 @@ MonoBehaviour:
   selector:
     left: {fileID: 0}
     right: {fileID: 0}
+  isPlayerInPlatform: 0
 --- !u!1 &2127623994 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5120047951862333661, guid: b6b1931a4552daf43b2794863b253d2e, type: 3}

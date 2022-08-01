@@ -8,9 +8,18 @@
       <e p="Assets" t="Include">
         <e p="Plugin" t="Include">
           <e p="Facepunch.Steamworks" t="Include">
+            <e p="Facepunch.Steamworks.Posix.dll" t="Include" />
             <e p="Facepunch.Steamworks.Posix.xml" t="Include" />
+            <e p="Facepunch.Steamworks.Win32.dll" t="Include" />
             <e p="Facepunch.Steamworks.Win32.xml" t="Include" />
+            <e p="Facepunch.Steamworks.Win64.dll" t="Include" />
             <e p="Facepunch.Steamworks.Win64.xml" t="Include" />
+            <e p="redistributable_bin" t="Include">
+              <e p="steam_api.dll" t="Include" />
+              <e p="win64" t="Include">
+                <e p="steam_api64.dll" t="Include" />
+              </e>
+            </e>
           </e>
         </e>
         <e p="Prefabs" t="Include">
@@ -43,11 +52,13 @@
           <e p="Networking" t="Include">
             <e p="FriendObject.cs" t="Include" />
             <e p="LobbyFriendObject.cs" t="Include" />
+            <e p="NetworkManager.cs" t="Include" />
             <e p="SteamFriendsManager.cs" t="Include" />
             <e p="SteamLobbyManager.cs" t="Include" />
             <e p="SteamManager.cs" t="Include" />
             <e p="SteamServerManager.cs" t="Include" />
             <e p="Utils" t="Include">
+              <e p="LobbyPlayerInfo.cs" t="Include" />
               <e p="Network.cs" t="Include" />
               <e p="NetworkHelper.cs" t="Include" />
             </e>
@@ -72,6 +83,7 @@
             <e p="PlayerMovement.cs" t="Include" />
             <e p="PlayerSpecSetter.cs" t="Include" />
             <e p="RagdollOnOff.cs" t="Include" />
+            <e p="RemotePlayerMovement.cs" t="Include" />
             <e p="ScriptKeeper.cs" t="Include" />
           </e>
           <e p="Route" t="Include">
@@ -82,11 +94,6 @@
             <e p="Platform.cs" t="Include" />
             <e p="PlatformSpecSet.cs" t="Include" />
             <e p="RouteSelector.cs" t="Include" />
-          </e>
-          <e p="TempScripts" t="Include">
-            <e p="NetworkManager.cs" t="Include" />
-            <e p="PlayerInfo.cs" t="Include" />
-            <e p="PlayerMovementTemp.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
             <e p="EnlargeUIButtons.cs" t="Include" />
@@ -99,6 +106,7 @@
               <e p="CameraAnimations.cs" t="Include" />
               <e p="MapCamera.cs" t="Include" />
             </e>
+            <e p="DontDestroyOnSelectedScenes.cs" t="Include" />
             <e p="healPlatformAnimation.cs" t="Include" />
             <e p="InventorySystem" t="Include">
               <e p="InventoryChanger.cs" t="Include" />
@@ -142,7 +150,6 @@
           </e>
           <e p="Sprites" t="Include">
             <e p="EmojiOne Attribution.txt" t="Include" />
-            <e p="EmojiOne.json" t="Include" />
           </e>
         </e>
       </e>

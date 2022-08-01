@@ -12,7 +12,7 @@ public class RemotePlayerMovement : MonoBehaviour
     private Vector3 _currentPosition;
     private float _t;
 
-    // çalýþmýyolar þuan
+    // Ã§alÄ±ÅŸmÄ±yolar ÅŸuan
     private Platform _currentPlatform;
     private int _currentStep;
 
@@ -61,6 +61,7 @@ public class RemotePlayerMovement : MonoBehaviour
             SendMoveDirection(networkData);
             _currentPlatform = current;
             _currentStep -= 1;
+            Debug.Log("Ey");
         }
     }
 
