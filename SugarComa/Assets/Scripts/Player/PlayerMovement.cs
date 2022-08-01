@@ -206,14 +206,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerAnimation.StopRunning();
         _playerCollector.CheckCurrentNode(_currentPlatform);
-        //if((_currentPlatform.HasSelector && _currentStep <= 0) || _currentPlatform.spec != PlatformSpec.Goal) _dice.SetActive(true);
 
         // Düzenle
-        /*
         if(_currentStep <= 0)
             PlayerHandler.Instance.ChangeCurrentPlayer();
-        */
-        if(true)
+        else
         {
             if (_currentPlatform.HasSelector)
             {

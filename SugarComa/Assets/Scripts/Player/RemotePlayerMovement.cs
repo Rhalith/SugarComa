@@ -52,15 +52,22 @@ public class RemotePlayerMovement : MonoBehaviour
     private void OnCurrentPlatformChanged()
     {
         var current = _pathTracker.CurrentPlatform;
-        if (current != null && _pathTracker.Next != null)
+        if (current != null)
         {
-            NetworkData networkData =
+            if (_pathTracker.Next != null)
+            {
+                NetworkData networkData =
                 new NetworkData(MessageType.InputDown, _pathTracker.Next.position);
+                SendMoveDirection(networkData);
 
-            SendMoveDirection(networkData);
-            _currentPlatform = current;
-            _currentStep -= 1;
-            Debug.Log("Ey");
+                _currentPlatform = current;
+                _currentStep--;
+            }
+            else
+            {
+                _currentPlatform = current;
+                _currentStep--;
+            }
         }
     }
 

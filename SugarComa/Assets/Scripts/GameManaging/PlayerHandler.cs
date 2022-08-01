@@ -12,6 +12,7 @@ public class PlayerHandler : MonoBehaviour
 
     #region SerializeFields
     [SerializeField] CameraAnimations _cameraAnimations;
+    [SerializeField] GameObject _remotePlayerPrefab;
     [SerializeField] GameObject _playerPrefab;
     [SerializeField] GameObject playerParent;
     [SerializeField] Platform _startplatform;
@@ -19,7 +20,6 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] MapCamera _mapCamera;
     [SerializeField] GameController _gameController;
     [SerializeField] GoalSelector _goalSelector;
-    [SerializeField] List<GameObject> _playerList;
     [SerializeField] Cinemachine.CinemachineBrain _cinemachineBrain;
     [SerializeField] GameObject _playerSpecCanvas;
     #endregion
@@ -30,12 +30,12 @@ public class PlayerHandler : MonoBehaviour
     [HideInInspector] public PlayerCollector currentPlayerCollector;
     [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
     #endregion
-    private GameObject _createdObject;
+
     public int whichPlayer;
-    public List<Steamworks.SteamId> _playerIdList;
+    private GameObject _createdObject;
     public Steamworks.SteamId[] _playerQueue;
 
-    private bool isFirst = true;
+    private int playerCount;
 
     void Awake()
     {
@@ -46,13 +46,12 @@ public class PlayerHandler : MonoBehaviour
         }
 
         _instance = this;
-
-        _playerIdList = new List<Steamworks.SteamId>();
     }
 
     private void Start()
     {
         SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+        playerCount = 0;
     }
 
     private void OnDestroy()
@@ -65,53 +64,34 @@ public class PlayerHandler : MonoBehaviour
     /// </summary>
     public GameObject CreatePlayer(Steamworks.SteamId id)
     {
-        if (isFirst && SteamManager.Instance.PlayerSteamId == id)
+        if (SteamManager.Instance.PlayerSteamId == id)
         {
-            _playerList[0].SetActive(true);
-            _playerIdList.Add(id);
-            isFirst = false;
-            return _playerList[0];
+            _createdObject = Instantiate(_playerPrefab, playerParent.transform);
         }
-        _createdObject = Instantiate(_playerPrefab, playerParent.transform);
+        else
+        {
+            _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
+        }
+
         _createdObject.transform.position = new Vector3(0, 0, 0);
-        _playerList.Add(_createdObject);
-        _playerIdList.Add(id);
         ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
         SetPlayerMovement(sckeeper);
         SetPlayerCollector(sckeeper);
         SetGobletSelection(sckeeper);
         SetPlayerInput(sckeeper);
-        SetPlayerSpec(sckeeper, _playerList.IndexOf(_createdObject)+1);
-        //ChangeCurrentPlayer();
+        SetPlayerSpec(sckeeper, ++playerCount);
 
         return _createdObject;
     }
 
-    public void CreatePlayerS()
-    {
-        if (isFirst)
-        {
-            _playerList[0].SetActive(true);
-            isFirst = false;
-        }
-        _createdObject = Instantiate(_playerPrefab, playerParent.transform);
-        _createdObject.transform.position = new Vector3(0, 0, 0);
-        _playerList.Add(_createdObject);
-        ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
-        SetPlayerMovement(sckeeper);
-        SetPlayerCollector(sckeeper);
-        SetGobletSelection(sckeeper);
-        SetPlayerInput(sckeeper);
-        SetPlayerSpec(sckeeper, _playerList.IndexOf(_createdObject) + 1);
-        //ChangeCurrentPlayer();
-    }
-
     public void UpdateTurnQueue()
     {
+
+
         // Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
 
         PlayerListNetworkData playerListData =
-               new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerIdList.ToArray()));
+               new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerList.Keys)));
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
 
         _playerQueue = _playerIdList.ToArray();
@@ -134,7 +114,7 @@ public class PlayerHandler : MonoBehaviour
     public void ChangeCurrentPlayer() ///Knowing bug, eğer ilk oyuncu oynarken 3. oyuncuyu yaratırsak kontrol 2. oyuncuya geçiyor.
     {
         ScriptKeeper previouskeep = null;
-        if (_playerList.Count > 1)
+        if (playerCount > 1)
         {
             whichPlayer++;
 
