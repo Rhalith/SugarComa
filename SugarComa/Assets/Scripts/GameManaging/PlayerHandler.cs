@@ -1,9 +1,11 @@
-using Networking;
+using Assets.MainBoard.Scripts.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using Assets.MainBoard.Scripts.Player.Utils;
+using Assets.MainBoard.Scripts.Networking.Utils;
 
 [DefaultExecutionOrder(-101)]
 public class PlayerHandler : MonoBehaviour
@@ -208,7 +210,7 @@ public class PlayerHandler : MonoBehaviour
     /// <param name="index"></param>
     private void SetPlayerSpec(ScriptKeeper keeper, int index)
     {
-        keeper._playerSpecSetter.SetParent(_playerSpecCanvas, index);
+        keeper._playerUIParentSetter.SetParent(_playerSpecCanvas, index);
     }
     /// <summary>
     /// Activates next player's input and dice.
