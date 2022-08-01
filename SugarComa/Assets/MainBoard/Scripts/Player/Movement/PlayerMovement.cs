@@ -1,4 +1,5 @@
 using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.Items;
 using Assets.MainBoard.Scripts.Route;
@@ -199,7 +200,8 @@ namespace Assets.MainBoard.Scripts.Player.Movement
                 if (_pathTracker.Next != null)
                 {
                     NetworkData networkData =
-                    new NetworkData(MessageType.InputDown, _pathTracker.Next.position);
+                        new NetworkData(MessageType.InputDown, _pathTracker.Next.position);
+                    SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
 
                     _currentPlatform = current;
                     _currentStep--;
