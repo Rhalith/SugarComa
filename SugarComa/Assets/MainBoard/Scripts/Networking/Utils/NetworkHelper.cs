@@ -31,9 +31,9 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public static byte[] SteamIdToByteArray(Steamworks.SteamId[] idArr)
         {
             int size = Marshal.SizeOf<ulong>();
-            byte[] bytes = new byte[size * NetworkManager.MaxPlayerCount];
+            byte[] bytes = new byte[size * SteamLobbyManager.MemberCount];
 
-            for (int i = 0; i < NetworkManager.MaxPlayerCount; i++)
+            for (int i = 0; i < SteamLobbyManager.MemberCount; i++)
             {
                 byte[] tempByteArr = System.BitConverter.GetBytes((ulong)idArr[i]);
                 System.Array.Copy(tempByteArr, 0, bytes, size * i, size);
@@ -45,9 +45,9 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public static Steamworks.SteamId[] ByteArrayToSteamId(byte[] bytes)
         {
             int size = Marshal.SizeOf<ulong>();
-            Steamworks.SteamId[] idArr = new Steamworks.SteamId[NetworkManager.MaxPlayerCount];
+            Steamworks.SteamId[] idArr = new Steamworks.SteamId[SteamLobbyManager.MemberCount];
 
-            for (int i = 0; i < NetworkManager.MaxPlayerCount; i++)
+            for (int i = 0; i < SteamLobbyManager.MemberCount; i++)
             {
                 byte[] tempArr = new byte[size];
                 System.Array.Copy(bytes, size * i, tempArr, 0, size);
@@ -82,6 +82,22 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
 
             Deserialize(buffer, out playerListData);
             if (playerListData.id != NetworkId.PlayerListNetworkDataId)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool TryGetTurnNetworkData(byte[] buffer, out TurnNetworkData data)
+        {
+            if (buffer.Length != Marshal.SizeOf<TurnNetworkData>())
+            {
+                data = new TurnNetworkData();
+                return false;
+            }
+
+            Deserialize(buffer, out data);
+            if (data.id != NetworkId.TurnNetworkDataId)
             {
                 return false;
             }

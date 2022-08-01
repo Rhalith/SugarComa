@@ -9,62 +9,39 @@ namespace Assets.MainBoard.Scripts.Player
 {
     public class RemotePlayerMovement : MonoBehaviour
     {
-        [SerializeField] PathTracker _pathTracker;
+        [SerializeField] float speed = 1f;
+        [SerializeField] float rotationSpeed = 720;
 
         private Vector3 _startPosition;
-        private Vector3 _currentPosition;
+        private Vector3 _nextPosition;
         private float _t;
-
-        // çalışmıyolar şuan
-        private Platform _currentPlatform;
-        private int _currentStep;
 
         private void Start()
         {
-            _pathTracker.OnCurrentPlatformChanged += OnCurrentPlatformChanged;
             SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
 
         }
         private void OnDestroy()
         {
-            _pathTracker.OnCurrentPlatformChanged -= OnCurrentPlatformChanged;
             SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
         }
 
         void Update()
         {
-            if (_currentPosition != _pathTracker.Next.position)
-                _currentPosition = _pathTracker.Next.position;
+            if (_nextPosition == transform.position)
+                return;
 
-            if (transform.position != _currentPosition)
+            _t += Time.deltaTime * speed;
+            // Smooth tracking
+            // if object position not equal the current platform position move to position.
+            transform.position = Vector3.Lerp(_startPosition, _nextPosition, _t);
+
+            // rotation
+            Vector3 movementDirection = (_nextPosition - transform.position).normalized;
+            if (movementDirection != Vector3.zero)
             {
-                _t += Time.deltaTime * _pathTracker.speed;
-                // Smooth tracking
-                // if object position not equal the current platform position move to position.
-                transform.position = Vector3.Lerp(_startPosition, _currentPosition, _t);
-
-                // rotation
-                Vector3 movementDirection = (_currentPosition - transform.position).normalized;
-                if (movementDirection != Vector3.zero)
-                {
-                    var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _pathTracker.rotationSpeed * Time.deltaTime);
-                }
-            }
-        }
-
-        private void OnCurrentPlatformChanged()
-        {
-            var current = _pathTracker.CurrentPlatform;
-            if (current != null && _pathTracker.Next != null)
-            {
-                NetworkData networkData =
-                    new NetworkData(MessageType.InputDown, _pathTracker.Next.position);
-
-                SendMoveDirection(networkData);
-                _currentPlatform = current;
-                _currentStep -= 1;
-                Debug.Log("Ey");
+                var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
             }
         }
 
@@ -77,15 +54,9 @@ namespace Assets.MainBoard.Scripts.Player
             {
                 _t = 0;
                 _startPosition = transform.position;
-                _currentPosition = networkData.position;
+                _nextPosition = networkData.position;
             }
         }
-
-        void SendMoveDirection(in NetworkData networkData)
-        {
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
-        }
-
 
     }
 }

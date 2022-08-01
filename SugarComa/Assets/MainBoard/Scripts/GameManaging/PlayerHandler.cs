@@ -116,6 +116,10 @@ namespace Assets.MainBoard.Scripts.GameManaging
                     _playerQueue = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
                 }
             }
+            else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
+            {
+
+            }
         }
 
         /// <summary>
@@ -123,13 +127,15 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         public void ChangeCurrentPlayer() ///Knowing bug, eğer ilk oyuncu oynarken 3. oyuncuyu yaratırsak kontrol 2. oyuncuya geçiyor.
         {
-            ScriptKeeper previousScKeep = null;
+            // SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+
+            // TODO
             if (playerCount > 1)
             {
                 whichPlayer++;
 
                 GameObject prevObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer - 1).Value;
-                previousScKeep = prevObj.GetComponent<ScriptKeeper>();
+                ScriptKeeper previousScKeep = prevObj.GetComponent<ScriptKeeper>();
 
                 if (whichPlayer > playerCount - 1) whichPlayer = 0;
 

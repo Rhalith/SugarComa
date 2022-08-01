@@ -216,9 +216,8 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         {
             _playerAnimation.StopRunning();
             _playerCollector.CheckCurrentNode(_currentPlatform);
-            //if((_currentPlatform.HasSelector && _currentStep <= 0) || _currentPlatform.spec != PlatformSpec.Goal) _dice.SetActive(true);
 
-            // Düzenle
+            // TODO Burada bi değişiklik yapmıştık bozulmuş. Düzelt.
             /*
             if(_currentStep <= 0)
                 PlayerHandler.Instance.ChangeCurrentPlayer();

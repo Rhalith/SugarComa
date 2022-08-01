@@ -12,9 +12,6 @@ namespace Assets.MainBoard.Scripts.Networking
         private static NetworkManager _instance;
         public static NetworkManager Instance => _instance;
 
-        // MaxPlayerCount...
-        public const int MaxPlayerCount = 2;
-
         // Ayrı bir yerde tutulabilir.
         public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
 

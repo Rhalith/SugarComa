@@ -31,7 +31,11 @@ namespace Assets.MainBoard.Scripts.Networking
         #endregion
 
         public GameObject InLobbyFriend;
-        public int MemberCount => currentLobby.MemberCount;
+
+        public const int MinPlayerCount = 2;
+        public const int MaxPlayerCount = 8;
+        public static int MemberCount => currentLobby.MemberCount;
+
         public Dictionary<SteamId, LobbyPlayerInfo> playerInfos = new Dictionary<SteamId, LobbyPlayerInfo>();
         public Dictionary<SteamId, GameObject> inLobby = new Dictionary<SteamId, GameObject>();
 

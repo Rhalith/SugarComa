@@ -19,6 +19,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     {
         public static readonly int NetworkDataId = Animator.StringToHash("NetworkData");
         public static readonly int PlayerListNetworkDataId = Animator.StringToHash("PlayerListNetworkData");
+        public static readonly int TurnNetworkDataId = Animator.StringToHash("TurnNetworkData");
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -70,7 +71,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             id = NetworkId.PlayerListNetworkDataId;
 
             this.type = type;
-            playerList = new byte[Marshal.SizeOf<ulong>() * NetworkManager.MaxPlayerCount];
+            playerList = new byte[Marshal.SizeOf<ulong>() * SteamLobbyManager.MemberCount];
         }
 
         public PlayerListNetworkData(MessageType type, byte[] steamId)
@@ -79,6 +80,19 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
 
             this.type = type;
             playerList = steamId;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct TurnNetworkData
+    {
+        public int id;
+        public MessageType messageType;
+
+        public TurnNetworkData(MessageType messageType)
+        {
+            this.id = NetworkId.TurnNetworkDataId;
+            this.messageType = messageType;
         }
     }
 }
