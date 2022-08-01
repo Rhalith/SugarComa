@@ -33,11 +33,6 @@ public class RemotePlayerMovement : MonoBehaviour
             _currentStep -= 1;
         }
     }
-    // |
-    // playerremotemovement scripti yaz, player tracker als�n, oncurrentplatformchanged eventi �al��s�n yukardakinin ayn�s�, 
-
-    // yeni scripte startposition a� bi tane, currentposition da next platformun de�eri
-    // start pos 
 
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
     {
@@ -52,7 +47,6 @@ public class RemotePlayerMovement : MonoBehaviour
         }
     }
 
-    // bunu onplatformchanged'da �a��r
     void SendMoveDirection(in NetworkData networkData)
     {
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
