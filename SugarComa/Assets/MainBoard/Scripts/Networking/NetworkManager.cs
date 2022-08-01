@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.Networking.Utils;
+using System.Linq;
 
 namespace Assets.MainBoard.Scripts.Networking
 {
@@ -48,7 +49,7 @@ namespace Assets.MainBoard.Scripts.Networking
         {
             SpawnPlayers();
             SteamLobbyManager.Instance.inLobby.Clear();
-            playerHandler.UpdateTurnQueue();
+            playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
         }
 
         private void OnApplicationQuit()

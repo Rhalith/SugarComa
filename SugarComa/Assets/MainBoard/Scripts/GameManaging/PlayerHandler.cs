@@ -5,10 +5,9 @@ using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Player.Utils;
 using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.Utils.CamUtils;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -20,6 +19,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
         #region SerializeFields
         [SerializeField] CameraAnimations _cameraAnimations;
+        [SerializeField] GameObject _remotePlayerPrefab;
         [SerializeField] GameObject _playerPrefab;
         [SerializeField] GameObject playerParent;
         [SerializeField] Platform _startplatform;
@@ -27,7 +27,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [SerializeField] MapCamera _mapCamera;
         [SerializeField] GameController _gameController;
         [SerializeField] GoalSelector _goalSelector;
-        [SerializeField] List<GameObject> _playerList;
         [SerializeField] Cinemachine.CinemachineBrain _cinemachineBrain;
         [SerializeField] GameObject _playerSpecCanvas;
         #endregion
@@ -38,12 +37,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [HideInInspector] public PlayerCollector currentPlayerCollector;
         [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
         #endregion
-        private GameObject _createdObject;
+
         public int whichPlayer;
-        public List<Steamworks.SteamId> _playerIdList;
+        private GameObject _createdObject;
         public Steamworks.SteamId[] _playerQueue;
 
-        private bool isFirst = true;
+        private int playerCount;
 
         void Awake()
         {
@@ -54,13 +53,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
 
             _instance = this;
-
-            _playerIdList = new List<Steamworks.SteamId>();
         }
 
         private void Start()
         {
             SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+            playerCount = 0;
         }
 
         private void OnDestroy()
@@ -73,35 +71,35 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         public GameObject CreatePlayer(Steamworks.SteamId id)
         {
-            if (isFirst && SteamManager.Instance.PlayerSteamId == id)
+            if (SteamManager.Instance.PlayerSteamId == id)
             {
-                _playerList[0].SetActive(true);
-                _playerIdList.Add(id);
-                isFirst = false;
-                return _playerList[0];
+                _createdObject = Instantiate(_playerPrefab, playerParent.transform);
             }
-            _createdObject = Instantiate(_playerPrefab, playerParent.transform);
+            else
+            {
+                _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
+            }
+
             _createdObject.transform.position = new Vector3(0, 0, 0);
-            _playerList.Add(_createdObject);
-            _playerIdList.Add(id);
             ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
             SetPlayerMovement(sckeeper);
             SetPlayerCollector(sckeeper);
             SetGobletSelection(sckeeper);
             SetPlayerInput(sckeeper);
-            SetPlayerSpec(sckeeper, _playerList.IndexOf(_createdObject) + 1);
-            //ChangeCurrentPlayer();
+            SetPlayerSpec(sckeeper, ++playerCount);
 
             return _createdObject;
         }
 
-        public void UpdateTurnQueue()
+        //TODO: System memory dll kullanılabilir performans'ı arttırmak için...
+        public void UpdateTurnQueue(Steamworks.SteamId[] _playerList)
         {
-            PlayerListNetworkData playerListData =
-                   new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerIdList.ToArray()));
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
+            // Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
+            _playerQueue = _playerList;
 
-            _playerQueue = _playerIdList.ToArray();
+            PlayerListNetworkData playerListData =
+                   new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerList));
+            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
         }
 
         private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
@@ -120,17 +118,20 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         public void ChangeCurrentPlayer() ///Knowing bug, eğer ilk oyuncu oynarken 3. oyuncuyu yaratırsak kontrol 2. oyuncuya geçiyor.
         {
-            ScriptKeeper previouskeep = null;
-            if (_playerList.Count > 1)
+            ScriptKeeper previousScKeep = null;
+            if (playerCount > 1)
             {
                 whichPlayer++;
 
-                // 3 tane liste var düzenlenmesi lazım... 1.GameObject List, 2.IdList, 3.IdListByQueue
-                previouskeep = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer - 1])].GetComponent<ScriptKeeper>();
-                if (whichPlayer > _playerList.Count - 1) whichPlayer = 0;
+                GameObject prevObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer - 1).Value;
+                previousScKeep = prevObj.GetComponent<ScriptKeeper>();
 
-                ScriptKeeper scKeeper = _playerList[_playerIdList.IndexOf(_playerQueue[whichPlayer])].GetComponent<ScriptKeeper>();
-                ChangeCurrentSpecs(scKeeper, previouskeep);
+                if (whichPlayer > playerCount - 1) whichPlayer = 0;
+
+                GameObject currentObj = NetworkManager.Instance.playerList.ElementAt(whichPlayer).Value;
+                ScriptKeeper currentScKeeper = currentObj.GetComponent<ScriptKeeper>();
+
+                ChangeCurrentSpecs(currentScKeeper, previousScKeep);
             }
         }
 
@@ -213,7 +214,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="index"></param>
         private void SetPlayerSpec(ScriptKeeper keeper, int index)
         {
-            keeper._playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+            keeper._playerSpecSetter.SetParent(_playerSpecCanvas, index);
         }
         /// <summary>
         /// Activates next player's input and dice.
