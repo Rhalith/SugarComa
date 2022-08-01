@@ -1,25 +1,54 @@
+using Networking;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RemotePlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] PathTracker _pathTracker;
+
+    private Vector3 _startPosition;
+    private Vector3 _currentPosition;
+    private float _t;
+
+    // çalýþmýyolar þuan
+    private Platform _currentPlatform;
+    private int _currentStep;
+
+    private void Start()
     {
         _pathTracker.OnCurrentPlatformChanged += OnCurrentPlatformChanged;
+        SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+
     }
     private void OnDestroy()
     {
         _pathTracker.OnCurrentPlatformChanged -= OnCurrentPlatformChanged;
+        SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (_currentPosition != _pathTracker.Next.position)
+            _currentPosition = _pathTracker.Next.position;
+
+        if (transform.position != _currentPosition)
+        {
+            _t += Time.deltaTime * _pathTracker.speed;
+            // Smooth tracking
+            // if object position not equal the current platform position move to position.
+            transform.position = Vector3.Lerp(_startPosition, _currentPosition, _t);
+
+            // rotation
+            Vector3 movementDirection = (_currentPosition - transform.position).normalized;
+            if (movementDirection != Vector3.zero)
+            {
+                var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _pathTracker.rotationSpeed * Time.deltaTime);
+            }
+        }
     }
-    
+
     private void OnCurrentPlatformChanged()
     {
         var current = _pathTracker.CurrentPlatform;
@@ -33,11 +62,6 @@ public class RemotePlayerMovement : MonoBehaviour
             _currentStep -= 1;
         }
     }
-    // |
-    // playerremotemovement scripti yaz, player tracker alsýn, oncurrentplatformchanged eventi çalýþsýn yukardakinin aynýsý, 
-
-    // yeni scripte startposition aç bi tane, currentposition da next platformun deðeri
-    // start pos 
 
     private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
     {
@@ -52,9 +76,10 @@ public class RemotePlayerMovement : MonoBehaviour
         }
     }
 
-    // bunu onplatformchanged'da çaðýr
     void SendMoveDirection(in NetworkData networkData)
     {
         SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
     }
+
+
 }
