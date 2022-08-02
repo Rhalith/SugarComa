@@ -119,35 +119,31 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 {
                     _playerQueue = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
 
-                    ChangeCurrentPlayer();
+                    ChangeCurrentPlayer(0);
                 }
             }
             else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
-
+                ChangeCurrentPlayer(turnNetworkData.index);
             }
         }
 
         /// <summary>
         /// Changes current player.
         /// </summary>
-        public void ChangeCurrentPlayer() ///Knowing bug, eğer ilk oyuncu oynarken 3. oyuncuyu yaratırsak kontrol 2. oyuncuya geçiyor.
+        public void ChangeCurrentPlayer(int index) ///Knowing bug, eğer ilk oyuncu oynarken 3. oyuncuyu yaratırsak kontrol 2. oyuncuya geçiyor.
         {
-            // SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+            int turn = index;
+            if (index >= SteamLobbyManager.MemberCount) turn = 0;
 
-            if(_playerQueue[whichPlayer] == SteamManager.Instance.PlayerSteamId)
+            if (turn == index)
             {
                 currentPlayerInput.isMyTurn = true;
                 currentPlayerInput.Dice.SetActive(true);
             }
-            else
-            {
-                currentPlayerInput.isMyTurn = false;
-                currentPlayerInput.Dice.SetActive(false);
-            }
 
             whichPlayer++;
-            if (whichPlayer > playerCount - 1) whichPlayer = 0;
+            if (whichPlayer > SteamLobbyManager.MemberCount - 1) whichPlayer = 0;
         }
 
         /// <summary>

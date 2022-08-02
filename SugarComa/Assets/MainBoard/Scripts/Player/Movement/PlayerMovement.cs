@@ -224,16 +224,22 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             if(_currentStep <= 0)
                 PlayerHandler.Instance.ChangeCurrentPlayer();
             */
-            if (true)
+
+            if (_currentPlatform.HasSelector)
             {
-                if (_currentPlatform.HasSelector)
-                {
-                    if (_currentStep <= 0) _dice.SetActive(true);
-                }
-                else if (_currentPlatform.spec != PlatformSpec.Goal)
-                {
-                    _dice.SetActive(true);
-                }
+                if (_currentStep <= 0) _dice.SetActive(true);
+            }
+            else if (_currentPlatform.spec != PlatformSpec.Goal)
+            {
+                _dice.SetActive(true);
+            }
+
+
+            if (_currentStep <= 0)
+            {
+                _playerInput.isMyTurn = false;
+                _playerInput.Dice.SetActive(false);
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index, MessageType.TurnOver)));
             }
         }
 

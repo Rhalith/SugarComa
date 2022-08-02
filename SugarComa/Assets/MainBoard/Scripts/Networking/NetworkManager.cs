@@ -12,6 +12,8 @@ namespace Assets.MainBoard.Scripts.Networking
         private static NetworkManager _instance;
         public static NetworkManager Instance => _instance;
 
+        private int _index;
+        public int Index => _index;
         // Ayrı bir yerde tutulabilir.
         public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
 
@@ -63,9 +65,12 @@ namespace Assets.MainBoard.Scripts.Networking
 
         void SpawnPlayers()
         {
+            int i = 0;
             foreach (var id in SteamLobbyManager.Instance.inLobby.Keys)
             {
                  playerList.Add(id, playerHandler.CreatePlayer(id));
+                if (id == SteamManager.Instance.PlayerSteamId) _index = i;
+                i++;
             }
         }
     }
