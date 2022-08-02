@@ -90,7 +90,6 @@ namespace Assets.MiniGames.FallingStars.Scripts
             }
         }
 
-
         public IEnumerator StartCountdown()
         {
             string text = timeText.text.ToString();
