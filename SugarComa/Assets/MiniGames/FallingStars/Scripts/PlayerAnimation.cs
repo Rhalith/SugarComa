@@ -12,6 +12,7 @@ namespace Assets.MiniGames.SpiritJump.Scripts
         [SerializeField] private bool _jump;
         [SerializeField] private bool _run;
         [SerializeField] private bool _dead;
+        [SerializeField] private bool _hit;
 
         [Header("Other Scripts")]
         [SerializeField] private Animator _animator;
@@ -23,6 +24,7 @@ namespace Assets.MiniGames.SpiritJump.Scripts
         public bool IsRunning => _run;
         public bool IsDead => _dead;
         public bool IsIdle => !_run && !_jump && !_dead;
+        public bool IsHit => _hit;
         #endregion
         private void RunSet(int running)
         {
@@ -34,6 +36,12 @@ namespace Assets.MiniGames.SpiritJump.Scripts
         {
             _animator.SetBool("jumping", jump != 0);
             _jump = jump != 0;
+        }
+
+        private void HitSet(int hit)
+        {
+            _animator.SetBool("gettinghit", hit != 0);
+            _hit = hit != 0;
         }
 
         public void StartRunning()
@@ -49,6 +57,16 @@ namespace Assets.MiniGames.SpiritJump.Scripts
         public void Jump()
         {
             JumpSet(1);
+        }
+
+        public void StartGettingHit()
+        {
+            HitSet(1);
+        }
+
+        public void StopGettingHit()
+        {
+            HitSet(0);
         }
     }
 }

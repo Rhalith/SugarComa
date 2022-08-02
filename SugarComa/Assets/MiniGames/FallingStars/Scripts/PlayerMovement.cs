@@ -7,7 +7,7 @@ namespace Assets.MiniGames.SpiritJump.Scripts
     public class PlayerMovement : MonoBehaviour
     {
         #region Properties
-        [SerializeField] float _moveSpeed = 5f;
+        public float _moveSpeed = 5f;
         [SerializeField] float _rotationSpeed = 10f;
         [SerializeField] float _jumpHeight = 1f;
         [SerializeField] float _gravityValue = -9.81f;
@@ -62,6 +62,23 @@ namespace Assets.MiniGames.SpiritJump.Scripts
             }
             _playerVelocity.y += _gravityValue * Time.deltaTime;
             _characterController.Move(_playerVelocity * Time.deltaTime);
+        }
+
+        public void Aduket()
+        {
+            StartCoroutine(aduket());
+        }
+        IEnumerator aduket()
+        {
+            float time = 0;
+            while(time < 60)
+            {
+                _characterController.Move(Vector3.forward / 3);
+                yield return new WaitForSeconds(0.005f);
+                time++;
+                _animation.StartGettingHit();
+            }
+            _animation.StopGettingHit();
         }
     }
 }

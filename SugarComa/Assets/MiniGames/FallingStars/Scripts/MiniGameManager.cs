@@ -18,12 +18,21 @@ namespace Assets.MiniGames.FallingStars.Scripts
         private static MiniGameManager _instance;
 
         [SerializeField] private MeteorMeshes _meteorMeshes;
+        [SerializeField] private MeteorEffectMeshes _meteorEffectMeshes;
         public static MeteorMeshes MeteorMeshes
         {
             get
             {
                 if (_instance == null) return null;
                 return _instance._meteorMeshes;
+            }
+        }
+        public static MeteorEffectMeshes MeteorEffectMeshes
+        {
+            get
+            {
+                if (_instance == null) return null;
+                return _instance._meteorEffectMeshes;
             }
         }
         void Awake()
