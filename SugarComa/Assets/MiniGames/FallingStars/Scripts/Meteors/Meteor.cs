@@ -24,19 +24,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             CheckType(_type, _meteorMesh, _effectMesh);
         }
 
-
-        private void OnDisable()
-        {
-            MiniGameController.Instance.AddToPool(gameObject);
-        }
-
         public void CheckHit(Collision collision = null, Collider collider = null)
         {
             if(collision != null)
             {
                 if (collision.transform.gameObject.CompareTag("Plane"))
                 {
-                    gameObject.SetActive(false);
+                    MiniGameController.Instance.AddToPool(gameObject);
                 }
             }
             else
@@ -50,7 +44,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         //TODO
         public void CheckType(MeteorType type, MeshFilter meteor, MeshFilter effect)
         {
-            SetMeshes(type, meteor, effect);
+            //SetMeshes(type, meteor, effect);
             SetEffect(type);
         }
         //TODO THEIR CHANGES WILL NOT BE EQUAL
