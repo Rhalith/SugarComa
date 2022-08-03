@@ -7,6 +7,8 @@ public class MeteorShadow : MonoBehaviour
 {
     public bool isPlayerInShadow;
     public List<PlayerSpecs> _playerList;
+    [SerializeField] GameObject _meteorObject;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -23,5 +25,11 @@ public class MeteorShadow : MonoBehaviour
             isPlayerInShadow = false;
             _playerList.Remove(other.GetComponent<PlayerSpecs>());
         }
+    }
+    
+    public void ActivateMeteorObject()
+    {
+        _meteorObject.SetActive(true);
+        print("activated");
     }
 }

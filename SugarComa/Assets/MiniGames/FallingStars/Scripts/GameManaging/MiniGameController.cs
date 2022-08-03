@@ -66,8 +66,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 float y = Random.Range(-_plane.y, _plane.y);
                 GameObject instance = GetFromPool();
                 instance.transform.position = new Vector3(x, 0, y);
+                StartCoroutine(ActivateObject(instance));
                 //instance.GetComponent<Meteor>()._meteorObject.GetComponent<Animator>().SetTrigger();
             }
+        }
+
+        private IEnumerator ActivateObject(GameObject gameObject)
+        {
+            yield return new WaitForSeconds(1f);
+            gameObject.GetComponentInChildren<MeteorShadow>().ActivateMeteorObject();
         }
     }
 }
