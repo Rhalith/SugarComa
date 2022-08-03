@@ -402,7 +402,7 @@ MonoBehaviour:
   - {fileID: 7816483566640255624}
   - {fileID: 7816483566640255624}
   _effectObject: {fileID: 0}
-  _meteorObject: {fileID: 0}
+  _meteorObject: {fileID: 7816483565440598221}
 --- !u!1 &7816483565440598221
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
     public class MiniGameManager : MonoBehaviour
     {
         private static MiniGameManager _instance;
-        private float _gameTime;
+        private float _gameTime=120f;
         private int _meteorCount = 3;
 
         [SerializeField] private MeteorMeshes _meteorMeshes;

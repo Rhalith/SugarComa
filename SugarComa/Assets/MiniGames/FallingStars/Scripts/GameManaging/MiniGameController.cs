@@ -25,9 +25,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             Instance = this;
             GrowPool();
-        }
-        private void OnEnable()
-        {
             miniGameManager._SpawnNewWave += SpawnWave;
             miniGameManager._CalculateNewWave += CalculateWave;
         }
@@ -66,8 +63,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             return instance;
         }
 
-        private void SpawnWave()
+        public void SpawnWave()
         {
+            print("spawnWave");
             foreach (GameObject instance in newWaveMeteors)
             {
                 instance.GetComponent<Meteor>()._meteorObject.GetComponent<Rigidbody>().velocity = new Vector3(-_meteorVelocity.x, 0, -_meteorVelocity.y);
@@ -75,14 +73,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             newWaveMeteors = null;
         }
 
-        private void CalculateWave()
+        public void CalculateWave()
         {
+           
             for (int i = 0; i < miniGameManager.GetMeteorCount(); i++)
             {
                 float x = Random.Range(-_plane.x + _meteorVelocity.x * 2, _plane.x + _meteorVelocity.x * 2);
                 float y = Random.Range(-_plane.y + _meteorVelocity.y * 2, _plane.y + _meteorVelocity.y * 2);
                 GameObject instance = GetFromPool();
-                instance.GetComponent<Meteor>()._meteorObject.transform.position = new Vector3(x, 1000, y);
+                instance.GetComponent<Meteor>()._meteorObject.transform.position = new Vector3(x, 20, y);
                 newWaveMeteors[i] = instance;
             }
         }
