@@ -7,7 +7,8 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     public enum MessageType : byte
     {
         Ready,
-        UnReady,
+        UnReady, 
+        ReadyCheck,
         StartGame,
         InputDown,
         TurnOver,

@@ -153,10 +153,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="previousKeep"></param>
         private void ChangeCurrentSpecs(ScriptKeeper scriptKeeper, ScriptKeeper previousKeep)
         {
-            ChangePlayingInput(previousKeep._playerInput, scriptKeeper._playerInput);
-            
             ChangeUISpecs(scriptKeeper, previousKeep);
-            ChangeCamSpecs(scriptKeeper, previousKeep);
+            ChangeCamPriority(scriptKeeper, previousKeep);
         }
 
         /// <summary>
@@ -170,16 +168,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
         }
 
         /// <summary>
-        /// Changes Cam specifications.
-        /// </summary>
-        /// <param name="scriptKeeper"></param>
-        /// <param name="previousKeep"></param>
-        private void ChangeCamSpecs(ScriptKeeper scriptKeeper, ScriptKeeper previousKeep)
-        {
-            ChangeCamPriority(previousKeep, scriptKeeper);
-        }
-
-        /// <summary>
         /// Sets player movement variables by using ScriptKeeper.
         /// </summary>
         /// <param name="keeper"></param>
@@ -190,6 +178,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             keeper._playerMovement.CurrentPlatform = _startplatform;
             keeper._playerMovement.GameController = _gameController;
         }
+
         /// <summary>
         /// Sets player input variables by using ScriptKeeper.
         /// </summary>
@@ -198,6 +187,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         {
             keeper._playerInput.CineMachineBrain = _cinemachineBrain;
         }
+
         /// <summary>
         /// Sets player collector variables by using ScriptKeeper.
         /// </summary>
@@ -206,6 +196,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         {
             keeper._playerCollector.GameController = _gameController;
         }
+
         /// <summary>
         /// Sets goblet selection variables by using ScriptKeeper.
         /// </summary>
@@ -218,6 +209,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             keeper._gobletSelection.PathFinder = _pathFinder;
             keeper._playerAnimation.GoalSelector = _goalSelector;
         }
+
         /// <summary>
         /// Makes player UI child of _playerSpecCanvas for automatic line up.
         /// </summary>
@@ -227,18 +219,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         {
             keeper._playerUIParentSetter.SetParent(_playerSpecCanvas, index);
         }
-        /// <summary>
-        /// Activates next player's input and dice.
-        /// </summary>
-        /// <param name="currentInput"></param>
-        /// <param name="nextInput"></param>
-        private void ChangePlayingInput(PlayerInput currentInput, PlayerInput nextInput)
-        {
-            currentInput.isMyTurn = false;
-            nextInput.isMyTurn = true;
-            currentInput.Dice.SetActive(false);
-            nextInput.Dice.SetActive(true);
-        }
+
         /// <summary>
         /// Changes current scripts variables for check or use them.
         /// </summary>
@@ -251,6 +232,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             currentPlayerCollector = nextCollector;
             currentPlayerInventory = nextInventory;
         }
+
         /// <summary>
         /// Changes current UI variables for check or use them.
         /// </summary>
@@ -263,6 +245,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             currentplayerHealth = playerHealth;
             currentplayerGoblet = playerGoblet;
         }
+
         /// <summary>
         /// Makes current player's cam priority higher.
         /// </summary>

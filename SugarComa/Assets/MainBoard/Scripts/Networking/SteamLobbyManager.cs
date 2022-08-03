@@ -83,7 +83,6 @@ namespace Assets.MainBoard.Scripts.Networking
             #endregion
         }
 
-        // For now i'll use a button instead of check if everybody ready.
         public void StartGame()
         {
             if (Instance.playerInfos.Any((playerInfo) => !playerInfo.Value.IsReady))
@@ -98,7 +97,6 @@ namespace Assets.MainBoard.Scripts.Networking
             }
         }
 
-
         void Update()
         {
             SteamClient.RunCallbacks();
@@ -111,6 +109,7 @@ namespace Assets.MainBoard.Scripts.Networking
 
             if (await CreatePlayer(friend.Id, friend.Name))
             {
+                SteamFriendsManager.Instance.UpdateFriendListByFriend(friend.Id);
                 AcceptP2P(friend.Id);
             }
         }
@@ -152,21 +151,25 @@ namespace Assets.MainBoard.Scripts.Networking
                     {
                         playerInfos[steamid].IsReady = true;
                         inLobby[steamid].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
-                        // inLobby[steamid].active = green;
-                        // panelImage.color = UnityEngine.Color.green;
                     }
                     break;
                 case MessageType.UnReady:
                     {
                         playerInfos[steamid].IsReady = false;
                         inLobby[steamid].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
-                        // inLobby[steamid].active = green;
-                        //panelImage.color = UnityEngine.Color.red;
                     }
                     break;
                 case MessageType.StartGame:
                     {
                         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    }
+                    break;
+                case MessageType.ReadyCheck:
+                    {
+                        if(playerInfos[steamManager.PlayerSteamId].IsReady)
+                            SteamServerManager.Instance.SendingMessage(steamid, NetworkHelper.Serialize(new NetworkData(MessageType.Ready)));
+                        else
+                            SteamServerManager.Instance.SendingMessage(steamid, NetworkHelper.Serialize(new NetworkData(MessageType.UnReady)));
                     }
                     break;
                 default:
@@ -252,6 +255,10 @@ namespace Assets.MainBoard.Scripts.Networking
                     AcceptP2P(friend.Id);
                 }
             }
+
+            // Update ready/unready status
+            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.ReadyCheck)));
+
             Task.WaitAll(tasks.ToArray());
         }
 
@@ -332,6 +339,5 @@ namespace Assets.MainBoard.Scripts.Networking
             playerInfos.Add(playerInfo.SteamId, playerInfo);
             return true;
         }
-
     }
 }

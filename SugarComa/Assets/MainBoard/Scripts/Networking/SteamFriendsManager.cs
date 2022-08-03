@@ -1,15 +1,35 @@
 ﻿using Assets.MainBoard.Scripts.Networking;
 using Steamworks;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SteamFriendsManager : MonoBehaviour
 {
+    public static SteamFriendsManager _instance;
+    public static SteamFriendsManager Instance => _instance;
+
     public RawImage pp;
     public Text playername;
 
     public Transform friendsContent;
     public GameObject friendObj;
+
+    private Dictionary<SteamId, GameObject> FriendList = new Dictionary<SteamId, GameObject>();
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            DestroyImmediate(this);
+            return;
+        }
+
+        _instance = this;
+
+        // TODO: Can be used for updating friend list???
+        //InvokeRepeating(nameof(ReceivingMessages), 0, 0.05f);
+    }
 
     async void Start()
     {
@@ -49,8 +69,38 @@ public class SteamFriendsManager : MonoBehaviour
                 f.GetComponentInChildren<Text>().text = friend.Name;
                 f.GetComponent<FriendObject>().steamid = friend.Id;
                 AssingFriendImage(f, friend.Id);
+
+                FriendList.Add(friend.Id, f);
             }
         }
+    }
+
+    // TODO: kontrol et...
+    // Çevrimiçin olan arkadaşlar için bir tetikleyici yoksa bu şekilde yapılabilir ama for döngüsü yorucu...
+    public void UpdateFriendList()
+    {
+        foreach (var friend in SteamFriends.GetFriends())
+        {
+            if (friend.IsOnline)
+            {
+                if (!FriendList.ContainsKey(friend.Id) && !SteamLobbyManager.Instance.inLobby.ContainsKey(friend.Id))
+                {
+                    GameObject f = Instantiate(friendObj, friendsContent);
+                    f.GetComponentInChildren<Text>().text = friend.Name;
+                    f.GetComponent<FriendObject>().steamid = friend.Id;
+                    AssingFriendImage(f, friend.Id);
+
+                    FriendList.Add(friend.Id, f);
+                }
+            }
+        }
+    }
+
+    public void UpdateFriendListByFriend(SteamId id)
+    {
+        GameObject temp = FriendList[id];
+        Destroy(temp);
+        FriendList.Remove(id);
     }
 
     public async void AssingFriendImage(GameObject f, SteamId id)
