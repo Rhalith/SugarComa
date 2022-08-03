@@ -12,7 +12,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [SerializeField] float _damage;
         public bool isPlayerIn;
         private int _localDuration;
-        private Vector3 _localScale;
+        private Coroutine insideCoroutine, outsideCoroutine;
         #endregion
 
         #region OtherComponents
@@ -29,10 +29,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     KillPlayer(player);
                 }
             }
-            _localScale = transform.localScale;
             _localDuration = _duration;
-            InvokeRepeating("UpScaleMeteorEffect", 0.2f, 0.1f);
-            InvokeRepeating("WhileDuration", 0f, 1f);
         }
         public void DamagePlayer(PlayerSpecs player, float damage)
         {
@@ -45,13 +42,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             player._isDead = true;
         }
 
-        //TODO
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                //StartCoroutine();
                 isPlayerIn = true;
+                if(outsideCoroutine != null) StopCoroutine(outsideCoroutine);
+                insideCoroutine = StartCoroutine(Poison(_damage, other.GetComponent<PlayerSpecs>()));
             }
         }
 
@@ -59,8 +56,18 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         {
             if (other.CompareTag("Player"))
             {
-                StopAllCoroutines();
                 isPlayerIn = false;
+                if (insideCoroutine != null) StopCoroutine(insideCoroutine);
+                outsideCoroutine = StartCoroutine(other.GetComponent<PlayerSpecs>().PoisonEffect(_localDuration, _damage));
+            }
+        }
+
+        private IEnumerator Poison(float damage, PlayerSpecs playerSpecs)
+        {
+            while (isPlayerIn)
+            {
+                playerSpecs._health -= damage;
+                yield return new WaitForSeconds(1f);
             }
         }
 
