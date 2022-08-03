@@ -30,7 +30,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             {
                 if (collision.transform.gameObject.CompareTag("Plane"))
                 {
-                    MiniGameController.Instance.AddToPool(gameObject);
+                    MiniGameController.Instance.AddToPool(this.gameObject);
                 }
             }
             else
