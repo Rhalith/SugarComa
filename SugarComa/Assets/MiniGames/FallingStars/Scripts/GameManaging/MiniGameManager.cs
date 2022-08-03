@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace Assets.MiniGames.FallingStars.Scripts
+namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 {
     public static class StringExtensions
     {

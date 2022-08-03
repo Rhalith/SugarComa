@@ -1,14 +1,15 @@
+using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Assets.MiniGames.FallingStars.Scripts
+namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
     public class Meteor : MonoBehaviour
     {
 
-        [SerializeField] MeteorType type;
+        MeteorType _type;
         [SerializeField] MeshFilter _meteorMesh, _effectMesh;
         [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
         [SerializeField] GameObject[] _effectObjects = new GameObject[4];
@@ -18,9 +19,12 @@ namespace Assets.MiniGames.FallingStars.Scripts
 
         private GameObject _effectObject;
 
+
+        public MeteorType MeteorType { get => _type; }
+
         private void OnEnable()
         {
-            CheckType(type, _meteorMesh, _effectMesh);
+            CheckType(_type, _meteorMesh, _effectMesh);
         }
 
 
@@ -54,16 +58,16 @@ namespace Assets.MiniGames.FallingStars.Scripts
             switch (i)
             {
                 case 0:
-                    type = MeteorType.classic;
+                    _type = MeteorType.classic;
                     break;
                 case 1:
-                    type = MeteorType.explosion;
+                    _type = MeteorType.explosion;
                     break;
                 case 2:
-                    type = MeteorType.poison;
+                    _type = MeteorType.poison;
                     break;
                 case 3:
-                    type = MeteorType.sticky;
+                    _type = MeteorType.sticky;
                     break;
             }
         }

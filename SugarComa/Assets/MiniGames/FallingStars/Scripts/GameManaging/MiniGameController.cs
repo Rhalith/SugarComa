@@ -1,9 +1,10 @@
+using Assets.MiniGames.FallingStars.Scripts.Meteors;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.MiniGames.FallingStars.Scripts
+namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 {
     public class MiniGameController : MonoBehaviour
     {
