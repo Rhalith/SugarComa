@@ -28,6 +28,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         }
 
 
+        private void OnDisable()
+        {
+            MiniGameController.Instance.AddToPool(gameObject);
+        }
+
         public void CheckHit(Collision collision = null, Collider collider = null)
         {
             if(collision != null)
