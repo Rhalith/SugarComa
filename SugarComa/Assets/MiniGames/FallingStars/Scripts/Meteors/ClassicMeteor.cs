@@ -18,10 +18,18 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 
         #region OtherComponents
         [SerializeField] Meteor _currentMeteor;
+        [SerializeField] MeteorShadow _currentShadow;
         #endregion
 
         private void OnEnable()
         {
+            if (_currentShadow.isPlayerInShadow)
+            {
+                foreach (PlayerSpecs player in _currentShadow._playerList)
+                {
+                    KillPlayer(player);
+                }
+            }
             _localScale = transform.localScale;
             _localDuration = _duration;
             InvokeRepeating("UpScaleMeteorEffect", 0.2f, 0.1f);

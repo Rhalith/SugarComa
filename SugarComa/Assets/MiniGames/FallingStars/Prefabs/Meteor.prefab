@@ -626,6 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerInShadow: 0
+  _playerList: []
 --- !u!1 &7816483566640255624
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,5 +740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 0
   _damage: 0
+  _upScaleValue: 0
   isPlayerIn: 0
   _currentMeteor: {fileID: 7816483564973452870}
+  _currentShadow: {fileID: 9122527562331275818}
