@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -687,7 +687,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 0.70485437, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -974,33 +974,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1257275131600124250, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: _damage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1257275131600124250, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: _duration
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1257275131600124250, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: _upScaleValue
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7711545566233178063, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7711545566233178063, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7816483564973452864, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_Name
       value: Meteor
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816483564973452864, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7816483564973452865, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_RootOrder
@@ -1046,38 +1022,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7816483565522074281, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816483565522074286, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816483566640255624, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816483566640255625, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816483566640255625, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816483566640255625, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816483566640255625, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816483566640255625, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.201
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
 --- !u!1 &1183745603
@@ -1115,6 +1059,10 @@ MonoBehaviour:
     explosion: {fileID: 0}
     poison: {fileID: 0}
     sticky: {fileID: 0}
+  timeText: {fileID: 0}
+  _meteorCountUpdateTime: 15
+  _meteorWaveSpawnTime: 4
+  _meteorWaveCalculateTime: 2
 --- !u!4 &1183745605
 Transform:
   m_ObjectHideFlags: 0
@@ -1143,6 +1091,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meteorPrefab: {fileID: 7816483564973452864, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+  miniGameManager: {fileID: 1183745604}
+  _meteorVelocity: {x: 0, y: 0}
+  _plane: {x: 0, y: 0}
+  _meteorReleaseHeight: 20
 --- !u!1 &1220887058
 GameObject:
   m_ObjectHideFlags: 0

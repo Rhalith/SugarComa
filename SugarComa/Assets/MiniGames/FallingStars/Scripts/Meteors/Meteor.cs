@@ -15,7 +15,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [SerializeField] GameObject[] _effectObjects = new GameObject[4];
 
         public GameObject _effectObject;
-
+        public GameObject _meteorObject;
 
         public MeteorType MeteorType { get => _type; }
 
