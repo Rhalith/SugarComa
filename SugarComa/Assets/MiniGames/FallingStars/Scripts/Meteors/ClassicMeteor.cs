@@ -8,6 +8,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
     public class ClassicMeteor : MonoBehaviour, IMeteorHit
     {
         [SerializeField] Meteor _currentMeteor;
+        [SerializeField] int _duration;
         public void DamagePlayer(PlayerSpecs player)
         {
             
