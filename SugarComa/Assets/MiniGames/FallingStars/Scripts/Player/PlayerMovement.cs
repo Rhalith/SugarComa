@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.MiniGames.SpiritJump.Scripts.Player
+namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
         #region Properties
-        public float _moveSpeed = 5f;
-        [SerializeField] float _rotationSpeed = 10f;
         [SerializeField] float _jumpHeight = 1f;
         [SerializeField] float _gravityValue = -9.81f;
         Vector3 _movement;
@@ -21,6 +19,7 @@ namespace Assets.MiniGames.SpiritJump.Scripts.Player
         #region OtherComponents
         [SerializeField] CharacterController _characterController;
         [SerializeField] PlayerAnimation _animation;
+        [SerializeField] PlayerSpecs _playerSpecs;
         #endregion
         void Update()
         {
@@ -36,8 +35,8 @@ namespace Assets.MiniGames.SpiritJump.Scripts.Player
             if (_movement.x != 0 || _movement.z != 0)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(_movementDir, Vector3.up);
-                _characterController.Move(_movementDir * _moveSpeed * Time.deltaTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _rotationSpeed * Time.deltaTime);
+                _characterController.Move(_movementDir * _playerSpecs._moveSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
                 _animation.StartRunning();
             }
             else
