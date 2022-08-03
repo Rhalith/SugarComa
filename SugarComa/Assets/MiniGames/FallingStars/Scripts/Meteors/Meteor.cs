@@ -33,13 +33,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     MiniGameController.Instance.AddToPool(this.gameObject);
                 }
             }
-            else
+            /*else
             {
                 if (collider.transform.gameObject.CompareTag("MeteorShadow"))
                 {
                     collider.transform.gameObject.SetActive(false);
                 }
-            }
+            }*/
         }
         //TODO
         public void CheckType(MeteorType type, MeshFilter meteor, MeshFilter effect)

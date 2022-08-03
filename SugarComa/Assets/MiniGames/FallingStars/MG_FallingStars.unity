@@ -1005,7 +1005,6 @@ MonoBehaviour:
   timeText: {fileID: 1381385004}
   _meteorCountUpdateTime: 15
   _meteorWaveSpawnTime: 4
-  _meteorWaveCalculateTime: 2
 --- !u!4 &1183745605
 Transform:
   m_ObjectHideFlags: 0
@@ -1035,10 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meteorPrefab: {fileID: 7816483564973452864, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
   miniGameManager: {fileID: 1183745604}
-  newWaveMeteors: []
-  _meteorVelocity: {x: 5, y: 5}
-  _plane: {x: 25, y: 25}
-  _meteorReleaseHeight: 20
+  _plane: {x: 23, y: 23}
 --- !u!1 &1220887058
 GameObject:
   m_ObjectHideFlags: 0

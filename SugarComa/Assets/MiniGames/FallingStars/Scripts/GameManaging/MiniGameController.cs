@@ -12,26 +12,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private GameObject meteorPrefab;
         [SerializeField]
         private MiniGameManager miniGameManager;
-        public List<GameObject> newWaveMeteors;
 
         private Queue<GameObject> AvaliableMeteors = new Queue<GameObject>(11);
 
         public static MiniGameController Instance { get; private set; }
 
-        public Vector2 _meteorVelocity;
         public Vector2 _plane;
-        public int _meteorReleaseHeight = 20;
         private void Awake()
         {
             Instance = this;
             GrowPool();
             miniGameManager._SpawnNewWave += SpawnWave;
-            miniGameManager._CalculateNewWave += CalculateWave;
         }
         private void OnDisable()
         {
             miniGameManager._SpawnNewWave -= SpawnWave;
-            miniGameManager._CalculateNewWave -= CalculateWave;
         }
 
         private void GrowPool()
@@ -65,29 +60,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         public void SpawnWave()
         {
-            foreach (GameObject instance in newWaveMeteors)
-            {
-                instance.GetComponent<Meteor>()._meteorObject.GetComponent<Rigidbody>().velocity = new Vector3(-_meteorVelocity.x, 0, -_meteorVelocity.y);
-                instance.GetComponent<Meteor>()._meteorObject.GetComponent<Rigidbody>().useGravity = true;
-            }
-            newWaveMeteors.Clear();
-        }
-
-        public void CalculateWave()
-        {
-           
             for (int i = 0; i < miniGameManager.GetMeteorCount(); i++)
             {
-                float x = Random.Range(-_plane.x + _meteorVelocity.x * 2, _plane.x + _meteorVelocity.x * 2);
-                float y = Random.Range(-_plane.y + _meteorVelocity.y * 2, _plane.y + _meteorVelocity.y * 2);
+                float x = Random.Range(-_plane.x, _plane.x);
+                float y = Random.Range(-_plane.y, _plane.y);
                 GameObject instance = GetFromPool();
-                instance.GetComponent<Meteor>()._meteorObject.transform.position = new Vector3(x, 20, y);
-                instance.GetComponent<Meteor>()._meteorObject.GetComponent<Rigidbody>().useGravity = false;
-                newWaveMeteors.Insert(i, instance);
+                instance.transform.position = new Vector3(x, 0, y);
+                //instance.GetComponent<Meteor>()._meteorObject.GetComponent<Animator>().SetTrigger();
             }
         }
-
-
     }
 }
 

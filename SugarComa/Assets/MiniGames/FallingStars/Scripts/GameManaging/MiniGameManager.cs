@@ -27,10 +27,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         public int _meteorCountUpdateTime = 15;
         public int _meteorWaveSpawnTime = 4;
-        public int _meteorWaveCalculateTime = 2;
 
         public Action _SpawnNewWave;
-        public Action _CalculateNewWave;
 
         public static MeteorMeshes MeteorMeshes
         {
@@ -63,7 +61,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         private void Start()
         {
-            Invoke("CalculateFirstWave", _meteorWaveCalculateTime);
             Invoke("StartFirstWave", _meteorWaveSpawnTime);
             Invoke("FirstUpdateMeteorCount", _meteorCountUpdateTime);
             StartCoroutine(StartCountdown());
@@ -74,12 +71,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             yield return new WaitForSeconds(_meteorWaveSpawnTime);
             StartCoroutine(SpawnNewWave());
             _SpawnNewWave?.Invoke();
-        }
-        IEnumerator CalculateNewWave()
-        {
-            yield return new WaitForSeconds(_meteorWaveSpawnTime);
-            StartCoroutine(CalculateNewWave());
-            _CalculateNewWave?.Invoke();
         }
         IEnumerator UpdateMeteorCount()
         {
@@ -106,12 +97,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             StartCoroutine(SpawnNewWave());
             _SpawnNewWave?.Invoke();
 
-        }
-        private void CalculateFirstWave()
-        {
-            StartCoroutine(CalculateNewWave());
-            _CalculateNewWave?.Invoke();
-          
         }
         private void FirstUpdateMeteorCount()
         {
