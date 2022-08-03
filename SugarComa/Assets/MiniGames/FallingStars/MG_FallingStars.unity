@@ -1004,7 +1004,7 @@ MonoBehaviour:
     sticky: {fileID: 0}
   timeText: {fileID: 1381385004}
   _meteorCountUpdateTime: 15
-  _meteorWaveSpawnTime: 4
+  _meteorWaveSpawnTime: 2
 --- !u!4 &1183745605
 Transform:
   m_ObjectHideFlags: 0
