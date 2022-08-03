@@ -3,21 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StickyMeteor : MonoBehaviour, IMeteorHit
+namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
-    public void DamagePlayer(PlayerSpecs player)
+    public class StickyMeteor : MonoBehaviour, IMeteorHit
     {
-        throw new System.NotImplementedException();
-    }
+        [SerializeField] Meteor _currentMeteor;
+        public void DamagePlayer(PlayerSpecs player)
+        {
+            
+        }
 
-    public bool IsPlayerIn()
-    {
-        throw new System.NotImplementedException();
-    }
+        public bool IsPlayerIn()
+        {
+            return true;
+        }
 
-    public void KillPlayer(PlayerSpecs player)
-    {
-        throw new System.NotImplementedException();
-    }
+        public void KillPlayer(PlayerSpecs player)
+        {
+            
+        }
 
+    }
 }

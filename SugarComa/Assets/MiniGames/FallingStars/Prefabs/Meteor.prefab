@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7636735892981437273}
   - component: {fileID: 2915585472028193538}
   - component: {fileID: 2655671109844754836}
+  - component: {fileID: 2625704610694405952}
   m_Layer: 0
   m_Name: PoisonEffect
   m_TagString: Untagged
@@ -98,6 +99,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2625704610694405952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3950570626153239711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3c38c72503476458e6140d0a48bc06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentMeteor: {fileID: 7816483564973452870}
 --- !u!1 &5974671132531833696
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +124,7 @@ GameObject:
   - component: {fileID: 662674785518484809}
   - component: {fileID: 8282939054121852005}
   - component: {fileID: 5391959523574824760}
+  - component: {fileID: 5438610670135493021}
   m_Layer: 0
   m_Name: ExplosionEffect
   m_TagString: Untagged
@@ -196,6 +211,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5438610670135493021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5974671132531833696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c37da7aa05261e648b595460221c2e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentMeteor: {fileID: 7816483564973452870}
 --- !u!1 &6426113782046495607
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +236,7 @@ GameObject:
   - component: {fileID: 8366573211880897501}
   - component: {fileID: 6077027742421852643}
   - component: {fileID: 5865920219791756798}
+  - component: {fileID: 5729321239742684807}
   m_Layer: 0
   m_Name: StickyEffect
   m_TagString: Untagged
@@ -294,6 +323,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5729321239742684807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426113782046495607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a52748b57f78a469e8d9938fc0b8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentMeteor: {fileID: 7816483564973452870}
 --- !u!1 &7816483564973452864
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,6 +619,7 @@ GameObject:
   - component: {fileID: 7816483566640255628}
   - component: {fileID: 7816483566640255631}
   - component: {fileID: 7711545566233178063}
+  - component: {fileID: 1257275131600124250}
   m_Layer: 0
   m_Name: ClassicEffect
   m_TagString: Untagged
@@ -663,3 +706,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1257275131600124250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7816483566640255624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651612664a862b944bdd3f9eea1b409a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentMeteor: {fileID: 7816483564973452870}

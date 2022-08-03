@@ -8,5 +8,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
     {
         public int _health;
         public bool _isDead;
+        public float _moveSpeed = 5f;
+        public float _rotationSpeed = 10f;
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.MiniGames.SpiritJump.Scripts.Player
+namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
     public class PlayerAnimation : MonoBehaviour
     {
