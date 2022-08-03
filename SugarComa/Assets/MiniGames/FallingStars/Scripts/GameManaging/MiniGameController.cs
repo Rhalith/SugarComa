@@ -10,15 +10,31 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
     {
         [SerializeField]
         private GameObject meteorPrefab;
+        [SerializeField]
+        private MiniGameManager miniGameManager;
+        private GameObject[] newWaveMeteors;
 
         private Queue<GameObject> AvaliableMeteors = new Queue<GameObject>(11);
 
         public static MiniGameController Instance { get; private set; }
 
+        public Vector2 _meteorVelocity;
+        public Vector2 _plane;
+        public int _meteorReleaseHeight = 20;
         private void Awake()
         {
             Instance = this;
             GrowPool();
+        }
+        private void OnEnable()
+        {
+            miniGameManager._SpawnNewWave += SpawnWave;
+            miniGameManager._CalculateNewWave += CalculateWave;
+        }
+        private void OnDisable()
+        {
+            miniGameManager._SpawnNewWave -= SpawnWave;
+            miniGameManager._CalculateNewWave -= CalculateWave;
         }
 
         private void GrowPool()
@@ -50,10 +66,31 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             return instance;
         }
 
-        private void Start()
+        private void SpawnWave()
         {
             GetFromPool();
+            print(newWaveMeteors.Length);
+            foreach (GameObject instance in newWaveMeteors)
+            {
+                instance.GetComponent<Rigidbody>().velocity = new Vector3(-_meteorVelocity.x, 0, -_meteorVelocity.y);
+            }
+            newWaveMeteors = null;
         }
+
+        private void CalculateWave()
+        {
+            print(miniGameManager.GetMeteorCount());
+            for (int i = 0; i < miniGameManager.GetMeteorCount(); i++)
+            {
+                float x = Random.Range(-_plane.x + _meteorVelocity.x * 2, _plane.x + _meteorVelocity.x * 2);
+                float y = Random.Range(-_plane.y + _meteorVelocity.y * 2, _plane.y + _meteorVelocity.y * 2);
+                GameObject instance = GetFromPool();
+                instance.transform.position = new Vector3(x, _meteorReleaseHeight, y);
+                newWaveMeteors[i] = instance;
+            }
+        }
+
+
     }
 }
 

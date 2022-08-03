@@ -17,9 +17,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
     public class MiniGameManager : MonoBehaviour
     {
         private static MiniGameManager _instance;
+        private float _gameTime;
+        private int _meteorCount = 3;
 
         [SerializeField] private MeteorMeshes _meteorMeshes;
         [SerializeField] private MeteorEffectMeshes _meteorEffectMeshes;
+
+        [SerializeField] TMP_Text timeText;
+
+        public int _meteorCountUpdateTime = 15;
+        public int _meteorWaveSpawnTime = 4;
+        public int _meteorWaveCalculateTime = 2;
+
+        public Action _SpawnNewWave;
+        public Action _CalculateNewWave;
+
         public static MeteorMeshes MeteorMeshes
         {
             get
@@ -47,6 +59,65 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             _instance = this;
 
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void Start()
+        {
+            Invoke("CalculateFirstWave", _meteorWaveCalculateTime);
+            Invoke("StartFirstWave", _meteorWaveSpawnTime);
+            Invoke("FirstUpdateMeteorCount", _meteorCountUpdateTime);
+            StartCoroutine(StartCountdown());
+        }
+
+        IEnumerator SpawnNewWave()
+        {
+            yield return new WaitForSeconds(_meteorWaveSpawnTime);
+            _SpawnNewWave?.Invoke();
+            StartCoroutine(SpawnNewWave());
+        }
+        IEnumerator CalculateNewWave()
+        {
+            yield return new WaitForSeconds(_meteorWaveSpawnTime);
+            _CalculateNewWave?.Invoke();
+            StartCoroutine(CalculateNewWave());
+        }
+        IEnumerator UpdateMeteorCount()
+        {
+            _meteorCount++;
+            yield return new WaitForSeconds(_meteorCountUpdateTime);
+            StartCoroutine(UpdateMeteorCount());
+        }
+        IEnumerator StartCountdown()
+        {
+            string text = timeText.text.ToString();
+            while (_gameTime >= 0)
+            {
+                timeText.SetText(text + _gameTime.ToString());
+                if (_gameTime == 0)
+                {
+                    timeText.SetText(text + _gameTime.ToString().AddColor(Color.red));
+                }
+                yield return new WaitForSeconds(1.0f);
+                _gameTime--;
+            }
+        }
+        private void StartFirstWave()
+        {
+            _SpawnNewWave?.Invoke();
+            StartCoroutine(SpawnNewWave());
+        }
+        private void CalculateFirstWave()
+        {
+            _CalculateNewWave?.Invoke();
+            StartCoroutine(CalculateNewWave());
+        }
+        private void FirstUpdateMeteorCount()
+        {
+            StartCoroutine(UpdateMeteorCount());
+        }
+        public int GetMeteorCount()
+        {
+            return _meteorCount;
         }
     }
 }
