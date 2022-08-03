@@ -6,6 +6,6 @@ using UnityEngine;
 public interface IMeteorHit
 {
     public void KillPlayer(PlayerSpecs player);
-    public void DamagePlayer(PlayerSpecs player);
-    public bool IsPlayerIn();
+    public void DamagePlayer(PlayerSpecs player, float damage);
+
 }

@@ -7,15 +7,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
     public class StickyMeteor : MonoBehaviour, IMeteorHit
     {
+        #region Properties
+        [SerializeField] int _duration;
+        [SerializeField] float _damage;
+        #endregion
+
+        #region OtherComponents
         [SerializeField] Meteor _currentMeteor;
-        public void DamagePlayer(PlayerSpecs player)
+        #endregion
+        public void DamagePlayer(PlayerSpecs player, float damage)
         {
             
-        }
-
-        public bool IsPlayerIn()
-        {
-            return true;
         }
 
         public void KillPlayer(PlayerSpecs player)

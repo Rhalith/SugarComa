@@ -7,13 +7,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
     public class PoisonMeteor : MonoBehaviour, IMeteorHit
     {
-        [SerializeField] Meteor _currentMeteor;
-        public void DamagePlayer(PlayerSpecs player)
-        {
-            throw new System.NotImplementedException();
-        }
+        #region Properties
+        [SerializeField] int _duration;
+        [SerializeField] float _damage;
+        #endregion
 
-        public bool IsPlayerIn()
+        #region OtherComponents
+        [SerializeField] Meteor _currentMeteor;
+        #endregion
+        public void DamagePlayer(PlayerSpecs player, float damage)
         {
             throw new System.NotImplementedException();
         }

@@ -27,8 +27,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _movement.z = Input.GetAxisRaw("Vertical");
             _movementDir = _movement.normalized;
             _isGrounded = _characterController.isGrounded;
-            _isJumping = Input.GetKeyDown(KeyCode.Space);
-            Jump();
         }
         private void FixedUpdate()
         {
@@ -48,20 +46,20 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         /// <summary>
         /// Put it to update otherwise it wont work properly.
         /// </summary>
-        private void Jump()
-        {
-            if (_isGrounded && _playerVelocity.y < 0)
-            {
-                _playerVelocity.y = 0f;
-                if (_isJumping)
-                {
-                    _animation.Jump();
-                    _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
-                }
-            }
-            _playerVelocity.y += _gravityValue * Time.deltaTime;
-            _characterController.Move(_playerVelocity * Time.deltaTime);
-        }
+        //private void Jump()
+        //{
+        //    if (_isGrounded && _playerVelocity.y < 0)
+        //    {
+        //        _playerVelocity.y = 0f;
+        //        if (_isJumping)
+        //        {
+        //            _animation.Jump();
+        //            _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
+        //        }
+        //    }
+        //    _playerVelocity.y += _gravityValue * Time.deltaTime;
+        //    _characterController.Move(_playerVelocity * Time.deltaTime);
+        //}
 
         public void Aduket()
         {

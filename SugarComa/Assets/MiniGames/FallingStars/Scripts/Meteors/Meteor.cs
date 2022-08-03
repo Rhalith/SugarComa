@@ -14,10 +14,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
         [SerializeField] GameObject[] _effectObjects = new GameObject[4];
 
-        [SerializeField] float _effectDuration;
-        [SerializeField] float _damage;
-
-        private GameObject _effectObject;
+        public GameObject _effectObject;
 
 
         public MeteorType MeteorType { get => _type; }
