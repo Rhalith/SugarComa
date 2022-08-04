@@ -30,7 +30,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         }
         private void FixedUpdate()
         {
-            if (_movement.x != 0 || _movement.z != 0)
+            if ((_movement.x != 0 || _movement.z != 0) && _playerSpecs._moveSpeed != 0)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(_movementDir, Vector3.up);
                 _characterController.Move(_movementDir * _playerSpecs._moveSpeed * Time.deltaTime);

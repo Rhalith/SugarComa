@@ -11,6 +11,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         public float _moveSpeed = 5f;
         public float _rotationSpeed = 10f;
 
+        public float _localMoveSpeed;
+        public float _localRotationSpeed;
+
         public IEnumerator PoisonEffect(int duration, float damage)
         {
             while(duration < 5)
