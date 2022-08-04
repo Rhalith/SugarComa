@@ -8,6 +8,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 {
     public class MiniGameController : MonoBehaviour
     {
+        #region Components
+
         [SerializeField]
         private GameObject meteorPrefab;
         [SerializeField]
@@ -16,8 +18,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private Queue<GameObject> AvaliableMeteors = new Queue<GameObject>(11);
 
         public static MiniGameController Instance { get; private set; }
+        #endregion
 
         public Vector2 _plane;
+
         private void Awake()
         {
             Instance = this;
@@ -67,7 +71,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 GameObject instance = GetFromPool();
                 instance.transform.position = new Vector3(x, 0, y);
                 StartCoroutine(ActivateObject(instance));
-                //instance.GetComponent<Meteor>()._meteorObject.GetComponent<Animator>().SetTrigger();
             }
         }
 

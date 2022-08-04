@@ -16,19 +16,24 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
     }
     public class MiniGameManager : MonoBehaviour
     {
+
+        #region Components
         private static MiniGameManager _instance;
-        private float _gameTime=120f;
-        private int _meteorCount = 3;
 
         [SerializeField] private MeteorMeshes _meteorMeshes;
         [SerializeField] private MeteorEffectMeshes _meteorEffectMeshes;
 
         [SerializeField] TMP_Text timeText;
+        #endregion
 
+        #region Properties
+        private float _gameTime = 120f;
+        private int _meteorCount = 3;
         public int _meteorCountUpdateTime = 15;
         public int _meteorWaveSpawnTime = 4;
 
         public Action _SpawnNewWave;
+        #endregion
 
         public static MeteorMeshes MeteorMeshes
         {
@@ -61,7 +66,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         private void Start()
         {
-            Invoke("StartFirstWave", _meteorWaveSpawnTime);
+            Invoke("StartFirstWave", 2);
             Invoke("FirstUpdateMeteorCount", _meteorCountUpdateTime);
             StartCoroutine(StartCountdown());
         }
