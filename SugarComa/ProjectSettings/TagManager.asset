@@ -9,6 +9,7 @@ TagManager:
   - GlovesHit
   - MeteorShadow
   - Plane
+  - MiniMeteor
   layers:
   - Default
   - TransparentFX

@@ -30,6 +30,5 @@ public class MeteorShadow : MonoBehaviour
     public void ActivateMeteorObject()
     {
         _meteorObject.SetActive(true);
-        print("activated");
     }
 }
