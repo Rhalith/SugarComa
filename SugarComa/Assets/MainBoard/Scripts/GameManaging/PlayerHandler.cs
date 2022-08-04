@@ -7,6 +7,7 @@ using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.Utils.CamUtils;
 using TMPro;
 using UnityEngine;
+using Cinemachine;
 using System.Linq;
 
 namespace Assets.MainBoard.Scripts.GameManaging
@@ -33,13 +34,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
         #endregion
 
         #region HideInInspectors
-        public PlayerInput currentPlayerInput;
-        public PlayerInventory currentPlayerInventory;
-        public PlayerCollector currentPlayerCollector;
-        public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
+        [HideInInspector] public PlayerInput currentPlayerInput;
+        [HideInInspector] public PlayerInventory currentPlayerInventory;
+        [HideInInspector] public PlayerCollector currentPlayerCollector;
+        [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
         #endregion
 
-        public int whichPlayer;
         public Steamworks.SteamId[] _playerQueue;
         private GameObject _createdObject;
         private int playerCount;
@@ -74,7 +74,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             if (SteamManager.Instance.PlayerSteamId == id)
             {
                 _createdObject = Instantiate(_playerPrefab, playerParent.transform);
-                _mapCam.mainCamera = _createdObject.transform.GetChild(0).GetComponent<Cinemachine.CinemachineVirtualCamera>();
+                _mapCam.mainCamera = _createdObject.transform.GetChild(0).GetComponent<CinemachineVirtualCamera>();
 
                 _createdObject.transform.position = new Vector3(0, 0, 0);
 
@@ -124,26 +124,31 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
-                ChangeCurrentPlayer(turnNetworkData.index);
+
+                // +1 eklendi sonrakine sıra geçmesi gerektiği için
+                ChangeCurrentPlayer(turnNetworkData.index+1);
             }
         }
 
         /// <summary>
         /// Changes current player.
         /// </summary>
-        public void ChangeCurrentPlayer(int index) ///Knowing bug, eğer ilk oyuncu oynarken 3. oyuncuyu yaratırsak kontrol 2. oyuncuya geçiyor.
+        public void ChangeCurrentPlayer(int index)
         {
-            int turn = index;
-            if (index >= SteamLobbyManager.MemberCount) turn = 0;
+            if (index >= SteamLobbyManager.MemberCount)
+            {
+                index = 0;
+            }
 
-            if (turn == index)
+            if (NetworkManager.Instance.Index == index)
             {
                 currentPlayerInput.isMyTurn = true;
                 currentPlayerInput.Dice.SetActive(true);
             }
 
-            whichPlayer++;
-            if (whichPlayer > SteamLobbyManager.MemberCount - 1) whichPlayer = 0;
+            CinemachineVirtualCamera current = _mapCam.mainCamera;
+            CinemachineVirtualCamera next = NetworkManager.Instance.playerList.ElementAt(index).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
+            ChangeCamPriority(current, next);
         }
 
         /// <summary>
@@ -154,7 +159,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
         private void ChangeCurrentSpecs(ScriptKeeper scriptKeeper, ScriptKeeper previousKeep)
         {
             ChangeUISpecs(scriptKeeper, previousKeep);
-            ChangeCamPriority(scriptKeeper, previousKeep);
         }
 
         /// <summary>
@@ -251,10 +255,10 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         /// <param name="current"></param>
         /// <param name="next"></param>
-        private void ChangeCamPriority(ScriptKeeper current, ScriptKeeper next)
+        private void ChangeCamPriority(CinemachineVirtualCamera current, CinemachineVirtualCamera next)
         {
-            current._playerCamera.Priority = 1;
-            next._playerCamera.Priority = 2;
+            current.Priority = 1;
+            next.Priority = 2;
         }
     }
 }
