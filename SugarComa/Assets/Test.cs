@@ -5,9 +5,15 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
     private bool isIn;
-    private void OnEnable()
+    float i = 0;
+    private void Update()
     {
-        StartCoroutine(enumerator());
+        if (!isIn)
+        {
+            i++;
+            print(i);
+        }
+
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -16,16 +22,6 @@ public class Test : MonoBehaviour
         {
             isIn = true;
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        }
-    }
-    IEnumerator enumerator()
-    {
-        float i = 0;
-        while (!isIn)
-        {
-            yield return new WaitForSeconds(0.01f);
-            i++;
-            print(i);
         }
     }
 }

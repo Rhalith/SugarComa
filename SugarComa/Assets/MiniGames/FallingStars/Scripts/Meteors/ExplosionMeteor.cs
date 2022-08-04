@@ -67,12 +67,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     rig.velocity +=
                         new Vector3(rig.gameObject.transform.localPosition.x, 0,
                             rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
-
+                    print(rig.velocity.y);
                     Vector3 distance = new Vector3(rig.velocity.x, 0,
                             rig.velocity.z) * _explosionForce * 0.024f;
                     distance += rig.transform.position;
-                    print("distance:" + distance + "name:" + rig.name);
-                    Instantiate(_currentShadow, distance, Quaternion.identity);
+                    //print("distance:" + distance + "name:" + rig.name);
+                    //Instantiate(_currentShadow, distance, Quaternion.identity);
                 }
             }
         }
