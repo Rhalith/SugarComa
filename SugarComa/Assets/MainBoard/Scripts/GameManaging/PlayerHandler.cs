@@ -126,7 +126,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             {
 
                 // +1 eklendi sonrakine sıra geçmesi gerektiği için
-                ChangeCurrentPlayer(turnNetworkData.index+1);
+                ChangeCurrentPlayer(turnNetworkData.index);
             }
         }
 
@@ -135,12 +135,13 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         public void ChangeCurrentPlayer(int index)
         {
+            int turn = index;
             if (index >= SteamLobbyManager.MemberCount)
             {
-                index = 0;
+                turn = 0;
             }
 
-            if (NetworkManager.Instance.Index == index)
+            if (turn == index)
             {
                 currentPlayerInput.isMyTurn = true;
                 currentPlayerInput.Dice.SetActive(true);
