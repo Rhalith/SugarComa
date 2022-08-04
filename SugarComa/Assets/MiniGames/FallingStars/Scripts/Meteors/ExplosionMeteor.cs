@@ -11,8 +11,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 
         [SerializeField] int _duration;
         [SerializeField] float _damage;
-        [SerializeField] float _explosionRatio;
-        [SerializeField] float _explosionForce = 30;
+        [SerializeField] float _maxExplosionRatio;
+        [SerializeField] float _explosionForce = 30; // 1 is equal to 0.024 seconds in air
         [SerializeField] float _explosionDistributionRatio = 10;
         public bool isPlayerIn;
         private int _localDuration;
@@ -35,7 +35,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     KillPlayer(player);
                 }
             }
-
+            DistributeMeteors();
             _localDuration = _duration;
         }
 
@@ -46,24 +46,33 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 
         public void KillPlayer(PlayerSpecs player)
         {
-            throw new System.NotImplementedException();
+            player._health = 0;
+            player._isDead = true;
         }
 
         private void DistributeMeteors()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
 
+            //transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
             foreach (Collider nearby in colliders)
             {
                 print(nearby);
                 Rigidbody rig = nearby.GetComponent<Rigidbody>();
                 if (rig != null && rig.gameObject.tag.Equals("MiniMeteor"))
                 {
+                    _explosionDistributionRatio = Random.Range(10, _maxExplosionRatio);
                     // rig.AddExplosionForce(_explosionRatio, transform.position, 5f);
                     rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce);
                     rig.velocity +=
                         new Vector3(rig.gameObject.transform.localPosition.x, 0,
                             rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
+
+                    Vector3 distance = new Vector3(rig.velocity.x, 0,
+                            rig.velocity.z) * _explosionForce * 0.024f;
+                    distance += rig.transform.position;
+                    print("distance:" + distance + "name:" + rig.name);
+                    Instantiate(_currentShadow, distance, Quaternion.identity);
                 }
             }
         }
