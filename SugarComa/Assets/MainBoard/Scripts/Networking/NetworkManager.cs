@@ -14,6 +14,8 @@ namespace Assets.MainBoard.Scripts.Networking
 
         private int _index;
         public int Index => _index;
+
+        public int temp;
         // Ayrı bir yerde tutulabilir.
         public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
 
@@ -72,6 +74,8 @@ namespace Assets.MainBoard.Scripts.Networking
                 if (id == SteamManager.Instance.PlayerSteamId) _index = i;
                 i++;
             }
+
+            temp = _index;
         }
     }
 }
