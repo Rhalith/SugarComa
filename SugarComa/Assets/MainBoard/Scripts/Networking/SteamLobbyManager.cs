@@ -239,27 +239,29 @@ namespace Assets.MainBoard.Scripts.Networking
             }
             inLobby.Clear();
 
-            await CreatePlayer(steamManager.PlayerSteamId, SteamClient.Name);
-
             OnLobbyJoined.Invoke();
 
-            int count = currentLobby.MemberCount - 1;
-            if (count <= 0) return;
+            int count = currentLobby.MemberCount-1;
 
-            List<Task<bool>> tasks = new List<Task<bool>>(count);
-            foreach (var friend in currentLobby.Members)
+            if (count > 0)
             {
-                if (friend.Id != SteamClient.SteamId)
+                List<Task<bool>> tasks = new List<Task<bool>>(count);
+                foreach (var friend in currentLobby.Members)
                 {
-                    tasks.Add(CreatePlayer(friend.Id, friend.Name));
-                    AcceptP2P(friend.Id);
+                    if (friend.Id != SteamClient.SteamId)
+                    {
+                        tasks.Add(CreatePlayer(friend.Id, friend.Name));
+                        AcceptP2P(friend.Id);
+                    }
                 }
+
+                // Update ready/unready status
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.ReadyCheck)));
+
+                Task.WaitAll(tasks.ToArray());
             }
 
-            // Update ready/unready status
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.ReadyCheck)));
-
-            Task.WaitAll(tasks.ToArray());
+            await CreatePlayer(steamManager.PlayerSteamId, SteamClient.Name);
         }
 
         public async void CreateLobbyAsync()
