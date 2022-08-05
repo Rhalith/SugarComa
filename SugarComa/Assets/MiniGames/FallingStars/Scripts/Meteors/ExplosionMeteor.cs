@@ -63,16 +63,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                 {
                     _explosionDistributionRatio = Random.Range(10, _maxExplosionRatio);
                     // rig.AddExplosionForce(_explosionRatio, transform.position, 5f);
-                    rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce);
+                    rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce, ForceMode.Force);
                     rig.velocity +=
                         new Vector3(rig.gameObject.transform.localPosition.x, 0,
                             rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
-                    print(rig.velocity.y);
-                    Vector3 distance = new Vector3(rig.velocity.x, 0,
-                            rig.velocity.z) * _explosionForce * 0.024f;
+                    Vector3 distance = rig.velocity * 1.05f;
                     distance += rig.transform.position;
                     //print("distance:" + distance + "name:" + rig.name);
-                    //Instantiate(_currentShadow, distance, Quaternion.identity);
+                    Instantiate(_currentShadow, new Vector3(distance.x,0,distance.z), Quaternion.identity);
                 }
             }
         }
