@@ -20,6 +20,10 @@ public class MeteorObject : MonoBehaviour
         CheckHit(collider);
     }
 
+
+    /// <summary>
+    /// Invokes at the end of MeteorAnimation
+    /// </summary>
     public void OnHit()
     {
         OnMeteorHit?.Invoke();
@@ -32,9 +36,6 @@ public class MeteorObject : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Invokes at the end of MeteorAnimation
-    /// </summary>
     private void DisableObject()
     {
         gameObject.SetActive(false);

@@ -79,7 +79,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             yield return new WaitForSeconds(1f);
             //TODO
-            gameObject.GetComponentInChildren<MeteorShadow>().ActivateMeteorObject();
+            gameObject.GetComponentInChildren<MeteorObject>().gameObject.SetActive(true);
         }
     }
 }
