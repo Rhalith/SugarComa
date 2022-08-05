@@ -1509,10 +1509,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5438610670135493021, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: _miniMeteor
-      value: 
-      objectReference: {fileID: 9186205010024138019, guid: 852949482cedee042b0f382a775941cb, type: 3}
-    - target: {fileID: 5438610670135493021, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: _explosionForce
       value: 30
       objectReference: {fileID: 0}
@@ -1520,10 +1516,6 @@ PrefabInstance:
       propertyPath: _explosionRatio
       value: 350
       objectReference: {fileID: 0}
-    - target: {fileID: 5438610670135493021, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-      propertyPath: rotateGameObject
-      value: 
-      objectReference: {fileID: 9186205010024138019, guid: 852949482cedee042b0f382a775941cb, type: 3}
     - target: {fileID: 5438610670135493021, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: _maxExplosionForce
       value: 40
