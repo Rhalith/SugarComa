@@ -56,6 +56,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 GrowPool();
             }
 
+            print(AvaliableMeteors.Count);
             Meteor instance = AvaliableMeteors.Dequeue();
             instance.GetComponent<Meteor>().SetType();
             instance.gameObject.SetActive(true);

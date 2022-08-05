@@ -18,6 +18,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         #region OtherComponents
         [SerializeField] Meteor _meteor;
+        [SerializeField] GameObject _explosionMeteor;
         #endregion
 
         private void OnEnable()
@@ -57,11 +58,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             else
             {
                 CancelInvoke();
-                gameObject.SetActive(false);
+                _explosionMeteor.SetActive(false);
                 _duration = _localDuration;
                 transform.localScale = _localScale;
                 print(_meteor.name);
                 MiniGameController.Instance.AddToPool(_meteor);
+                gameObject.SetActive(false);
             }
         }
         IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)

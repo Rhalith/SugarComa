@@ -115,6 +115,7 @@ MonoBehaviour:
   _damage: 1
   _upScaleValue: 5
   _meteor: {fileID: 7816483564973452870}
+  _explosionMeteor: {fileID: 5974671132531833696}
 --- !u!1 &3474484250990909450
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +231,7 @@ MonoBehaviour:
   _damage: 1
   _upScaleValue: 5
   _meteor: {fileID: 7816483564973452870}
+  _explosionMeteor: {fileID: 5974671132531833696}
 --- !u!1 &3950570626153239711
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +463,7 @@ MonoBehaviour:
   _damage: 1
   _upScaleValue: 5
   _meteor: {fileID: 7816483564973452870}
+  _explosionMeteor: {fileID: 5974671132531833696}
 --- !u!1 &5974671132531833696
 GameObject:
   m_ObjectHideFlags: 0

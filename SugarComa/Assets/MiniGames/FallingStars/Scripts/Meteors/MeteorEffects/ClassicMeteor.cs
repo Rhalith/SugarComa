@@ -57,10 +57,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             else 
             {
                 CancelInvoke();
-                gameObject.SetActive(false);
                 _duration = _localDuration;
                 transform.localScale = _localScale;
                 MiniGameController.Instance.AddToPool(_meteor);
+                gameObject.SetActive(false);
             }
         }
         IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
