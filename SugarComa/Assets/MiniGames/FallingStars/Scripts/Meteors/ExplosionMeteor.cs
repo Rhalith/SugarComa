@@ -19,6 +19,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         #region OtherComponents
         [SerializeField] MeteorShadow _currentShadow;
         [SerializeField] private GameObject _miniMeteor;
+        [SerializeField] private GameObject _meteorShadow;
         #endregion
 
         private void OnEnable()
@@ -44,7 +45,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                             rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
                     Vector3 distance = rig.velocity * 1.05f;
                     distance += rig.transform.position;
-                    Instantiate(_currentShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
+                    Instantiate(_meteorShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
                         transform);
                 }
             }

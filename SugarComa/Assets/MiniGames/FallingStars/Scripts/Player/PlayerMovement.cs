@@ -11,29 +11,23 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         [SerializeField] float _gravityValue = -9.81f;
         Vector3 _movement;
         Vector3 _movementDir;
-        Vector3 _playerVelocity;
         public bool _isGrounded;
-        bool _isJumping;
         #endregion
 
         #region OtherComponents
-        [SerializeField] CharacterController _characterController;
         [SerializeField] PlayerAnimation _animation;
         [SerializeField] PlayerSpecs _playerSpecs;
         #endregion
         void Update()
         {
-            _movement.x = Input.GetAxisRaw("Horizontal");
-            _movement.z = Input.GetAxisRaw("Vertical");
-            _movementDir = _movement.normalized;
-            _isGrounded = _characterController.isGrounded;
+            GetInput();
         }
         private void FixedUpdate()
         {
             if ((_movement.x != 0 || _movement.z != 0) && _playerSpecs._moveSpeed != 0)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(_movementDir, Vector3.up);
-                _characterController.Move(_movementDir * _playerSpecs._moveSpeed * Time.deltaTime);
+                transform.Translate(_movementDir * _playerSpecs._moveSpeed * Time.deltaTime, Space.World);
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
                 _animation.StartRunning();
             }
@@ -41,6 +35,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             {
                 _animation.StopRunning();
             }
+        }
+
+        private void GetInput()
+        {
+            _movement.x = Input.GetAxisRaw("Horizontal");
+            _movement.z = Input.GetAxisRaw("Vertical");
+            _movementDir = _movement.normalized;
         }
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             float time = 0;
             while(time < 60)
             {
-                _characterController.Move(Vector3.forward / 3);
+                transform.Translate(-Vector3.forward / 3);
                 yield return new WaitForSeconds(0.005f);
                 time++;
                 _animation.StartGettingHit();
