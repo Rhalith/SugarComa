@@ -1,9 +1,9 @@
+using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using Assets.MiniGames.FallingStars.Scripts.Player;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.MiniGames.FallingStars.Scripts.Meteors
+namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 {
     public class ClassicMeteor : MonoBehaviour
     {
@@ -15,6 +15,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         private Vector3 _localScale;
         #endregion
 
+        #region OtherComponents
+        [SerializeField] Meteor _meteor;
+        #endregion
+
         private void OnEnable()
         {
             _localScale = transform.localScale;
@@ -22,7 +26,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             InvokeRepeating("UpScaleMeteorEffect", 0.2f, 0.1f);
             InvokeRepeating("WhileDuration", 0f, 1f);
         }
-        public void DamagePlayer(PlayerSpecs player, float damage)
+        private void DamagePlayer(PlayerSpecs player, float damage)
         {
             player._health -= damage;
         }
@@ -56,6 +60,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                 gameObject.SetActive(false);
                 _duration = _localDuration;
                 transform.localScale = _localScale;
+                MiniGameController.Instance.AddToPool(_meteor);
             }
         }
         IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)

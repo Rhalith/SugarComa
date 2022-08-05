@@ -1,4 +1,5 @@
 using Assets.MiniGames.FallingStars.Scripts.GameManaging;
+using Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,14 +15,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [SerializeField] GameObject[] _effectObjects = new GameObject[4];
 
         private GameObject _effectObject;
-        [SerializeField] MeteorObject _meteorObject;
-        [SerializeField] GameObject _meteorShadow;
+        public GameObject _meteorObject;
+        public GameObject _meteorShadow;
 
         public MeteorType MeteorType { get => _type; }
 
         private void Awake()
         {
-            _meteorObject.OnMeteorHit += OnMeteorHit;
+            _meteorObject.GetComponent<MeteorObject>().OnMeteorHit += OnMeteorHit;
         }
 
         private void OnEnable()

@@ -1,4 +1,5 @@
 using Assets.MiniGames.FallingStars.Scripts.Meteors;
+using Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,17 +11,16 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
     {
         #region Components
 
-        [SerializeField]
-        private GameObject meteorPrefab;
-        [SerializeField]
-        private MiniGameManager miniGameManager;
+        [SerializeField] private Meteor meteorPrefab;
+        [SerializeField] private MiniGameManager miniGameManager;
 
-        private Queue<GameObject> AvaliableMeteors = new Queue<GameObject>(11);
+        private Queue<Meteor> AvaliableMeteors = new Queue<Meteor>(11);
 
         public static MiniGameController Instance { get; private set; }
+        [SerializeField] Borders _borders;
         #endregion
 
-        public Vector2 _plane;
+
 
         private void Awake()
         {
@@ -37,28 +37,28 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             for (int i = 0; i < 11; i++)
             {
-                var instanceToAdd = Instantiate(meteorPrefab);
+                Meteor instanceToAdd = Instantiate(meteorPrefab);
                 instanceToAdd.transform.SetParent(transform);
                 AddToPool(instanceToAdd);
             }
         }
 
-        public void AddToPool(GameObject instance)
+        public void AddToPool(Meteor instance)
         {
-            instance.SetActive(false);
+            instance.gameObject.SetActive(false);
             AvaliableMeteors.Enqueue(instance);
         }
 
-        public GameObject GetFromPool()
+        public Meteor GetFromPool()
         {
             if (AvaliableMeteors.Count == 0)
             {
                 GrowPool();
             }
 
-            var instance = AvaliableMeteors.Dequeue();
+            Meteor instance = AvaliableMeteors.Dequeue();
             instance.GetComponent<Meteor>().SetType();
-            instance.SetActive(true);
+            instance.gameObject.SetActive(true);
             return instance;
         }
 
@@ -67,19 +67,19 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             print(miniGameManager.GetMeteorCount());
             for (int i = 0; i < miniGameManager.GetMeteorCount(); i++)
             {
-                float x = Random.Range(-_plane.x, _plane.x);
-                float y = Random.Range(-_plane.y, _plane.y);
-                GameObject instance = GetFromPool();
-                instance.transform.position = new Vector3(x, 0, y);
+                float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
+                float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+                Meteor instance = GetFromPool();
+                instance.transform.position = new Vector3(x, 0, z);
+                instance._meteorShadow.SetActive(true);
                 StartCoroutine(ActivateObject(instance));
             }
         }
 
-        private IEnumerator ActivateObject(GameObject gameObject)
+        private IEnumerator ActivateObject(Meteor gameObject)
         {
             yield return new WaitForSeconds(1f);
-            //TODO
-            gameObject.GetComponentInChildren<MeteorObject>().gameObject.SetActive(true);
+            gameObject._meteorObject.SetActive(true);
         }
     }
 }

@@ -1,9 +1,9 @@
+using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using Assets.MiniGames.FallingStars.Scripts.Player;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.MiniGames.FallingStars.Scripts.Meteors
+namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 {
     public class PoisonMeteor : MonoBehaviour
     {
@@ -15,11 +15,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         private Coroutine insideCoroutine, outsideCoroutine;
         #endregion
 
+        #region OtherComponents
+        [SerializeField] Meteor _meteor;
+        #endregion
+
         private void OnEnable()
         {
             StartCoroutine(CountdownTimer());
         }
-        public void DamagePlayer(PlayerSpecs player, float damage)
+        private void DamagePlayer(PlayerSpecs player, float damage)
         {
             player._health -= damage;
         }
@@ -48,7 +52,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         {
             while (isPlayerIn)
             {
-                playerSpecs._health -= damage;
+                DamagePlayer(playerSpecs, damage);
                 yield return new WaitForSeconds(1f);
             }
         }
@@ -61,6 +65,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                 yield return new WaitForSeconds(1f);
             }
             gameObject.SetActive(false);
+            MiniGameController.Instance.AddToPool(_meteor);
         }
     }
 }

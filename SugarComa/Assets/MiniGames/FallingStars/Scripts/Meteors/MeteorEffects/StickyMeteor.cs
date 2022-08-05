@@ -1,9 +1,9 @@
+using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using Assets.MiniGames.FallingStars.Scripts.Player;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.MiniGames.FallingStars.Scripts.Meteors
+namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 {
     public class StickyMeteor : MonoBehaviour
     {
@@ -13,6 +13,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [SerializeField] float _slowEffectRatio;
         #endregion
 
+        #region OtherComponents
+        [SerializeField] Meteor _meteor;
+        #endregion
         private void OnEnable()
         {
             StartCoroutine(CountdownTimer());
@@ -75,6 +78,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                 yield return new WaitForSeconds(1f);
             }
             gameObject.SetActive(false);
+            MiniGameController.Instance.AddToPool(_meteor);
         }
     }
 }

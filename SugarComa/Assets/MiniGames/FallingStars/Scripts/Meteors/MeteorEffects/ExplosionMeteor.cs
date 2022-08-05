@@ -1,12 +1,10 @@
 using System;
-using Assets.MiniGames.FallingStars.Scripts.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows.WebCam;
 using Random = UnityEngine.Random;
 
-namespace Assets.MiniGames.FallingStars.Scripts.Meteors
+namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 {
     public class ExplosionMeteor : MonoBehaviour
     {
@@ -17,9 +15,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         #endregion
 
         #region OtherComponents
-        [SerializeField] MeteorShadow _currentShadow;
-        [SerializeField] private GameObject _miniMeteor;
         [SerializeField] private GameObject _meteorShadow;
+        public Vector3[] _localPositions = new Vector3[3];
+        public List<GameObject> _miniEffects = new List<GameObject>(3);
+        public List<GameObject> _miniShadows = new List<GameObject>(3);
+        public List<GameObject> _miniObjects = new List<GameObject>(3);
         #endregion
 
         private void OnEnable()
@@ -30,13 +30,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         private void DistributeMeteors()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
-
-          foreach (Collider nearby in colliders)
+            int i = 0;
+            foreach (Collider nearby in colliders)
             {
-                print(nearby);
                 Rigidbody rig = nearby.GetComponent<Rigidbody>();
                 if (rig != null && rig.gameObject.CompareTag("MiniMeteor"))
                 {
+                    _localPositions[i] = nearby.gameObject.transform.position;
+                    _miniObjects.Add(nearby.gameObject);
                     _explosionDistributionRatio = Random.Range(10, _maxExplosionRatio);
                     // rig.AddExplosionForce(_explosionRatio, transform.position, 5f);
                     rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce, ForceMode.Force);
@@ -45,8 +46,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                             rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
                     Vector3 distance = rig.velocity * 1.05f;
                     distance += rig.transform.position;
-                    Instantiate(_meteorShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
+                    GameObject shadow = Instantiate(_meteorShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
                         transform);
+                    _miniEffects[i].transform.position = new Vector3(distance.x, 0, distance.z);
+                    _miniShadows.Add(shadow);
+                    i++;
                 }
             }
           /*
