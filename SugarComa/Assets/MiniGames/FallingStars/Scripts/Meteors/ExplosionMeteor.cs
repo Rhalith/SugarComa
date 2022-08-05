@@ -11,29 +11,19 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
     public class ExplosionMeteor : MonoBehaviour
     {
         #region Properties
-
-        [SerializeField] int _duration;
-        [SerializeField] float _damage;
         [SerializeField] float _maxExplosionRatio;
         [SerializeField] float _explosionForce = 30; // 1 is equal to 0.024 seconds in air
         [SerializeField] float _explosionDistributionRatio = 10;
-        public bool isPlayerIn;
-        private int _localDuration;
-
         #endregion
 
         #region OtherComponents
-
-        [SerializeField] Meteor _currentMeteor;
         [SerializeField] MeteorShadow _currentShadow;
-
         [SerializeField] private GameObject _miniMeteor;
         #endregion
 
         private void OnEnable()
         {
             DistributeMeteors();
-            _localDuration = _duration;
         }
 
         private void DistributeMeteors()

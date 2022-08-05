@@ -11,14 +11,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [SerializeField] int _duration;
         [SerializeField] float _damage;
         [SerializeField] float _upScaleValue;
-        public bool isPlayerIn;
         private int _localDuration;
         private Vector3 _localScale;
-        #endregion
-
-        #region OtherComponents
-        [SerializeField] Meteor _currentMeteor;
-        [SerializeField] MeteorShadow _currentShadow;
         #endregion
 
         private void OnEnable()
@@ -38,7 +32,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             if (other.CompareTag("Player"))
             {
                 StartCoroutine(DamageToPlayer(other.gameObject.GetComponent<PlayerSpecs>(), _damage));
-                isPlayerIn = true;
             }
         }
 
@@ -47,7 +40,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             if (other.CompareTag("Player"))
             {
                 StopAllCoroutines();
-                isPlayerIn = false;
             }
         }
 

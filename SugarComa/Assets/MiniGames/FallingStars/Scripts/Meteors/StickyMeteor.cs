@@ -8,15 +8,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
     public class StickyMeteor : MonoBehaviour
     {
         #region Properties
-        [SerializeField] int _duration;
         [SerializeField] int _effectDuration;
         [SerializeField] float _slowEffectRatio;
-        public bool isPlayerIn;
-        #endregion
-
-        #region OtherComponents
-        [SerializeField] Meteor _currentMeteor;
-        [SerializeField] MeteorShadow _currentShadow;
         #endregion
 
         private void OnTriggerEnter(Collider other)

@@ -11,19 +11,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [SerializeField] int _duration;
         [SerializeField] float _damage;
         public bool isPlayerIn;
-        private int _localDuration;
         private Coroutine insideCoroutine, outsideCoroutine;
         #endregion
-
-        #region OtherComponents
-        [SerializeField] Meteor _currentMeteor;
-        [SerializeField] MeteorShadow _currentShadow;
-        #endregion
-
-        private void OnEnable()
-        {
-            _localDuration = _duration;
-        }
         public void DamagePlayer(PlayerSpecs player, float damage)
         {
             player._health -= damage;
@@ -45,7 +34,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             {
                 isPlayerIn = false;
                 if (insideCoroutine != null) StopCoroutine(insideCoroutine);
-                outsideCoroutine = StartCoroutine(other.GetComponent<PlayerSpecs>().PoisonEffect(_localDuration, _damage));
+                outsideCoroutine = StartCoroutine(other.GetComponent<PlayerSpecs>().PoisonEffect(_duration, _damage));
             }
         }
 
