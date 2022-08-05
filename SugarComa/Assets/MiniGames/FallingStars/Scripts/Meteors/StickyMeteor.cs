@@ -8,9 +8,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
     public class StickyMeteor : MonoBehaviour
     {
         #region Properties
-        [SerializeField] int _effectDuration;
+        [SerializeField] int _duration = 6;
+        [SerializeField] int _effectDuration = 2;
         [SerializeField] float _slowEffectRatio;
         #endregion
+
+        private void OnEnable()
+        {
+            StartCoroutine(CountdownTimer());
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -59,6 +65,16 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                 localDuration++;
             }
             SlowDownPlayer(player, ratio, player._localMoveSpeed, player._localRotationSpeed);
+        }
+
+        private IEnumerator CountdownTimer()
+        {
+            while (_duration > 0)
+            {
+                _duration--;
+                yield return new WaitForSeconds(1f);
+            }
+            gameObject.SetActive(false);
         }
     }
 }

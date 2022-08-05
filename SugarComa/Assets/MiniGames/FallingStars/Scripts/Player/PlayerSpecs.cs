@@ -16,10 +16,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         public float _localRotationSpeed;
         public IEnumerator PoisonEffect(int duration, float damage)
         {
-            while(duration < 5)
+            while(duration > 0)
             {
                 _health -= damage;
-                duration++;
+                duration--;
                 yield return new WaitForSeconds(1f);
             }
         }

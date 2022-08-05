@@ -8,7 +8,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
     public class ClassicMeteor : MonoBehaviour
     {
         #region Properties
-        [SerializeField] int _duration;
+        [SerializeField] int _duration = 4;
         [SerializeField] float _damage;
         [SerializeField] float _upScaleValue;
         private int _localDuration;
