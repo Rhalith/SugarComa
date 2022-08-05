@@ -255,13 +255,14 @@ namespace Assets.MainBoard.Scripts.Networking
                     }
                 }
 
-                // Update ready/unready status
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.ReadyCheck)));
-
                 Task.WaitAll(tasks.ToArray());
             }
 
             await CreatePlayer(steamManager.PlayerSteamId, SteamClient.Name);
+
+            // Update ready/unready status
+            if (count > 0)
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.ReadyCheck)));
         }
 
         public async void CreateLobbyAsync()
