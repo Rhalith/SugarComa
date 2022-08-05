@@ -1620,6 +1620,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1634804693123222934, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2571872955114278410, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -1630,6 +1634,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3312072956231099250, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3474484250990909450, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3950570626153239711, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
@@ -1688,6 +1696,10 @@ PrefabInstance:
       propertyPath: _explosionDistributionRatio
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5469753593264054538, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5489687815107496180, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_TagString
       value: MiniMeteor
@@ -1738,7 +1750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7816483564973452865, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.8
+      value: 14.29
       objectReference: {fileID: 0}
     - target: {fileID: 7816483564973452865, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1782,7 +1794,7 @@ PrefabInstance:
       objectReference: {fileID: 846052228}
     - target: {fileID: 7816483565440598221, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7816483565440598224, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_IsTrigger
@@ -1798,7 +1810,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7816483565522074281, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7816483565522074285, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_LocalPosition.x

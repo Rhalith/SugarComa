@@ -35,7 +35,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         private void GrowPool()
         {
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Meteor instanceToAdd = Instantiate(meteorPrefab);
                 instanceToAdd.transform.SetParent(transform);
