@@ -60,8 +60,114 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask: []
-      maskType: 3
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/hips
+        weight: 1
+      - path: Armature/hips/leg_L
+        weight: 1
+      - path: Armature/hips/leg_L/leg_L.001
+        weight: 1
+      - path: Armature/hips/leg_L/leg_L.001/leg_L.002
+        weight: 1
+      - path: Armature/hips/leg_L/leg_L.001/leg_L.002/foot_L
+        weight: 1
+      - path: Armature/hips/leg_L/leg_L.001/leg_L.002/foot_L/foot_L_end
+        weight: 1
+      - path: Armature/hips/leg_L/leg_L.001/leg_L.002/foot_L/foot_L_end/foot_L_end_end
+        weight: 1
+      - path: Armature/hips/leg_R
+        weight: 1
+      - path: Armature/hips/leg_R/leg_R.001
+        weight: 1
+      - path: Armature/hips/leg_R/leg_R.001/leg_R.002
+        weight: 1
+      - path: Armature/hips/leg_R/leg_R.001/leg_R.002/foot_R
+        weight: 1
+      - path: Armature/hips/leg_R/leg_R.001/leg_R.002/foot_R/foot_R_end
+        weight: 1
+      - path: Armature/hips/leg_R/leg_R.001/leg_R.002/foot_R/foot_R_end/foot_R_end_end
+        weight: 1
+      - path: Armature/hips/ribs
+        weight: 1
+      - path: Armature/hips/ribs/arm_L
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger10_L
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger10_L/finger11_L
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger10_L/finger11_L/finger11_L_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger10_L/finger11_L/finger11_L_end/finger11_L_end_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger20_L
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger20_L/finger22_L
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger20_L/finger22_L/finger22_L_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger20_L/finger22_L/finger22_L_end/finger22_L_end_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger30_L
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger30_L/finger33_L
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger30_L/finger33_L/finger33_L_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger30_L/finger33_L/finger33_L_end/finger33_L_end_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_R
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger10_R
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger10_R/finger11_R
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger10_R/finger11_R/finger11_R_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger10_R/finger11_R/finger11_R_end/finger11_R_end_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger20_R
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger20_R/finger22_R
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger20_R/finger22_R/finger22_R_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger20_R/finger22_R/finger22_R_end/finger22_R_end_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger30_R
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger30_R/finger33_R
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger30_R/finger33_R/finger33_R_end
+        weight: 1
+      - path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger30_R/finger33_R/finger33_R_end/finger33_R_end_end
+        weight: 1
+      - path: Armature/hips/ribs/neck
+        weight: 1
+      - path: Armature/hips/ribs/neck/head
+        weight: 1
+      - path: Armature/hips/ribs/neck/head/head_end
+        weight: 1
+      - path: Armature/hips/ribs/neck/head/head_end/head_end_end
+        weight: 1
+      - path: BSurfaceMesh
+        weight: 1
+      maskType: 0
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     isReadable: 0
