@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
-    public class ExplosionMeteor : MonoBehaviour, IMeteorHit
+    public class ExplosionMeteor : MonoBehaviour
     {
         #region Properties
 
@@ -32,25 +32,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 
         private void OnEnable()
         {
-            if (_currentShadow.isPlayerInShadow)
-            {
-                foreach (PlayerSpecs player in _currentShadow._playerList)
-                {
-                    KillPlayer(player);
-                }
-            }
             DistributeMeteors();
             _localDuration = _duration;
-        }
-        public void DamagePlayer(PlayerSpecs player, float damage)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void KillPlayer(PlayerSpecs player)
-        {
-            player._health = 0;
-            player._isDead = true;
         }
 
         private void DistributeMeteors()
@@ -61,7 +44,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             {
                 print(nearby);
                 Rigidbody rig = nearby.GetComponent<Rigidbody>();
-                if (rig != null && rig.gameObject.tag.Equals("MiniMeteor"))
+                if (rig != null && rig.gameObject.CompareTag("MiniMeteor"))
                 {
                     _explosionDistributionRatio = Random.Range(10, _maxExplosionRatio);
                     // rig.AddExplosionForce(_explosionRatio, transform.position, 5f);
@@ -71,7 +54,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                             rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
                     Vector3 distance = rig.velocity * 1.05f;
                     distance += rig.transform.position;
-                    //print("distance:" + distance + "name:" + rig.name);
                     Instantiate(_currentShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
                         transform);
                 }

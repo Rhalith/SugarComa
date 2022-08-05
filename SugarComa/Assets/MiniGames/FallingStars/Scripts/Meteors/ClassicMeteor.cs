@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
-    public class ClassicMeteor : MonoBehaviour, IMeteorHit
+    public class ClassicMeteor : MonoBehaviour
     {
         #region Properties
         [SerializeField] int _duration;
@@ -23,13 +23,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 
         private void OnEnable()
         {
-            if (_currentShadow.isPlayerInShadow)
-            {
-                foreach (PlayerSpecs player in _currentShadow._playerList)
-                {
-                    KillPlayer(player);
-                }
-            }
             _localScale = transform.localScale;
             _localDuration = _duration;
             InvokeRepeating("UpScaleMeteorEffect", 0.2f, 0.1f);
@@ -38,12 +31,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         public void DamagePlayer(PlayerSpecs player, float damage)
         {
             player._health -= damage;
-        }
-
-        public void KillPlayer(PlayerSpecs player)
-        {
-            player._health = 0;
-            player._isDead = true;
         }
 
         private void OnTriggerEnter(Collider other)

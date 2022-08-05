@@ -6,6 +6,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
     public class PlayerSpecs : MonoBehaviour
     {
+
         public float _health;
         public bool _isDead;
         public float _moveSpeed = 5f;
@@ -13,7 +14,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         public float _localMoveSpeed;
         public float _localRotationSpeed;
-
         public IEnumerator PoisonEffect(int duration, float damage)
         {
             while(duration < 5)
@@ -22,6 +22,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                 duration++;
                 yield return new WaitForSeconds(1f);
             }
+        }
+
+        public void KillPlayer()
+        {
+            _health = 0;
+            _isDead = true;
         }
     }
 }

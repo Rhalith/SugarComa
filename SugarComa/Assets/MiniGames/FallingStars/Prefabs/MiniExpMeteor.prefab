@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2229516599264785190}
   - component: {fileID: 4639139301799879425}
   - component: {fileID: 4624788460102734577}
+  - component: {fileID: 5225885891900062566}
   m_Layer: 0
   m_Name: MiniExpMeteor
   m_TagString: MiniMeteor
@@ -93,7 +94,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9186205010024138019}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -114,3 +115,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5225885891900062566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9186205010024138019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f64a6e5e80f87418386f2e5b248b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

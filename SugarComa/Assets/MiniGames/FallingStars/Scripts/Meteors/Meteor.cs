@@ -8,42 +8,28 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
     public class Meteor : MonoBehaviour
     {
-
         MeteorType _type;
-        [SerializeField] MeshFilter _meteorMesh, _effectMesh;
+        [SerializeField] MeshFilter _meteorMesh;
         [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
         [SerializeField] GameObject[] _effectObjects = new GameObject[4];
 
-        public GameObject _effectObject;
-        public GameObject _meteorObject;
+        private GameObject _effectObject;
+        [SerializeField] MeteorObject _meteorObject;
+        [SerializeField] GameObject _meteorShadow;
 
         public MeteorType MeteorType { get => _type; }
 
-        private void OnEnable()
+        private void Awake()
         {
-            CheckType(_type, _meteorMesh, _effectMesh);
+            _meteorObject.OnMeteorHit += OnMeteorHit;
         }
 
-        public void CheckHit(Collision collision = null, Collider collider = null)
+        private void OnEnable()
         {
-            if(collision != null)
-            {
-                if (collision.transform.gameObject.CompareTag("Plane"))
-                {
-                    _meteorObject.SetActive(false);
-                    MiniGameController.Instance.AddToPool(this.gameObject);
-                }
-            }
-            /*else
-            {
-                if (collider.transform.gameObject.CompareTag("MeteorShadow"))
-                {
-                    collider.transform.gameObject.SetActive(false);
-                }
-            }*/
+            CheckType(_type, _meteorMesh);
         }
         //TODO
-        public void CheckType(MeteorType type, MeshFilter meteor, MeshFilter effect)
+        public void CheckType(MeteorType type, MeshFilter meteor)
         {
             //SetMeshes(type, meteor, effect);
             SetEffect(type);
@@ -68,35 +54,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     break;
             }
         }
-        void OnCollisionEnter(Collision collision)
-        {
-            CheckHit(collision, null);
-        }
-
-        void OnTriggerEnter(Collider collider)
-        {
-            CheckHit(null, collider);
-        }
-
-        private void SetMeshes(MeteorType type, MeshFilter meteor, MeshFilter effect)
+        private void SetMeshes(MeteorType type, MeshFilter meteor)
         {
             switch (type)
             {
                 case MeteorType.classic:
                     meteor.mesh = MiniGameManager.MeteorMeshes.classic;
-                    effect.mesh = MiniGameManager.MeteorEffectMeshes.classic;
                     break;
                 case MeteorType.explosion:
                     meteor.mesh = MiniGameManager.MeteorMeshes.explosion;
-                    effect.mesh = MiniGameManager.MeteorEffectMeshes.explosion;
                     break;
                 case MeteorType.poison:
                     meteor.mesh = MiniGameManager.MeteorMeshes.poison;
-                    effect.mesh = MiniGameManager.MeteorEffectMeshes.poison;
                     break;
                 case MeteorType.sticky:
                     meteor.mesh = MiniGameManager.MeteorMeshes.sticky;
-                    effect.mesh = MiniGameManager.MeteorEffectMeshes.sticky;
                     break;
             }
         }
@@ -118,6 +90,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     _effectObject = _effectObjects[3];
                     break;
             }
+        }
+
+        private void OnMeteorHit()
+        {
+            _meteorShadow.SetActive(false);
+            _effectObject.SetActive(true);
         }
     }
 

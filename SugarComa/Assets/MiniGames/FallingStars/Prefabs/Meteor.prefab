@@ -407,7 +407,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteorMesh: {fileID: 0}
-  _effectMesh: {fileID: 0}
   _effectObjects:
   - {fileID: 7816483566640255624}
   - {fileID: 7816483566640255624}
@@ -510,7 +509,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7816483565440598221}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -526,8 +525,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -543,6 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6e9bc8548a43545b4815bfbbe940d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _meteor: {fileID: 0}
 --- !u!95 &5068315340142165441
 Animator:
   serializedVersion: 4

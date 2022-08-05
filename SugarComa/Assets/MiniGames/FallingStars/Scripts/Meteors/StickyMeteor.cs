@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
-    public class StickyMeteor : MonoBehaviour, IMeteorHit
+    public class StickyMeteor : MonoBehaviour
     {
         #region Properties
         [SerializeField] int _duration;
@@ -18,26 +18,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [SerializeField] Meteor _currentMeteor;
         [SerializeField] MeteorShadow _currentShadow;
         #endregion
-        private void OnEnable()
-        {
-            if (_currentShadow.isPlayerInShadow)
-            {
-                foreach (PlayerSpecs player in _currentShadow._playerList)
-                {
-                    KillPlayer(player);
-                }
-            }
-        }
-        public void DamagePlayer(PlayerSpecs player, float damage)
-        {
-            
-        }
-
-        public void KillPlayer(PlayerSpecs player)
-        {
-            player._health = 0;
-            player._isDead = true;
-        }
 
         private void OnTriggerEnter(Collider other)
         {

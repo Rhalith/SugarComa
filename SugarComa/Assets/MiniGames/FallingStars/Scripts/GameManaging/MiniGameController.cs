@@ -78,6 +78,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private IEnumerator ActivateObject(GameObject gameObject)
         {
             yield return new WaitForSeconds(1f);
+            //TODO
             gameObject.GetComponentInChildren<MeteorShadow>().ActivateMeteorObject();
         }
     }

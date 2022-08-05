@@ -942,6 +942,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &846052228 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 7816483565440598230, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+  m_PrefabInstance: {fileID: 1566143100}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &986949769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,11 +1535,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5438610670135493021, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: _maxExplosionRatio
-      value: 25
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5438610670135493021, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: _explosionDistributionRatio
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5489687815107496180, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_TagString
@@ -1559,6 +1564,18 @@ PrefabInstance:
     - target: {fileID: 6426113782046495607, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778723843997009886, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_Name
+      value: MiniExpMeteor
+      objectReference: {fileID: 0}
+    - target: {fileID: 6783225249125873312, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_Name
+      value: MiniExpMeteor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510517775782274375, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_Name
+      value: MiniExpMeteor
       objectReference: {fileID: 0}
     - target: {fileID: 7816483564973452864, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_Name
@@ -1612,8 +1629,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7816483564973452870, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: _meteorMesh
+      value: 
+      objectReference: {fileID: 846052228}
     - target: {fileID: 7816483565440598221, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816483565440598224, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816483565440598227, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816483565440598227, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816483565522074285, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7816483566640255624, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
