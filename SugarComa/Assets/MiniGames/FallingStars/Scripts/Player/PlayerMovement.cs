@@ -12,7 +12,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         Vector3 _movement;
         Vector3 _movementDir;
         Vector3 _playerVelocity;
-        bool _isGrounded;
+        public bool _isGrounded;
         bool _isJumping;
         #endregion
 

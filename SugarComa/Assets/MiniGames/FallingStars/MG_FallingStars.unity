@@ -395,9 +395,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpHeight: 1
   _gravityValue: -9.81
-  _characterController: {fileID: 986949773}
+  _isGrounded: 0
+  _characterController: {fileID: 139751116}
   _animation: {fileID: 139751111}
   _playerSpecs: {fileID: 139751112}
+--- !u!143 &139751116
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139751107}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 5.33
+  m_Radius: 0.9
+  m_SlopeLimit: 45
+  m_StepOffset: 0
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 2.12, z: 0.16}
 --- !u!1001 &401330365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -991,7 +1010,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 986949772}
-  - component: {fileID: 986949773}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1007,7 +1025,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986949769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 3.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1015,24 +1033,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &986949773
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986949769}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 5.28
-  m_Radius: 0.9
-  m_SlopeLimit: 45
-  m_StepOffset: 0
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 1.56, z: 0.16}
 --- !u!1 &1183745603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,7 +1219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7fca060d96bb7b548af373fad492934c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -1.58
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7fca060d96bb7b548af373fad492934c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1271,7 +1271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7fca060d96bb7b548af373fad492934c, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7036213049465896255, guid: 7fca060d96bb7b548af373fad492934c, type: 3}
       propertyPath: m_IsActive
@@ -1279,7 +1279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 7fca060d96bb7b548af373fad492934c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.08
+      value: 1.56399
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fca060d96bb7b548af373fad492934c, type: 3}
@@ -1765,6 +1765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpHeight: 1
   _gravityValue: -9.81
+  _isGrounded: 0
   _characterController: {fileID: 1859487284}
   _animation: {fileID: 1908577173}
   _playerSpecs: {fileID: 1859487283}
