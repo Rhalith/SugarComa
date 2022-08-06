@@ -784,6 +784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   rotationSpeed: 720
+  _playerAnimation: {fileID: 2946181445786484163}
 --- !u!114 &1281681497997228436
 MonoBehaviour:
   m_ObjectHideFlags: 0

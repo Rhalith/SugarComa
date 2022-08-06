@@ -60,6 +60,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
                 _t = 0;
                 _startPosition = transform.position;
                 _nextPosition = networkData.position;
+                _nextPosition.y = _startPosition.y;
                 _playerAnimation.StartRunning();
             }
         }
