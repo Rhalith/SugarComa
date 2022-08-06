@@ -6,17 +6,20 @@
         {
         }
 
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
         public override void CheckStateChanges()
         {
             if (context.NextSelectionStepPressed)
             {
                 SwitchState(factory.Running);
             }
+        }
+
+        public override void AnimationStarted()
+        {
+        }
+
+        public override void AnimationEnded()
+        {
         }
     }
 }

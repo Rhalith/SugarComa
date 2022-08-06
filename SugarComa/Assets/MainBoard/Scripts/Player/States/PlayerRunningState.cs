@@ -14,6 +14,8 @@ namespace Assets.MainBoard.Scripts.Player.States
         public override void Enter()
         {
             base.Enter();
+
+            
         }
 
         public override void FixedUpdate()

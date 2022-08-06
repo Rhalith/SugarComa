@@ -88,20 +88,20 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         void ProcessInputs()
         {
-            nextSelectionStepPressed = nextSelectionStepPressed || Input.GetKeyDown(KeyCode.Space);
-            selectLeftPressed = selectLeftPressed || Input.GetKeyDown(KeyCode.A);
-            selectRightPressed = selectRightPressed || Input.GetKeyDown(KeyCode.D);
-            applySelectPressed = applySelectPressed || Input.GetKeyDown(KeyCode.Return);
-            openInventory = openInventory || Input.GetKeyDown(KeyCode.I);
-            openMap = openMap || Input.GetKeyDown(KeyCode.M);
-            closeUI = closeUI || Input.GetKeyDown(KeyCode.Escape);
-            useMouseItem = (useMouseItem || Input.GetMouseButtonDown(0)) && ItemPool._isItemUsing;
+            //nextSelectionStepPressed = nextSelectionStepPressed || Input.GetKeyDown(KeyCode.Space);
+            //selectLeftPressed = selectLeftPressed || Input.GetKeyDown(KeyCode.A);
+            //selectRightPressed = selectRightPressed || Input.GetKeyDown(KeyCode.D);
+            //applySelectPressed = applySelectPressed || Input.GetKeyDown(KeyCode.Return);
+            //openInventory = openInventory || Input.GetKeyDown(KeyCode.I);
+            //openMap = openMap || Input.GetKeyDown(KeyCode.M);
+            //closeUI = closeUI || Input.GetKeyDown(KeyCode.Escape);
+            //useMouseItem = (useMouseItem || Input.GetMouseButtonDown(0)) && ItemPool._isItemUsing;
 
 
-            nextSelectionPressed = nextSelectionPressed || Input.GetKeyDown(KeyCode.X);
-            nextGoalPressed = nextGoalPressed || Input.GetKeyDown(KeyCode.C);
-            nextGoalStepPressed = nextGoalStepPressed || Input.GetKeyDown(KeyCode.V);
-            moveToBackStepPressed = moveToBackStepPressed || Input.GetKeyDown(KeyCode.B);
+            //nextSelectionPressed = nextSelectionPressed || Input.GetKeyDown(KeyCode.X);
+            //nextGoalPressed = nextGoalPressed || Input.GetKeyDown(KeyCode.C);
+            //nextGoalStepPressed = nextGoalStepPressed || Input.GetKeyDown(KeyCode.V);
+            //moveToBackStepPressed = moveToBackStepPressed || Input.GetKeyDown(KeyCode.B);
         }
     }
 }
