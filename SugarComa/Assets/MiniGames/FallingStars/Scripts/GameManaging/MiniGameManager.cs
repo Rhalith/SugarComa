@@ -78,8 +78,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         private void Start()
         {
-            Invoke("StartFirstWave", 2);
-            Invoke("FirstUpdateMeteorCount", _meteorCountUpdateTime);
+            Invoke(nameof(StartFirstWave), 2);
+            Invoke(nameof(FirstUpdateMeteorCount), _meteorCountUpdateTime);
             StartCoroutine(StartCountdown());
         }
 

@@ -2368,17 +2368,6 @@ MonoBehaviour:
     - {fileID: 1169082757}
     - {fileID: 901489764}
     - {fileID: 810154195}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
 --- !u!1 &1220887058
 GameObject:
   m_ObjectHideFlags: 0

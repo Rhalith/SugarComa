@@ -73,10 +73,19 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 Meteor instance = GetFromPool();
                 instance.transform.position = new Vector3(x, 0, z);
                 instance._meteorShadow.SetActive(true);
+                CheckMeteorPosition(instance, x, z);
                 StartCoroutine(ActivateObject(instance));
             }
         }
 
+        private void CheckMeteorPosition(Meteor meteor, float x, float z)
+        {
+            if(meteor.gameObject.GetComponentInChildren<MeteorShadow>().isIn)
+            {
+                meteor.transform.position = new Vector3(x, 0, z);
+                meteor.gameObject.GetComponentInChildren<MeteorShadow>().isIn = false;
+            }
+        }
         private IEnumerator ActivateObject(Meteor gameObject)
         {
             yield return new WaitForSeconds(1f);

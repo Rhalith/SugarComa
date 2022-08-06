@@ -28,7 +28,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _playerInput.PlayerInputs.Movement.performed += Movement_performed;
             _playerInput.PlayerInputs.Movement.canceled += Movement_performed;
 
-            _playerInput.PlayerInputs.Punch.performed += Punch_performed;
+            _playerInput.PlayerInputs.Punch.started += Punch_performed;
             _playerInput.PlayerInputs.Punch.canceled += Punch_performed;
         }
 
@@ -56,16 +56,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         {
             _playerInput.Disable();
         }
-        //void Update()
-        //{
-        //    GetInput();
-        //}
         private void FixedUpdate()
         {
             if ((_movement.x != 0 || _movement.z != 0) && _playerSpecs._moveSpeed != 0)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(_movementDir, Vector3.up);
-                transform.Translate(_movementDir * _playerSpecs._moveSpeed * Time.deltaTime, Space.World);
+                transform.Translate(_playerSpecs._moveSpeed * Time.deltaTime * _movementDir, Space.World);
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
                 _animation.StartRunning();
             }
@@ -75,15 +71,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             }
 
         }
-
-        //private void GetInput()
-        //{
-        //    _movement.x = Input.GetAxisRaw("Horizontal");
-        //    _movement.z = Input.GetAxisRaw("Vertical");
-        //    _punch = Input.GetMouseButton(0);
-        //    _movementDir = _movement.normalized;
-        //}
-
         /// <summary>
         /// Put it to update otherwise it wont work properly.
         /// </summary>

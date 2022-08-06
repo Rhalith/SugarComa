@@ -23,8 +23,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             _localScale = transform.localScale;
             _localDuration = _duration;
-            InvokeRepeating("UpScaleMeteorEffect", 0.2f, 0.1f);
-            InvokeRepeating("WhileDuration", 0f, 1f);
+            InvokeRepeating(nameof(UpScaleMeteorEffect), 0.2f, 0.1f);
+            InvokeRepeating(nameof(WhileDuration), 0f, 1f);
         }
         private void DamagePlayer(PlayerSpecs player, float damage)
         {
@@ -59,8 +59,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                 CancelInvoke();
                 _duration = _localDuration;
                 transform.localScale = _localScale;
-                MiniGameController.Instance.AddToPool(_meteor);
                 gameObject.SetActive(false);
+                print("kapandý amk");
             }
         }
         IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
@@ -70,6 +70,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                 DamagePlayer(player, damage);
                 yield return new WaitForSeconds(1f);
             }
+        }
+
+        private void OnDisable()
+        {
+            MiniGameController.Instance.AddToPool(_meteor);
         }
     }
 }

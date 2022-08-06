@@ -16,10 +16,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         #region OtherComponents
         [SerializeField] private GameObject _meteorShadow;
-        public Vector3[] _localPositions = new Vector3[3];
-        public List<GameObject> _miniEffects = new List<GameObject>(3);
-        public List<GameObject> _miniShadows = new List<GameObject>(3);
-        public List<GameObject> _miniObjects = new List<GameObject>(3);
+        public List<Vector3> _localPositions = new(3);
+        public List<GameObject> _miniEffects = new(3);
+        public List<GameObject> _miniShadows = new(3);
+        public List<GameObject> _miniObjects = new(3);
         #endregion
 
         private void OnEnable()
@@ -36,14 +36,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                 Rigidbody rig = nearby.GetComponent<Rigidbody>();
                 if (rig != null && rig.gameObject.CompareTag("MiniMeteor"))
                 {
-                    _localPositions[i] = nearby.gameObject.transform.position;
+                    _localPositions.Add(nearby.gameObject.transform.position);
                     _miniObjects.Add(nearby.gameObject);
                     _explosionDistributionRatio = Random.Range(10, _maxExplosionRatio);
-                    // rig.AddExplosionForce(_explosionRatio, transform.position, 5f);
                     rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce, ForceMode.Force);
-                    rig.velocity +=
-                        new Vector3(rig.gameObject.transform.localPosition.x, 0,
-                            rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
+                    rig.velocity += new Vector3(rig.gameObject.transform.localPosition.x, 0, rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
                     Vector3 distance = rig.velocity * 1.05f;
                     distance += rig.transform.position;
                     GameObject shadow = Instantiate(_meteorShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
@@ -53,36 +50,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                     i++;
                 }
             }
-          /*
-          for (int i = 0; i < 3; i++)
-          {
-              Rigidbody rig;
-              
-              GameObject instance = Instantiate(_miniMeteor, getMiniMeteorPos()+transform.position, Quaternion.identity,
-                  transform);
-              rig = instance.GetComponent<Rigidbody>();
-              _explosionDistributionRatio = Random.Range(10, _maxExplosionRatio);
-              // rig.AddExplosionForce(_explosionRatio, transform.position, 5f);
-              rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce, ForceMode.Force);
-              rig.velocity +=
-                  new Vector3(rig.gameObject.transform.localPosition.x, 0,
-                      rig.gameObject.transform.localPosition.z) *_explosionDistributionRatio;
-              Vector3 distance = rig.velocity;
-              distance += rig.transform.position;
-              //print("distance:" + distance + "name:" + rig.name);
-              Instantiate(_currentShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
-                  transform);
-            }*/
         }
 
-        private Vector3 getMiniMeteorPos()
+        private void OnDisable()
         {
-            float x = Random.Range(0f, 1f);
-            float z = MathF.Sqrt(1f - Mathf.Pow(x, 2));
-            Vector3 vector = new Vector3(x,1f,z);
-            
-            print(vector);
-            return vector;
+            for (int i = 0; i < _miniObjects.Count; i++)
+            {
+                _miniObjects[i].transform.position = _localPositions[i];
+            }
+            _miniObjects.Clear();
+            _miniShadows.Clear();
+            _localPositions.Clear();
         }
     }
 }

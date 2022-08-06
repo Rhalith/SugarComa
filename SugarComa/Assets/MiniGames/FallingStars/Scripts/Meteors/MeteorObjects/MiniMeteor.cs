@@ -15,6 +15,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
         [SerializeField] ExplosionMeteor _explosionMeteor;
         #endregion
 
+        private void OnEnable()
+        {
+            EnableListElements(_explosionMeteor._miniObjects);
+            EnableListElements(_explosionMeteor._miniShadows);
+            DisableListElements(_explosionMeteor._miniEffects);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Plane"))

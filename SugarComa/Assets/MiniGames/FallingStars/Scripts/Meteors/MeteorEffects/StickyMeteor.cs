@@ -77,7 +77,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                 _duration--;
                 yield return new WaitForSeconds(1f);
             }
-            gameObject.SetActive(false);
             MiniGameController.Instance.AddToPool(_meteor);
         }
     }

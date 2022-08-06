@@ -10,6 +10,7 @@ TagManager:
   - MeteorShadow
   - Plane
   - MiniMeteor
+  - ColliderChecker
   layers:
   - Default
   - TransparentFX
