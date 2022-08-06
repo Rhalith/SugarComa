@@ -1,5 +1,4 @@
-﻿using Assets.MainBoard.Scripts.Player.Movement;
-using Assets.MainBoard.Scripts.Route;
+﻿using Assets.MainBoard.Scripts.Route;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.States
@@ -8,7 +7,6 @@ namespace Assets.MainBoard.Scripts.Player.States
     {
         #region Serialize Field
         
-        [SerializeField] private PlayerInput _playerInput;
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private Animator _animator;
         [SerializeField] private Rigidbody2D _rb;
@@ -19,6 +17,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         #region Private Members
 
         private Platform _currentPlatform;
+        private PlayerInputAction _playerInput;
         private PlayerBaseState _currentState;
         private PlayerStateFactory _factory;
         #endregion
@@ -33,8 +32,16 @@ namespace Assets.MainBoard.Scripts.Player.States
         public Animator Animator => _animator;
         public PathTracker PathTracker => _pathTracker;
         public PathFinder PathFinder => _pathFinder;
-        public Platform Platform => _currentPlatform;
+        public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
         #endregion
+
+        private void Awake()
+        {
+            // Initialize the player inputs.
+            _playerInput = new PlayerInputAction();
+            _playerInput.MainBoard.Space.started += OnSpace;
+            _playerInput.MainBoard.Space.canceled += OnSpace;
+        }
 
         private void Start()
         {
@@ -50,11 +57,29 @@ namespace Assets.MainBoard.Scripts.Player.States
         }
 
         #region Running
+        
+        private bool _spacePressed;
+        public bool NextSelectionStepPressed => _spacePressed;
 
-        public bool NextSelectionStepPressed => _playerInput.nextSelectionStepPressed;
+        private void OnSpace(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _spacePressed = obj.ReadValue<bool>();
+        }
         #endregion
 
         public void AnimationStarted() { _currentState.AnimationStarted(); }
         public void AnimationEnded() { _currentState.AnimationEnded(); }
+
+        #region Enabling / Disabling
+        private void OnEnable()
+        {
+            _playerInput.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _playerInput.Disable();
+        }
+        #endregion
     }
 }
