@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TopOfCharacter
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/hips
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_L
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_L/leg_L.001
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_L/leg_L.001/leg_L.002
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_L/leg_L.001/leg_L.002/foot_L
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_L/leg_L.001/leg_L.002/foot_L/foot_L_end
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_R
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_R/leg_R.001
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_R/leg_R.001/leg_R.002
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_R/leg_R.001/leg_R.002/foot_R
+    m_Weight: 1
+  - m_Path: Armature/hips/leg_R/leg_R.001/leg_R.002/foot_R/foot_R_end
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger10_L
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger10_L/finger11_L
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger10_L/finger11_L/finger11_L_end
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger20_L
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger20_L/finger22_L
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger20_L/finger22_L/finger22_L_end
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger30_L
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger30_L/finger33_L
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_L/arm_L.001/arm_L.002/palm_L/finger30_L/finger33_L/finger33_L_end
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger10_R
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger10_R/finger11_R
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger10_R/finger11_R/finger11_R_end
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger20_R
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger20_R/finger22_R
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger20_R/finger22_R/finger22_R_end
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger30_R
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger30_R/finger33_R
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/arm_R/arm_R.001/arm_R.002/palm_R/finger30_R/finger33_R/finger33_R_end
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/neck
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/neck/head
+    m_Weight: 1
+  - m_Path: Armature/hips/ribs/neck/head/head_end
+    m_Weight: 1
+  - m_Path: BSurfaceMesh
+    m_Weight: 1

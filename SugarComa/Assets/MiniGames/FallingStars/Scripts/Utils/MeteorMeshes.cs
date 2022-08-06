@@ -12,7 +12,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Utils
         public Mesh poison;
         public Mesh sticky;
     }
-
+    [System.Serializable]
+    public class MeteorMaterials
+    {
+        public Material[] meteor;
+    }
+    [System.Serializable]
     public class MeteorEffectMeshes
     {
         public Mesh classic;

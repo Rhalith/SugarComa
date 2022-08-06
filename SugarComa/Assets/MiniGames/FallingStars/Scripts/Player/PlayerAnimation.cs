@@ -13,6 +13,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         [SerializeField] private bool _run;
         [SerializeField] private bool _dead;
         [SerializeField] private bool _hit;
+        [SerializeField] private bool _gettingHit;
 
         [Header("Other Scripts")]
         [SerializeField] private Animator _animator;
@@ -24,7 +25,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         public bool IsRunning => _run;
         public bool IsDead => _dead;
         public bool IsIdle => !_run && !_jump && !_dead;
-        public bool IsHit => _hit;
+        public bool IsGettingHit => _gettingHit;
+        public bool IsHitting => _hit;
         #endregion
         private void RunSet(int running)
         {
@@ -38,12 +40,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _jump = jump != 0;
         }
 
-        private void HitSet(int hit)
+        private void GettingHitSet(int hit)
         {
             _animator.SetBool("gettinghit", hit != 0);
-            _hit = hit != 0;
+            _gettingHit = hit != 0;
         }
 
+        private void HitSet(int hit)
+        {
+            _animator.SetBool("punch", hit != 0);
+            _hit = hit != 0;
+        }
         public void StartRunning()
         {
             RunSet(1);
@@ -61,10 +68,20 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         public void StartGettingHit()
         {
-            HitSet(1);
+            GettingHitSet(1);
         }
 
         public void StopGettingHit()
+        {
+            GettingHitSet(0);
+        }
+
+        public void StartToHit()
+        {
+            HitSet(1);
+        }
+
+        public void EndToHit()
         {
             HitSet(0);
         }

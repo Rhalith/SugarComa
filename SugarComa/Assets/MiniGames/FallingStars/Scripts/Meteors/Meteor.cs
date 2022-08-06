@@ -11,6 +11,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
     {
         MeteorType _type;
         [SerializeField] MeshFilter _meteorMesh;
+        [SerializeField] MeshRenderer _meteorRenderer;
         [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
         [SerializeField] GameObject[] _effectObjects = new GameObject[4];
 
@@ -27,12 +28,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 
         private void OnEnable()
         {
-            CheckType(_type, _meteorMesh);
+            CheckType(_type, _meteorMesh, _meteorRenderer);
         }
         //TODO
-        public void CheckType(MeteorType type, MeshFilter meteor)
+        public void CheckType(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
         {
-            //SetMeshes(type, meteor, effect);
+            SetMeshes(type, meteorFilter, meteorRenderer);
             SetEffect(type);
         }
         //TODO THEIR CHANGES WILL NOT BE EQUAL
@@ -55,23 +56,24 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     break;
             }
         }
-        private void SetMeshes(MeteorType type, MeshFilter meteor)
+        private void SetMeshes(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
         {
             switch (type)
             {
                 case MeteorType.classic:
-                    meteor.mesh = MiniGameManager.MeteorMeshes.classic;
+                    meteorFilter.mesh = MiniGameManager.MeteorMeshes.classic;
                     break;
                 case MeteorType.explosion:
-                    meteor.mesh = MiniGameManager.MeteorMeshes.explosion;
+                    meteorFilter.mesh = MiniGameManager.MeteorMeshes.explosion;
                     break;
                 case MeteorType.poison:
-                    meteor.mesh = MiniGameManager.MeteorMeshes.poison;
+                    meteorFilter.mesh = MiniGameManager.MeteorMeshes.poison;
                     break;
                 case MeteorType.sticky:
-                    meteor.mesh = MiniGameManager.MeteorMeshes.sticky;
+                    meteorFilter.mesh = MiniGameManager.MeteorMeshes.sticky;
                     break;
             }
+            meteorRenderer.materials = MiniGameManager.MeteorMaterials.meteor;
         }
         //TODO
         private void SetEffect(MeteorType type)

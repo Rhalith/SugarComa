@@ -65,8 +65,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         public void SpawnWave()
         {
-            print(miniGameManager.GetMeteorCount());
-            for (int i = 0; i < miniGameManager.GetMeteorCount(); i++)
+            print(miniGameManager.MeteorCount);
+            for (int i = 0; i < miniGameManager.MeteorCount; i++)
             {
                 float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
                 float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);

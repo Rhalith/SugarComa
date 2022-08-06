@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using Assets.MiniGames.FallingStars.Scripts.Player;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,7 +15,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
 
         public MeteorAction OnMeteorHit;
         #endregion
-
         private void Awake()
         {
             OnMeteorHit += DisableObject;
@@ -23,8 +23,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
         {
             CheckHit(collider);
         }
-
-
         /// <summary>
         /// Invokes at the end of MeteorAnimation
         /// </summary>

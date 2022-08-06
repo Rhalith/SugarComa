@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
@@ -11,17 +12,54 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         [SerializeField] float _gravityValue = -9.81f;
         Vector3 _movement;
         Vector3 _movementDir;
-        public bool _isGrounded;
+        bool _punch;
         #endregion
 
         #region OtherComponents
         [SerializeField] PlayerAnimation _animation;
         [SerializeField] PlayerSpecs _playerSpecs;
+        PlayerActions _playerInput;
         #endregion
-        void Update()
+
+        private void Awake()
         {
-            GetInput();
+            _playerInput = new PlayerActions();
+
+            _playerInput.PlayerInputs.Movement.performed += Movement_performed;
+            _playerInput.PlayerInputs.Movement.canceled += Movement_performed;
+
+            _playerInput.PlayerInputs.Punch.performed += Punch_performed;
+            _playerInput.PlayerInputs.Punch.canceled += Punch_performed;
         }
+
+        private void Punch_performed(InputAction.CallbackContext obj)
+        {
+            _punch = obj.ReadValueAsButton();
+            if (!_punch) _animation.EndToHit();
+            else _animation.StartToHit();
+        }
+
+        private void Movement_performed(InputAction.CallbackContext obj)
+        {
+            var input = obj.ReadValue<Vector2>();
+            _movement.x = input.x;
+            _movement.z = input.y;
+            _movementDir = _movement.normalized;
+        }
+
+        private void OnEnable()
+        {
+            _playerInput.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _playerInput.Disable();
+        }
+        //void Update()
+        //{
+        //    GetInput();
+        //}
         private void FixedUpdate()
         {
             if ((_movement.x != 0 || _movement.z != 0) && _playerSpecs._moveSpeed != 0)
@@ -35,14 +73,16 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             {
                 _animation.StopRunning();
             }
+
         }
 
-        private void GetInput()
-        {
-            _movement.x = Input.GetAxisRaw("Horizontal");
-            _movement.z = Input.GetAxisRaw("Vertical");
-            _movementDir = _movement.normalized;
-        }
+        //private void GetInput()
+        //{
+        //    _movement.x = Input.GetAxisRaw("Horizontal");
+        //    _movement.z = Input.GetAxisRaw("Vertical");
+        //    _punch = Input.GetMouseButton(0);
+        //    _movementDir = _movement.normalized;
+        //}
 
         /// <summary>
         /// Put it to update otherwise it wont work properly.

@@ -1,4 +1,5 @@
 using Assets.MiniGames.FallingStars.Scripts.Utils;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         [SerializeField] private MeteorMeshes _meteorMeshes;
         [SerializeField] private MeteorEffectMeshes _meteorEffectMeshes;
+        [SerializeField] private MeteorMaterials _meteorMaterials;
 
         [SerializeField] TMP_Text timeText;
         #endregion
@@ -33,8 +35,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         public int _meteorWaveSpawnTime = 4;
 
         public Action _SpawnNewWave;
-        #endregion
 
+        public int MeteorCount => _meteorCount;
+        #endregion
         public static MeteorMeshes MeteorMeshes
         {
             get
@@ -49,6 +52,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             {
                 if (_instance == null) return null;
                 return _instance._meteorEffectMeshes;
+            }
+        }
+
+        public static MeteorMaterials MeteorMaterials
+        {
+            get
+            {
+                if (_instance == null) return null;
+                return _instance._meteorMaterials;
             }
         }
         void Awake()
@@ -106,10 +118,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private void FirstUpdateMeteorCount()
         {
             StartCoroutine(UpdateMeteorCount());
-        }
-        public int GetMeteorCount()
-        {
-            return _meteorCount;
         }
     }
 }
