@@ -124,8 +124,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
-
-                // +1 eklendi sonrakine sıra geçmesi gerektiği için
                 ChangeCurrentPlayer(turnNetworkData.index+1);
             }
         }
@@ -135,10 +133,13 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         public void ChangeCurrentPlayer(int index)
         {
+            int prev = index - 1;
             if (index >= SteamLobbyManager.MemberCount)
             {
                 index = 0;
             }
+            if (index == 0)
+                prev = SteamLobbyManager.MemberCount-1;
 
             if (NetworkManager.Instance.Index == index)
             {
@@ -146,7 +147,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 currentPlayerInput.Dice.SetActive(true);
             }
 
-            CinemachineVirtualCamera current = _mapCam.mainCamera;
+            CinemachineVirtualCamera current = NetworkManager.Instance.playerList.ElementAt(prev).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
             CinemachineVirtualCamera next = NetworkManager.Instance.playerList.ElementAt(index).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
             ChangeCamPriority(current, next);
         }

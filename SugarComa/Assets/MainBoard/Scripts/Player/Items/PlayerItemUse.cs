@@ -64,6 +64,7 @@ namespace Assets.MainBoard.Scripts.Player.Items
             //    isPosSet =false;
             //}
         }
+
         //TODO fix it
         //private IEnumerator rotation()
         //{
