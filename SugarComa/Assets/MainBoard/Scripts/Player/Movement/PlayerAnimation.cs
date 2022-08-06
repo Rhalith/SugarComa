@@ -1,3 +1,4 @@
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Player.Items.BoxGloves;
 using Assets.MainBoard.Scripts.Player.Utils;
 using Assets.MainBoard.Scripts.Route;
@@ -69,7 +70,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
                 }
                 StartCoroutine(waitForCloseText());
             }
-
         }
         /// <summary>
         /// Triggers landing animation.
@@ -77,6 +77,8 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         /// <param name="landing"></param>
         private void LandSet(int landing)
         {
+
+
             _animator.SetBool("landing", landing != 0);
             _land = landing != 0;
             if (_playerMovement.PlayerCollector.isDead && landing == 0)
@@ -85,12 +87,19 @@ namespace Assets.MainBoard.Scripts.Player.Movement
                 _playerMovement.PlayerCollector.isDead = false;
                 _scriptKeeper._playerCamera.Priority = 1;
             }
-            if (!GoalSelector.isAnyGoalPlatform && landing == 0)
+
+
+            // TODO: Düzgün çalýþtýðýndan emin deðilim....
+            // Host olup olmamaya göre ayýrmak lazým...
+            // Burayý
+
+            if (SteamManager.Instance.currentLobby.Owner.Id == SteamManager.Instance.PlayerSteamId && !GoalSelector.isAnyGoalPlatform && landing == 0)
             {
-                _goalSelector.SelectGoalOnStart();
+                _goalSelector.RandomGoalSelect(-1);
                 _dice.SetActive(true);
             }
         }
+
         /// <summary>
         /// Triggers surprise animation.
         /// </summary>

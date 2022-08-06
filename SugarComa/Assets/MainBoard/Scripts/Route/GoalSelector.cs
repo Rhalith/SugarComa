@@ -5,6 +5,8 @@ using Cinemachine;
 using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Utils.PlatformUtils;
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Networking.Utils;
 
 namespace Assets.MainBoard.Scripts.Route
 {
@@ -36,43 +38,54 @@ namespace Assets.MainBoard.Scripts.Route
         /// </summary>
         public static bool isAnyGoalPlatform;
 
-        public void RandomGoalSelect()
+        private void Start()
         {
-            int i = Random.Range(0, platforms.Count);
-            if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].HasSelector && platforms[i] != _currentPlatform && !platforms[i].isPlayerInPlatform)
+            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
+        }
+
+        private void OnDestroy()
+        {
+            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+        }
+
+        private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+        {
+            if (NetworkHelper.TryGetChestData(buffer, out ChestNetworkData chestData))
             {
-                platforms[i].spec = PlatformSpec.Goal;
-                CreateGoalObject(platforms[i]);
-                VirtualCameraLookTo(_camera, platforms[i].transform);
-                print(platforms[i]);
-                isAnyGoalPlatform = true;
-                PlayerInput.canPlayersAct = false;
-                _currentPlatform = platforms[i];
-                return;
-            }
-            else
-            {
-                RandomGoalSelect();
+                if (chestData.messageType == MessageType.CreateChest)
+                {
+
+                }
             }
         }
 
-        public void SelectGoalOnStart()
+        public void RandomGoalSelect(int index)
         {
-            int i = Random.Range(0, platforms.Count);
-            if (platforms[i].spec != PlatformSpec.Goal && !platforms[i].HasSelector && !platforms[i].isPlayerInPlatform)
+            if(index == -1)
+                index = Random.Range(0, platforms.Count);
+
+            if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector && !platforms[index].isPlayerInPlatform)
             {
-                platforms[i].spec = PlatformSpec.Goal;
-                CreateGoalObject(platforms[i]);
-                VirtualCameraLookTo(_camera, platforms[i].transform);
-                PlayerInput.canPlayersAct = false;
-                print(platforms[i]);
+                if(_currentPlatform != null && platforms[index] == _currentPlatform)
+                {
+                    RandomGoalSelect(-1);
+                }
+
+                platforms[index].spec = PlatformSpec.Goal;
+                CreateGoalObject(platforms[index]);
+                VirtualCameraLookTo(_camera, platforms[index].transform);
+                print(platforms[index]);
                 isAnyGoalPlatform = true;
-                _currentPlatform = platforms[i];
+                PlayerInput.canPlayersAct = false; 
+                _currentPlatform = platforms[index];
+
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index, MessageType.CreateChest)));
+
                 return;
             }
             else
             {
-                SelectGoalOnStart();
+                RandomGoalSelect(-1);
             }
         }
 
@@ -112,7 +125,7 @@ namespace Assets.MainBoard.Scripts.Route
                 _currentGoal.SetActive(false);
                 _selectedPlatform.ActivateMeshRenderer(true);
                 isGoalActive = false;
-                RandomGoalSelect();
+                RandomGoalSelect(-1);
             }
 
         }

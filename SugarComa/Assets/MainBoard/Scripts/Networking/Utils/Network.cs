@@ -13,6 +13,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         InputDown,
         TurnOver,
         UpdateQueue,
+        CreateChest,
         Exit
     }
 
@@ -21,6 +22,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public static readonly int NetworkDataId = Animator.StringToHash("NetworkData");
         public static readonly int PlayerListNetworkDataId = Animator.StringToHash("PlayerListNetworkData");
         public static readonly int TurnNetworkDataId = Animator.StringToHash("TurnNetworkData");
+        public static readonly int ChestNetworkDataId = Animator.StringToHash("ChestNetworkData");
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -92,6 +94,21 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public MessageType messageType;
 
         public TurnNetworkData(byte index, MessageType messageType)
+        {
+            this.id = NetworkId.TurnNetworkDataId;
+            this.index = index;
+            this.messageType = messageType;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ChestNetworkData
+    {
+        public int id;
+        public byte index;
+        public MessageType messageType;
+
+        public ChestNetworkData(byte index, MessageType messageType)
         {
             this.id = NetworkId.TurnNetworkDataId;
             this.index = index;

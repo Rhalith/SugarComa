@@ -70,6 +70,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
             //}
 
         }
+
         /// <summary>
         /// Triggers landing animation.
         /// </summary>

@@ -103,5 +103,21 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             }
             return true;
         }
+
+        public static bool TryGetChestData(byte[] buffer, out ChestNetworkData networkData)
+        {
+            if (buffer.Length != Marshal.SizeOf<ChestNetworkData>())
+            {
+                networkData = new ChestNetworkData();
+                return false;
+            }
+
+            Deserialize(buffer, out networkData);
+            if (networkData.id != NetworkId.ChestNetworkDataId)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
