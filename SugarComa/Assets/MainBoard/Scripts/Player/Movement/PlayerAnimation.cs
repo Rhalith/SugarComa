@@ -156,13 +156,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         {
             DeathSet(1);
         }
-        /// <summary>
-        /// When death animation ends. Invokes in death animation.
-        /// </summary>
-        public void AfterDeath()
-        {
-            _playerMovement.OnDeath();
-        }
 
         /// <summary>
         /// Set box gloves off, Invokes at the start of "BoxGlovesLeaving" animation.
