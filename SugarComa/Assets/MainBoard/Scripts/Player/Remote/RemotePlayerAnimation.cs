@@ -5,10 +5,10 @@ using Assets.MainBoard.Scripts.Utils.InventorySystem;
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.MainBoard.Scripts.Player.Movement
+namespace Assets.MainBoard.Scripts.Player.Remote
 {
     [System.Obsolete("Bu script düzenlenip, kaldýrýlacak.")]
-    public class PlayerAnimation : MonoBehaviour
+    public class RemotePlayerAnimation : MonoBehaviour
     {
         #region SerializeField
 
@@ -21,10 +21,9 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         [Header("Other Scripts")]
         [SerializeField] private Animator _animator;
-        [SerializeField] private PlayerMovement _playerMovement;
-        [SerializeField] private ScriptKeeper _scriptKeeper;
+        [SerializeField] private RemotePlayerMovement _playerMovement;
+        [SerializeField] private RemoteScriptKeeper _scriptKeeper;
         [SerializeField] private GameObject _boxGloves;
-        [SerializeField] private GoalSelector _goalSelector;
         [SerializeField] private RagdollOnOff _ragdollOnOff;
         #endregion
 
@@ -38,7 +37,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         public bool IsDead => _dead;
         public bool IsIdle => !_run && !_land && !_jump && !_surprised && !_dead;
 
-        public GoalSelector GoalSelector { set => _goalSelector = value; }
         #endregion
         /// <summary>
         /// Triggers running animation.
@@ -49,6 +47,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             _animator.SetBool("running", running != 0);
             _run = running != 0;
         }
+
         /// <summary>
         /// Triggers jump animation.
         /// </summary>
@@ -57,18 +56,18 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         {
             _animator.SetBool("jump", jump != 0);
             _jump = jump != 0;
-            if (jump == 0)
-            {
-                _dice.SetActive(false);
-                _playerMovement.DiceText.enabled = true;
-                IEnumerator waitForCloseText()
-                {
-                    yield return null;
-                    yield return new WaitForSeconds(0.5f);
-                    _playerMovement.DiceText.enabled = false;
-                }
-                StartCoroutine(waitForCloseText());
-            }
+            //if (jump == 0)
+            //{
+            //    _dice.SetActive(false);
+            //    _playerMovement.DiceText.enabled = true;
+            //    IEnumerator waitForCloseText()
+            //    {
+            //        yield return null;
+            //        yield return new WaitForSeconds(0.5f);
+            //        _playerMovement.DiceText.enabled = false;
+            //    }
+            //    StartCoroutine(waitForCloseText());
+            //}
 
         }
         /// <summary>
@@ -79,18 +78,14 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         {
             _animator.SetBool("landing", landing != 0);
             _land = landing != 0;
-            if (_playerMovement.PlayerCollector.isDead && landing == 0)
-            {
-                DeathSet(0);
-                _playerMovement.PlayerCollector.isDead = false;
-                _scriptKeeper._playerCamera.Priority = 1;
-            }
-            if (!GoalSelector.isAnyGoalPlatform && landing == 0)
-            {
-                _goalSelector.SelectGoalOnStart();
-                _dice.SetActive(true);
-            }
+            //if (_playerMovement.PlayerCollector.isDead && landing == 0)
+            //{
+            //    DeathSet(0);
+            //    _playerMovement.PlayerCollector.isDead = false;
+            //    _scriptKeeper._playerCamera.Priority = 1;
+            //}
         }
+
         /// <summary>
         /// Triggers surprise animation.
         /// </summary>

@@ -5,12 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.MainBoard.Scripts.Player
+namespace Assets.MainBoard.Scripts.Player.Remote
 {
     public class RemotePlayerMovement : MonoBehaviour
     {
         [SerializeField] float speed = 1f;
         [SerializeField] float rotationSpeed = 720;
+        [SerializeField] private RemotePlayerAnimation _playerAnimation;
 
         private Vector3 _startPosition;
         private Vector3 _nextPosition;
@@ -29,7 +30,11 @@ namespace Assets.MainBoard.Scripts.Player
         void Update()
         {
             if (_nextPosition == transform.position)
+            {
+                if (_playerAnimation.IsRunning)
+                    _playerAnimation.StopRunning();
                 return;
+            }
 
             _t += Time.deltaTime * speed;
             // Smooth tracking
@@ -55,6 +60,7 @@ namespace Assets.MainBoard.Scripts.Player
                 _t = 0;
                 _startPosition = transform.position;
                 _nextPosition = networkData.position;
+                _playerAnimation.StartRunning();
             }
         }
     }

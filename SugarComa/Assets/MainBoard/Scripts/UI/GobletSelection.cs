@@ -61,13 +61,5 @@ namespace Assets.MainBoard.Scripts.UI
             gameObject.SetActive(false);
             OnLeaveIt?.Invoke();
         }
-
-        [System.Obsolete("Use player movement instead.")]
-        public void ContinueToMove()
-        {
-            // var path = _pathFinder.ToSelector(_playerMovement.CurrentPlatform, _playerMovement.CurrentStep);
-            // _playerMovement.StartFollowPath(path, true);
-            // _playerAnimation.ContinueRunning();
-        }
     }
 }
