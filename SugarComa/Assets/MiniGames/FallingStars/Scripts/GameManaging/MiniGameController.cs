@@ -82,8 +82,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             if(meteor.gameObject.GetComponentInChildren<MeteorShadow>().isIn)
             {
-                meteor.transform.position = new Vector3(x, 0, z);
                 meteor.gameObject.GetComponentInChildren<MeteorShadow>().isIn = false;
+                meteor.transform.position = new Vector3(x, 0, z);
             }
         }
         private IEnumerator ActivateObject(Meteor gameObject)
