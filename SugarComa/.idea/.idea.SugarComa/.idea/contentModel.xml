@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\kara-\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\kara-\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_SugarComa.-1261052859.00" t="ExcludeRecursive" />
+    <e p="C:\Users\kara-\Desktop\Game Dev Apps\Unity Projects\SugarComa\SugarComa" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Plugin" t="Include">
+          <e p="Facepunch.Steamworks" t="Include">
+            <e p="Facepunch.Steamworks.Posix.dll" t="Include" />
+            <e p="Facepunch.Steamworks.Posix.xml" t="Include" />
+            <e p="Facepunch.Steamworks.Win32.dll" t="Include" />
+            <e p="Facepunch.Steamworks.Win32.xml" t="Include" />
+            <e p="Facepunch.Steamworks.Win64.dll" t="Include" />
+            <e p="Facepunch.Steamworks.Win64.xml" t="Include" />
+            <e p="redistributable_bin" t="Include">
+              <e p="steam_api.dll" t="Include" />
+              <e p="win64" t="Include">
+                <e p="steam_api64.dll" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="Prefabs" t="Include">
+          <e p="Hareket Platformları" t="Include">
+            <e p="chest2" t="Include">
+              <e p="chestChangeAnimation" t="Include">
+                <e p="GoalChestAnimation.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Player" t="Include">
+            <e p="Items" t="Include">
+              <e p="Boks" t="Include">
+                <e p="BoxGlovesAnimation.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Editors" t="Include">
+            <e p="Drawers" t="Include">
+              <e p="PlatformDictionaryDrawer.cs" t="Include" />
+            </e>
+          </e>
+          <e p="GameManaging" t="Include">
+            <e p="GameController.cs" t="Include" />
+            <e p="GameManager.cs" t="Include" />
+            <e p="PlayerHandler.cs" t="Include" />
+          </e>
+          <e p="Networking" t="Include">
+            <e p="FriendObject.cs" t="Include" />
+            <e p="LobbyFriendObject.cs" t="Include" />
+            <e p="NetworkManager.cs" t="Include" />
+            <e p="SteamFriendsManager.cs" t="Include" />
+            <e p="SteamLobbyManager.cs" t="Include" />
+            <e p="SteamManager.cs" t="Include" />
+            <e p="SteamServerManager.cs" t="Include" />
+            <e p="Utils" t="Include">
+              <e p="LobbyPlayerInfo.cs" t="Include" />
+              <e p="Network.cs" t="Include" />
+              <e p="NetworkHelper.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Player" t="Include">
+            <e p="Items" t="Include">
+              <e p="BoxGloves.cs" t="Include" />
+              <e p="Items.cs" t="Include" />
+              <e p="PlayerItemUse.cs" t="Include" />
+              <e p="RDForBoxGloves.cs" t="Include" />
+            </e>
+            <e p="MiniGames" t="Include">
+              <e p="SpiritJump" t="Include">
+                <e p="SpiritJumpAnimation.cs" t="Include" />
+                <e p="SpiritJumpMovement.cs" t="Include" />
+              </e>
+            </e>
+            <e p="PlayerAnimation.cs" t="Include" />
+            <e p="PlayerCollector.cs" t="Include" />
+            <e p="PlayerInput.cs" t="Include" />
+            <e p="PlayerInventory.cs" t="Include" />
+            <e p="PlayerMovement.cs" t="Include" />
+            <e p="PlayerSpecSetter.cs" t="Include" />
+            <e p="RagdollOnOff.cs" t="Include" />
+            <e p="RemotePlayerMovement.cs" t="Include" />
+            <e p="ScriptKeeper.cs" t="Include" />
+          </e>
+          <e p="Route" t="Include">
+            <e p="GoalSelector.cs" t="Include" />
+            <e p="Graph.cs" t="Include" />
+            <e p="PathFinder.cs" t="Include" />
+            <e p="PathTracker.cs" t="Include" />
+            <e p="Platform.cs" t="Include" />
+            <e p="PlatformSpecSet.cs" t="Include" />
+            <e p="RouteSelector.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="EnlargeUIButtons.cs" t="Include" />
+            <e p="GobletSelection.cs" t="Include" />
+            <e p="NotifyScript.cs" t="Include" />
+            <e p="TextChanger.cs" t="Include" />
+          </e>
+          <e p="Utils" t="Include">
+            <e p="CamUtils" t="Include">
+              <e p="CameraAnimations.cs" t="Include" />
+              <e p="MapCamera.cs" t="Include" />
+            </e>
+            <e p="DontDestroyOnSelectedScenes.cs" t="Include" />
+            <e p="healPlatformAnimation.cs" t="Include" />
+            <e p="InventorySystem" t="Include">
+              <e p="InventoryChanger.cs" t="Include" />
+              <e p="InventoryItemData.cs" t="Include" />
+              <e p="ItemObject.cs" t="Include" />
+              <e p="ItemPool.cs" t="Include" />
+            </e>
+            <e p="Materials.cs" t="Include" />
+            <e p="Meshes.cs" t="Include" />
+            <e p="PlatformDictionary.cs" t="Include" />
+            <e p="PlatformGoalSpec.cs" t="Include" />
+            <e p="PlatformSpec.cs" t="Include" />
+          </e>
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+            <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+            <e p="TMP_Bitmap.shader" t="Include" />
+            <e p="TMP_SDF Overlay.shader" t="Include" />
+            <e p="TMP_SDF SSD.shader" t="Include" />
+            <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+            <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+            <e p="TMP_SDF-Mobile SSD.shader" t="Include" />
+            <e p="TMP_SDF-Mobile.shader" t="Include" />
+            <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+            <e p="TMP_SDF-Surface.shader" t="Include" />
+            <e p="TMP_SDF.shader" t="Include" />
+            <e p="TMP_Sprite.shader" t="Include" />
+            <e p="TMPro.cginc" t="Include" />
+            <e p="TMPro_Mobile.cginc" t="Include" />
+            <e p="TMPro_Properties.cginc" t="Include" />
+            <e p="TMPro_Surface.cginc" t="Include" />
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="SugarComa.sln" t="IncludeFlat" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
