@@ -1995,6 +1995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpHeight: 1
   _gravityValue: -9.81
+  _cam: {fileID: 801087445}
   _animation: {fileID: 986949775}
   _playerSpecs: {fileID: 986949774}
 --- !u!114 &986949774
@@ -2263,7 +2264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1183745604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3845,6 +3846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpHeight: 1
   _gravityValue: -9.81
+  _cam: {fileID: 0}
   _animation: {fileID: 1908577173}
   _playerSpecs: {fileID: 1859487283}
 --- !u!4 &1859487286

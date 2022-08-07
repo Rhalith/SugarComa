@@ -46,6 +46,33 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotationWithGamepad"",
+                    ""type"": ""Value"",
+                    ""id"": ""32d571c9-8afc-45b8-97bd-302069945cff"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseForRotation"",
+                    ""type"": ""Button"",
+                    ""id"": ""08a6df70-5e25-4c32-99f8-b32f7defb233"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotationWithMouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""f8e7bc8d-868f-42c5-b69d-05e698b0a24c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -54,6 +81,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     ""id"": ""0d8f7765-1394-4cab-b233-2d9caaf482a5"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""926507ba-1f1a-470b-aa38-5367e16c586b"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Punch"",
@@ -125,6 +163,39 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77056ccf-e54d-47c8-bc1c-e3d5c9737e15"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotationWithGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1a79160-f794-41a9-8787-be2bd7e870b6"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseForRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5702a8b7-9614-49dc-bfc6-aabb4e4fa842"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotationWithMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -135,6 +206,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             m_PlayerInputs = asset.FindActionMap("PlayerInputs", throwIfNotFound: true);
             m_PlayerInputs_Movement = m_PlayerInputs.FindAction("Movement", throwIfNotFound: true);
             m_PlayerInputs_Punch = m_PlayerInputs.FindAction("Punch", throwIfNotFound: true);
+            m_PlayerInputs_RotationWithGamepad = m_PlayerInputs.FindAction("RotationWithGamepad", throwIfNotFound: true);
+            m_PlayerInputs_MouseForRotation = m_PlayerInputs.FindAction("MouseForRotation", throwIfNotFound: true);
+            m_PlayerInputs_RotationWithMouse = m_PlayerInputs.FindAction("RotationWithMouse", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -196,12 +270,18 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private IPlayerInputsActions m_PlayerInputsActionsCallbackInterface;
         private readonly InputAction m_PlayerInputs_Movement;
         private readonly InputAction m_PlayerInputs_Punch;
+        private readonly InputAction m_PlayerInputs_RotationWithGamepad;
+        private readonly InputAction m_PlayerInputs_MouseForRotation;
+        private readonly InputAction m_PlayerInputs_RotationWithMouse;
         public struct PlayerInputsActions
         {
             private @PlayerActions m_Wrapper;
             public PlayerInputsActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_PlayerInputs_Movement;
             public InputAction @Punch => m_Wrapper.m_PlayerInputs_Punch;
+            public InputAction @RotationWithGamepad => m_Wrapper.m_PlayerInputs_RotationWithGamepad;
+            public InputAction @MouseForRotation => m_Wrapper.m_PlayerInputs_MouseForRotation;
+            public InputAction @RotationWithMouse => m_Wrapper.m_PlayerInputs_RotationWithMouse;
             public InputActionMap Get() { return m_Wrapper.m_PlayerInputs; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -217,6 +297,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     @Punch.started -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnPunch;
                     @Punch.performed -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnPunch;
                     @Punch.canceled -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnPunch;
+                    @RotationWithGamepad.started -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnRotationWithGamepad;
+                    @RotationWithGamepad.performed -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnRotationWithGamepad;
+                    @RotationWithGamepad.canceled -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnRotationWithGamepad;
+                    @MouseForRotation.started -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnMouseForRotation;
+                    @MouseForRotation.performed -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnMouseForRotation;
+                    @MouseForRotation.canceled -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnMouseForRotation;
+                    @RotationWithMouse.started -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnRotationWithMouse;
+                    @RotationWithMouse.performed -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnRotationWithMouse;
+                    @RotationWithMouse.canceled -= m_Wrapper.m_PlayerInputsActionsCallbackInterface.OnRotationWithMouse;
                 }
                 m_Wrapper.m_PlayerInputsActionsCallbackInterface = instance;
                 if (instance != null)
@@ -227,6 +316,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     @Punch.started += instance.OnPunch;
                     @Punch.performed += instance.OnPunch;
                     @Punch.canceled += instance.OnPunch;
+                    @RotationWithGamepad.started += instance.OnRotationWithGamepad;
+                    @RotationWithGamepad.performed += instance.OnRotationWithGamepad;
+                    @RotationWithGamepad.canceled += instance.OnRotationWithGamepad;
+                    @MouseForRotation.started += instance.OnMouseForRotation;
+                    @MouseForRotation.performed += instance.OnMouseForRotation;
+                    @MouseForRotation.canceled += instance.OnMouseForRotation;
+                    @RotationWithMouse.started += instance.OnRotationWithMouse;
+                    @RotationWithMouse.performed += instance.OnRotationWithMouse;
+                    @RotationWithMouse.canceled += instance.OnRotationWithMouse;
                 }
             }
         }
@@ -235,6 +333,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         {
             void OnMovement(InputAction.CallbackContext context);
             void OnPunch(InputAction.CallbackContext context);
+            void OnRotationWithGamepad(InputAction.CallbackContext context);
+            void OnMouseForRotation(InputAction.CallbackContext context);
+            void OnRotationWithMouse(InputAction.CallbackContext context);
         }
     }
 }

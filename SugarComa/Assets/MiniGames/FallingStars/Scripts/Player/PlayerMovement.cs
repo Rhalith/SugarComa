@@ -12,7 +12,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         [SerializeField] float _gravityValue = -9.81f;
         Vector3 _movement;
         Vector3 _movementDir;
+        Vector3 _rotationDir;
+        Vector3 _mouseDir;
         bool _punch;
+        bool _isMouseActive;
+        RaycastHit _hit;
+        Ray _ray;
+        [SerializeField] Camera _cam;
         #endregion
 
         #region OtherComponents
@@ -28,11 +34,39 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _playerInput.PlayerInputs.Movement.performed += Movement_performed;
             _playerInput.PlayerInputs.Movement.canceled += Movement_performed;
 
-            _playerInput.PlayerInputs.Punch.started += Punch_performed;
-            _playerInput.PlayerInputs.Punch.canceled += Punch_performed;
+            _playerInput.PlayerInputs.Punch.started += Punch_started;
+            _playerInput.PlayerInputs.Punch.canceled += Punch_started;
+
+            _playerInput.PlayerInputs.RotationWithGamepad.performed += RotationWithGamepad_performed;
+            _playerInput.PlayerInputs.RotationWithGamepad.canceled += RotationWithGamepad_performed;
+
+            _playerInput.PlayerInputs.RotationWithMouse.started += RotationWithMouse_performed;
+            _playerInput.PlayerInputs.RotationWithMouse.performed += RotationWithMouse_performed;
+            _playerInput.PlayerInputs.RotationWithMouse.canceled += RotationWithMouse_performed;
+
+            _playerInput.PlayerInputs.MouseForRotation.performed += MouseForRotation_performed;
+            _playerInput.PlayerInputs.MouseForRotation.canceled += MouseForRotation_performed;
         }
 
-        private void Punch_performed(InputAction.CallbackContext obj)
+        private void RotationWithMouse_performed(InputAction.CallbackContext obj)
+        {
+            _mouseDir = obj.ReadValue<Vector2>();
+        }
+
+        private void MouseForRotation_performed(InputAction.CallbackContext obj)
+        {
+            _isMouseActive = obj.performed;
+        }
+
+        private void RotationWithGamepad_performed(InputAction.CallbackContext obj)
+        {
+            var input = obj.ReadValue<Vector2>();
+            _rotationDir.x = input.x;
+            _rotationDir.z = input.y;
+            _rotationDir = _rotationDir.normalized;
+        }
+
+        private void Punch_started(InputAction.CallbackContext obj)
         {
             _punch = obj.ReadValueAsButton();
             if (!_punch) _animation.EndToHit();
@@ -58,12 +92,41 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         }
         private void FixedUpdate()
         {
-            if ((_movement.x != 0 || _movement.z != 0) && _playerSpecs._moveSpeed != 0)
+            if(_playerSpecs._moveSpeed != 0)
             {
-                Quaternion desiredRotation = Quaternion.LookRotation(_movementDir, Vector3.up);
+                if (!_isMouseActive)
+                {
+                    if(_rotationDir.x != 0 || _rotationDir.z != 0)
+                    {
+                        Quaternion desiredRotation = Quaternion.LookRotation(_rotationDir, Vector3.up);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
+                    }
+                    else if (_movementDir.x != 0 || _movementDir.z != 0)
+                    {
+                        Quaternion desiredRotation = Quaternion.LookRotation(_movementDir, Vector3.up);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
+                    }
+                }
+                else
+                {
+                    //TODO
+                    _ray = _cam.ScreenPointToRay(_mouseDir);
+                    if (Physics.Raycast(_ray, out _hit))
+                    {
+                        Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(_hit.point.x, 0, _hit.point.z), Vector3.up);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
+                    }
+                }
                 transform.Translate(_playerSpecs._moveSpeed * Time.deltaTime * _movementDir, Space.World);
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
-                _animation.StartRunning();
+                if ((_movement.x != 0 || _movement.z != 0))
+                {
+                    _animation.StartRunning();
+                }
+                else
+                {
+                    _animation.StopRunning();
+                }
+
             }
             else
             {
