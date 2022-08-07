@@ -11,11 +11,16 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] int _duration = 6;
         [SerializeField] int _effectDuration = 2;
         [SerializeField] float _slowEffectRatio;
+        private int _localDuration;
         #endregion
 
         #region OtherComponents
         [SerializeField] Meteor _meteor;
         #endregion
+        private void Awake()
+        {
+            _meteor.OnMeteorDisable += ResetMeteor;
+        }
         private void OnEnable()
         {
             StartCoroutine(CountdownTimer());
@@ -50,6 +55,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             player._rotationSpeed = 0;
         }
 
+        private void ResetMeteor()
+        {
+            print("stickmeteor resetted");
+            _duration = _localDuration;
+        }
         private void ResetPlayerSpeed(PlayerSpecs player, float moveSpeed, float rotationSpeed)
         {
             player._moveSpeed = moveSpeed;
@@ -72,6 +82,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         private IEnumerator CountdownTimer()
         {
+            _localDuration = _duration;
             while (_duration > 0)
             {
                 _duration--;

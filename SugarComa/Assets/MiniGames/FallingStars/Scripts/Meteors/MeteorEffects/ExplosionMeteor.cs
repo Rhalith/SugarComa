@@ -16,12 +16,18 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         #region OtherComponents
         [SerializeField] private GameObject _meteorShadow;
+        [SerializeField] private Meteor _meteor;
         public List<Vector3> _localPositions = new(3);
         public List<GameObject> _miniEffects = new(3);
         public List<GameObject> _miniShadows = new(3);
         public List<GameObject> _miniObjects = new(3);
         #endregion
 
+
+        private void Awake()
+        {
+            _meteor.OnMeteorDisable += ResetMeteor;
+        }
         private void OnEnable()
         {
             DistributeMeteors();
@@ -52,8 +58,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             }
         }
 
-        private void OnDisable()
+        private void ResetMeteor()
         {
+            print("explosionmeteor resetted");
             for (int i = 0; i < _miniObjects.Count; i++)
             {
                 _miniObjects[i].transform.position = _localPositions[i];

@@ -585,6 +585,7 @@ MonoBehaviour:
   _explosionForce: 30
   _explosionDistributionRatio: 10
   _meteorShadow: {fileID: 5938148336897162123, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+  _meteor: {fileID: 7816483564973452870}
   _localPositions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}

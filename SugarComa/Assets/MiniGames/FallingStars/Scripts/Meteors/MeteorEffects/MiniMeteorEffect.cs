@@ -20,7 +20,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] Meteor _meteor;
         [SerializeField] GameObject _explosionMeteor;
         #endregion
-
+        private void Awake()
+        {
+            _meteor.OnMeteorDisable += ResetMeteor;
+        }
         private void OnEnable()
         {
             _localScale = transform.localScale;
@@ -58,12 +61,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             else
             {
                 CancelInvoke();
-                _explosionMeteor.SetActive(false);
-                _duration = _localDuration;
-                transform.localScale = _localScale;
-                print(_meteor.name);
-                gameObject.SetActive(false);
-                print("kapandý amk");
             }
         }
         IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
@@ -78,6 +75,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void OnDisable()
         {
             MiniGameController.Instance.AddToPool(_meteor);
+        }
+
+        private void ResetMeteor()
+        {
+            print("minimeteor resetted");
+            _duration = _localDuration;
+            transform.localScale = _localScale;
+            _explosionMeteor.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
     public class Meteor : MonoBehaviour
     {
+        public delegate void MeteorAction();
         MeteorType _type;
         [SerializeField] MeshFilter _meteorMesh;
         [SerializeField] MeshRenderer _meteorRenderer;
@@ -18,6 +19,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         private GameObject _effectObject;
         public GameObject _meteorObject;
         public GameObject _meteorShadow;
+
+        public MeteorAction OnMeteorDisable;
 
         public MeteorType MeteorType { get => _type; }
 
@@ -29,6 +32,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         private void OnEnable()
         {
             CheckType(_type, _meteorMesh, _meteorRenderer);
+        }
+        private void OnDisable()
+        {
+           OnMeteorDisable?.Invoke();
         }
         //TODO
         public void CheckType(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
