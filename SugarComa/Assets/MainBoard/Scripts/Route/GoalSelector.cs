@@ -7,6 +7,7 @@ using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Utils.PlatformUtils;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.Player.States;
 
 namespace Assets.MainBoard.Scripts.Route
 {
@@ -76,7 +77,7 @@ namespace Assets.MainBoard.Scripts.Route
                 VirtualCameraLookTo(_camera, platforms[index].transform);
                 print(platforms[index]);
                 isAnyGoalPlatform = true;
-                PlayerInput.canPlayersAct = false; 
+                PlayerStateContext.canPlayersAct = false; 
                 _currentPlatform = platforms[index];
 
                 SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index, MessageType.CreateChest)));
@@ -106,7 +107,7 @@ namespace Assets.MainBoard.Scripts.Route
         public void ResetGoalCameraPriority()
         {
             _camera.Priority = realPriority;
-            PlayerInput.canPlayersAct = true;
+            PlayerStateContext.canPlayersAct = true;
         }
 
         /// <summary>

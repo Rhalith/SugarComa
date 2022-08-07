@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using Cinemachine;
 using System.Linq;
+using Assets.MainBoard.Scripts.Player.States;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -34,7 +35,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         #endregion
 
         #region HideInInspectors
-        [HideInInspector] public PlayerInput currentPlayerInput;
+        [HideInInspector] public PlayerStateContext currentPlayerStateContext;
         [HideInInspector] public PlayerInventory currentPlayerInventory;
         [HideInInspector] public PlayerCollector currentPlayerCollector;
         [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
@@ -84,7 +85,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
                 SetPlayerInput(sckeeper);
                 SetPlayerCollector(sckeeper);
-                ChangeCurrentScripts(sckeeper._playerInput, sckeeper._playerCollector, sckeeper._playerInventory);
+                ChangeCurrentScripts(sckeeper._playerStateContext, sckeeper._playerCollector, sckeeper._playerInventory);
                 ChangeCurrentUIElements(sckeeper.playerGold, sckeeper.playerHealth, sckeeper.playerGoblet);
                 SetPlayerMovement(sckeeper);
                 SetGobletSelection(sckeeper);
@@ -143,8 +144,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
             if (NetworkManager.Instance.Index == index)
             {
-                currentPlayerInput.isMyTurn = true;
-                currentPlayerInput.Dice.SetActive(true);
+                currentPlayerStateContext.isMyTurn = true;
+                currentPlayerStateContext.Dice.SetActive(true);
             }
 
             CinemachineVirtualCamera current = NetworkManager.Instance.playerList.ElementAt(prev).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
@@ -190,7 +191,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="keeper"></param>
         private void SetPlayerInput(ScriptKeeper keeper)
         {
-            keeper._playerInput.CineMachineBrain = _cinemachineBrain;
+            keeper._playerStateContext.CineMachineBrain = _cinemachineBrain;
         }
 
         /// <summary>
@@ -231,9 +232,9 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="nextInput"></param>
         /// <param name="nextCollector"></param>
         /// <param name="nextInventory"></param>
-        private void ChangeCurrentScripts(PlayerInput nextInput, PlayerCollector nextCollector, PlayerInventory nextInventory)
+        private void ChangeCurrentScripts(PlayerStateContext stateContext, PlayerCollector nextCollector, PlayerInventory nextInventory)
         {
-            currentPlayerInput = nextInput;
+            currentPlayerStateContext = stateContext;
             currentPlayerCollector = nextCollector;
             currentPlayerInventory = nextInventory;
         }

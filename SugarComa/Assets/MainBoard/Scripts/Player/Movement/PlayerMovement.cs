@@ -2,6 +2,7 @@ using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.Items;
+using Assets.MainBoard.Scripts.Player.States;
 using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.UI;
 using Assets.MainBoard.Scripts.Utils.CamUtils;
@@ -35,7 +36,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         [SerializeField] private MapCamera _mapCamera;
         [SerializeField] private PathFinder _pathFinder;
         [SerializeField] private PathTracker _pathTracker;
-        [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] private PlayerStateContext _playerStateContext;
         [SerializeField] private Platform _currentPlatform;
         [SerializeField] private GameController _gameController;
         [SerializeField] private PlayerCollector _playerCollector;
@@ -73,9 +74,9 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         private void Update()
         {
-            if (!isUserInterfaceActive && _playerAnimation.IsIdle && _playerInput.isMyTurn)
+            if (!isUserInterfaceActive && _playerAnimation.IsIdle && _playerStateContext.isMyTurn)
             {
-                if (_currentStep <= 0 && _playerInput.nextSelectionStepPressed)
+                if (_currentStep <= 0 && _playerStateContext.SpacePressed)
                 {
                     RollDice();
                 }
@@ -94,26 +95,9 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         private void StartMove()
         {
             _currentPlatform.isPlayerInPlatform = false;
-            if (_playerInput.nextSelectionStepPressed || !_playerAnimation.IsJumping) // space
+            if (_playerStateContext.SpacePressed || !_playerAnimation.IsJumping) // space
             {
                 _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep), PlatformSpec.Goal, _currentPlatform.HasSelector);
-            }
-            else if (_playerInput.nextSelectionPressed) // X
-            {
-                _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform), PlatformSpec.Goal, _currentPlatform.HasSelector);
-
-            }
-            else if (_playerInput.nextGoalPressed) // C
-            {
-                _pathTracker.StartTracking(_pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal), PlatformSpec.Goal, _currentPlatform.HasSelector);
-            }
-            else if (_playerInput.nextGoalStepPressed) // V
-            {
-                _pathTracker.StartTracking(_pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal, goalStep), PlatformSpec.Goal, _currentPlatform.HasSelector);
-            }
-            else if (_playerInput.moveToBackStepPressed) // B
-            {
-                _pathTracker.RestartTracking(maximumStep, false, PlatformSpec.Goal);
             }
             isDiceRolled = false;
         }
@@ -121,23 +105,23 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         private void ProcessUI()
         {
-            if (_playerInput.openInventory)
+            if (_playerStateContext.OpenInventory)
             {
                 _playerInventory.OpenInventory();
                 isUserInterfaceActive = true;
             }
-            else if (_playerInput.closeUI && !ItemPool._isItemUsing)
+            else if (_playerStateContext.CloseUI && !ItemPool._isItemUsing)
             {
                 _playerInventory.CloseInventory();
                 _mapCamera.SetCameraPriority(_mapCamera.cam, _mapCamera.mainCamera.Priority - 1, true);
                 isUserInterfaceActive = false;
             }
-            else if (_playerInput.openMap)
+            else if (_playerStateContext.OpenMap)
             {
                 _mapCamera.SetCameraPriority(_mapCamera.cam, _mapCamera.mainCamera.Priority + 1);
                 isUserInterfaceActive = true;
             }
-            else if (_playerInput.closeUI && ItemPool._isItemUsing)
+            else if (_playerStateContext.CloseUI && ItemPool._isItemUsing)
             {
                 _itemPool.CloseItem();
                 isUserInterfaceActive = false;
@@ -151,10 +135,10 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             _currentPlatform.selector.left.SetActive(true);
             _currentPlatform.selector.right.SetActive(true);
 
-            if (_playerInput.selectLeftPressed && leftPlatform.activeInHierarchy) SelectPlatform(RouteSelectorDirection.Left);
-            else if (_playerInput.selectRightPressed && rightPlatform.activeInHierarchy) SelectPlatform(RouteSelectorDirection.Right);
+            if (_playerStateContext.SelectLeftPressed && leftPlatform.activeInHierarchy) SelectPlatform(RouteSelectorDirection.Left);
+            else if (_playerStateContext.SelectRightPressed && rightPlatform.activeInHierarchy) SelectPlatform(RouteSelectorDirection.Right);
 
-            if (_playerInput.applySelectPressed && _selectorDirection != RouteSelectorDirection.None)
+            if (_playerStateContext.ApplySelectPressed && _selectorDirection != RouteSelectorDirection.None)
             {
                 RouteSelectorDirection temp = _selectorDirection;
                 SelectPlatform(RouteSelectorDirection.None, leftPlatform, rightPlatform);
@@ -173,7 +157,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         {
             _currentPlatform.ResetSpec();
             isUserInterfaceActive = false;
-            PlayerInput.canPlayersAct = true;
+            PlayerStateContext.canPlayersAct = true;
             _dice.SetActive(true);
             _currentStep = 0;
             //TODO
@@ -230,8 +214,8 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
             if (_currentStep <= 0)
             {
-                _playerInput.isMyTurn = false;
-                _playerInput.Dice.SetActive(false);
+                _playerStateContext.isMyTurn = false;
+                _playerStateContext.Dice.SetActive(false);
                 SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index, MessageType.TurnOver)));
             }
         }

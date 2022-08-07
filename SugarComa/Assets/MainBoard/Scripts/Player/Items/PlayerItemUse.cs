@@ -1,4 +1,5 @@
 using Assets.MainBoard.Scripts.Player.Movement;
+using Assets.MainBoard.Scripts.Player.States;
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Assets.MainBoard.Scripts.Player.Items
     {
         [SerializeField] Transform playerTransform;
         [SerializeField] ItemPool _itemPool;
-        [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] private PlayerStateContext _playerStateContext;
         [SerializeField] float speed;
         private Vector3 _rotationY;
         private bool isPosSet;
@@ -41,7 +42,7 @@ namespace Assets.MainBoard.Scripts.Player.Items
         }
         private void FixedUpdate()
         {
-            if (ItemPool._isItemUsing && _playerInput.isMyTurn)
+            if (ItemPool._isItemUsing && _playerStateContext.isMyTurn)
             {
                 if (ItemUsing.BoxGlovesUsing)
                 {
@@ -84,11 +85,11 @@ namespace Assets.MainBoard.Scripts.Player.Items
         {
             KeepPosition();
             FollowMouse();
-            if (_playerInput.useMouseItem && !_itemPool._playerInventory.activeInHierarchy)
+            if (_playerStateContext.UseMouseItem && !_itemPool._playerInventory.activeInHierarchy)
             {
                 ItemUsing.BoxGlovesUsing = true;
                 _itemPool.UseCurrentItem();
-                _playerInput.useMouseItem = false;
+                _playerStateContext.UseMouseItem = false;
                 isRotSet = true;
             }
         }

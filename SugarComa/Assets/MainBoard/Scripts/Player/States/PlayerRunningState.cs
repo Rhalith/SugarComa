@@ -15,7 +15,15 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             base.Enter();
 
-            
+            // Yab
+        }
+
+        public override void Exit()
+        {
+            // Yab
+
+
+            base.Exit();
         }
 
         public override void FixedUpdate()

@@ -4,11 +4,12 @@
     {
         public PlayerIdleState(PlayerStateContext context, PlayerData playerData, PlayerStateFactory factory, string animBoolName) : base(context, playerData, factory, animBoolName)
         {
+            // 
         }
 
         public override void CheckStateChanges()
         {
-            if (context.NextSelectionStepPressed)
+            if (context.SpacePressed)
             {
                 SwitchState(factory.Running);
             }

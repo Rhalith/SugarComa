@@ -4207,7 +4207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4120892788481720714}
-  - component: {fileID: 4120892788481720718}
+  - component: {fileID: 9092802037901078777}
   - component: {fileID: 4120892788481720719}
   - component: {fileID: 4120892788481720712}
   - component: {fileID: 4120892788481720713}
@@ -4240,7 +4240,7 @@ Transform:
   m_Father: {fileID: 3886626679076762459}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &4120892788481720718
+--- !u!114 &9092802037901078777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4249,24 +4249,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4120892788481720715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85c619d688aebb04a8735dd892f80062, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d6275441ed283944bee082cccb35abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMyTurn: 0
-  nextSelectionPressed: 0
-  nextSelectionStepPressed: 0
-  nextGoalPressed: 0
-  nextGoalStepPressed: 0
-  moveToBackStepPressed: 0
-  selectLeftPressed: 0
-  selectRightPressed: 0
-  applySelectPressed: 0
-  openInventory: 0
-  closeUI: 0
-  openMap: 0
-  useMouseItem: 0
+  _playerData: {fileID: 0}
+  _animator: {fileID: 4120892787933790878}
+  _rb: {fileID: 5019937161402794153}
+  _pathTracker: {fileID: 4120892788481720719}
+  _pathFinder: {fileID: 0}
   cinemachineBrain: {fileID: 0}
   _dice: {fileID: 7986056786197168510}
+  isMyTurn: 0
+  SpacePressed: 0
 --- !u!114 &4120892788481720719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4304,7 +4298,7 @@ MonoBehaviour:
   _mapCamera: {fileID: 0}
   _pathFinder: {fileID: 0}
   _pathTracker: {fileID: 4120892788481720719}
-  _playerInput: {fileID: 4120892788481720718}
+  _playerStateContext: {fileID: 0}
   _currentPlatform: {fileID: 0}
   _gameController: {fileID: 0}
   _playerCollector: {fileID: 4120892788481720713}
@@ -4384,7 +4378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 4120892788481720714}
   _itemPool: {fileID: 4120892788034233094}
-  _playerInput: {fileID: 4120892788481720718}
+  _playerStateContext: {fileID: 0}
   speed: 25
 --- !u!136 &2808706967063836918
 CapsuleCollider:
@@ -5816,7 +5810,7 @@ MonoBehaviour:
   _gobletSelection: {fileID: 4120892788315320753}
   _playerAnimation: {fileID: 4120892787933790877}
   _goalSelector: {fileID: 0}
-  _playerInput: {fileID: 4120892788481720718}
+  _playerStateContext: {fileID: 0}
   _playerInventory: {fileID: 4120892788481720717}
   _currentUI: {fileID: 4120892787982766272}
   playerGold: {fileID: 4120892787917468866}
