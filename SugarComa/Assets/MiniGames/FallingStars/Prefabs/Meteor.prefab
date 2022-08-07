@@ -586,10 +586,7 @@ MonoBehaviour:
   _explosionDistributionRatio: 10
   _meteorShadow: {fileID: 5938148336897162123, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
   _meteor: {fileID: 7816483564973452870}
-  _localPositions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  _localPositions: []
   _miniEffects:
   - {fileID: 1634804693123222934}
   - {fileID: 5469753593264054538}
@@ -961,6 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6e9bc8548a43545b4815bfbbe940d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _meteor: {fileID: 7816483564973452870}
 --- !u!95 &5068315340142165441
 Animator:
   serializedVersion: 4

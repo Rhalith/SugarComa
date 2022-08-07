@@ -2014,8 +2014,6 @@ MonoBehaviour:
   _isDead: 0
   _moveSpeed: 15
   _rotationSpeed: 10
-  _localMoveSpeed: 0
-  _localRotationSpeed: 0
 --- !u!114 &986949775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3812,8 +3810,6 @@ MonoBehaviour:
   _isDead: 0
   _moveSpeed: 10
   _rotationSpeed: 10
-  _localMoveSpeed: 0
-  _localRotationSpeed: 0
 --- !u!143 &1859487284
 CharacterController:
   m_ObjectHideFlags: 0

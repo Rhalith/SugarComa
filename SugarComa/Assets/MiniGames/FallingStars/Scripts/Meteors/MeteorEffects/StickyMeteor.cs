@@ -1,6 +1,7 @@
 using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using Assets.MiniGames.FallingStars.Scripts.Player;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
@@ -12,6 +13,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] int _effectDuration = 2;
         [SerializeField] float _slowEffectRatio;
         private int _localDuration;
+        private List<PlayerSpecs> _playerSpecs = new();
         #endregion
 
         #region OtherComponents
@@ -31,6 +33,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             if (other.CompareTag("Player"))
             {
                 PlayerSpecs playerSpec = other.GetComponent<PlayerSpecs>();
+                _playerSpecs.Add(playerSpec);
                 StartCoroutine(StickyEffect(playerSpec, _effectDuration, _slowEffectRatio));
             }
         }
@@ -40,44 +43,20 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             if (other.CompareTag("Player"))
             {
                 PlayerSpecs playerSpec = other.GetComponent<PlayerSpecs>();
-                ResetPlayerSpeed(playerSpec, playerSpec._localMoveSpeed, playerSpec._localRotationSpeed);
+                _playerSpecs.Remove(playerSpec);
+                playerSpec.ResetPlayerSpeed();
             }
-        }
-        private void SlowDownPlayer(PlayerSpecs player, float ratio, float moveSpeed, float rotationSpeed)
-        {
-            player._moveSpeed = moveSpeed / ratio;
-            player._rotationSpeed = rotationSpeed;
-        }
-
-        private void StopPlayer(PlayerSpecs player)
-        {
-            player._moveSpeed = 0;
-            player._rotationSpeed = 0;
-        }
-
-        private void ResetMeteor()
-        {
-            print("stickmeteor resetted");
-            _duration = _localDuration;
-        }
-        private void ResetPlayerSpeed(PlayerSpecs player, float moveSpeed, float rotationSpeed)
-        {
-            player._moveSpeed = moveSpeed;
-            player._rotationSpeed = rotationSpeed;
         }
         IEnumerator StickyEffect(PlayerSpecs player, int duration, float ratio)
         {
-            player._localMoveSpeed = player._moveSpeed;
-            player._localRotationSpeed = player._rotationSpeed;
-
-            StopPlayer(player);
+            player.StopPlayerMovement();
             int localDuration = 0;
             while (localDuration < duration)
             {
                 yield return new WaitForSeconds(1f);
                 localDuration++;
             }
-            SlowDownPlayer(player, ratio, player._localMoveSpeed, player._localRotationSpeed);
+            player.SlowDownPlayer(ratio);
         }
 
         private IEnumerator CountdownTimer()
@@ -89,6 +68,22 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                 yield return new WaitForSeconds(1f);
             }
             MiniGameController.Instance.AddToPool(_meteor);
+        }
+        private void ResetMeteor()
+        {
+            print("stickmeteor resetted");
+            if (_playerSpecs.Count > 0)
+            {
+                foreach (var player in _playerSpecs)
+                {
+                    player.ResetPlayerSpeed();
+                }
+
+            }
+            _playerSpecs.Clear();
+            _duration = _localDuration;
+            StopAllCoroutines();
+
         }
     }
 }

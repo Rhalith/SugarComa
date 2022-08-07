@@ -28,11 +28,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             StartCoroutine(CountdownTimer());
         }
-        private void DamagePlayer(PlayerSpecs player, float damage)
-        {
-            player._health -= damage;
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -57,7 +52,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             while (isPlayerIn)
             {
-                DamagePlayer(playerSpecs, damage);
+                playerSpecs.DamagePlayer(damage);
                 yield return new WaitForSeconds(1f);
             }
         }
@@ -77,6 +72,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             print("poisonmeteor resetted");
             _duration = _localDuration;
+            StopAllCoroutines();
         }
     }
 }

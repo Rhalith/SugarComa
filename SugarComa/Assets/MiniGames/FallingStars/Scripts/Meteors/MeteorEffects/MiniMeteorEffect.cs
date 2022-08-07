@@ -23,24 +23,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void Awake()
         {
             _meteor.OnMeteorDisable += ResetMeteor;
+            _localScale = transform.localScale;
+            _localDuration = _duration;
         }
         private void OnEnable()
         {
-            _localScale = transform.localScale;
-            _localDuration = _duration;
             InvokeRepeating(nameof(UpScaleMeteorEffect), 0.2f, 0.1f);
             InvokeRepeating(nameof(WhileDuration), 0f, 1f);
-        }
-        private void DamagePlayer(PlayerSpecs player, float damage)
-        {
-            player._health -= damage;
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                StartCoroutine(DamageToPlayer(other.gameObject.GetComponent<PlayerSpecs>(), _damage));
+                PlayerSpecs playerSpec = other.gameObject.GetComponent<PlayerSpecs>();
+                StartCoroutine(DamageToPlayer(playerSpec, _damage));
             }
         }
 
@@ -60,21 +57,16 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             if (_duration > 0) _duration--;
             else
             {
-                CancelInvoke();
+                MiniGameController.Instance.AddToPool(_meteor);
             }
         }
         IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
         {
             while (true)
             {
-                DamagePlayer(player, damage);
+                player.DamagePlayer(damage);
                 yield return new WaitForSeconds(1f);
             }
-        }
-
-        private void OnDisable()
-        {
-            MiniGameController.Instance.AddToPool(_meteor);
         }
 
         private void ResetMeteor()
@@ -82,8 +74,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             print("minimeteor resetted");
             _duration = _localDuration;
             transform.localScale = _localScale;
+            StopAllCoroutines();
+            CancelInvoke();
             _explosionMeteor.SetActive(false);
             gameObject.SetActive(false);
+            MiniGameController.Instance.AddToPool(_meteor);
         }
     }
 }

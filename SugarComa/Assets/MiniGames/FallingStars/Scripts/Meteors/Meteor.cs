@@ -24,18 +24,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 
         public MeteorType MeteorType { get => _type; }
 
-        private void Awake()
-        {
-            _meteorObject.GetComponent<MeteorObject>().OnMeteorHit += OnMeteorHit;
-        }
-
         private void OnEnable()
         {
             CheckType(_type, _meteorMesh, _meteorRenderer);
         }
         private void OnDisable()
         {
-           OnMeteorDisable?.Invoke();
+            OnMeteorHit(false);
+            OnMeteorDisable?.Invoke();
         }
         //TODO
         public void CheckType(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
@@ -101,11 +97,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     break;
             }
         }
-
-        private void OnMeteorHit()
+        /// <summary>
+        /// value => true for enable, value => false for disable
+        /// </summary>
+        /// <param name="value"></param>
+        public void OnMeteorHit(bool value)
         {
-            _meteorShadow.SetActive(false);
-            _effectObject.SetActive(true);
+            _meteorObject.SetActive(!value);
+            _meteorShadow.SetActive(!value);
+            _effectObject.SetActive(value);
         }
     }
 
