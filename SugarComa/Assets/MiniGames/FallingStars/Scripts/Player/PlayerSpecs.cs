@@ -33,8 +33,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         public void SlowDownPlayer(float ratio)
         {
+            ResetPlayerSpeed();
             _moveSpeed /= ratio;
-            _rotationSpeed = _localRotationSpeed;
         }
 
         public void StopPlayerMovement()

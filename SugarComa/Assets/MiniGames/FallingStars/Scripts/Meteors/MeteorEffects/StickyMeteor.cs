@@ -12,7 +12,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] int _duration = 6;
         [SerializeField] int _effectDuration = 2;
         [SerializeField] float _slowEffectRatio;
-        private int _localDuration;
         private List<PlayerSpecs> _playerSpecs = new();
         #endregion
 
@@ -50,23 +49,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         IEnumerator StickyEffect(PlayerSpecs player, int duration, float ratio)
         {
             player.StopPlayerMovement();
-            int localDuration = 0;
-            while (localDuration < duration)
-            {
-                yield return new WaitForSeconds(1f);
-                localDuration++;
-            }
+            yield return new WaitForSeconds(duration);
             player.SlowDownPlayer(ratio);
         }
 
         private IEnumerator CountdownTimer()
         {
-            _localDuration = _duration;
-            while (_duration > 0)
-            {
-                _duration--;
-                yield return new WaitForSeconds(1f);
-            }
+            yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);
         }
         private void ResetMeteor()
@@ -81,7 +70,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
             }
             _playerSpecs.Clear();
-            _duration = _localDuration;
             StopAllCoroutines();
 
         }

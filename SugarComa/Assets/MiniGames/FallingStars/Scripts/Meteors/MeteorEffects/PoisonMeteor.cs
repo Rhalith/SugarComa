@@ -13,7 +13,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] float _damage;
         public bool isPlayerIn;
         private Coroutine insideCoroutine, outsideCoroutine;
-        private int _localDuration;
         #endregion
 
         #region OtherComponents
@@ -59,19 +58,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         private IEnumerator CountdownTimer()
         {
-            _localDuration = _duration;
-            while (_duration > 0)
-            {
-                _duration--;
-                yield return new WaitForSeconds(1f);
-            }
+            yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);
         }
 
         private void ResetMeteor()
         {
             print("poisonmeteor resetted");
-            _duration = _localDuration;
             StopAllCoroutines();
         }
     }

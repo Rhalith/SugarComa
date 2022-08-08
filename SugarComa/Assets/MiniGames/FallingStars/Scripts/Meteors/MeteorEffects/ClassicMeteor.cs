@@ -40,7 +40,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                 StartCoroutine(DamageToPlayer(playerSpecs, _damage));
             }
         }
-
+        //TODO check
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))

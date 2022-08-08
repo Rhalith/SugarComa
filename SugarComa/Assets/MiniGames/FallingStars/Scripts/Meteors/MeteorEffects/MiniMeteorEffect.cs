@@ -12,7 +12,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] int _duration = 4;
         [SerializeField] float _damage;
         [SerializeField] float _upScaleValue;
-        private int _localDuration;
         private Vector3 _localScale;
         #endregion
 
@@ -24,12 +23,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             _meteor.OnMeteorDisable += ResetMeteor;
             _localScale = transform.localScale;
-            _localDuration = _duration;
         }
         private void OnEnable()
         {
             InvokeRepeating(nameof(UpScaleMeteorEffect), 0.2f, 0.1f);
-            InvokeRepeating(nameof(WhileDuration), 0f, 1f);
+            StartCoroutine(CountdownTimer());
         }
 
         private void OnTriggerEnter(Collider other)
@@ -52,13 +50,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             transform.localScale = new Vector3(transform.localScale.x + _upScaleValue / 100, transform.localScale.y, transform.localScale.z + _upScaleValue / 100);
         }
-        private void WhileDuration()
+        private IEnumerator CountdownTimer()
         {
-            if (_duration > 0) _duration--;
-            else
-            {
-                MiniGameController.Instance.AddToPool(_meteor);
-            }
+            yield return new WaitForSeconds(_duration);
+            MiniGameController.Instance.AddToPool(_meteor);
         }
         IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
         {
@@ -72,7 +67,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void ResetMeteor()
         {
             print("minimeteor resetted");
-            _duration = _localDuration;
             transform.localScale = _localScale;
             StopAllCoroutines();
             CancelInvoke();

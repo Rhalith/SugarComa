@@ -89,6 +89,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             StartCoroutine(SpawnNewWave());
             _SpawnNewWave?.Invoke();
         }
+        //TODO
         IEnumerator UpdateMeteorCount()
         {
             _meteorCount++;

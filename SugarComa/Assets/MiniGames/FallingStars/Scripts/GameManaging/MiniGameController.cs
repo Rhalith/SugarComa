@@ -1,5 +1,4 @@
 using Assets.MiniGames.FallingStars.Scripts.Meteors;
-using Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

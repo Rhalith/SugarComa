@@ -17,7 +17,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         [Header("Other Scripts")]
         [SerializeField] private Animator _animator;
-        [SerializeField] private PlayerMovement _movement;
         #endregion
 
         #region Properties
