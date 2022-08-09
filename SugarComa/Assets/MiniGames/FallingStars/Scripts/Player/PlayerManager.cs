@@ -1,4 +1,5 @@
 using Assets.MiniGames.FallingStars.Scripts.Meteors;
+using Assets.MiniGames.FallingStars.Scripts.Player.PlayerManaging;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private StickyMeteor _stickyMeteor;
         private PoisonMeteor _poisonMeteor;
 
-        [SerializeField] bool zort;
+        public PlayerSpecifications PlayerSpec { get => _playerSpec; private set => _playerSpec = value; }
 
-
-        private void Start()
+        private void Awake()
         {
             _classicMeteor = new(this);
             _explosionMeteor = new(this);
@@ -26,23 +26,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         public void DamagePlayer(float damage)
         {
-            _playerSpec.Health -= damage;
-            if (_playerSpec.Health <= 0) KillPlayer();
+            PlayerSpec.Health -= damage;
+            if (PlayerSpec.Health <= 0) KillPlayer();
         }
         public void KillPlayer()
         {
-            _playerSpec.Health = 0;
-            _playerSpec.IsDead = true;
+            PlayerSpec.Health = 0;
+            PlayerSpec.IsDead = true;
         }
 
-        IEnumerator test()
-        {
-            while(_playerSpec.Health > 0)
-            {
-                yield return new WaitForSeconds(1f);
-                print("zort");
-            }
-        }
         public void StartNumerator(MeteorType meteorType, float damage = 0, int duration = 0, float ratio = 0)
         {
             switch (meteorType)
@@ -62,7 +54,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     break;
             }
         }
-        public void StopNumerator(MeteorType meteorType, float damage = 0, int duration = 0, float ratio = 0)
+        public void StopNumerator(MeteorType meteorType, float damage = 0, int duration = 0)
         {
             switch (meteorType)
             {
@@ -83,37 +75,37 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
             }
         }
-        #region ClassicMeteor
+        //#region ClassicMeteor
 
-        private class ClassicMeteor
-        {
-            public Coroutine _coroutine;
-            private PlayerManager _playerManager;
+        //private class ClassicMeteor
+        //{
+        //    public Coroutine _coroutine;
+        //    private readonly PlayerManager _playerManager;
 
-            public ClassicMeteor(PlayerManager playerManager)
-            {
-                _playerManager = playerManager;
-            }
+        //    public ClassicMeteor(PlayerManager playerManager)
+        //    {
+        //        _playerManager = playerManager;
+        //    }
 
-            public IEnumerator DamageToPlayer(float damage = 0)
-            {
-                while (_playerManager._playerSpec.Health > 0)
-                {
-                    _playerManager.DamagePlayer(damage);
-                    yield return new WaitForSeconds(1f);
-                }
-            }
-            public void StopIteration()
-            {
-                _playerManager.StopCoroutine(_coroutine);
-            }
-        }
-        #endregion
+        //    public IEnumerator DamageToPlayer(float damage = 0)
+        //    {
+        //        while (_playerManager.PlayerSpec.Health > 0)
+        //        {
+        //            _playerManager.DamagePlayer(damage);
+        //            yield return new WaitForSeconds(1f);
+        //        }
+        //    }
+        //    public void StopIteration()
+        //    {
+        //        _playerManager.StopCoroutine(_coroutine);
+        //    }
+        //}
+        //#endregion
         #region ExplosionMeteor
         private class ExplosionMeteor
         {
             public Coroutine _coroutine;
-            private PlayerManager _playerManager;
+            private readonly PlayerManager _playerManager;
 
             public ExplosionMeteor(PlayerManager playerManager)
             {
@@ -138,7 +130,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private class StickyMeteor
         {
             public Coroutine _coroutine;
-            private PlayerManager _playerManager;
+            private readonly PlayerManager _playerManager;
 
             public StickyMeteor(PlayerManager playerManager)
             {
@@ -153,17 +145,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             public void SlowDownPlayer(float ratio)
             {
                 ResetPlayerSpeed();
-                _playerManager._playerSpec.MoveSpeed /= ratio;
+                _playerManager.PlayerSpec.MoveSpeed /= ratio;
             }
             public void StopPlayerMovement()
             {
-                _playerManager._playerSpec.MoveSpeed = 0;
-                _playerManager._playerSpec.RotationSpeed = 0;
+                _playerManager.PlayerSpec.MoveSpeed = 0;
+                _playerManager.PlayerSpec.RotationSpeed = 0;
             }
             public void ResetPlayerSpeed()
             {
-                _playerManager._playerSpec.MoveSpeed = _playerManager._playerSpec.LocalMoveSpeed;
-                _playerManager._playerSpec.RotationSpeed = _playerManager._playerSpec.LocalRotationSpeed;
+                _playerManager.PlayerSpec.MoveSpeed = _playerManager.PlayerSpec.LocalMoveSpeed;
+                _playerManager.PlayerSpec.RotationSpeed = _playerManager.PlayerSpec.LocalRotationSpeed;
             }
             public void StopIteration()
             {
@@ -176,7 +168,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private class PoisonMeteor
         {
             public Coroutine _coroutine;
-            private PlayerManager _playerManager;
+            private readonly PlayerManager _playerManager;
 
             public PoisonMeteor(PlayerManager playerManager)
             {
@@ -184,7 +176,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             }
             public IEnumerator DamageToPlayer(float damage = 0)
             {
-                while (_playerManager._playerSpec.Health > 0)
+                while (_playerManager.PlayerSpec.Health > 0)
                 {
                     _playerManager.DamagePlayer(damage);
                     yield return new WaitForSeconds(1f);
