@@ -9,7 +9,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         #region SerializeField
 
         [Header("Animation Flags")]
-        [SerializeField] private bool _jump;
         [SerializeField] private bool _run;
         [SerializeField] private bool _dead;
         [SerializeField] private bool _hit;
@@ -20,10 +19,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         #endregion
 
         #region Properties
-        public bool IsJumping => _jump;
         public bool IsRunning => _run;
         public bool IsDead => _dead;
-        public bool IsIdle => !_run && !_jump && !_dead;
+        public bool IsIdle => !_run && !_dead;
         public bool IsGettingHit => _gettingHit;
         public bool IsHitting => _hit;
         #endregion
@@ -35,11 +33,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         public void StopRunning()
         {
             RunSet(0);
-        }
-
-        public void Jump()
-        {
-            JumpSet(1);
         }
 
         public void StartGettingHit()
@@ -65,12 +58,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         {
             _animator.SetBool("running", running != 0);
             _run = running != 0;
-        }
-
-        private void JumpSet(int jump)
-        {
-            _animator.SetBool("jumping", jump != 0);
-            _jump = jump != 0;
         }
 
         private void GettingHitSet(int hit)

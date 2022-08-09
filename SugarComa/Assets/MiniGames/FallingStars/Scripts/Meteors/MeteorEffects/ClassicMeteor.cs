@@ -64,7 +64,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             MiniGameController.Instance.AddToPool(_meteor);
         }
 
-
         private void ResetMeteor()
         {
             print("classicmeteor resetted");

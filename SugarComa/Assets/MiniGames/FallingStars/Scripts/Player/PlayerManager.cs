@@ -1,5 +1,4 @@
 using Assets.MiniGames.FallingStars.Scripts.Meteors;
-using Assets.MiniGames.FallingStars.Scripts.Player.PlayerManaging;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +7,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
     public class PlayerManager: MonoBehaviour
     {
-        [SerializeField] private PlayerSpecifications _playerSpec;
         private ClassicMeteor _classicMeteor;
         private ExplosionMeteor _explosionMeteor;
         private StickyMeteor _stickyMeteor;
         private PoisonMeteor _poisonMeteor;
 
-        public PlayerSpecifications PlayerSpec { get => _playerSpec; private set => _playerSpec = value; }
+        [SerializeField] private PlayerMovement _playerMovement;
 
         private void Awake()
         {
@@ -26,13 +24,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         public void DamagePlayer(float damage)
         {
-            PlayerSpec.Health -= damage;
-            if (PlayerSpec.Health <= 0) KillPlayer();
+            _playerMovement.PlayerSpec.Health -= damage;
+            if (_playerMovement.PlayerSpec.Health <= 0) KillPlayer();
         }
         public void KillPlayer()
         {
-            PlayerSpec.Health = 0;
-            PlayerSpec.IsDead = true;
+            _playerMovement.PlayerSpec.Health = 0;
+            _playerMovement.PlayerSpec.IsDead = true;
         }
 
         public void StartNumerator(MeteorType meteorType, float damage = 0, int duration = 0, float ratio = 0)
@@ -75,32 +73,32 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
             }
         }
-        //#region ClassicMeteor
+        #region ClassicMeteor
 
-        //private class ClassicMeteor
-        //{
-        //    public Coroutine _coroutine;
-        //    private readonly PlayerManager _playerManager;
+        private class ClassicMeteor
+        {
+            public Coroutine _coroutine;
+            private readonly PlayerManager _playerManager;
 
-        //    public ClassicMeteor(PlayerManager playerManager)
-        //    {
-        //        _playerManager = playerManager;
-        //    }
+            public ClassicMeteor(PlayerManager playerManager)
+            {
+                _playerManager = playerManager;
+            }
 
-        //    public IEnumerator DamageToPlayer(float damage = 0)
-        //    {
-        //        while (_playerManager.PlayerSpec.Health > 0)
-        //        {
-        //            _playerManager.DamagePlayer(damage);
-        //            yield return new WaitForSeconds(1f);
-        //        }
-        //    }
-        //    public void StopIteration()
-        //    {
-        //        _playerManager.StopCoroutine(_coroutine);
-        //    }
-        //}
-        //#endregion
+            public IEnumerator DamageToPlayer(float damage = 0)
+            {
+                while (_playerManager._playerMovement.PlayerSpec.Health > 0)
+                {
+                    _playerManager.DamagePlayer(damage);
+                    yield return new WaitForSeconds(1f);
+                }
+            }
+            public void StopIteration()
+            {
+                _playerManager.StopCoroutine(_coroutine);
+            }
+        }
+        #endregion
         #region ExplosionMeteor
         private class ExplosionMeteor
         {
@@ -145,17 +143,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             public void SlowDownPlayer(float ratio)
             {
                 ResetPlayerSpeed();
-                _playerManager.PlayerSpec.MoveSpeed /= ratio;
+                _playerManager._playerMovement.PlayerSpec.MoveSpeed /= ratio;
             }
             public void StopPlayerMovement()
             {
-                _playerManager.PlayerSpec.MoveSpeed = 0;
-                _playerManager.PlayerSpec.RotationSpeed = 0;
+                _playerManager._playerMovement.PlayerSpec.MoveSpeed = 0;
+                _playerManager._playerMovement.PlayerSpec.RotationSpeed = 0;
             }
             public void ResetPlayerSpeed()
             {
-                _playerManager.PlayerSpec.MoveSpeed = _playerManager.PlayerSpec.LocalMoveSpeed;
-                _playerManager.PlayerSpec.RotationSpeed = _playerManager.PlayerSpec.LocalRotationSpeed;
+                _playerManager._playerMovement.PlayerSpec.MoveSpeed = _playerManager._playerMovement.PlayerSpec.LocalMoveSpeed;
+                _playerManager._playerMovement.PlayerSpec.RotationSpeed = _playerManager._playerMovement.PlayerSpec.LocalRotationSpeed;
             }
             public void StopIteration()
             {
@@ -176,7 +174,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             }
             public IEnumerator DamageToPlayer(float damage = 0)
             {
-                while (_playerManager.PlayerSpec.Health > 0)
+                while (_playerManager._playerMovement.PlayerSpec.Health > 0)
                 {
                     _playerManager.DamagePlayer(damage);
                     yield return new WaitForSeconds(1f);

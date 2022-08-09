@@ -24,9 +24,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         #endregion
 
         #region OtherComponents
-        [SerializeField] PlayerAnimation _animation;
-        [SerializeField] PlayerSpecifications _playerSpecs;
-        PlayerActions _playerInput;
+        [SerializeField] private PlayerAnimation _animation;
+        [SerializeField] private PlayerSpecifications _playerSpecs;
+        private PlayerActions _playerInput;
+        public PlayerSpecifications PlayerSpec { get => _playerSpecs; }
         #endregion
 
         private void Awake()
