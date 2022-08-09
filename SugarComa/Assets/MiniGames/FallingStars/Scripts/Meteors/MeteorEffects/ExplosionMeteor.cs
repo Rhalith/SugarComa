@@ -66,9 +66,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             {
                 MiniObjects[i].transform.localPosition = LocalPositions[i];
                 MiniObjects[i].SetActive(true);
+                MiniShadows[i].SetActive(true);
             }
             MiniObjects.Clear();
-            MiniShadows.Clear();
             LocalPositions.Clear();
         }
 
@@ -77,13 +77,22 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             _explosionDistributionRatio = Random.Range(10, _maxExplosionRatio);
             rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce, ForceMode.Force);
             rig.velocity += new Vector3(rig.gameObject.transform.localPosition.x, 0, rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
+            Vector3 distance = CalculateDistance(rig);
+            SetObjectPosition(MiniShadows, i, distance, true);
+            SetObjectPosition(MiniEffects, i, distance);
+        }
+
+        private void SetObjectPosition(List<GameObject> list, int i, Vector3 vector3, bool isOn = false)
+        {
+            list[i].SetActive(isOn);
+            list[i].transform.position = new Vector3(vector3.x, 0, vector3.z);
+        }
+
+        private Vector3 CalculateDistance(Rigidbody rig)
+        {
             Vector3 distance = rig.velocity * 1.05f;
             distance += rig.transform.position;
-            //TODO shadow oluþturma active et
-            GameObject shadow = Instantiate(_meteorShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
-                transform);
-            MiniEffects[i].transform.position = new Vector3(distance.x, 0, distance.z);
-            MiniShadows.Add(shadow);
+            return distance;
         }
     }
 }
