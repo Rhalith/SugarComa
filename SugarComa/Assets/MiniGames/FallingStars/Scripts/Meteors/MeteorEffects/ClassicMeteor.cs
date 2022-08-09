@@ -1,6 +1,7 @@
 using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using Assets.MiniGames.FallingStars.Scripts.Player;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
@@ -8,14 +9,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     public class ClassicMeteor : MonoBehaviour
     {
         #region Properties
-
-        private int _localDuration;
         private Vector3 _localScale;
+        private List<PlayerManager> _players;
 
         #region SeralizeFields
-        [SerializeField] int _duration = 4;
-        [SerializeField] float _damage;
-        [SerializeField] float _upScaleValue;
+        [SerializeField] private int _duration = 4;
+        [SerializeField] private float _damage;
+        [SerializeField] private float _upScaleValue;
         #endregion
         #endregion
         #region OtherComponents
@@ -25,13 +25,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void Awake()
         {
             _localScale = transform.localScale;
-            _localDuration = _duration;
             _meteor.OnMeteorDisable += ResetMeteor;
         }
 
         private void OnEnable()
         {
-            InvokeRepeating(nameof(UpScaleMeteorEffect), 0.2f, 0.1f);
+            InvokeRepeating(nameof(UpScaleMeteor), 0.2f, 0.1f);
             StartCoroutine(TimerCountdown());
         }
 
@@ -39,20 +38,23 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             if (other.CompareTag("Player"))
             {
-                PlayerSpecs playerSpecs = other.gameObject.GetComponent<PlayerSpecs>();
-                StartCoroutine(DamageToPlayer(playerSpecs, _damage));
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                print(playerManager);
+                //_players.Add(playerManager);
+                playerManager.StartNumerator(_meteor.Type, _damage);
             }
         }
-        //TODO check
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                StopAllCoroutines();
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                //_players.Remove(playerManager);
+                playerManager.StopNumerator(_meteor.Type, _damage);
             }
         }
 
-        private void UpScaleMeteorEffect()
+        private void UpScaleMeteor()
         {
             transform.localScale = new Vector3(transform.localScale.x + _upScaleValue / 100, transform.localScale.y, transform.localScale.z + _upScaleValue / 100);
         }
@@ -62,20 +64,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);
         }
-        private IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
-        {
-            while (true)
-            {
-                player.DamagePlayer(damage);
-                yield return new WaitForSeconds(1f);
-            }
-        }
+
 
         private void ResetMeteor()
         {
             print("classicmeteor resetted");
-            _duration = _localDuration;
             transform.localScale = _localScale;
+            foreach (var player in _players)
+            {
+                player.StopNumerator(_meteor.Type);
+            }
+            _players.Clear();
             StopAllCoroutines();
             CancelInvoke();
             gameObject.SetActive(false);

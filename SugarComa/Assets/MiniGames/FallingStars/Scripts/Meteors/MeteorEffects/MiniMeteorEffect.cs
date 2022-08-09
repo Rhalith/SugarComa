@@ -10,6 +10,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     {
         #region Properties
         private Vector3 _localScale;
+        private readonly List<PlayerManager> _players;
         #region SerializeFields
         [SerializeField] private int _duration = 4;
         [SerializeField] private float _damage;
@@ -36,8 +37,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             if (other.CompareTag("Player"))
             {
-                PlayerSpecs playerSpec = other.gameObject.GetComponent<PlayerSpecs>();
-                StartCoroutine(DamageToPlayer(playerSpec, _damage));
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                _players.Add(playerManager);
+                playerManager.StartNumerator(_meteor.Type, _damage);
             }
         }
 
@@ -45,7 +47,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             if (other.CompareTag("Player"))
             {
-                StopAllCoroutines();
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                _players.Remove(playerManager);
+                playerManager.StopNumerator(_meteor.Type, _damage);
             }
         }
         private void UpScaleMeteorEffect()
@@ -57,19 +61,16 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);
         }
-        private IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
-        {
-            while (true)
-            {
-                player.DamagePlayer(damage);
-                yield return new WaitForSeconds(1f);
-            }
-        }
 
         private void ResetMeteor()
         {
             print("minimeteor resetted");
             transform.localScale = _localScale;
+            foreach (var player in _players)
+            {
+                player.StopNumerator(_meteor.Type);
+            }
+            _players.Clear();
             StopAllCoroutines();
             CancelInvoke();
             _explosionMeteor.SetActive(false);

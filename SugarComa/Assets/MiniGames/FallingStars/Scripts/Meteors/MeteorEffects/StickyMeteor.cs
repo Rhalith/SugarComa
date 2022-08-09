@@ -12,7 +12,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] private int _duration = 6;
         [SerializeField] private int _effectDuration = 2;
         [SerializeField] private float _slowEffectRatio;
-        private readonly List<PlayerSpecs> _playerSpecs = new();
+        private List<PlayerManager> _players;
         #endregion
 
         #region OtherComponents
@@ -31,9 +31,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             if (other.CompareTag("Player"))
             {
-                PlayerSpecs playerSpec = other.GetComponent<PlayerSpecs>();
-                _playerSpecs.Add(playerSpec);
-                StartCoroutine(StickyEffect(playerSpec, _effectDuration, _slowEffectRatio));
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                _players.Add(playerManager);
+                playerManager.StartNumerator(_meteor.Type, 0, _effectDuration, _slowEffectRatio);
             }
         }
 
@@ -41,16 +41,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             if (other.CompareTag("Player"))
             {
-                PlayerSpecs playerSpec = other.GetComponent<PlayerSpecs>();
-                _playerSpecs.Remove(playerSpec);
-                playerSpec.ResetPlayerSpeed();
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                _players.Remove(playerManager);
+                playerManager.StopNumerator(_meteor.Type);
             }
-        }
-        private IEnumerator StickyEffect(PlayerSpecs player, int duration, float ratio)
-        {
-            player.StopPlayerMovement();
-            yield return new WaitForSeconds(duration);
-            player.SlowDownPlayer(ratio);
         }
 
         private IEnumerator TimerCountdown()
@@ -61,15 +55,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void ResetMeteor()
         {
             print("stickmeteor resetted");
-            if (_playerSpecs.Count > 0)
+            foreach (var player in _players)
             {
-                foreach (var player in _playerSpecs)
-                {
-                    player.ResetPlayerSpeed();
-                }
-
+                player.StopNumerator(_meteor.Type);
             }
-            _playerSpecs.Clear();
+            _players.Clear();
             StopAllCoroutines();
 
         }

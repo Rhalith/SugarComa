@@ -88,9 +88,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         IEnumerator SpawnWave()
         {
-            yield return new WaitForSeconds(_meteorWaveSpawnTime);
-            StartCoroutine(SpawnWave());
-            SpawnNewWave?.Invoke();
+            while(true)
+            {
+                yield return new WaitForSeconds(_meteorWaveSpawnTime);
+                SpawnNewWave?.Invoke();
+            }
         }
         //TODO
         IEnumerator UpdateMeteorCount()

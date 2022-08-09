@@ -1,6 +1,7 @@
 using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using Assets.MiniGames.FallingStars.Scripts.Player;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
@@ -8,8 +9,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     public class PoisonMeteor : MonoBehaviour
     {
         #region Properties
-        private bool isPlayerIn;
-        private Coroutine insideCoroutine, outsideCoroutine;
+        private List<PlayerManager> _players;
         #region SeralizeFields
         [SerializeField] private int _duration = 3;
         [SerializeField] private int _poisonDuration = 5;
@@ -33,9 +33,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             if (other.CompareTag("Player"))
             {
-                isPlayerIn = true;
-                if(outsideCoroutine != null) StopCoroutine(outsideCoroutine);
-                insideCoroutine = StartCoroutine(Poison(_damage, other.GetComponent<PlayerSpecs>()));
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                _players.Add(playerManager);
+                playerManager.StartNumerator(_meteor.Type, _damage, _poisonDuration);
             }
         }
 
@@ -43,18 +43,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             if (other.CompareTag("Player"))
             {
-                isPlayerIn = false;
-                if (insideCoroutine != null) StopCoroutine(insideCoroutine);
-                outsideCoroutine = StartCoroutine(other.GetComponent<PlayerSpecs>().PoisonEffect(_poisonDuration, _damage));
-            }
-        }
-
-        private IEnumerator Poison(float damage, PlayerSpecs playerSpecs)
-        {
-            while (isPlayerIn)
-            {
-                playerSpecs.DamagePlayer(damage);
-                yield return new WaitForSeconds(1f);
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                _players.Remove(playerManager);
+                playerManager.StopNumerator(_meteor.Type);
             }
         }
 
@@ -67,6 +58,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void ResetMeteor()
         {
             print("poisonmeteor resetted");
+            foreach (var player in _players)
+            {
+                player.StopNumerator(_meteor.Type);
+            }
             StopAllCoroutines();
         }
     }

@@ -346,7 +346,6 @@ MonoBehaviour:
   _duration: 3
   _poisonDuration: 5
   _damage: 1
-  isPlayerIn: 0
   _meteor: {fileID: 7816483564973452870}
 --- !u!1 &5469753593264054538
 GameObject:
@@ -821,6 +820,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09efc761649bdb94da92e72cf1ab2ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _meteorObject: {fileID: 7816483565440598221}
+  _meteorShadow: {fileID: 7816483565522074281}
   _meteorMesh: {fileID: 7816483565440598230}
   _meteorRenderer: {fileID: 7816483565440598225}
   _effectObjects:
@@ -828,8 +829,6 @@ MonoBehaviour:
   - {fileID: 5974671132531833696}
   - {fileID: 3950570626153239711}
   - {fileID: 6426113782046495607}
-  _meteorObject: {fileID: 7816483565440598221}
-  _meteorShadow: {fileID: 7816483565522074281}
 --- !u!1 &7816483565440598221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,7 +1366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997020cb7d809a94ba2ca05e11b17cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isIn: 0
 --- !u!4 &7816483565522074285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5938148336897162127, guid: 2a390289cb541874eb530f17d62913cc, type: 3}

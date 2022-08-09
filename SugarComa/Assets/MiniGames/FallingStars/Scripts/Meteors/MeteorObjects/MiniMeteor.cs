@@ -36,8 +36,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
             }
             else if (other.CompareTag("Player"))
             {
-                PlayerSpecs playerSpecs = other.GetComponent<PlayerSpecs>();
-                playerSpecs.DamagePlayer(_damage);
+                PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
+                playerManager.DamagePlayer(_damage);
             }
         }
 

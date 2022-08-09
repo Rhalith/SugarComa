@@ -13,12 +13,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         public MeteorAction OnMeteorDisable;
         public GameObject MeteorShadow { get => _meteorShadow; }
         public GameObject MeteorObject { get => _meteorObject; }
+        public MeteorType Type { get => _type; private set => _type = value; }
+
         public delegate void MeteorAction();
 
         private MeteorType _type;
         private GameObject _effectObject;
-        private readonly GameObject _meteorObject;
-        private readonly GameObject _meteorShadow;
+        [SerializeField] private GameObject _meteorObject;
+        [SerializeField] private GameObject _meteorShadow;
 
         #region SerializeFields
         [SerializeField] private MeshFilter _meteorMesh;
@@ -30,7 +32,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 
         private void OnEnable()
         {
-            CheckType(_type, _meteorMesh, _meteorRenderer);
+            CheckType(Type, _meteorMesh, _meteorRenderer);
         }
         private void OnDisable()
         {
@@ -44,16 +46,16 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             switch (i)
             {
                 case 0:
-                    _type = MeteorType.classic;
+                    Type = MeteorType.classic;
                     break;
                 case 1:
-                    _type = MeteorType.explosion;
+                    Type = MeteorType.explosion;
                     break;
                 case 2:
-                    _type = MeteorType.poison;
+                    Type = MeteorType.poison;
                     break;
                 case 3:
-                    _type = MeteorType.sticky;
+                    Type = MeteorType.sticky;
                     break;
             }
         }

@@ -25,7 +25,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         #region OtherComponents
         [SerializeField] PlayerAnimation _animation;
-        [SerializeField] PlayerSpecs _playerSpecs;
+        [SerializeField] PlayerSpecifications _playerSpecs;
         PlayerActions _playerInput;
         #endregion
 
@@ -92,6 +92,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         {
             _playerInput.Disable();
         }
+        //TODO düzenle
         private void FixedUpdate()
         {
             if(_playerSpecs.MoveSpeed != 0)

@@ -28,7 +28,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
         {
             if (collider.CompareTag("Player"))
             {
-                collider.GetComponent<PlayerSpecs>().KillPlayer();
+                PlayerManager playerManager = collider.gameObject.GetComponent<PlayerManager>();
+                playerManager.KillPlayer();
             }
         }
 
