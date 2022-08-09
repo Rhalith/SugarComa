@@ -81,6 +81,9 @@ namespace Assets.MainBoard.Scripts.Player.States
 
             _playerStateContext.MainBoard.Escape.started += OnEscapePressed;
             _playerStateContext.MainBoard.Escape.canceled += OnEscapePressed;
+
+            _playerStateContext.MainBoard.Mouse.started += OnLeftMouseDown;
+            _playerStateContext.MainBoard.Mouse.canceled += OnLeftMouseDown;
         }
 
         private void Start()
@@ -98,11 +101,12 @@ namespace Assets.MainBoard.Scripts.Player.States
             ClearInputs();
 
             if (GameManager.IsGameOver) return;
+
+            /* TODO
             if (isMyTurn && canPlayersAct && !cinemachineBrain.IsBlending)
             {
-                // ?? In here, inputs were processing. 
-                IsMouseMove();
             }
+            */
         }
 
         private void FixedUpdate()
@@ -202,9 +206,9 @@ namespace Assets.MainBoard.Scripts.Player.States
             get { return _useMouseItem; }
             set { _useMouseItem = value; }
         }
-        private void IsMouseMove()
+        private void OnLeftMouseDown(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _useMouseItem = (_useMouseItem || Input.GetMouseButtonDown(0)) && ItemPool._isItemUsing;
+            _closeUI = obj.ReadValue<bool>();
         }
         #endregion
 

@@ -6,6 +6,8 @@
         {
         }
 
+
+        // ?? We didn't call this method
         public override void AnimationEnded()
         {
             SwitchState(factory.Idle);

@@ -42,7 +42,7 @@ namespace Assets.MainBoard.Scripts.Player.Items.BoxGloves
         public void TakeGlovesToPlayer()
         {
             ItemUsing.BoxGlovesUsing = true;
-            _playerAnimator.SetBool("boks", true);
+            _playerAnimator.SetBool("boxing", true);
         }
 
         /// <summary>

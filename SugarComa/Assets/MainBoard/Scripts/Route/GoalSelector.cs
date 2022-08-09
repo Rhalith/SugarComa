@@ -53,10 +53,7 @@ namespace Assets.MainBoard.Scripts.Route
         {
             if (NetworkHelper.TryGetChestData(buffer, out ChestNetworkData chestData))
             {
-                if (chestData.messageType == MessageType.CreateChest)
-                {
-
-                }
+                RandomGoalSelect(chestData.index);
             }
         }
 
@@ -79,8 +76,10 @@ namespace Assets.MainBoard.Scripts.Route
                 isAnyGoalPlatform = true;
                 PlayerStateContext.canPlayersAct = false; 
                 _currentPlatform = platforms[index];
-
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index, MessageType.CreateChest)));
+                
+                // Sadece host gönderecek.
+                if(SteamManager.Instance.currentLobby.Owner.Id == SteamManager.Instance.PlayerSteamId)
+                    SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index, MessageType.CreateChest)));
 
                 return;
             }

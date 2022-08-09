@@ -1,3 +1,4 @@
+using Assets.MainBoard.Scripts.Route;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.States
@@ -46,14 +47,27 @@ namespace Assets.MainBoard.Scripts.Player.States
             context.Animator.SetBool(animBoolHash, false);
         }
 
+        public virtual void Start()
+        {
+
+        }
+        public virtual void Update()
+        {
+
+        }
+
         public virtual void FixedUpdate()
         {
             CheckStateChanges();
         }
-        
+
         public virtual void CheckStateChanges() { }
 
         public virtual void AnimationStarted() { }
-        public virtual void AnimationEnded() { }
+
+        public virtual void AnimationEnded() 
+        {
+            SwitchState(factory.Idle);
+        }
     }
 }

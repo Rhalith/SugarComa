@@ -89,6 +89,15 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Mouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd096967-ca5f-4495-93ef-d2bd8a8e6d34"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -168,6 +177,17 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f835c6e3-d1dc-41f4-b9d8-a7226c3b727e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -183,6 +203,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         m_MainBoard_I = m_MainBoard.FindAction("I", throwIfNotFound: true);
         m_MainBoard_M = m_MainBoard.FindAction("M", throwIfNotFound: true);
         m_MainBoard_Escape = m_MainBoard.FindAction("Escape", throwIfNotFound: true);
+        m_MainBoard_Mouse = m_MainBoard.FindAction("Mouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -249,6 +270,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_MainBoard_I;
     private readonly InputAction m_MainBoard_M;
     private readonly InputAction m_MainBoard_Escape;
+    private readonly InputAction m_MainBoard_Mouse;
     public struct MainBoardActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -260,6 +282,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         public InputAction @I => m_Wrapper.m_MainBoard_I;
         public InputAction @M => m_Wrapper.m_MainBoard_M;
         public InputAction @Escape => m_Wrapper.m_MainBoard_Escape;
+        public InputAction @Mouse => m_Wrapper.m_MainBoard_Mouse;
         public InputActionMap Get() { return m_Wrapper.m_MainBoard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -290,6 +313,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 @Escape.started -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnEscape;
                 @Escape.performed -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnEscape;
                 @Escape.canceled -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnEscape;
+                @Mouse.started -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnMouse;
+                @Mouse.performed -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnMouse;
+                @Mouse.canceled -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnMouse;
             }
             m_Wrapper.m_MainBoardActionsCallbackInterface = instance;
             if (instance != null)
@@ -315,6 +341,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 @Escape.started += instance.OnEscape;
                 @Escape.performed += instance.OnEscape;
                 @Escape.canceled += instance.OnEscape;
+                @Mouse.started += instance.OnMouse;
+                @Mouse.performed += instance.OnMouse;
+                @Mouse.canceled += instance.OnMouse;
             }
         }
     }
@@ -328,5 +357,6 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         void OnI(InputAction.CallbackContext context);
         void OnM(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
     }
 }
