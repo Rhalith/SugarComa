@@ -9,14 +9,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     public class StickyMeteor : MonoBehaviour
     {
         #region Properties
-        [SerializeField] int _duration = 6;
-        [SerializeField] int _effectDuration = 2;
-        [SerializeField] float _slowEffectRatio;
-        private List<PlayerSpecs> _playerSpecs = new();
+        [SerializeField] private int _duration = 6;
+        [SerializeField] private int _effectDuration = 2;
+        [SerializeField] private float _slowEffectRatio;
+        private readonly List<PlayerSpecs> _playerSpecs = new();
         #endregion
 
         #region OtherComponents
-        [SerializeField] Meteor _meteor;
+        [SerializeField] private Meteor _meteor;
         #endregion
         private void Awake()
         {
@@ -24,7 +24,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         }
         private void OnEnable()
         {
-            StartCoroutine(CountdownTimer());
+            StartCoroutine(TimerCountdown());
         }
 
         private void OnTriggerEnter(Collider other)
@@ -46,14 +46,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                 playerSpec.ResetPlayerSpeed();
             }
         }
-        IEnumerator StickyEffect(PlayerSpecs player, int duration, float ratio)
+        private IEnumerator StickyEffect(PlayerSpecs player, int duration, float ratio)
         {
             player.StopPlayerMovement();
             yield return new WaitForSeconds(duration);
             player.SlowDownPlayer(ratio);
         }
 
-        private IEnumerator CountdownTimer()
+        private IEnumerator TimerCountdown()
         {
             yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);

@@ -8,17 +8,19 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
     public class PlayerMovement : MonoBehaviour
     {
         #region Properties
-        [SerializeField] float _jumpHeight = 1f;
-        [SerializeField] float _gravityValue = -9.81f;
-        Vector3 _movement;
-        Vector3 _movementDir;
-        Vector3 _rotationDir;
-        Vector3 _mouseDir;
-        bool _punch;
-        bool _isMouseActive;
-        RaycastHit _hit;
-        Ray _ray;
-        [SerializeField] Camera _cam;
+        #region Serialized Field
+        //[SerializeField] private float _jumpHeight = 1f;
+        //[SerializeField] private float _gravityValue = -9.81f;
+        [SerializeField] private Camera _cam;
+        #endregion
+        private Vector3 _movement;
+        private Vector3 _movementDir;
+        private Vector3 _rotationDir;
+        private Vector3 _mouseDir;
+        private bool _punch;
+        private bool _isMouseActive;
+        private RaycastHit _hit;
+        private Ray _ray;
         #endregion
 
         #region OtherComponents
@@ -92,19 +94,19 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         }
         private void FixedUpdate()
         {
-            if(_playerSpecs._moveSpeed != 0)
+            if(_playerSpecs.MoveSpeed != 0)
             {
                 if (!_isMouseActive)
                 {
                     if(_rotationDir.x != 0 || _rotationDir.z != 0)
                     {
                         Quaternion desiredRotation = Quaternion.LookRotation(_rotationDir, Vector3.up);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
                     }
                     else if (_movementDir.x != 0 || _movementDir.z != 0)
                     {
                         Quaternion desiredRotation = Quaternion.LookRotation(_movementDir, Vector3.up);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
                     }
                 }
                 else
@@ -114,10 +116,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     if (Physics.Raycast(_ray, out _hit))
                     {
                         Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(_hit.point.x, 0, _hit.point.z), Vector3.up);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs._rotationSpeed * Time.deltaTime);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
                     }
                 }
-                transform.Translate(_playerSpecs._moveSpeed * Time.deltaTime * _movementDir, Space.World);
+                transform.Translate(_playerSpecs.MoveSpeed * Time.deltaTime * _movementDir, Space.World);
                 if ((_movement.x != 0 || _movement.z != 0))
                 {
                     _animation.StartRunning();
@@ -152,6 +154,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         //    _characterController.Move(_playerVelocity * Time.deltaTime);
         //}
 
+        //TODO
         public void Aduket()
         {
             StartCoroutine(aduket());

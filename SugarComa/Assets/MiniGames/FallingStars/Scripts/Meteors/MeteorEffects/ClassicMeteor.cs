@@ -8,15 +8,18 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     public class ClassicMeteor : MonoBehaviour
     {
         #region Properties
+
+        private int _localDuration;
+        private Vector3 _localScale;
+
+        #region SeralizeFields
         [SerializeField] int _duration = 4;
         [SerializeField] float _damage;
         [SerializeField] float _upScaleValue;
-        private int _localDuration;
-        private Vector3 _localScale;
         #endregion
-
+        #endregion
         #region OtherComponents
-        [SerializeField] Meteor _meteor;
+        [SerializeField] private Meteor _meteor;
         #endregion
 
         private void Awake()
@@ -29,7 +32,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void OnEnable()
         {
             InvokeRepeating(nameof(UpScaleMeteorEffect), 0.2f, 0.1f);
-            InvokeRepeating(nameof(WhileDuration), 0f, 1f);
+            StartCoroutine(TimerCountdown());
         }
 
         private void OnTriggerEnter(Collider other)
@@ -53,15 +56,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             transform.localScale = new Vector3(transform.localScale.x + _upScaleValue / 100, transform.localScale.y, transform.localScale.z + _upScaleValue / 100);
         }
-        private void WhileDuration()
+
+        private IEnumerator TimerCountdown()
         {
-            if (_duration > 0) _duration--;
-            else 
-            {
-                MiniGameController.Instance.AddToPool(_meteor);
-            }
+            yield return new WaitForSeconds(_duration);
+            MiniGameController.Instance.AddToPool(_meteor);
         }
-        IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
+        private IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
         {
             while (true)
             {

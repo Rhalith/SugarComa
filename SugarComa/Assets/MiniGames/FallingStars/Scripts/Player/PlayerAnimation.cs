@@ -27,29 +27,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         public bool IsGettingHit => _gettingHit;
         public bool IsHitting => _hit;
         #endregion
-        private void RunSet(int running)
-        {
-            _animator.SetBool("running", running != 0);
-            _run = running != 0;
-        }
-
-        private void JumpSet(int jump)
-        {
-            _animator.SetBool("jumping", jump != 0);
-            _jump = jump != 0;
-        }
-
-        private void GettingHitSet(int hit)
-        {
-            _animator.SetBool("gettinghit", hit != 0);
-            _gettingHit = hit != 0;
-        }
-
-        private void HitSet(int hit)
-        {
-            _animator.SetBool("punch", hit != 0);
-            _hit = hit != 0;
-        }
         public void StartRunning()
         {
             RunSet(1);
@@ -83,6 +60,29 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         public void EndToHit()
         {
             HitSet(0);
+        }
+        private void RunSet(int running)
+        {
+            _animator.SetBool("running", running != 0);
+            _run = running != 0;
+        }
+
+        private void JumpSet(int jump)
+        {
+            _animator.SetBool("jumping", jump != 0);
+            _jump = jump != 0;
+        }
+
+        private void GettingHitSet(int hit)
+        {
+            _animator.SetBool("gettinghit", hit != 0);
+            _gettingHit = hit != 0;
+        }
+
+        private void HitSet(int hit)
+        {
+            _animator.SetBool("punch", hit != 0);
+            _hit = hit != 0;
         }
     }
 }

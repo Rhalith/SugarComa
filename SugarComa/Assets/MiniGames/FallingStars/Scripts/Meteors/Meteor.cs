@@ -9,20 +9,24 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
     public class Meteor : MonoBehaviour
     {
-        public delegate void MeteorAction();
-        MeteorType _type;
-        [SerializeField] MeshFilter _meteorMesh;
-        [SerializeField] MeshRenderer _meteorRenderer;
-        [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
-        [SerializeField] GameObject[] _effectObjects = new GameObject[4];
-
-        private GameObject _effectObject;
-        public GameObject _meteorObject;
-        public GameObject _meteorShadow;
-
+        #region Properties
         public MeteorAction OnMeteorDisable;
+        public GameObject MeteorShadow { get => _meteorShadow; }
+        public GameObject MeteorObject { get => _meteorObject; }
+        public delegate void MeteorAction();
 
-        public MeteorType MeteorType { get => _type; }
+        private MeteorType _type;
+        private GameObject _effectObject;
+        private readonly GameObject _meteorObject;
+        private readonly GameObject _meteorShadow;
+
+        #region SerializeFields
+        [SerializeField] private MeshFilter _meteorMesh;
+        [SerializeField] private MeshRenderer _meteorRenderer;
+        [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
+        [SerializeField] private GameObject[] _effectObjects = new GameObject[4];
+        #endregion
+        #endregion
 
         private void OnEnable()
         {
@@ -32,12 +36,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         {
             OnMeteorHit(false);
             OnMeteorDisable?.Invoke();
-        }
-        //TODO
-        public void CheckType(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
-        {
-            SetMeshes(type, meteorFilter, meteorRenderer);
-            SetEffect(type);
         }
         //TODO THEIR CHANGES WILL NOT BE EQUAL
         public void SetType()
@@ -59,6 +57,22 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     break;
             }
         }
+        /// <summary>
+        /// value => true for enable, value => false for disable
+        /// </summary>
+        /// <param name="value"></param>
+        public void OnMeteorHit(bool value)
+        {
+            MeteorObject.SetActive(!value);
+            MeteorShadow.SetActive(!value);
+            _effectObject.SetActive(value);
+        }
+        //TODO
+        private void CheckType(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
+        {
+            SetMeshes(type, meteorFilter, meteorRenderer);
+            SetEffect(type);
+        }
         private void SetMeshes(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
         {
             switch (type)
@@ -78,7 +92,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             }
             meteorRenderer.materials = MiniGameManager.MeteorMaterials.meteor;
         }
-        //TODO
         private void SetEffect(MeteorType type)
         {
             switch (type)
@@ -96,16 +109,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     _effectObject = _effectObjects[3];
                     break;
             }
-        }
-        /// <summary>
-        /// value => true for enable, value => false for disable
-        /// </summary>
-        /// <param name="value"></param>
-        public void OnMeteorHit(bool value)
-        {
-            _meteorObject.SetActive(!value);
-            _meteorShadow.SetActive(!value);
-            _effectObject.SetActive(value);
         }
     }
 

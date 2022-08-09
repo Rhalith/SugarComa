@@ -9,42 +9,38 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
     public class MiniMeteor : MonoBehaviour
     {
         #region Properties
-        [SerializeField] float _damage;
+        [SerializeField] private float _damage;
         #endregion
         #region OtherComponents
-        [SerializeField] ExplosionMeteor _explosionMeteor;
+        [SerializeField] private ExplosionMeteor _explosionMeteor;
         #endregion
 
         private void OnEnable()
         {
-            EnableListElements(_explosionMeteor._miniObjects);
-            EnableListElements(_explosionMeteor._miniShadows);
-            DisableListElements(_explosionMeteor._miniEffects);
+            EnableListElements(_explosionMeteor.MiniObjects);
+            EnableListElements(_explosionMeteor.MiniShadows);
+            DisableListElements(_explosionMeteor.MiniEffects);
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Plane"))
             {
-                for (int i = 0; i < _explosionMeteor._miniObjects.Count; i++)
+                for (int i = 0; i < _explosionMeteor.MiniObjects.Count; i++)
                 {
-                    _explosionMeteor._miniObjects[i].transform.position = _explosionMeteor._localPositions[i];
+                    _explosionMeteor.MiniObjects[i].transform.position = _explosionMeteor.LocalPositions[i];
                 }
-                DisableListElements(_explosionMeteor._miniObjects);
-                DisableListElements(_explosionMeteor._miniShadows);
-                EnableListElements(_explosionMeteor._miniEffects);
+                DisableListElements(_explosionMeteor.MiniObjects);
+                DisableListElements(_explosionMeteor.MiniShadows);
+                EnableListElements(_explosionMeteor.MiniEffects);
             }
             else if (other.CompareTag("Player"))
             {
                 PlayerSpecs playerSpecs = other.GetComponent<PlayerSpecs>();
-                DamagePlayer(playerSpecs, _damage);
+                playerSpecs.DamagePlayer(_damage);
             }
         }
 
-        private void DamagePlayer(PlayerSpecs player, float damage)
-        {
-            player._health -= damage;
-        }
         private void EnableListElements(List<GameObject> list)
         {
             foreach (var gameObject in list)

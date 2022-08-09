@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class MeteorShadow : MonoBehaviour
 {
-    public bool isIn;
+    private bool _isIn;
+
+    public bool IsIn { get => _isIn; set => _isIn = value; }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("ColliderChecker")) isIn = true;
+        if(other.CompareTag("ColliderChecker")) IsIn = true;
     }
 }

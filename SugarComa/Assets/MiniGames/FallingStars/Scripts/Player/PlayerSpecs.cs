@@ -7,25 +7,29 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
     public class PlayerSpecs : MonoBehaviour
     {
 
-        public float _health;
-        public bool _isDead;
-        public float _moveSpeed = 5f;
-        public float _rotationSpeed = 10f;
-
+        private float _health;
+        private bool _isDead;
+        private float _moveSpeed = 5f;
+        private float _rotationSpeed = 10f;
         private float _localMoveSpeed;
         private float _localRotationSpeed;
 
+        public float Health { get => _health; private set => _health = value; }
+        public bool IsDead { get => _isDead; private set => _isDead = value; }
+        public float MoveSpeed { get => _moveSpeed; private set => _moveSpeed = value; }
+        public float RotationSpeed { get => _rotationSpeed; private set => _rotationSpeed = value; }
+
         private void Start()
         {
-            _localMoveSpeed = _moveSpeed;
-            _localRotationSpeed = _rotationSpeed;
+            _localMoveSpeed = MoveSpeed;
+            _localRotationSpeed = RotationSpeed;
         }
 
         public IEnumerator PoisonEffect(int duration, float damage)
         {
             while(duration > 0)
             {
-                _health -= damage;
+                Health -= damage;
                 duration--;
                 yield return new WaitForSeconds(1f);
             }
@@ -34,29 +38,29 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         public void SlowDownPlayer(float ratio)
         {
             ResetPlayerSpeed();
-            _moveSpeed /= ratio;
+            MoveSpeed /= ratio;
         }
 
         public void StopPlayerMovement()
         {
-            _moveSpeed = 0;
-            _rotationSpeed = 0;
+            MoveSpeed = 0;
+            RotationSpeed = 0;
         }
         
         public void ResetPlayerSpeed()
         {
-            _moveSpeed = _localMoveSpeed;
-            _rotationSpeed = _localRotationSpeed;
+            MoveSpeed = _localMoveSpeed;
+            RotationSpeed = _localRotationSpeed;
         }
 
         public void DamagePlayer(float damage)
         {
-            _health -= damage;
+            Health -= damage;
         }
         public void KillPlayer()
         {
-            _health = 0;
-            _isDead = true;
+            Health = 0;
+            IsDead = true;
         }
     }
 }

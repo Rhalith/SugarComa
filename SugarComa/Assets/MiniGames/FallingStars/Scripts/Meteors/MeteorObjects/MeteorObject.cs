@@ -10,11 +10,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
 {
     public class MeteorObject : MonoBehaviour
     {
-        [SerializeField] Meteor _meteor;
-        void OnTriggerEnter(Collider collider)
-        {
-            CheckHit(collider);
-        }
+        [SerializeField] private Meteor _meteor;
+
         /// <summary>
         /// Invokes at the end of MeteorAnimation
         /// </summary>
@@ -22,6 +19,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
         {
             _meteor.OnMeteorHit(true);
         }
+        private void OnTriggerEnter(Collider collider)
+        {
+            CheckHit(collider);
+        }
+
         private void CheckHit(Collider collider)
         {
             if (collider.CompareTag("Player"))

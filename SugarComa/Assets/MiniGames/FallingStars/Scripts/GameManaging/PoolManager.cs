@@ -12,6 +12,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             public List<GameObject> pooledObjects;
         }
 
-        [SerializeField] private Pool[] pools = null;
+        [SerializeField] private Pool[] _pools = null;
     }
 }

@@ -9,18 +9,27 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     public class ExplosionMeteor : MonoBehaviour
     {
         #region Properties
-        [SerializeField] float _maxExplosionRatio;
-        [SerializeField] float _explosionForce = 30; // 1 is equal to 0.024 seconds in air
-        [SerializeField] float _explosionDistributionRatio = 10;
+        [SerializeField] private float _maxExplosionRatio;
+        [SerializeField] private float _explosionForce = 30;
+        [SerializeField] private float _explosionDistributionRatio = 10;
         #endregion
 
         #region OtherComponents
+        public List<Vector3> LocalPositions { get => _localPositions; private set => _localPositions = value; }
+        public List<GameObject> MiniEffects { get => _miniEffects; private set => _miniEffects = value; }
+        public List<GameObject> MiniShadows { get => _miniShadows; private set => _miniShadows = value; }
+        public List<GameObject> MiniObjects { get => _miniObjects; private set => _miniObjects = value; }
+
+        #region SerializeFields
         [SerializeField] private GameObject _meteorShadow;
         [SerializeField] private Meteor _meteor;
-        public List<Vector3> _localPositions = new();
-        public List<GameObject> _miniEffects = new();
-        public List<GameObject> _miniShadows = new();
-        public List<GameObject> _miniObjects = new();
+        [SerializeField] private List<Vector3> _localPositions = new();
+        [SerializeField] private List<GameObject> _miniEffects = new();
+        [SerializeField] private List<GameObject> _miniShadows = new();
+        [SerializeField] private List<GameObject> _miniObjects = new();
+
+
+        #endregion
         #endregion
 
 
@@ -42,8 +51,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
                 Rigidbody rig = nearby.GetComponent<Rigidbody>();
                 if (rig != null && rig.gameObject.CompareTag("MiniMeteor"))
                 {
-                    _localPositions.Add(nearby.gameObject.transform.localPosition);
-                    _miniObjects.Add(nearby.gameObject);
+                    LocalPositions.Add(nearby.gameObject.transform.localPosition);
+                    MiniObjects.Add(nearby.gameObject);
                     ThrowMiniMeteor(rig, i);
                     i++;
                 }
@@ -53,14 +62,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void ResetMeteor()
         {
             print("explosionmeteor resetted");
-            for (int i = 0; i < _miniObjects.Count; i++)
+            for (int i = 0; i < MiniObjects.Count; i++)
             {
-                _miniObjects[i].transform.localPosition = _localPositions[i];
-                _miniObjects[i].SetActive(true);
+                MiniObjects[i].transform.localPosition = LocalPositions[i];
+                MiniObjects[i].SetActive(true);
             }
-            _miniObjects.Clear();
-            _miniShadows.Clear();
-            _localPositions.Clear();
+            MiniObjects.Clear();
+            MiniShadows.Clear();
+            LocalPositions.Clear();
         }
 
         private void ThrowMiniMeteor(Rigidbody rig, int i)
@@ -73,8 +82,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             //TODO shadow oluþturma active et
             GameObject shadow = Instantiate(_meteorShadow, new Vector3(distance.x, 0, distance.z), Quaternion.identity,
                 transform);
-            _miniEffects[i].transform.position = new Vector3(distance.x, 0, distance.z);
-            _miniShadows.Add(shadow);
+            MiniEffects[i].transform.position = new Vector3(distance.x, 0, distance.z);
+            MiniShadows.Add(shadow);
         }
     }
 }

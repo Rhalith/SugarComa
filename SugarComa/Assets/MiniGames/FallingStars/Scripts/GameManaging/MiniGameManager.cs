@@ -21,23 +21,26 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         #region Components
         private static MiniGameManager _instance;
 
+        #region SerializeFields
         [SerializeField] private MeteorMeshes _meteorMeshes;
         [SerializeField] private MeteorEffectMeshes _meteorEffectMeshes;
         [SerializeField] private MeteorMaterials _meteorMaterials;
-
-        [SerializeField] TMP_Text timeText;
+        [SerializeField] private TMP_Text _timeText;
+        #endregion
         #endregion
 
         #region Properties
+        public Action SpawnNewWave;
+        public int MeteorCount => _meteorCount;
         private float _gameTime = 120f;
         private int _meteorCount = 3;
-        public int _meteorCountUpdateTime = 15;
-        public int _meteorWaveSpawnTime = 4;
 
-        public Action _SpawnNewWave;
-
-        public int MeteorCount => _meteorCount;
+        #region SerializeFields
+        [SerializeField] private int _meteorCountUpdateTime = 15;
+        [SerializeField] private int _meteorWaveSpawnTime = 4;
         #endregion
+        #endregion
+
         public static MeteorMeshes MeteorMeshes
         {
             get
@@ -83,11 +86,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             StartCoroutine(StartCountdown());
         }
 
-        IEnumerator SpawnNewWave()
+        IEnumerator SpawnWave()
         {
             yield return new WaitForSeconds(_meteorWaveSpawnTime);
-            StartCoroutine(SpawnNewWave());
-            _SpawnNewWave?.Invoke();
+            StartCoroutine(SpawnWave());
+            SpawnNewWave?.Invoke();
         }
         //TODO
         IEnumerator UpdateMeteorCount()
@@ -98,13 +101,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         }
         IEnumerator StartCountdown()
         {
-            string text = timeText.text.ToString();
+            string text = _timeText.text.ToString();
             while (_gameTime >= 0)
             {
-                timeText.SetText(text + _gameTime.ToString());
+                _timeText.SetText(text + _gameTime.ToString());
                 if (_gameTime == 0)
                 {
-                    timeText.SetText(text + _gameTime.ToString().AddColor(Color.red));
+                    _timeText.SetText(text + _gameTime.ToString().AddColor(Color.red));
                 }
                 yield return new WaitForSeconds(1.0f);
                 _gameTime--;
@@ -112,8 +115,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         }
         private void StartFirstWave()
         {
-            StartCoroutine(SpawnNewWave());
-            _SpawnNewWave?.Invoke();
+            StartCoroutine(SpawnWave());
+            SpawnNewWave?.Invoke();
 
         }
         private void FirstUpdateMeteorCount()

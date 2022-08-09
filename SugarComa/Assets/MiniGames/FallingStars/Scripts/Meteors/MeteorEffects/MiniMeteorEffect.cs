@@ -9,15 +9,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     public class MiniMeteorEffect : MonoBehaviour
     {
         #region Properties
-        [SerializeField] int _duration = 4;
-        [SerializeField] float _damage;
-        [SerializeField] float _upScaleValue;
         private Vector3 _localScale;
+        #region SerializeFields
+        [SerializeField] private int _duration = 4;
+        [SerializeField] private float _damage;
+        [SerializeField] private float _upScaleValue;
+        #endregion
         #endregion
 
         #region OtherComponents
-        [SerializeField] Meteor _meteor;
-        [SerializeField] GameObject _explosionMeteor;
+        [SerializeField] private Meteor _meteor;
+        [SerializeField] private GameObject _explosionMeteor;
         #endregion
         private void Awake()
         {
@@ -55,7 +57,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);
         }
-        IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
+        private IEnumerator DamageToPlayer(PlayerSpecs player = null, float damage = 0)
         {
             while (true)
             {

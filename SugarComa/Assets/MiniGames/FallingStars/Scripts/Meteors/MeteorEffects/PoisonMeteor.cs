@@ -8,11 +8,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     public class PoisonMeteor : MonoBehaviour
     {
         #region Properties
-        [SerializeField] int _duration = 3;
-        [SerializeField] int _poisonDuration = 5;
-        [SerializeField] float _damage;
-        public bool isPlayerIn;
+        private bool isPlayerIn;
         private Coroutine insideCoroutine, outsideCoroutine;
+        #region SeralizeFields
+        [SerializeField] private int _duration = 3;
+        [SerializeField] private int _poisonDuration = 5;
+        [SerializeField] private float _damage;
+        #endregion
         #endregion
 
         #region OtherComponents
