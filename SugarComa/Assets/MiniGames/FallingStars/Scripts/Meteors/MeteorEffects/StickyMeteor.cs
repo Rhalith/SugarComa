@@ -12,7 +12,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] private int _duration = 6;
         [SerializeField] private int _effectDuration = 2;
         [SerializeField] private float _slowEffectRatio;
-        private List<PlayerManager> _players;
+        private readonly List<PlayerManager> _players = new();
         #endregion
 
         #region OtherComponents

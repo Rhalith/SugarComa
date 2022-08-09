@@ -9,7 +9,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _rotationSpeed = 10f;
-        private float _health;
+        [SerializeField] private float _health = 25f;
         private bool _isDead;
         private float _localMoveSpeed;
         private float _localRotationSpeed;

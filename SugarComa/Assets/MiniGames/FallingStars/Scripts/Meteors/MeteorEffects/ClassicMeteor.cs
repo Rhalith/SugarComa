@@ -10,7 +10,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     {
         #region Properties
         private Vector3 _localScale;
-        private List<PlayerManager> _players;
+        private readonly List<PlayerManager> _players = new();
 
         #region SeralizeFields
         [SerializeField] private int _duration = 4;
@@ -39,8 +39,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             if (other.CompareTag("Player"))
             {
                 PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
-                print(playerManager);
-                //_players.Add(playerManager);
+                _players.Add(playerManager);
                 playerManager.StartNumerator(_meteor.Type, _damage);
             }
         }
@@ -49,7 +48,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             if (other.CompareTag("Player"))
             {
                 PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
-                //_players.Remove(playerManager);
+                _players.Remove(playerManager);
                 playerManager.StopNumerator(_meteor.Type, _damage);
             }
         }

@@ -2273,6 +2273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 15
   _rotationSpeed: 10
+  _health: 25
 --- !u!114 &986949775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2334,6 +2335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpec: {fileID: 986949774}
+  zort: 0
 --- !u!1001 &1030637332
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2783,7 +2785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1183745604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4361,6 +4363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 5
   _rotationSpeed: 10
+  _health: 0
 --- !u!143 &1859487284
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4842,7 +4845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &2108995751
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4902,6 +4905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 15
   _rotationSpeed: 10
+  _health: 25
 --- !u!114 &2108995755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4915,6 +4919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpec: {fileID: 2108995754}
+  zort: 0
 --- !u!114 &2108995756
 MonoBehaviour:
   m_ObjectHideFlags: 0

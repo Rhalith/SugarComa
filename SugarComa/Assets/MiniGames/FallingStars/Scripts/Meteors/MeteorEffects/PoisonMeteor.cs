@@ -9,7 +9,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     public class PoisonMeteor : MonoBehaviour
     {
         #region Properties
-        private List<PlayerManager> _players;
+        private readonly List<PlayerManager> _players = new();
         #region SeralizeFields
         [SerializeField] private int _duration = 3;
         [SerializeField] private int _poisonDuration = 5;

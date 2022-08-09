@@ -10,7 +10,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
     {
         #region Properties
         private Vector3 _localScale;
-        private readonly List<PlayerManager> _players;
+        private readonly List<PlayerManager> _players = new();
         #region SerializeFields
         [SerializeField] private int _duration = 4;
         [SerializeField] private float _damage;
