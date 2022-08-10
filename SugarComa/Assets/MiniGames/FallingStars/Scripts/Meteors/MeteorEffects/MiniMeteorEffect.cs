@@ -64,7 +64,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         private void ResetMeteor()
         {
-            print("minimeteor resetted");
             transform.localScale = _localScale;
             foreach (var player in _players)
             {

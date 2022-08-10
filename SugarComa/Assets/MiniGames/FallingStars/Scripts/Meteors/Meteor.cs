@@ -30,10 +30,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         #endregion
         #endregion
 
-        private void OnEnable()
-        {
-            CheckType(Type, _meteorMesh, _meteorRenderer);
-        }
+        //private void OnEnable()
+        //{
+        //    CheckType(Type, _meteorMesh, _meteorRenderer);
+        //}
         private void OnDisable()
         {
             OnMeteorHit(false);
@@ -58,6 +58,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     Type = MeteorType.sticky;
                     break;
             }
+            CheckType(Type, _meteorMesh, _meteorRenderer);
         }
         /// <summary>
         /// value => true for enable, value => false for disable

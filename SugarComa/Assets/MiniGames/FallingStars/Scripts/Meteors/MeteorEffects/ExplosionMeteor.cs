@@ -61,7 +61,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         private void ResetMeteor()
         {
-            print("explosionmeteor resetted");
             for (int i = 0; i < MiniObjects.Count; i++)
             {
                 MiniObjects[i].transform.localPosition = LocalPositions[i];

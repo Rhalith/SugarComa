@@ -57,7 +57,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         private void ResetMeteor()
         {
-            print("poisonmeteor resetted");
             foreach (var player in _players)
             {
                 player.StopNumerator(_meteor.Type);

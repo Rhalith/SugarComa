@@ -54,9 +54,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         }
         private void ResetMeteor()
         {
-            print("stickmeteor resetted");
             foreach (var player in _players)
             {
+                print("boþ ama girdi");
                 player.StopNumerator(_meteor.Type);
             }
             _players.Clear();
