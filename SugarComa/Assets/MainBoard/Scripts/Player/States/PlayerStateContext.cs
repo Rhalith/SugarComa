@@ -1,5 +1,7 @@
 ﻿using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Route;
+using Assets.MainBoard.Scripts.UI;
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
 using UnityEngine;
 
@@ -9,25 +11,20 @@ namespace Assets.MainBoard.Scripts.Player.States
     public class PlayerStateContext : MonoBehaviour
     {
         #region Serialize Field
-        
+
+        [SerializeField] private PlayerCollector _playerCollector;
+        //[SerializeField] private GameController _gameController;
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private Animator _animator;
         [SerializeField] private Rigidbody _rb;
-        [SerializeField] private PathTracker _pathTracker;
-        [SerializeField] private PathFinder _pathFinder;
-        [SerializeField] Cinemachine.CinemachineBrain cinemachineBrain;
-        [SerializeField] GameObject _dice;
+        [SerializeField] private GobletSelection _gobletSelection;
+        //[SerializeField] private Cinemachine.CinemachineBrain _cinemachineBrain;
         #endregion
 
         #region Private Members
 
-        private Platform _currentPlatform;
-        private PlayerInputAction _playerStateContext;
+        private PlayerInputAction _playerInput;
         private PlayerBaseState _currentState;
-        private PlayerStateFactory _factory;
-
-        private bool _readyToClear; // used to keep input in sync
-        private bool _clearNextTick = false;
         #endregion
 
         #region Properties
@@ -38,68 +35,41 @@ namespace Assets.MainBoard.Scripts.Player.States
             set => _currentState = value;
         }
         public Animator Animator => _animator;
-        public PathTracker PathTracker => _pathTracker;
-        public PathFinder PathFinder => _pathFinder;
-        public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
 
         /// <summary>
         /// if an animation or action will play to all players.
         /// </summary>
         public static bool canPlayersAct = true;
-        public Cinemachine.CinemachineBrain CineMachineBrain { set => cinemachineBrain = value; }
-        public GameObject Dice { get => _dice; }
+        //public Cinemachine.CinemachineBrain CineMachineBrain { set => _cinemachineBrain = value; }
+        //public GameController GameController { get => _gameController; set => _gameController = value; }
+        public PlayerCollector PlayerCollector => _playerCollector;
+        public GobletSelection GobletSelection => _gobletSelection;
         #endregion
 
         #region Move To PlayerData
 
         //TODO: Must move to playerData
-        public bool isMyTurn;
+        private bool _isMyTurn;
+        public bool IsMyTurn { get => _isMyTurn; set { _isMyTurn = enabled = value; } }
 
         #endregion
 
         private void Awake()
         {
             // Initialize the player inputs.
-            _playerStateContext = new PlayerInputAction();
-            _playerStateContext.MainBoard.Space.started += OnSpace;
-            _playerStateContext.MainBoard.Space.canceled += OnSpace;
+            InitializePlayerInputs();
 
-            _playerStateContext.MainBoard.A.started += OnAPressed;
-            _playerStateContext.MainBoard.A.canceled += OnAPressed;
-
-            _playerStateContext.MainBoard.D.started += OnDPressed;
-            _playerStateContext.MainBoard.D.canceled += OnDPressed;
-
-            _playerStateContext.MainBoard.Return.started += OnReturnPressed;
-            _playerStateContext.MainBoard.Return.canceled += OnReturnPressed;
-
-            _playerStateContext.MainBoard.I.started += OnIPressed;
-            _playerStateContext.MainBoard.I.canceled += OnIPressed;
-
-            _playerStateContext.MainBoard.M.started += OnMPressed;
-            _playerStateContext.MainBoard.M.canceled += OnMPressed;
-
-            _playerStateContext.MainBoard.Escape.started += OnEscapePressed;
-            _playerStateContext.MainBoard.Escape.canceled += OnEscapePressed;
-
-            _playerStateContext.MainBoard.Mouse.started += OnLeftMouseDown;
-            _playerStateContext.MainBoard.Mouse.canceled += OnLeftMouseDown;
+            InitializeStates();
         }
 
         private void Start()
         {
-            // create factory instance.
-            _factory = new PlayerStateFactory(this, _playerData);
-            // set current state to landing.
-            _currentState = _factory.Landing;
+            //_gameController.ChangeText();
+            //_gameController.ChangeInventory();
         }
 
         private void Update()
         {
-            _clearNextTick = false;
-
-            ClearInputs();
-
             if (GameManager.IsGameOver) return;
 
             /* TODO
@@ -107,32 +77,71 @@ namespace Assets.MainBoard.Scripts.Player.States
             {
             }
             */
+            _currentState.Update();
         }
 
         private void FixedUpdate()
         {
-            _readyToClear = true;
-
-            // make sure inputs cleared.
-            // only if fixed update being called more than update.
-            if (_clearNextTick)
-            {
-                ClearInputs();
-                _clearNextTick = false;
-            }
-            _clearNextTick = true;
-
             _currentState.FixedUpdate();
         }
 
+        private void InitializePlayerInputs()
+        {
+            _playerInput = new PlayerInputAction();
+            _playerInput.MainBoard.Space1.started += OnSpace;
+            _playerInput.MainBoard.Space1.canceled += OnSpace;
+
+            _playerInput.MainBoard.A.started += OnAPressed;
+            _playerInput.MainBoard.A.canceled += OnAPressed;
+
+            _playerInput.MainBoard.D.started += OnDPressed;
+            _playerInput.MainBoard.D.canceled += OnDPressed;
+
+            _playerInput.MainBoard.Return.started += OnReturnPressed;
+            _playerInput.MainBoard.Return.canceled += OnReturnPressed;
+
+            _playerInput.MainBoard.I.started += OnIPressed;
+            _playerInput.MainBoard.I.canceled += OnIPressed;
+
+            _playerInput.MainBoard.M.started += OnMPressed;
+            _playerInput.MainBoard.M.canceled += OnMPressed;
+
+            _playerInput.MainBoard.Escape.started += OnEscapePressed;
+            _playerInput.MainBoard.Escape.canceled += OnEscapePressed;
+
+            _playerInput.MainBoard.Mouse.started += OnLeftMouseDown;
+            _playerInput.MainBoard.Mouse.canceled += OnLeftMouseDown;
+        }
+
+        #region States
+        [SerializeField] private PlayerIdleState _playerIdle;
+        [SerializeField] private PlayerDiceState _playerDice;
+        [SerializeField] private PlayerRunningState _playerRunning;
+        [SerializeField] private PlayerLandingState _playerLanding;
+        public PlayerIdleState Idle => _playerIdle;
+        public PlayerDiceState Dice => _playerDice;
+        public PlayerRunningState Running => _playerRunning;
+        public PlayerLandingState Land => _playerLanding;
+
+        private void InitializeStates()
+        {
+            _playerIdle = new PlayerIdleState(this, _playerData, "idle");
+            _playerLanding = new PlayerLandingState(this, _playerData, "landing");
+            _playerRunning = new PlayerRunningState(this, _playerData, "running");
+
+            // set current state to landing.
+            _currentState = _playerLanding;
+        }
+        #endregion
+
         #region Running
-        
+
         private bool _spacePressed;
         public bool SpacePressed => _spacePressed;
 
         private void OnSpace(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _spacePressed = obj.ReadValue<bool>();
+            _spacePressed = obj.ReadValueAsButton();
         }
         #endregion
 
@@ -212,35 +221,18 @@ namespace Assets.MainBoard.Scripts.Player.States
         }
         #endregion
 
-        private void ClearInputs()
-        {
-            //If we're not ready to clear input, return
-            if (!_readyToClear) return;
-
-            //Reset all inputs
-            _spacePressed = false;
-            _selectLeftPressed = false;
-            _selectRightPressed = false;
-            _applySelectPressed = false;
-            _openInventory = false;
-            _closeUI = false;
-            _openMap = false;
-
-            _readyToClear = false;
-        }
-
         public void AnimationStarted() { _currentState.AnimationStarted(); }
         public void AnimationEnded() { _currentState.AnimationEnded(); }
 
         #region Enabling / Disabling
         private void OnEnable()
         {
-            _playerStateContext.Enable();
+            _playerInput.Enable();
         }
 
         private void OnDisable()
         {
-            _playerStateContext.Disable();
+            _playerInput.Disable();
         }
         #endregion
     }

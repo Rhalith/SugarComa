@@ -35,10 +35,14 @@ namespace Assets.MainBoard.Scripts.GameManaging
         #endregion
 
         #region HideInInspectors
-        [HideInInspector] public PlayerStateContext currentPlayerStateContext;
+        public PlayerStateContext currentPlayerStateContext;
         [HideInInspector] public PlayerInventory currentPlayerInventory;
         [HideInInspector] public PlayerCollector currentPlayerCollector;
         [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
+        #endregion
+
+        #region Properties
+        public MapCamera MapCamera => _mapCamera;
         #endregion
 
         public Steamworks.SteamId[] _playerQueue;
@@ -81,7 +85,13 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 _mapCam.player = _createdObject.transform.GetChild(1).transform;
 
+                currentPlayerStateContext = _createdObject.transform.GetChild(1).transform.GetChild(1).GetComponent<PlayerStateContext>();
+                currentPlayerStateContext.Idle.MapCamera = _mapCam;
+                currentPlayerStateContext.Running.PathFinder = _pathFinder;
+                currentPlayerStateContext.Running.PathTracker = _createdObject.transform.GetChild(1).GetComponent<PathTracker>();
+                currentPlayerStateContext.Running.InitializePathTracker();
 
+                /*
                 ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
                 SetPlayerInput(sckeeper);
                 SetPlayerCollector(sckeeper);
@@ -90,7 +100,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 SetPlayerMovement(sckeeper);
                 SetGobletSelection(sckeeper);
                 SetPlayerSpec(sckeeper, ++playerCount);
-            }   
+                */
+            }
             else
             {
                 _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
@@ -144,8 +155,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
             if (NetworkManager.Instance.Index == index)
             {
-                currentPlayerStateContext.isMyTurn = true;
-                currentPlayerStateContext.Dice.SetActive(true);
+                currentPlayerStateContext.IsMyTurn = true;
             }
 
             CinemachineVirtualCamera current = NetworkManager.Instance.playerList.ElementAt(prev).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
@@ -179,10 +189,11 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="keeper"></param>
         private void SetPlayerMovement(ScriptKeeper keeper)
         {
-            keeper._playerMovement.MapCamera = _mapCamera;
-            keeper._playerMovement.PathFinder = _pathFinder;
-            keeper._playerMovement.CurrentPlatform = _startplatform;
+            keeper._playerStateContext.Idle.MapCamera = _mapCamera;
+            /*
+            keeper._playerStateContext.RU.PathFinder = _pathFinder;
             keeper._playerMovement.GameController = _gameController;
+            */
         }
 
         /// <summary>
@@ -191,7 +202,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="keeper"></param>
         private void SetPlayerInput(ScriptKeeper keeper)
         {
-            keeper._playerStateContext.CineMachineBrain = _cinemachineBrain;
+            //keeper._playerStateContext.CineMachineBrain = _cinemachineBrain;
         }
 
         /// <summary>

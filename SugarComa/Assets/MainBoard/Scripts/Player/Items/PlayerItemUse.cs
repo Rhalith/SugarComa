@@ -42,7 +42,7 @@ namespace Assets.MainBoard.Scripts.Player.Items
         }
         private void FixedUpdate()
         {
-            if (ItemPool._isItemUsing && _playerStateContext.isMyTurn)
+            if (ItemPool._isItemUsing && _playerStateContext.IsMyTurn)
             {
                 if (ItemUsing.BoxGlovesUsing)
                 {

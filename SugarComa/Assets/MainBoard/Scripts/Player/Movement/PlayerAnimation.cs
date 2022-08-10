@@ -61,12 +61,12 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             if (jump == 0)
             {
                 _dice.SetActive(false);
-                _playerMovement.DiceText.enabled = true;
+                //_playerMovement.DiceText.enabled = true;
                 IEnumerator waitForCloseText()
                 {
                     yield return null;
                     yield return new WaitForSeconds(0.5f);
-                    _playerMovement.DiceText.enabled = false;
+                    //_playerMovement.DiceText.enabled = false;
                 }
                 StartCoroutine(waitForCloseText());
             }
@@ -81,13 +81,14 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
             _animator.SetBool("landing", landing != 0);
             _land = landing != 0;
+            /*
             if (_playerMovement.PlayerCollector.isDead && landing == 0)
             {
                 DeathSet(0);
                 _playerMovement.PlayerCollector.isDead = false;
                 _scriptKeeper._playerCamera.Priority = 1;
             }
-
+            */
 
             // TODO: Düzgün çalýþtýðýndan emin deðilim....
             // Host olup olmamaya göre ayýrmak lazým...

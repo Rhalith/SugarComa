@@ -28,13 +28,13 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
             ""id"": ""ead05179-b5c7-47ac-9216-abbd068680d8"",
             ""actions"": [
                 {
-                    ""name"": ""Space"",
-                    ""type"": ""Button"",
+                    ""name"": ""Space1"",
+                    ""type"": ""Value"",
                     ""id"": ""23d11112-eb60-44d3-84c4-f0d33bbe39ee"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""A"",
@@ -108,7 +108,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Space"",
+                    ""action"": ""Space1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -196,7 +196,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
 }");
         // MainBoard
         m_MainBoard = asset.FindActionMap("MainBoard", throwIfNotFound: true);
-        m_MainBoard_Space = m_MainBoard.FindAction("Space", throwIfNotFound: true);
+        m_MainBoard_Space1 = m_MainBoard.FindAction("Space1", throwIfNotFound: true);
         m_MainBoard_A = m_MainBoard.FindAction("A", throwIfNotFound: true);
         m_MainBoard_D = m_MainBoard.FindAction("D", throwIfNotFound: true);
         m_MainBoard_Return = m_MainBoard.FindAction("Return", throwIfNotFound: true);
@@ -263,7 +263,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     // MainBoard
     private readonly InputActionMap m_MainBoard;
     private IMainBoardActions m_MainBoardActionsCallbackInterface;
-    private readonly InputAction m_MainBoard_Space;
+    private readonly InputAction m_MainBoard_Space1;
     private readonly InputAction m_MainBoard_A;
     private readonly InputAction m_MainBoard_D;
     private readonly InputAction m_MainBoard_Return;
@@ -275,7 +275,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     {
         private @PlayerInputAction m_Wrapper;
         public MainBoardActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Space => m_Wrapper.m_MainBoard_Space;
+        public InputAction @Space1 => m_Wrapper.m_MainBoard_Space1;
         public InputAction @A => m_Wrapper.m_MainBoard_A;
         public InputAction @D => m_Wrapper.m_MainBoard_D;
         public InputAction @Return => m_Wrapper.m_MainBoard_Return;
@@ -292,9 +292,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_MainBoardActionsCallbackInterface != null)
             {
-                @Space.started -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnSpace;
-                @Space.performed -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnSpace;
-                @Space.canceled -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnSpace;
+                @Space1.started -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnSpace1;
+                @Space1.performed -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnSpace1;
+                @Space1.canceled -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnSpace1;
                 @A.started -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnA;
                 @A.performed -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnA;
                 @A.canceled -= m_Wrapper.m_MainBoardActionsCallbackInterface.OnA;
@@ -320,9 +320,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
             m_Wrapper.m_MainBoardActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Space.started += instance.OnSpace;
-                @Space.performed += instance.OnSpace;
-                @Space.canceled += instance.OnSpace;
+                @Space1.started += instance.OnSpace1;
+                @Space1.performed += instance.OnSpace1;
+                @Space1.canceled += instance.OnSpace1;
                 @A.started += instance.OnA;
                 @A.performed += instance.OnA;
                 @A.canceled += instance.OnA;
@@ -350,7 +350,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     public MainBoardActions @MainBoard => new MainBoardActions(this);
     public interface IMainBoardActions
     {
-        void OnSpace(InputAction.CallbackContext context);
+        void OnSpace1(InputAction.CallbackContext context);
         void OnA(InputAction.CallbackContext context);
         void OnD(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);

@@ -2,7 +2,7 @@
 {
     public class PlayerLandingState : PlayerBaseState
     {
-        public PlayerLandingState(PlayerStateContext context, PlayerData playerData, PlayerStateFactory factory, string animBoolName) : base(context, playerData, factory, animBoolName)
+        public PlayerLandingState(PlayerStateContext context, PlayerData playerData, string animBoolName) : base(context, playerData, animBoolName)
         {
         }
 
@@ -10,7 +10,7 @@
         // ?? We didn't call this method
         public override void AnimationEnded()
         {
-            SwitchState(factory.Idle);
+            SwitchState(context.Idle);
         }
     }
 }

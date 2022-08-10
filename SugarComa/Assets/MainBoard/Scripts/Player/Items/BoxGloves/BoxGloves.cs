@@ -59,8 +59,8 @@ namespace Assets.MainBoard.Scripts.Player.Items.BoxGloves
             }
             otherPlayersCollector.Clear();
             _itemObject.RemoveItem();
-            _playerMovement.GameController.ChangeInventory();
-            _playerMovement.isUserInterfaceActive = false;
+            // TODO:
+            //_playerMovement.GameController.ChangeInventory();
             _itemPool.CloseItem();
         }
 

@@ -62,7 +62,8 @@ namespace Assets.MainBoard.Scripts.Route
             if(index == -1)
                 index = Random.Range(0, platforms.Count);
 
-            if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector && !platforms[index].isPlayerInPlatform)
+            // TODO: Check if player in that platform with currentplatform
+            if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector)
             {
                 if(_currentPlatform != null && platforms[index] == _currentPlatform)
                 {

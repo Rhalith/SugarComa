@@ -4207,7 +4207,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4120892788481720714}
-  - component: {fileID: 9092802037901078777}
   - component: {fileID: 4120892788481720719}
   - component: {fileID: 4120892788481720712}
   - component: {fileID: 4120892788481720713}
@@ -4240,27 +4239,6 @@ Transform:
   m_Father: {fileID: 3886626679076762459}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &9092802037901078777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4120892788481720715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d6275441ed283944bee082cccb35abd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerData: {fileID: 0}
-  _animator: {fileID: 4120892787933790878}
-  _rb: {fileID: 5019937161402794153}
-  _pathTracker: {fileID: 4120892788481720719}
-  _pathFinder: {fileID: 0}
-  cinemachineBrain: {fileID: 0}
-  _dice: {fileID: 7986056786197168510}
-  isMyTurn: 0
-  SpacePressed: 0
 --- !u!114 &4120892788481720719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4289,24 +4267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c814e38117cb9444d88b62804941bcc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentStep: 0
-  goalStep: 5
-  maximumStep: 3
-  isDiceRolled: 0
-  isUserInterfaceActive: 0
-  _itemPool: {fileID: 4120892788034233094}
-  _mapCamera: {fileID: 0}
-  _pathFinder: {fileID: 0}
-  _pathTracker: {fileID: 4120892788481720719}
-  _playerStateContext: {fileID: 0}
-  _currentPlatform: {fileID: 0}
-  _gameController: {fileID: 0}
-  _playerCollector: {fileID: 4120892788481720713}
-  _playerInventory: {fileID: 4120892788481720717}
-  _playerAnimation: {fileID: 4120892787933790877}
-  _gobletSelection: {fileID: 4120892788315320753}
-  _diceText: {fileID: 3643661254280034090}
-  _dice: {fileID: 7986056786197168510}
 --- !u!114 &4120892788481720713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4725,7 +4685,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7785236, y: 1}
+    m_SensorSize: {x: 1.7784432, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5810,7 +5770,7 @@ MonoBehaviour:
   _gobletSelection: {fileID: 4120892788315320753}
   _playerAnimation: {fileID: 4120892787933790877}
   _goalSelector: {fileID: 0}
-  _playerStateContext: {fileID: 0}
+  _playerStateContext: {fileID: 3994039499720399007}
   _playerInventory: {fileID: 4120892788481720717}
   _currentUI: {fileID: 4120892787982766272}
   playerGold: {fileID: 4120892787917468866}
@@ -6975,6 +6935,35 @@ MonoBehaviour:
   _goalSelector: {fileID: 0}
   _ragdollOnOff: {fileID: 0}
   _dice: {fileID: 7986056786197168510}
+--- !u!114 &3994039499720399007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886945101997239710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6275441ed283944bee082cccb35abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCollector: {fileID: 4120892788481720713}
+  _playerData: {fileID: 0}
+  _animator: {fileID: 4120892787933790878}
+  _rb: {fileID: 5019937161402794153}
+  _gobletSelection: {fileID: 4120892788315320753}
+  _playerIdle:
+    _itemPool: {fileID: 4120892788034233094}
+    _mapCamera: {fileID: 0}
+    _playerInventory: {fileID: 4120892788481720717}
+  _playerDice:
+    _dice: {fileID: 7986056786197168510}
+    _diceText: {fileID: 3643661254280034090}
+  _playerRunning:
+    _pathTracker: {fileID: 4120892788481720719}
+    _currentPlatform: {fileID: 0}
+    _currentStep: 0
+    _pathFinder: {fileID: 0}
 --- !u!1 &4195898190158683059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9004233853494326404, guid: 7fca060d96bb7b548af373fad492934c, type: 3}

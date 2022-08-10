@@ -1,26 +1,92 @@
-﻿using Assets.MainBoard.Scripts.Route;
+﻿using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.Utils.PlatformUtils;
+using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
+    [System.Serializable]
     public class PlayerRunningState : PlayerBaseState
     {
+        #region Private Members
+        [SerializeField] private PathTracker _pathTracker;
+        [SerializeField] private Platform _currentPlatform;
+        [SerializeField] private int _currentStep;
+        [SerializeField] private PathFinder _pathFinder;
+        #endregion
 
-        public PlayerRunningState(PlayerStateContext context, PlayerData playerData, PlayerStateFactory factory, string animBoolName) : base(context, playerData, factory, animBoolName)
+        #region Properties
+        public PathFinder PathFinder { get => _pathFinder; set => _pathFinder = value; }
+        public PathTracker PathTracker { get => _pathTracker; set => _pathTracker = value; }
+        public int CurrentStep { get => _currentStep; set => _currentStep = value; }
+        public RouteSelectorDirection SelectorDir { get; set; } = RouteSelectorDirection.None;
+        public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
+        #endregion
+
+        public PlayerRunningState(PlayerStateContext context, PlayerData playerData, string animBoolName) : base(context, playerData, animBoolName)
         {
+            
         }
+
+
+        #region Pathtracker
+        public void InitializePathTracker()
+        {
+            _pathTracker.OnTrackingStarted += OnTrackingStarted;
+            _pathTracker.OnCurrentPlatformChanged += OnCurrentPlatformChanged;
+            _pathTracker.OnTrackingStopped += OnTrackingStopped;
+        }
+
+        private void OnTrackingStarted()
+        {
+            SwitchState(context.Running);
+        }
+
+        private void OnCurrentPlatformChanged()
+        {
+            var current = _pathTracker.CurrentPlatform;
+            if (current != null)
+            {
+                if (_pathTracker.Next != null)
+                {
+                    NetworkData networkData =
+                        new NetworkData(MessageType.InputDown, _pathTracker.Next.position);
+                    SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
+
+                    _currentPlatform = current;
+                    _currentStep--;
+                }
+                else
+                {
+                    _currentPlatform = current;
+                    _currentStep--;
+                }
+            }
+        }
+
+        private void OnTrackingStopped()
+        {
+            SwitchState(context.Idle);
+        }
+        #endregion
 
         public override void Enter()
         {
             base.Enter();
 
-            // Yab
+            _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep, SelectorDir), PlatformSpec.Goal, _currentPlatform.HasSelector);
         }
 
         public override void Exit()
         {
-            // Yab
+            context.PlayerCollector.CheckCurrentNode(_currentPlatform);
 
+            if (_currentStep <= 0)
+            {
+                context.IsMyTurn = false;
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index, MessageType.TurnOver)));
+            }
 
             base.Exit();
         }

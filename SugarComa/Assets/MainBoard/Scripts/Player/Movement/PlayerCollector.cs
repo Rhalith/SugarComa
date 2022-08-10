@@ -39,7 +39,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
                 case PlatformSpec.Jackpot: RandomJackpot(5); break;
                 case PlatformSpec.Goal: GobletSelection(); break;
             }
-            platform.isPlayerInPlatform = true;
         }
         /// <summary>
         /// Adding value to player's gold
@@ -135,7 +134,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         }
         void GobletSelection()
         {
-            _playerMovement.isUserInterfaceActive = true;
             _gobletSelection.OpenGobletSelection();
         }
 

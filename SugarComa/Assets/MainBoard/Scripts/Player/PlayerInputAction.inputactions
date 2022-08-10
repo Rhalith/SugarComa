@@ -6,13 +6,13 @@
             "id": "ead05179-b5c7-47ac-9216-abbd068680d8",
             "actions": [
                 {
-                    "name": "Space",
-                    "type": "Button",
+                    "name": "Space1",
+                    "type": "Value",
                     "id": "23d11112-eb60-44d3-84c4-f0d33bbe39ee",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "A",
@@ -86,7 +86,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Space",
+                    "action": "Space1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

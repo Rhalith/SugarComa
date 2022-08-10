@@ -7,17 +7,15 @@ namespace Assets.MainBoard.Scripts.Player.States
     {
         protected readonly PlayerStateContext context;
         protected readonly PlayerData playerData;
-        protected readonly PlayerStateFactory factory;
         protected readonly string animBoolName;
         protected readonly int animBoolHash;
         protected bool sendData;
         
-        public PlayerBaseState(PlayerStateContext context, PlayerData playerData, PlayerStateFactory factory, string animBoolName, bool sendData = true)
+        public PlayerBaseState(PlayerStateContext context, PlayerData playerData, string animBoolName, bool sendData = true)
         {
             this.context = context;
             this.playerData = playerData;
             this.animBoolName = animBoolName;
-            this.factory = factory;
             this.sendData = sendData;
             animBoolHash = Animator.StringToHash(animBoolName);
         }
@@ -47,27 +45,24 @@ namespace Assets.MainBoard.Scripts.Player.States
             context.Animator.SetBool(animBoolHash, false);
         }
 
-        public virtual void Start()
-        {
-
-        }
         public virtual void Update()
-        {
-
-        }
-
-        public virtual void FixedUpdate()
         {
             CheckStateChanges();
         }
 
+        public virtual void FixedUpdate()
+        {
+            CheckPhysicsStateChanges();
+        }
+
+        public virtual void CheckPhysicsStateChanges() { }
         public virtual void CheckStateChanges() { }
 
         public virtual void AnimationStarted() { }
 
         public virtual void AnimationEnded() 
         {
-            SwitchState(factory.Idle);
+
         }
     }
 }

@@ -77,7 +77,7 @@ namespace Assets.MainBoard.Scripts.Player.Utils
             yield return null;
             yield return new WaitForSeconds(2f);
             RagDollOff();
-            _playerMovement.OnDeath();
+            //_playerMovement.OnDeath();
         }
     }
 }
