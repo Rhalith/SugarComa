@@ -58,12 +58,12 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             // Initialize the player inputs.
             InitializePlayerInputs();
-
             InitializeStates();
         }
 
         private void Start()
         {
+            _currentState.Enter();
             //_gameController.ChangeText();
             //_gameController.ChangeInventory();
         }
@@ -115,19 +115,18 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         #region States
         [SerializeField] private PlayerIdleState _playerIdle;
-        [SerializeField] private PlayerDiceState _playerDice;
         [SerializeField] private PlayerRunningState _playerRunning;
         [SerializeField] private PlayerLandingState _playerLanding;
         public PlayerIdleState Idle => _playerIdle;
-        public PlayerDiceState Dice => _playerDice;
         public PlayerRunningState Running => _playerRunning;
         public PlayerLandingState Land => _playerLanding;
 
         private void InitializeStates()
         {
-            _playerIdle = new PlayerIdleState(this, _playerData, "idle");
-            _playerLanding = new PlayerLandingState(this, _playerData, "landing");
-            _playerRunning = new PlayerRunningState(this, _playerData, "running");
+            _playerIdle.Initialize(this, _playerData, "idle");
+            _playerIdle.Dice.Initialize(this, _playerData, "");
+            _playerLanding.Initialize(this, _playerData, "landing");
+            _playerRunning.Initialize(this, _playerData, "running");
 
             // set current state to landing.
             _currentState = _playerLanding;
@@ -152,7 +151,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnAPressed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _selectLeftPressed = obj.ReadValue<bool>();
+            _selectLeftPressed = obj.ReadValueAsButton();
         }
 
         // D
@@ -161,7 +160,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnDPressed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _selectRightPressed = obj.ReadValue<bool>();
+            _selectRightPressed = obj.ReadValueAsButton();
         }
 
         // Return
@@ -170,7 +169,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnReturnPressed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _applySelectPressed = obj.ReadValue<bool>();
+            _applySelectPressed = obj.ReadValueAsButton();
         }
         #endregion
 
@@ -181,7 +180,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnIPressed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _openInventory = obj.ReadValue<bool>();
+            _openInventory = obj.ReadValueAsButton();
         }
 
         #endregion
@@ -193,7 +192,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnMPressed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _openMap = obj.ReadValue<bool>();
+            _openMap = obj.ReadValueAsButton();
         }
         #endregion
 
@@ -204,7 +203,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnEscapePressed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _closeUI = obj.ReadValue<bool>();
+            _closeUI = obj.ReadValueAsButton();
         }
         #endregion
 
@@ -217,7 +216,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         }
         private void OnLeftMouseDown(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            _closeUI = obj.ReadValue<bool>();
+            _closeUI = obj.ReadValueAsButton();
         }
         #endregion
 
@@ -233,6 +232,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         private void OnDisable()
         {
             _playerInput.Disable();
+            _playerIdle.Dice.Exit();
         }
         #endregion
     }

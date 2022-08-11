@@ -14,12 +14,14 @@ namespace Assets.MainBoard.Scripts.Player.States
         [SerializeField] private Platform _currentPlatform;
         [SerializeField] private int _currentStep;
         [SerializeField] private PathFinder _pathFinder;
+
+        private Platform[] _path;
         #endregion
 
         #region Properties
         public PathFinder PathFinder { get => _pathFinder; set => _pathFinder = value; }
         public PathTracker PathTracker { get => _pathTracker; set => _pathTracker = value; }
-        public int CurrentStep { get => _currentStep; set => _currentStep = value; }
+        public int CurrentStep { get => _currentStep; set { if (value == 0) _path = null; _currentStep = value; } }
         public RouteSelectorDirection SelectorDir { get; set; } = RouteSelectorDirection.None;
         public Platform CurrentPlatform { get => _currentPlatform; set => _currentPlatform = value; }
         #endregion
@@ -40,7 +42,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnTrackingStarted()
         {
-            SwitchState(context.Running);
+            
         }
 
         private void OnCurrentPlatformChanged()
@@ -55,19 +57,19 @@ namespace Assets.MainBoard.Scripts.Player.States
                     SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
 
                     _currentPlatform = current;
-                    _currentStep--;
+                    CurrentStep--;
                 }
                 else
                 {
                     _currentPlatform = current;
-                    _currentStep--;
+                    CurrentStep--;
                 }
             }
         }
 
         private void OnTrackingStopped()
         {
-            SwitchState(context.Idle);
+            SwitchState(Context.Idle);
         }
         #endregion
 
@@ -75,16 +77,21 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             base.Enter();
 
-            _pathTracker.StartTracking(_pathFinder.ToSelector(_currentPlatform, _currentStep, SelectorDir), PlatformSpec.Goal, _currentPlatform.HasSelector);
+            _path = _pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal, _currentStep);
+
+            if (_path == null)
+                SwitchState(Context.Idle);
+
+            _pathTracker.StartTracking(_path, PlatformSpec.Goal, _currentPlatform.HasSelector, _currentStep);
         }
 
         public override void Exit()
         {
-            context.PlayerCollector.CheckCurrentNode(_currentPlatform);
+            Context.PlayerCollector.CheckCurrentNode(_currentPlatform);
 
             if (_currentStep <= 0)
             {
-                context.IsMyTurn = false;
+                Context.IsMyTurn = false;
                 SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index, MessageType.TurnOver)));
             }
 

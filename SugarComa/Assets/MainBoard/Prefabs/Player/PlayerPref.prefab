@@ -6911,6 +6911,35 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3994039499720399007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886945101997239710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6275441ed283944bee082cccb35abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCollector: {fileID: 4120892788481720713}
+  _playerData: {fileID: 0}
+  _animator: {fileID: 4120892787933790878}
+  _rb: {fileID: 5019937161402794153}
+  _gobletSelection: {fileID: 4120892788315320753}
+  _playerIdle:
+    _itemPool: {fileID: 4120892788034233094}
+    _mapCamera: {fileID: 0}
+    _playerInventory: {fileID: 4120892788481720717}
+    _dice:
+      _dice: {fileID: 7986056786197168510}
+      _diceText: {fileID: 3643661254280034090}
+  _playerRunning:
+    _pathTracker: {fileID: 4120892788481720719}
+    _currentPlatform: {fileID: 0}
+    _currentStep: 0
+    _pathFinder: {fileID: 0}
 --- !u!114 &4120892787933790877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6935,35 +6964,6 @@ MonoBehaviour:
   _goalSelector: {fileID: 0}
   _ragdollOnOff: {fileID: 0}
   _dice: {fileID: 7986056786197168510}
---- !u!114 &3994039499720399007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3886945101997239710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d6275441ed283944bee082cccb35abd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerCollector: {fileID: 4120892788481720713}
-  _playerData: {fileID: 0}
-  _animator: {fileID: 4120892787933790878}
-  _rb: {fileID: 5019937161402794153}
-  _gobletSelection: {fileID: 4120892788315320753}
-  _playerIdle:
-    _itemPool: {fileID: 4120892788034233094}
-    _mapCamera: {fileID: 0}
-    _playerInventory: {fileID: 4120892788481720717}
-  _playerDice:
-    _dice: {fileID: 7986056786197168510}
-    _diceText: {fileID: 3643661254280034090}
-  _playerRunning:
-    _pathTracker: {fileID: 4120892788481720719}
-    _currentPlatform: {fileID: 0}
-    _currentStep: 0
-    _pathFinder: {fileID: 0}
 --- !u!1 &4195898190158683059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9004233853494326404, guid: 7fca060d96bb7b548af373fad492934c, type: 3}

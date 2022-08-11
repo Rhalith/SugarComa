@@ -1,21 +1,15 @@
 ﻿using UnityEngine;
 
-namespace Assets.MainBoard.Scripts.Player.States
+namespace Assets.MainBoard.Scripts.Player.States.SubStates
 {
     [System.Serializable]
     public class PlayerDiceState : PlayerBaseState
     {
         #region Private Members
         [SerializeField] private GameObject _dice;
-
         [SerializeField] private TMPro.TMP_Text _diceText;
         #endregion
-
-
-        #region Properties
         public GameObject Dice => _dice;
-        public TMPro.TMP_Text DiceText { get => _diceText; }
-        #endregion
 
         public PlayerDiceState(PlayerStateContext context, PlayerData playerData, string animBoolName, bool sendData = true) : base(context, playerData, animBoolName, sendData)
         {
@@ -23,19 +17,19 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         public override void Enter()
         {
-            base.Enter();
-
             _dice.SetActive(true);
+        }
+
+        public void RollDice()
+        {
             int tempStep = Random.Range(1, 10);
-            context.Running.CurrentStep = tempStep;
-            _diceText.text = tempStep.ToString(); 
+            Context.Running.CurrentStep = tempStep;
+            _diceText.text = tempStep.ToString();
         }
 
         public override void Exit()
         {
             _dice.SetActive(false);
-
-            base.Exit();
         }
     }
 }

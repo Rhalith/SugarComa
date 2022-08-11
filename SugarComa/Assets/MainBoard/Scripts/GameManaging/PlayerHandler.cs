@@ -34,6 +34,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [SerializeField] MapCamera _mapCam;
         #endregion
 
+
+        // TODO: bunlar player'lara göre değişiyodu şu an ana player'a bağlı olacaklar bu nedenle create'te tanımlanmalılar.
         #region HideInInspectors
         public PlayerStateContext currentPlayerStateContext;
         [HideInInspector] public PlayerInventory currentPlayerInventory;
@@ -85,22 +87,31 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 _mapCam.player = _createdObject.transform.GetChild(1).transform;
 
+                ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
                 currentPlayerStateContext = _createdObject.transform.GetChild(1).transform.GetChild(1).GetComponent<PlayerStateContext>();
                 currentPlayerStateContext.Idle.MapCamera = _mapCam;
+                currentPlayerStateContext.Running.CurrentPlatform = _startplatform;
                 currentPlayerStateContext.Running.PathFinder = _pathFinder;
                 currentPlayerStateContext.Running.PathTracker = _createdObject.transform.GetChild(1).GetComponent<PathTracker>();
                 currentPlayerStateContext.Running.InitializePathTracker();
+
+                // TODO: Bu class'ın yeniden oluşturulması lazım.
+                currentPlayerCollector = sckeeper._playerCollector;
+                currentPlayerCollector.GameController = _gameController;
+                ChangeCurrentUIElements(sckeeper.playerGold, sckeeper.playerHealth, sckeeper.playerGoblet);
+                ChangeCurrentScripts(sckeeper._playerStateContext, sckeeper._playerCollector, sckeeper._playerInventory);
+
+                currentPlayerStateContext.Land.GoalSelector = _goalSelector;
 
                 /*
                 ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
                 SetPlayerInput(sckeeper);
                 SetPlayerCollector(sckeeper);
-                ChangeCurrentScripts(sckeeper._playerStateContext, sckeeper._playerCollector, sckeeper._playerInventory);
-                ChangeCurrentUIElements(sckeeper.playerGold, sckeeper.playerHealth, sckeeper.playerGoblet);
                 SetPlayerMovement(sckeeper);
                 SetGobletSelection(sckeeper);
                 SetPlayerSpec(sckeeper, ++playerCount);
                 */
+
             }
             else
             {

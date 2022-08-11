@@ -89,16 +89,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
                 _scriptKeeper._playerCamera.Priority = 1;
             }
             */
-
-            // TODO: Düzgün çalýþtýðýndan emin deðilim....
-            // Host olup olmamaya göre ayýrmak lazým...
-            // Burayý
-
-            if (SteamManager.Instance.currentLobby.Owner.Id == SteamManager.Instance.PlayerSteamId && !GoalSelector.isAnyGoalPlatform && landing == 0)
-            {
-                _goalSelector.RandomGoalSelect(-1);
-                _dice.SetActive(true);
-            }
         }
 
         /// <summary>

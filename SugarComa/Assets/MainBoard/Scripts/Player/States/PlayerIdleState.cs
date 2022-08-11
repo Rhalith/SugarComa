@@ -9,6 +9,7 @@ using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.UI;
 using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Player.States.SubStates;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -33,28 +34,32 @@ namespace Assets.MainBoard.Scripts.Player.States
         public MapCamera MapCamera { set => _mapCamera = value; }
         #endregion
 
+        #region SubStates
+        [SerializeField] private PlayerDiceState _dice;
+        public PlayerDiceState Dice => _dice;
+        #endregion
+
         public PlayerIdleState(PlayerStateContext context, PlayerData playerData, string animBoolName) : base(context, playerData, animBoolName)
         {
             // TODO
             context.GobletSelection.OnTakeIt += GobletSelection_OnTakeIt;
             context.GobletSelection.OnLeaveIt += GobletSelection_OnLeaveIt;
-
         }
 
         public override void Enter()
         {
             base.Enter();
-            _currentStep = context.Running.CurrentStep;
-            _currentPlatform = context.Running.CurrentPlatform;
+            _currentStep = Context.Running.CurrentStep;
+            _currentPlatform = Context.Running.CurrentPlatform;
+
+            if(_currentStep == 0)
+            {
+                _dice.Enter();
+            }
     }
 
         public override void Update()
         {
-            if (_currentStep > 0 && _currentPlatform.HasSelector)
-            {
-                ProcessSelect();
-            }
-
             ProcessUI();
             base.Update();
         }
@@ -65,19 +70,19 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentPlatform.selector.left.SetActive(true);
             _currentPlatform.selector.right.SetActive(true);
 
-            if (context.SelectLeftPressed && leftPlatform.activeInHierarchy) 
+            if (Context.SelectLeftPressed && leftPlatform.activeInHierarchy) 
                 SelectPlatform(RouteSelectorDirection.Left);
-            else if (context.SelectRightPressed && rightPlatform.activeInHierarchy) 
+            else if (Context.SelectRightPressed && rightPlatform.activeInHierarchy) 
                 SelectPlatform(RouteSelectorDirection.Right);
 
-            if (context.ApplySelectPressed && _selectorDirection != RouteSelectorDirection.None)
+            if (Context.ApplySelectPressed && _selectorDirection != RouteSelectorDirection.None)
             {
                 RouteSelectorDirection temp = _selectorDirection;
                 SelectPlatform(RouteSelectorDirection.None, leftPlatform, rightPlatform);
-                context.Running.SelectorDir = temp;
+                Context.Running.SelectorDir = temp;
 
-                SwitchState(context.Running);
-                context.Running.SelectorDir = RouteSelectorDirection.None;
+                SwitchState(Context.Running);
+                Context.Running.SelectorDir = RouteSelectorDirection.None;
             }
         }
 
@@ -94,20 +99,20 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void ProcessUI()
         {
-            if (context.OpenInventory)
+            if (Context.OpenInventory)
             {
                 _playerInventory.OpenInventory();
             }
-            else if (context.CloseUI && !ItemPool._isItemUsing)
+            else if (Context.CloseUI && !ItemPool._isItemUsing)
             {
                 _playerInventory.CloseInventory();
                 _mapCamera.SetCameraPriority(_mapCamera.cam, _mapCamera.mainCamera.Priority - 1, true);
             }
-            else if (context.OpenMap)
+            else if (Context.OpenMap)
             {
                 _mapCamera.SetCameraPriority(_mapCamera.cam, _mapCamera.mainCamera.Priority + 1);
             }
-            else if (context.CloseUI && ItemPool._isItemUsing)
+            else if (Context.CloseUI && ItemPool._isItemUsing)
             {
                 _itemPool.CloseItem();
             }
@@ -116,7 +121,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         #region Goblet Selectio events
         private void GobletSelection_OnLeaveIt()
         {
-            SwitchState(context.Running);
+            SwitchState(Context.Running);
         }
 
         private void GobletSelection_OnTakeIt()
@@ -124,23 +129,28 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentPlatform.ResetSpec();
             PlayerStateContext.canPlayersAct = true;
             // TODO: Dice state olabilir.
-            context.Running.CurrentStep = 0;
+            Context.Running.CurrentStep = 0;
         }
         #endregion
 
         public override void CheckStateChanges()
         {
-            // There is a jump state
-            // at first, we must check that state ended.
-            if (context.SpacePressed)
+            if (_currentStep > 0 && _currentPlatform.HasSelector)
             {
-                context.Running.CurrentStep = 5;
-                SwitchState(context.Running);
+                ProcessSelect();
             }
-
-            if (_currentStep <= 0 && context.SpacePressed)
+            else if (Context.SpacePressed)
             {
-                //SwitchState(context.Dice);
+                if (_currentStep <= 0)
+                {
+                    _dice.RollDice();
+                    _currentStep = Context.Running.CurrentStep;
+                    _dice.Exit();
+                }
+                else
+                {
+                    SwitchState(Context.Running);
+                }
             }
         }
     }

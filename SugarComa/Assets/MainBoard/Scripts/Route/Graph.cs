@@ -89,6 +89,7 @@ namespace Assets.MainBoard.Scripts.Route
         {
             var platforms = new List<Platform>();
 
+            // TODO: Hashset
             var keys = _platforms.Keys.ToArray();
             for (int i = 0; i < keys.Length; ++i)
             {
