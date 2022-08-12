@@ -73,9 +73,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         private void ThrowMiniMeteor(Rigidbody rig, int i)
         {
-            _explosionDistributionRatio = Random.Range(10, _maxExplosionRatio);
-            rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce, ForceMode.Force);
-            rig.velocity += new Vector3(rig.gameObject.transform.localPosition.x, 0, rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
+            _explosionDistributionRatio = Random.Range(4f,12f);
+           // rig.AddForce(rig.gameObject.transform.localPosition * _explosionForce,ForceMode.Force);
+           // rig.velocity += new Vector3(rig.gameObject.transform.localPosition.x, 0, rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
+           rig.velocity = new Vector3(rig.gameObject.transform.localPosition.x,rig.gameObject.transform.localPosition.y/(2f*_explosionDistributionRatio),rig.gameObject.transform.localPosition.z) * _explosionDistributionRatio;
             Vector3 distance = CalculateDistance(rig);
             SetObjectPosition(MiniShadows, i, distance, true);
             SetObjectPosition(MiniEffects, i, distance);
@@ -89,7 +90,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         private Vector3 CalculateDistance(Rigidbody rig)
         {
-            Vector3 distance = rig.velocity * 1.05f;
+            Vector3 distance = rig.velocity;
+            print("distance -> " + distance);
             distance += rig.transform.position;
             return distance;
         }

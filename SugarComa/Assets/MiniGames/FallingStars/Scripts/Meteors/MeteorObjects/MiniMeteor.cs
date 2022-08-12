@@ -24,7 +24,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Plane"))
+            if (other.CompareTag("MeteorShadow"))
             {
                 for (int i = 0; i < _explosionMeteor.MiniObjects.Count; i++)
                 {
