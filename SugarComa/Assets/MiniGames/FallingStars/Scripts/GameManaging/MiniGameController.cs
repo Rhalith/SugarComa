@@ -77,6 +77,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             {
                 float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
                 float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+                //float z = GetZValue(x,_borders._leftBorder.position.x);
+                print("x -> " + x + " z -> " + z);
                 Meteor instance = GetFromPool();
                 instance.transform.position = new Vector3(x, 0, z);
                 instance.MeteorShadow.SetActive(true);
@@ -84,6 +86,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 CheckMeteorPosition(instance, x, z);
                StartCoroutine(ActivateObject(instance));
             }
+        }
+
+        private float GetZValue(float x, float radius)
+        {
+            float zValue = Mathf.Pow((Mathf.Pow(radius, 2) - Mathf.Pow(x, 2)), 0.5f);
+            return Random.Range(-zValue,zValue);
         }
 
         private void CheckMeteorPosition(Meteor meteor, float x, float z)
