@@ -14,13 +14,13 @@ namespace Assets.MainBoard.Scripts.Player.Utils
         public PlayerMovement _playerMovement;
         public PlayerCollector _playerCollector;
         public GobletSelection _gobletSelection;
-        public PlayerAnimation _playerAnimation;
         public GoalSelector _goalSelector;
         public PlayerStateContext _playerStateContext;
         public PlayerInventory _playerInventory;
         public GameObject _currentUI;
         public TMP_Text playerGold, playerHealth, playerGoblet;
         public CinemachineVirtualCamera _playerCamera;
+        public Transform playerTransform;
         public PlayerUIParentSetter _playerUIParentSetter;
     }
 }

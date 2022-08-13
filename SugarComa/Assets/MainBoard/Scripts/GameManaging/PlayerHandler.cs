@@ -29,18 +29,18 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [SerializeField] MapCamera _mapCamera;
         [SerializeField] GameController _gameController;
         [SerializeField] GoalSelector _goalSelector;
+
+        // TODO: CinemachineBrain kullanılmıyo???
         [SerializeField] Cinemachine.CinemachineBrain _cinemachineBrain;
         [SerializeField] GameObject _playerSpecCanvas;
-        [SerializeField] MapCamera _mapCam;
         #endregion
 
 
-        // TODO: bunlar player'lara göre değişiyodu şu an ana player'a bağlı olacaklar bu nedenle create'te tanımlanmalılar.
         #region HideInInspectors
-        public PlayerStateContext currentPlayerStateContext;
-        [HideInInspector] public PlayerInventory currentPlayerInventory;
-        [HideInInspector] public PlayerCollector currentPlayerCollector;
-        [HideInInspector] public TMP_Text currentplayerGold, currentplayerHealth, currentplayerGoblet;
+        [HideInInspector] public PlayerStateContext mainPlayerStateContext;
+        [HideInInspector] public PlayerInventory mainPlayerInventory;
+        [HideInInspector] public PlayerCollector mainPlayerCollector;
+        [HideInInspector] public TMP_Text mainplayerGold, mainplayerHealth, mainplayerGoblet;
         #endregion
 
         #region Properties
@@ -81,37 +81,21 @@ namespace Assets.MainBoard.Scripts.GameManaging
             if (SteamManager.Instance.PlayerSteamId == id)
             {
                 _createdObject = Instantiate(_playerPrefab, playerParent.transform);
-                _mapCam.mainCamera = _createdObject.transform.GetChild(0).GetComponent<CinemachineVirtualCamera>();
-
                 _createdObject.transform.position = new Vector3(0, 0, 0);
 
-                _mapCam.player = _createdObject.transform.GetChild(1).transform;
+                // Script atamaları
+                ScriptKeeper scKeeper = _createdObject.GetComponent<ScriptKeeper>();
 
-                ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
-                currentPlayerStateContext = _createdObject.transform.GetChild(1).transform.GetChild(1).GetComponent<PlayerStateContext>();
-                currentPlayerStateContext.Idle.MapCamera = _mapCam;
-                currentPlayerStateContext.Running.CurrentPlatform = _startplatform;
-                currentPlayerStateContext.Running.PathFinder = _pathFinder;
-                currentPlayerStateContext.Running.PathTracker = _createdObject.transform.GetChild(1).GetComponent<PathTracker>();
-                currentPlayerStateContext.Running.InitializePathTracker();
+                UpdateMapCam(scKeeper);
+                SetScripts(scKeeper);
+                UpdateStateContext();
 
-                // TODO: Bu class'ın yeniden oluşturulması lazım.
-                currentPlayerCollector = sckeeper._playerCollector;
-                currentPlayerCollector.GameController = _gameController;
-                ChangeCurrentUIElements(sckeeper.playerGold, sckeeper.playerHealth, sckeeper.playerGoblet);
-                ChangeCurrentScripts(sckeeper._playerStateContext, sckeeper._playerCollector, sckeeper._playerInventory);
+                // TODO: Tracker zaten tanımlandığı için eventleri initialize edebiliriz running'de... (Silinebilir mi?)
+                mainPlayerStateContext.Running.InitializePathTracker();
 
-                currentPlayerStateContext.Land.GoalSelector = _goalSelector;
-
-                /*
-                ScriptKeeper sckeeper = _createdObject.GetComponent<ScriptKeeper>();
-                SetPlayerInput(sckeeper);
-                SetPlayerCollector(sckeeper);
-                SetPlayerMovement(sckeeper);
-                SetGobletSelection(sckeeper);
-                SetPlayerSpec(sckeeper, ++playerCount);
-                */
-
+                SetUIElements(scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
+                SetGobletSelection(scKeeper);            // ?   ///
+                SetPlayerSpec(scKeeper, ++playerCount);
             }
             else
             {
@@ -166,112 +150,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
             if (NetworkManager.Instance.Index == index)
             {
-                currentPlayerStateContext.IsMyTurn = true;
+                mainPlayerStateContext.IsMyTurn = true;
             }
 
             CinemachineVirtualCamera current = NetworkManager.Instance.playerList.ElementAt(prev).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
             CinemachineVirtualCamera next = NetworkManager.Instance.playerList.ElementAt(index).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
             ChangeCamPriority(current, next);
-        }
-
-        /// <summary>
-        /// Changes current input, UI, Cam specifications.
-        /// </summary>
-        /// <param name="scriptKeeper"></param>
-        /// <param name="previousKeep"></param>
-        private void ChangeCurrentSpecs(ScriptKeeper scriptKeeper, ScriptKeeper previousKeep)
-        {
-            ChangeUISpecs(scriptKeeper, previousKeep);
-        }
-
-        /// <summary>
-        /// Changes UI specifications.
-        /// </summary>
-        /// <param name="scriptKeeper"></param>
-        /// <param name="previousKeep"></param>
-        private void ChangeUISpecs(ScriptKeeper scriptKeeper, ScriptKeeper previousKeep)
-        {
-            ChangeCurrentUIElements(scriptKeeper.playerGold, scriptKeeper.playerHealth, scriptKeeper.playerGoblet);
-        }
-
-        /// <summary>
-        /// Sets player movement variables by using ScriptKeeper.
-        /// </summary>
-        /// <param name="keeper"></param>
-        private void SetPlayerMovement(ScriptKeeper keeper)
-        {
-            keeper._playerStateContext.Idle.MapCamera = _mapCamera;
-            /*
-            keeper._playerStateContext.RU.PathFinder = _pathFinder;
-            keeper._playerMovement.GameController = _gameController;
-            */
-        }
-
-        /// <summary>
-        /// Sets player input variables by using ScriptKeeper.
-        /// </summary>
-        /// <param name="keeper"></param>
-        private void SetPlayerInput(ScriptKeeper keeper)
-        {
-            //keeper._playerStateContext.CineMachineBrain = _cinemachineBrain;
-        }
-
-        /// <summary>
-        /// Sets player collector variables by using ScriptKeeper.
-        /// </summary>
-        /// <param name="keeper"></param>
-        private void SetPlayerCollector(ScriptKeeper keeper)
-        {
-            keeper._playerCollector.GameController = _gameController;
-        }
-
-        /// <summary>
-        /// Sets goblet selection variables by using ScriptKeeper.
-        /// </summary>
-        /// <param name="keeper"></param>
-        private void SetGobletSelection(ScriptKeeper keeper)
-        {
-            keeper._goalSelector = _goalSelector;
-            keeper._gobletSelection.GameController = _gameController;
-            keeper._gobletSelection.GoalSelector = _goalSelector;
-            keeper._gobletSelection.PathFinder = _pathFinder;
-            keeper._playerAnimation.GoalSelector = _goalSelector;
-        }
-
-        /// <summary>
-        /// Makes player UI child of _playerSpecCanvas for automatic line up.
-        /// </summary>
-        /// <param name="keeper"></param>
-        /// <param name="index"></param>
-        private void SetPlayerSpec(ScriptKeeper keeper, int index)
-        {
-            keeper._playerUIParentSetter.SetParent(_playerSpecCanvas, index);
-        }
-
-        /// <summary>
-        /// Changes current scripts variables for check or use them.
-        /// </summary>
-        /// <param name="nextInput"></param>
-        /// <param name="nextCollector"></param>
-        /// <param name="nextInventory"></param>
-        private void ChangeCurrentScripts(PlayerStateContext stateContext, PlayerCollector nextCollector, PlayerInventory nextInventory)
-        {
-            currentPlayerStateContext = stateContext;
-            currentPlayerCollector = nextCollector;
-            currentPlayerInventory = nextInventory;
-        }
-
-        /// <summary>
-        /// Changes current UI variables for check or use them.
-        /// </summary>
-        /// <param name="playerGold"></param>
-        /// <param name="playerHealth"></param>
-        /// <param name="playerGoblet"></param>
-        private void ChangeCurrentUIElements(TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet)
-        {
-            currentplayerGold = playerGold;
-            currentplayerHealth = playerHealth;
-            currentplayerGoblet = playerGoblet;
         }
 
         /// <summary>
@@ -284,5 +168,70 @@ namespace Assets.MainBoard.Scripts.GameManaging
             current.Priority = 1;
             next.Priority = 2;
         }
+
+        #region Setters
+        /// <summary>
+        /// Changes current scripts variables for check or use them.
+        /// </summary>
+        /// <param name="nextInput"></param>
+        /// <param name="nextCollector"></param>
+        /// <param name="nextInventory"></param>
+        private void SetScripts(ScriptKeeper scKeeper)
+        {
+            mainPlayerStateContext = scKeeper._playerStateContext;
+            mainPlayerInventory = scKeeper._playerInventory;
+            mainPlayerCollector = scKeeper._playerCollector;
+            mainPlayerCollector.GameController = _gameController;
+        }
+
+        // Mapcam atamaları
+        private void UpdateMapCam(ScriptKeeper scKeeper)
+        {
+            _mapCamera.mainCamera = scKeeper._playerCamera;
+            _mapCamera.player = scKeeper.playerTransform;
+        }
+
+        private void UpdateStateContext()
+        {
+            mainPlayerStateContext.Idle.MapCamera = _mapCamera;
+            mainPlayerStateContext.Running.CurrentPlatform = _startplatform;
+            mainPlayerStateContext.Running.PathFinder = _pathFinder;
+            mainPlayerStateContext.Land.GoalSelector = _goalSelector;
+        }
+
+        /// <summary>
+        /// Sets goblet selection variables by using ScriptKeeper.
+        /// </summary>
+        /// <param name="keeper"></param>
+        private void SetGobletSelection(ScriptKeeper keeper)
+        {
+            keeper._goalSelector = _goalSelector;
+            keeper._gobletSelection.GameController = _gameController;
+            keeper._gobletSelection.GoalSelector = _goalSelector;
+            keeper._gobletSelection.PathFinder = _pathFinder;
+        }
+        /// <summary>
+        /// Changes current UI variables for check or use them.
+        /// </summary>
+        /// <param name="playerGold"></param>
+        /// <param name="playerHealth"></param>
+        /// <param name="playerGoblet"></param>
+        private void SetUIElements(TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet)
+        {
+            mainplayerGold = playerGold;
+            mainplayerHealth = playerHealth;
+            mainplayerGoblet = playerGoblet;
+        }
+
+        /// <summary>
+        /// Makes player UI child of _playerSpecCanvas for automatic line up.
+        /// </summary>
+        /// <param name="keeper"></param>
+        /// <param name="index"></param>
+        private void SetPlayerSpec(ScriptKeeper keeper, int index)
+        {
+            keeper._playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+        }
+        #endregion
     }
 }

@@ -5768,7 +5768,6 @@ MonoBehaviour:
   _playerMovement: {fileID: 4120892788481720712}
   _playerCollector: {fileID: 4120892788481720713}
   _gobletSelection: {fileID: 4120892788315320753}
-  _playerAnimation: {fileID: 4120892787933790877}
   _goalSelector: {fileID: 0}
   _playerStateContext: {fileID: 3994039499720399007}
   _playerInventory: {fileID: 4120892788481720717}
@@ -5777,6 +5776,7 @@ MonoBehaviour:
   playerHealth: {fileID: 4120892787250652913}
   playerGoblet: {fileID: 4120892787186706926}
   _playerCamera: {fileID: 4120892788676648186}
+  playerTransform: {fileID: 4120892788481720714}
   _playerUIParentSetter: {fileID: 7305712665337842074}
 --- !u!54 &5519808315850263234
 Rigidbody:
