@@ -15,7 +15,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Utils
     [System.Serializable]
     public class MeteorMaterials
     {
-        public Material[] meteor;
+        public Material[] classic;
+        public Material[] explosion;
+        public Material[] poision;
+        public Material[] sticky;
     }
     [System.Serializable]
     public class MeteorEffectMeshes

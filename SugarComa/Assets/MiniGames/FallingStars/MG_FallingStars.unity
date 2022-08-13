@@ -3520,7 +3520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1183745604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3535,19 +3535,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meteorMeshes:
     classic: {fileID: 289301614986012343, guid: 951c15a31587ba34db31f10bfdfd89b4, type: 3}
-    explosion: {fileID: 289301614986012343, guid: 951c15a31587ba34db31f10bfdfd89b4, type: 3}
-    poison: {fileID: 289301614986012343, guid: 951c15a31587ba34db31f10bfdfd89b4, type: 3}
-    sticky: {fileID: 289301614986012343, guid: 951c15a31587ba34db31f10bfdfd89b4, type: 3}
+    explosion: {fileID: -3214521003866156968, guid: bd839b142c783794b9cb3db44ecad8e5, type: 3}
+    poison: {fileID: -1579241630799410176, guid: cc02eed2b0e3c9142bdca9708ad7a344, type: 3}
+    sticky: {fileID: 4711208715938537054, guid: ae8cdbf47f7979241b7abdc9d306a28c, type: 3}
   _meteorEffectMeshes:
     classic: {fileID: 2534964839176971238, guid: 4a02e70e5c9e96f40942b9483dede8b2, type: 3}
     explosion: {fileID: 6239881831769578202, guid: 93e6c17b8ee7aca4d8f9acc45ac48e17, type: 3}
     poison: {fileID: 8691780276856062721, guid: 833036f31dd0901458bfe075cee0a2e2, type: 3}
     sticky: {fileID: -7387706064836869012, guid: 04b3761f9886690438ad68b751435bff, type: 3}
   _meteorMaterials:
-    meteor:
-    - {fileID: 2100000, guid: 8a16f7e1455be87499767e4c9d072844, type: 2}
+    classic:
     - {fileID: -876546973899608171, guid: 951c15a31587ba34db31f10bfdfd89b4, type: 3}
+    - {fileID: 2100000, guid: 8a16f7e1455be87499767e4c9d072844, type: 2}
     - {fileID: 2100000, guid: 0ed2120a5bbdc9b4eaa142e9e7029faf, type: 2}
+    explosion:
+    - {fileID: 2100000, guid: 7508427c14f7028459b50cc01d4e661a, type: 2}
+    - {fileID: 2100000, guid: c4b5634916b8fd84e84b55693cdb8bc5, type: 2}
+    - {fileID: 3986188387995331715, guid: bd839b142c783794b9cb3db44ecad8e5, type: 3}
+    poision:
+    - {fileID: 2100000, guid: 1a10a78278c6b2142af5bca889376ba8, type: 2}
+    - {fileID: 2100000, guid: b6ce0b8562275e84da2bd57d9bac29f5, type: 2}
+    sticky:
+    - {fileID: 2100000, guid: cfa4c0671a2b89c40b34d5ff24e6a191, type: 2}
+    - {fileID: 2100000, guid: a76c79467aa16344aaa046c32b5d9809, type: 2}
   _timeText: {fileID: 1381385004}
   _meteorCountUpdateTime: 15
   _meteorWaveSpawnTime: 4
@@ -3709,7 +3719,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220887058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 17.78, y: 5, z: 32.75}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -82,18 +82,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             {
                 case MeteorType.classic:
                     meteorFilter.mesh = MiniGameManager.MeteorMeshes.classic;
+                    meteorRenderer.materials = MiniGameManager.MeteorMaterials.classic;
                     break;
                 case MeteorType.explosion:
                     meteorFilter.mesh = MiniGameManager.MeteorMeshes.explosion;
+                    meteorRenderer.materials = MiniGameManager.MeteorMaterials.explosion;
                     break;
                 case MeteorType.poison:
                     meteorFilter.mesh = MiniGameManager.MeteorMeshes.poison;
+                    meteorRenderer.materials = MiniGameManager.MeteorMaterials.poision;
                     break;
                 case MeteorType.sticky:
                     meteorFilter.mesh = MiniGameManager.MeteorMeshes.sticky;
+                    meteorRenderer.materials = MiniGameManager.MeteorMaterials.sticky;
                     break;
             }
-            meteorRenderer.materials = MiniGameManager.MeteorMaterials.meteor;
         }
         private void SetEffect(MeteorType type)
         {
