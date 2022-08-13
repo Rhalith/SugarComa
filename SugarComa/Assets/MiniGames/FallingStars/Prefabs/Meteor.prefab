@@ -757,7 +757,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.5, y: 0.01, z: 5.5}
+  m_Size: {x: 5.5, y: 0.22, z: 5.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5469553693885063360
 Rigidbody:
@@ -1380,6 +1380,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7816483564973452865}
     m_Modifications:
+    - target: {fileID: 263396314547566487, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+      propertyPath: _currentChecker
+      value: 
+      objectReference: {fileID: 6306520027562687437}
     - target: {fileID: 5938148336897162123, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
       propertyPath: m_Name
       value: MeteorShadow

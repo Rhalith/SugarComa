@@ -19,6 +19,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private Vector3 _mouseDir;
         private bool _punch;
         private bool _isMouseActive;
+        private bool _isGamepadActive;
         private RaycastHit _hit;
         private Ray _ray;
         #endregion
@@ -32,6 +33,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         private void Awake()
         {
+            //Cursor.visible = false;
             _playerInput = new PlayerActions();
 
             _playerInput.PlayerInputs.Movement.performed += Movement_performed;
@@ -67,6 +69,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _rotationDir.x = input.x;
             _rotationDir.z = input.y;
             _rotationDir = _rotationDir.normalized;
+            _isGamepadActive = obj.performed;
         }
 
         private void Punch_started(InputAction.CallbackContext obj)
@@ -93,50 +96,76 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         {
             _playerInput.Disable();
         }
-        //TODO düzenle
         private void FixedUpdate()
         {
-            if(_playerSpecs.MoveSpeed != 0)
-            {
-                if (!_isMouseActive)
-                {
-                    if(_rotationDir.x != 0 || _rotationDir.z != 0)
-                    {
-                        Quaternion desiredRotation = Quaternion.LookRotation(_rotationDir, Vector3.up);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
-                    }
-                    else if (_movementDir.x != 0 || _movementDir.z != 0)
-                    {
-                        Quaternion desiredRotation = Quaternion.LookRotation(_movementDir, Vector3.up);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
-                    }
-                }
-                else
-                {
-                    //TODO
-                    _ray = _cam.ScreenPointToRay(_mouseDir);
-                    if (Physics.Raycast(_ray, out _hit))
-                    {
-                        Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(_hit.point.x, 0, _hit.point.z), Vector3.up);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
-                    }
-                }
-                transform.Translate(_playerSpecs.MoveSpeed * Time.deltaTime * _movementDir, Space.World);
-                if ((_movement.x != 0 || _movement.z != 0))
-                {
-                    _animation.StartRunning();
-                }
-                else
-                {
-                    _animation.StopRunning();
-                }
+            MovePlayer();
+        }
 
+        private void MovePlayer()
+        {
+            if(_playerSpecs.MoveSpeed > 0)
+            {
+                RotatePlayer();
+                TranslatePlayer();
             }
             else
             {
                 _animation.StopRunning();
             }
+        }
+        private void RotatePlayer()
+        {
+            if (_isMouseActive)
+            {
+                RotateWithMouse(_mouseDir);
+            }
+            else if (_isGamepadActive)
+            {
+                RotateWithGamepad(_rotationDir);
+            }
+            else if (_movementDir.x != 0 || _movementDir.z != 0)
+            {
+                RotateWithMovement(_movementDir);
+            }
+        }
 
+        private void TranslatePlayer()
+        {
+            if (_movement.x != 0 || _movement.z != 0)
+            {
+                transform.Translate(_playerSpecs.MoveSpeed * Time.deltaTime * _movementDir, Space.World);
+                _animation.StartRunning();
+            }
+            else
+            {
+                _animation.StopRunning();
+            }
+        }
+
+        private void RotateWithMouse(Vector3 direction)
+        {
+            _ray = _cam.ScreenPointToRay(direction);
+            if (Physics.Raycast(_ray, out _hit))
+            {
+                print(_hit.point.x);
+                Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(_hit.point.x, 0, _hit.point.z), Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
+            }
+        }
+
+        private void RotateWithGamepad(Vector3 direction)
+        {
+            if (direction.x != 0 || direction.z != 0)
+            {
+                Quaternion desiredRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
+            }
+        }
+
+        private void RotateWithMovement(Vector3 direction)
+        {
+            Quaternion desiredRotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
         }
         /// <summary>
         /// Put it to update otherwise it wont work properly.
