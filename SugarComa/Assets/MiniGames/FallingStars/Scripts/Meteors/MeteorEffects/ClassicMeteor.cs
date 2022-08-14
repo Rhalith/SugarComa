@@ -55,7 +55,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
 
         private void UpScaleMeteor()
         {
-            transform.localScale = new Vector3(transform.localScale.x + _upScaleValue / 100, transform.localScale.y, transform.localScale.z + _upScaleValue / 100);
+            transform.localScale = new Vector3(transform.localScale.x + _upScaleValue / 10, transform.localScale.y, transform.localScale.z + _upScaleValue / 10);
         }
 
         private IEnumerator TimerCountdown()

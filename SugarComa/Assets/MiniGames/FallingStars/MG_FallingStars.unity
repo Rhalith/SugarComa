@@ -2489,11 +2489,6 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
---- !u!33 &846052228 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: 7816483565440598230, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
-  m_PrefabInstance: {fileID: 1566143100}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &872246324
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5247,10 +5242,10 @@ PrefabInstance:
     - target: {fileID: 7816483564973452870, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: _meteorMesh
       value: 
-      objectReference: {fileID: 846052228}
+      objectReference: {fileID: 0}
     - target: {fileID: 7816483565440598221, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7816483565440598224, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_IsTrigger
@@ -5299,6 +5294,10 @@ PrefabInstance:
     - target: {fileID: 8785475236720750888, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792539656202535422, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8963609939659812570, guid: 3b4f6a66c9971e84abf7db25c9fbf30b, type: 3}
       propertyPath: m_Enabled

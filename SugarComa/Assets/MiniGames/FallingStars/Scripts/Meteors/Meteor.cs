@@ -18,13 +18,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         public delegate void MeteorAction();
 
         private MeteorType _type;
+        private GameObject _meteorObject;
         private GameObject _effectObject;
-        [SerializeField] private GameObject _meteorObject;
-        [SerializeField] private GameObject _meteorShadow;
 
         #region SerializeFields
-        [SerializeField] private MeshFilter _meteorMesh;
-        [SerializeField] private MeshRenderer _meteorRenderer;
+        [SerializeField] private GameObject _meteorShadow;
+        [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
+        [SerializeField] private GameObject[] _meteorObjects = new GameObject[4];
         [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
         [SerializeField] private GameObject[] _effectObjects = new GameObject[4];
         #endregion
@@ -36,7 +36,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         //}
         private void OnDisable()
         {
-            OnMeteorHit(false);
+            ResetMeteor(true);
             OnMeteorDisable?.Invoke();
         }
         //TODO THEIR CHANGES WILL NOT BE EQUAL
@@ -58,7 +58,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     Type = MeteorType.sticky;
                     break;
             }
-            CheckType(Type, _meteorMesh, _meteorRenderer);
+            CheckType(Type);
         }
         /// <summary>
         /// value => true for enable, value => false for disable
@@ -70,34 +70,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             MeteorShadow.SetActive(!value);
             _effectObject.SetActive(value);
         }
-        //TODO
-        private void CheckType(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
+        private void ResetMeteor(bool value)
         {
-            SetMeshes(type, meteorFilter, meteorRenderer);
+            MeteorShadow.SetActive(value);
+            _effectObject.SetActive(!value);
+        }
+        private void CheckType(MeteorType type)
+        {
             SetEffect(type);
+            SetObject(type);
         }
-        private void SetMeshes(MeteorType type, MeshFilter meteorFilter, MeshRenderer meteorRenderer)
-        {
-            switch (type)
-            {
-                case MeteorType.classic:
-                    meteorFilter.mesh = MiniGameManager.MeteorMeshes.classic;
-                    meteorRenderer.materials = MiniGameManager.MeteorMaterials.classic;
-                    break;
-                case MeteorType.explosion:
-                    meteorFilter.mesh = MiniGameManager.MeteorMeshes.explosion;
-                    meteorRenderer.materials = MiniGameManager.MeteorMaterials.explosion;
-                    break;
-                case MeteorType.poison:
-                    meteorFilter.mesh = MiniGameManager.MeteorMeshes.poison;
-                    meteorRenderer.materials = MiniGameManager.MeteorMaterials.poision;
-                    break;
-                case MeteorType.sticky:
-                    meteorFilter.mesh = MiniGameManager.MeteorMeshes.sticky;
-                    meteorRenderer.materials = MiniGameManager.MeteorMaterials.sticky;
-                    break;
-            }
-        }
+
         private void SetEffect(MeteorType type)
         {
             switch (type)
@@ -115,6 +98,25 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     _effectObject = _effectObjects[3];
                     break;
             }
+        }
+        private void SetObject(MeteorType type)
+        {
+            switch (type)
+            {
+                case MeteorType.classic:
+                    _meteorObject = _meteorObjects[0];
+                    break;
+                case MeteorType.explosion:
+                    _meteorObject = _meteorObjects[1];
+                    break;
+                case MeteorType.poison:
+                    _meteorObject = _meteorObjects[2];
+                    break;
+                case MeteorType.sticky:
+                    _meteorObject = _meteorObjects[3];
+                    break;
+            }
+            _meteorObject.SetActive(true);
         }
     }
 

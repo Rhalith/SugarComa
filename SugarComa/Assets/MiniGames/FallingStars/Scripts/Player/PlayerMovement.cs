@@ -33,7 +33,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         private void Awake()
         {
-            //Cursor.visible = false;
             _playerInput = new PlayerActions();
 
             _playerInput.PlayerInputs.Movement.performed += Movement_performed;
@@ -147,9 +146,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _ray = _cam.ScreenPointToRay(direction);
             if (Physics.Raycast(_ray, out _hit))
             {
-                print(_hit.point.x);
-                Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(_hit.point.x, 0, _hit.point.z), Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
+                if (!_hit.collider.CompareTag("Player"))
+                {
+                    Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(_hit.point.x - transform.position.x, 0, _hit.point.z - transform.position.z), Vector3.up);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
+                }
             }
         }
 
