@@ -128,7 +128,6 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             _currentPlatform.ResetSpec();
             PlayerStateContext.canPlayersAct = true;
-            // TODO: Dice state olabilir.
             Context.Running.CurrentStep = 0;
         }
         #endregion

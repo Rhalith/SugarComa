@@ -15,7 +15,6 @@ namespace Assets.MainBoard.Scripts.UI
         [SerializeField] private Button Goblet;
         [SerializeField] private GoalSelector _goalSelector;
         [SerializeField] private PathFinder _pathFinder;
-        [SerializeField] private PlayerAnimation _playerAnimation;
         #endregion
 
         #region Properties

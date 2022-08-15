@@ -62,6 +62,9 @@ namespace Assets.MainBoard.Scripts.Route
         {
             int index = Random.Range(0, platforms.Count);
 
+            // Kaldýr...
+            index = 1;
+
             // TODO: Check if player in that platform with currentplatform
             if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector)
             {
@@ -129,7 +132,6 @@ namespace Assets.MainBoard.Scripts.Route
                 isGoalActive = false;
                 RandomGoalSelect();
             }
-
         }
 
         public void TakeGoblet()
@@ -137,6 +139,7 @@ namespace Assets.MainBoard.Scripts.Route
             _chestAnimator = _currentGoal.GetComponent<GoalChestAnimation>();
             _chestAnimator.StartChestOpeningAnimation();
         }
+
         private void CreateGoalObject(Platform platform)
         {
             _selectedPlatform = platform;

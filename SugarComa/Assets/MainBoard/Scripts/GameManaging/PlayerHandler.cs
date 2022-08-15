@@ -83,7 +83,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 _createdObject = Instantiate(_playerPrefab, playerParent.transform);
                 _createdObject.transform.position = new Vector3(0, 0, 0);
 
-                // Script atamaları
                 ScriptKeeper scKeeper = _createdObject.GetComponent<ScriptKeeper>();
 
                 UpdateMapCam(scKeeper);
@@ -94,7 +93,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 mainPlayerStateContext.Running.InitializePathTracker();
 
                 SetUIElements(scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
-                SetGobletSelection(scKeeper);            // ?   ///
+                SetGobletSelection(scKeeper);
                 SetPlayerSpec(scKeeper, ++playerCount);
             }
             else

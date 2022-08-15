@@ -1896,7 +1896,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4120892788315320753}
-        m_TargetAssemblyTypeName: GobletSelection, Assembly-CSharp
+        m_TargetAssemblyTypeName: Assets.MainBoard.Scripts.UI.GobletSelection, Assembly-CSharp
         m_MethodName: TakeIt
         m_Mode: 1
         m_Arguments:
@@ -3786,7 +3786,6 @@ MonoBehaviour:
   Goblet: {fileID: 4120892787399290847}
   _goalSelector: {fileID: 0}
   _pathFinder: {fileID: 0}
-  _playerAnimation: {fileID: 4120892787933790877}
 --- !u!1 &4120892788379030898
 GameObject:
   m_ObjectHideFlags: 0
@@ -4716,7 +4715,7 @@ MonoBehaviour:
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
     m_Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+    m_NoiseOffsets: {x: 411.10608, y: -180.96243, z: 861.37866}
 --- !u!1 &4120892788742707362
 GameObject:
   m_ObjectHideFlags: 0

@@ -8316,13 +8316,12 @@ MonoBehaviour:
   _goalSelector: {fileID: 1970712952}
   _cinemachineBrain: {fileID: 1919064173}
   _playerSpecCanvas: {fileID: 561571941}
-  _mapCam: {fileID: 1716652755}
-  currentPlayerStateContext: {fileID: 0}
-  currentPlayerInventory: {fileID: 0}
-  currentPlayerCollector: {fileID: 0}
-  currentplayerGold: {fileID: 0}
-  currentplayerHealth: {fileID: 0}
-  currentplayerGoblet: {fileID: 0}
+  mainPlayerStateContext: {fileID: 0}
+  mainPlayerInventory: {fileID: 0}
+  mainPlayerCollector: {fileID: 0}
+  mainplayerGold: {fileID: 0}
+  mainplayerHealth: {fileID: 0}
+  mainplayerGoblet: {fileID: 0}
 --- !u!224 &1222331014
 RectTransform:
   m_ObjectHideFlags: 0

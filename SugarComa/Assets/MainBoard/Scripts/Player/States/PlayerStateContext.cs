@@ -72,11 +72,6 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             if (GameManager.IsGameOver) return;
 
-            /* TODO
-            if (isMyTurn && canPlayersAct && !cinemachineBrain.IsBlending)
-            {
-            }
-            */
             _currentState.Update();
         }
 
