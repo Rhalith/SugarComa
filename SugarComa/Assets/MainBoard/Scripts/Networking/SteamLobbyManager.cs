@@ -55,6 +55,12 @@ namespace Assets.MainBoard.Scripts.Networking
             SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
 
+        private void OnDisable()
+        {
+            SceneManager.activeSceneChanged -= SceneManager_ActiveSceneChanged;
+            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+        }
+
         private void Start()
         {
             #region Lobby Events

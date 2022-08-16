@@ -119,5 +119,21 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             }
             return true;
         }
+
+        public static bool TryGetAnimationData(byte[] buffer, out AnimationStateData networkData)
+        {
+            if (buffer.Length != Marshal.SizeOf<AnimationStateData>())
+            {
+                networkData = new AnimationStateData();
+                return false;
+            }
+
+            Deserialize(buffer, out networkData);
+            if (networkData.id != NetworkId.AnimationStateNetworkDataId)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

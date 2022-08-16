@@ -1,3 +1,5 @@
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Route;
 using UnityEngine;
 
@@ -36,12 +38,22 @@ namespace Assets.MainBoard.Scripts.Player.States
         public void SwitchState(PlayerBaseState state)
         {
             if (Context.CurrentState == state) return;
+
+            // Send previous and next animation state bool hash's
+            SendStateData(Context.CurrentState.AnimBoolHash, state.AnimBoolHash);
             // exit the current state of the context
             Exit();
             // enter the new state
             state.Enter();
             // switch the state of the context
             Context.CurrentState = state;
+        }
+
+        public void SendStateData(int prevAnimBoolHash, int nextAnimBoolHash)
+        {
+            SteamServerManager.Instance.
+                SendingMessageToAll(NetworkHelper.Serialize(new AnimationStateData
+                (prevAnimBoolHash, nextAnimBoolHash, MessageType.AnimationStateUpdate)));
         }
 
         public virtual void Enter()

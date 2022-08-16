@@ -14,6 +14,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         TurnOver,
         UpdateQueue,
         CreateChest,
+        AnimationStateUpdate,
         Exit
     }
 
@@ -23,6 +24,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public static readonly int PlayerListNetworkDataId = Animator.StringToHash("PlayerListNetworkData");
         public static readonly int TurnNetworkDataId = Animator.StringToHash("TurnNetworkData");
         public static readonly int ChestNetworkDataId = Animator.StringToHash("ChestNetworkData");
+        public static readonly int AnimationStateNetworkDataId = Animator.StringToHash("AnimationStateData");
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -95,7 +97,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
 
         public TurnNetworkData(byte index, MessageType messageType)
         {
-            this.id = NetworkId.TurnNetworkDataId;
+            id = NetworkId.TurnNetworkDataId;
             this.index = index;
             this.messageType = messageType;
         }
@@ -110,8 +112,25 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
 
         public ChestNetworkData(byte index, MessageType messageType)
         {
-            this.id = NetworkId.TurnNetworkDataId;
+            id = NetworkId.TurnNetworkDataId;
             this.index = index;
+            this.messageType = messageType;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct AnimationStateData
+    {
+        public int id;
+        public int prevAnimBoolHash;
+        public int nextAnimBoolHash;
+        public MessageType messageType;
+
+        public AnimationStateData(int prevAnimBoolHash, int nextAnimBoolHash, MessageType messageType)
+        {
+            id = NetworkId.AnimationStateNetworkDataId;
+            this.prevAnimBoolHash = prevAnimBoolHash;
+            this.nextAnimBoolHash = nextAnimBoolHash;
             this.messageType = messageType;
         }
     }

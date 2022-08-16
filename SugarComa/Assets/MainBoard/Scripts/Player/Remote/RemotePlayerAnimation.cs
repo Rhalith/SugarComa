@@ -1,157 +1,65 @@
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.Items.BoxGloves;
 using Assets.MainBoard.Scripts.Player.Utils;
 using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
+using Steamworks;
 using System.Collections;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.Remote
 {
-    [System.Obsolete("Bu script düzenlenip, kaldýrýlacak.")]
     public class RemotePlayerAnimation : MonoBehaviour
     {
         #region SerializeField
-
-        [Header("Animation Flags")]
-        [SerializeField] private bool _jump;
-        [SerializeField] private bool _run;
-        [SerializeField] private bool _land;
-        [SerializeField] private bool _surprised;
-        [SerializeField] private bool _dead;
-
-        [Header("Other Scripts")]
-        [SerializeField] private Animator _animator;
-        [SerializeField] private RemotePlayerMovement _playerMovement;
-        [SerializeField] private RemoteScriptKeeper _scriptKeeper;
         [SerializeField] private GameObject _boxGloves;
-        [SerializeField] private RagdollOnOff _ragdollOnOff;
+        [SerializeField] private Animator anim;
         #endregion
 
-        #region Properties
-        [SerializeField] GameObject _dice;
-
-        public bool IsLanding => _land;
-        public bool IsJumping => _jump;
-        public bool IsRunning => _run;
-        public bool IsSurprised => _surprised;
-        public bool IsDead => _dead;
-        public bool IsIdle => !_run && !_land && !_jump && !_surprised && !_dead;
-
+        #region Private Field
+        private AnimatorControllerParameter[] animControlParams;
         #endregion
-        /// <summary>
-        /// Triggers running animation.
-        /// </summary>
-        /// <param name="running"></param>
-        private void RunSet(int running)
+
+        void OnEnable()
         {
-            _animator.SetBool("running", running != 0);
-            _run = running != 0;
+            // Gets all animator parameter as AnimatorControllerParameter array
+            animControlParams = anim.parameters;
         }
 
-        /// <summary>
-        /// Triggers jump animation.
-        /// </summary>
-        /// <param name="jump"></param>
-        private void JumpSet(int jump)
+        private void Awake()
         {
-            _animator.SetBool("jump", jump != 0);
-            _jump = jump != 0;
-            //if (jump == 0)
-            //{
-            //    _dice.SetActive(false);
-            //    _playerMovement.DiceText.enabled = true;
-            //    IEnumerator waitForCloseText()
-            //    {
-            //        yield return null;
-            //        yield return new WaitForSeconds(0.5f);
-            //        _playerMovement.DiceText.enabled = false;
-            //    }
-            //    StartCoroutine(waitForCloseText());
-            //}
-
+            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
 
-        /// <summary>
-        /// Triggers landing animation.
-        /// </summary>
-        /// <param name="landing"></param>
-        private void LandSet(int landing)
+        private void OnDisable()
         {
-            _animator.SetBool("landing", landing != 0);
-            _land = landing != 0;
-            //if (_playerMovement.PlayerCollector.isDead && landing == 0)
-            //{
-            //    DeathSet(0);
-            //    _playerMovement.PlayerCollector.isDead = false;
-            //    _scriptKeeper._playerCamera.Priority = 1;
-            //}
+            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
         }
 
-        /// <summary>
-        /// Triggers surprise animation.
-        /// </summary>
-        /// <param name="surprised"></param>
-        private void SurpriseSet(int surprised)
+        private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
-            _animator.SetBool("surprised", surprised != 0);
-            _surprised = surprised != 0;
+            if (NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
+            {
+                UpdateAnimState(animationStateData.prevAnimBoolHash, animationStateData.nextAnimBoolHash);
+            }
         }
 
-        /// <summary>
-        /// Triggers death animation.
-        /// </summary>
-        /// <param name="dying"></param>
-        /// TODO
-        private void DeathSet(int dying)
+        private void UpdateAnimState(int prevAnimBoolHash, int nextAnimBoolHash)
         {
-            _animator.SetBool("dead", dying != 0);
-            _dead = dying != 0;
-        }
+            foreach (AnimatorControllerParameter param in animControlParams)
+            {
+                int animBoolHash = Animator.StringToHash(param.name);
 
-        /// <summary>
-        /// Jumping and rolling dice
-        /// </summary>
-        public void RollDice()
-        {
-            JumpSet(1);
-        }
-
-        /// <summary>
-        /// After jumping start running
-        /// </summary>
-        public void StartRunning()
-        {
-            RunSet(1);
-        }
-
-        /// <summary>
-        /// If player stops
-        /// </summary>
-        public void StopRunning()
-        {
-            RunSet(0);
-        }
-
-        /// <summary>
-        /// If player is stopped in Selector and selected a way
-        /// </summary>
-        public void ContinueRunning()
-        {
-            RunSet(1);
-        }
-        /// <summary>
-        /// When player landed.
-        /// </summary>
-        public void LandPlayer()
-        {
-            LandSet(1);
-        }
-        /// <summary>
-        /// When death start.
-        /// </summary>
-        public void StartDeath()
-        {
-            DeathSet(1);
+                if (animBoolHash == nextAnimBoolHash)
+                {
+                    anim.SetBool(param.name, true);
+                }
+                else if (animBoolHash == prevAnimBoolHash)
+                {
+                    anim.SetBool(param.name, false);
+                }
+            }
         }
 
         /// <summary>

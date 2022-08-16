@@ -63,7 +63,7 @@ namespace Assets.MainBoard.Scripts.Route
             int index = Random.Range(0, platforms.Count);
 
             // Kaldýr...
-            index = 1;
+            // index = 1;
 
             // TODO: Check if player in that platform with currentplatform
             if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector)

@@ -29,10 +29,13 @@ namespace Assets.MainBoard.Scripts.Player.Remote
 
         void Update()
         {
+            // Buradaki kontrol stateler içerisinde saðlanacaðý için gereksiz galiba
             if (_nextPosition == transform.position)
             {
+                /*
                 if (_playerAnimation.IsRunning)
                     _playerAnimation.StopRunning();
+                */
                 return;
             }
 
@@ -61,7 +64,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
                 _startPosition = transform.position;
                 _nextPosition = networkData.position;
                 _nextPosition.y = _startPosition.y;
-                _playerAnimation.StartRunning();
+                //_playerAnimation.StartRunning();
             }
         }
     }
