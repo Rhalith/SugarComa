@@ -82,24 +82,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private void Start()
         {
             Invoke(nameof(StartFirstWave), 2);
-            Invoke(nameof(FirstUpdateMeteorCount), _meteorCountUpdateTime);
+            InvokeRepeating(nameof(UpdateMeteorCount), _meteorCountUpdateTime, _meteorCountUpdateTime);
             StartCoroutine(StartCountdown());
         }
 
         IEnumerator SpawnWave()
         {
-            while(true)
+            while(_gameTime >= _meteorWaveSpawnTime)
             {
                 yield return new WaitForSeconds(_meteorWaveSpawnTime);
                 SpawnNewWave?.Invoke();
             }
         }
-        //TODO add if gametime >= 0 to check.
-        IEnumerator UpdateMeteorCount()
+        private void UpdateMeteorCount()
         {
             _meteorCount++;
-            yield return new WaitForSeconds(_meteorCountUpdateTime);
-            StartCoroutine(UpdateMeteorCount());
         }
         IEnumerator StartCountdown()
         {
@@ -120,10 +117,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             StartCoroutine(SpawnWave());
             SpawnNewWave?.Invoke();
 
-        }
-        private void FirstUpdateMeteorCount()
-        {
-            StartCoroutine(UpdateMeteorCount());
         }
     }
 }

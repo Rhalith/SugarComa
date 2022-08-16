@@ -72,19 +72,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         public void SpawnWave()
         {
             int meteorCount = _miniGameManager.MeteorCount;
-            print(meteorCount);
             List<Meteor> _list = new();
             for (int i = 0; i < meteorCount; i++)
             {
                 float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
                 float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+                while (!isPositionOkey(x, z))
+                {
+                    x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
+                    z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+                }
                 //float z = GetZValue(x,_borders._leftBorder.position.x);
-                print("x -> " + x + " z -> " + z);
                 Meteor instance = GetFromPool();
                 _list.Add(instance);
                 instance.transform.position = new Vector3(x, 0, z);
                 instance.MeteorShadow.SetActive(true);
-
                 StartCoroutine(ActivateObject(instance));
             }
             CheckMeteorPosition(_list);
@@ -94,6 +96,26 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             float zValue = Mathf.Pow((Mathf.Pow(radius, 2) - Mathf.Pow(x, 2)), 0.5f);
             return Random.Range(-zValue,zValue);
+        }
+
+        private bool isPositionOkey(float x, float z)
+        {
+            Collider[] hits = Physics.OverlapSphere(new Vector3(x,0,z), 4.5f); //Measure collision via a small circle at the latest position, dont continue simulating Arc if hit
+            int count = 0;
+            foreach (Collider hit in hits)
+            {
+                if (hit.gameObject.tag.Equals("PoolEffect"))
+                {
+                    count++;
+                }
+            }
+            print(count);
+            if (count > 0) //Return true if something is hit, stopping Arc simulation
+            {
+                return false;
+
+            }
+            return true;
         }
 
         private void CheckMeteorPosition(List<Meteor> meteorList)
