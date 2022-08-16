@@ -48,9 +48,7 @@ public class HitBox : MonoBehaviour, IHitDetector
                             _hitData.hurtBox.HurtResponder?.Response(_hitData);
                         }
                     }
-
                 }
-
             }
         }
     }
