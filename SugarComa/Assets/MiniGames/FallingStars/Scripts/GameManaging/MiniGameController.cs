@@ -73,6 +73,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             int meteorCount = _miniGameManager.MeteorCount;
             print(meteorCount);
+            List<Meteor> _list = new();
             for (int i = 0; i < meteorCount; i++)
             {
                 float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
@@ -80,12 +81,13 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 //float z = GetZValue(x,_borders._leftBorder.position.x);
                 print("x -> " + x + " z -> " + z);
                 Meteor instance = GetFromPool();
+                _list.Add(instance);
                 instance.transform.position = new Vector3(x, 0, z);
                 instance.MeteorShadow.SetActive(true);
 
-                CheckMeteorPosition(instance, x, z);
-               StartCoroutine(ActivateObject(instance));
+                StartCoroutine(ActivateObject(instance));
             }
+            CheckMeteorPosition(_list);
         }
 
         private float GetZValue(float x, float radius)
@@ -94,13 +96,31 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             return Random.Range(-zValue,zValue);
         }
 
-        private void CheckMeteorPosition(Meteor meteor, float x, float z)
+        private void CheckMeteorPosition(List<Meteor> meteorList)
         {
-            if(meteor.gameObject.GetComponentInChildren<MeteorShadow>().IsIn)
+            foreach (var item in meteorList)
             {
-                meteor.gameObject.GetComponentInChildren<MeteorShadow>().IsIn = false;
-                meteor.transform.position = new Vector3(x, 0, z);
+                MeteorColliderChecker _meteorChecker = item.GetComponentInChildren<MeteorColliderChecker>();
+                if (_meteorChecker.IsIn)
+                {
+                    float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
+                    float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+                    item.transform.position = new Vector3(x, 0, z);
+                }
+                //var position = item.transform.position;
+                //for (int i = 0; i < meteorList.Count; i++)
+                //{
+                //    float distance = Vector3.Distance(position, meteorList[i].transform.position);
+                //    if (distance < 2f && distance != 0f)
+                //    {
+                //        print("yes");
+                //        float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
+                //        float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+                //        position = new Vector3(x, 0, z);
+                //    }
+                //}
             }
+            meteorList.Clear();
         }
         private IEnumerator ActivateObject(Meteor gameObject)
         {

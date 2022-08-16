@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeteorShadow : MonoBehaviour
+public class MeteorColliderChecker : MonoBehaviour
 {
     private bool _isIn;
     [SerializeField] private Collider _currentChecker;
@@ -13,6 +13,7 @@ public class MeteorShadow : MonoBehaviour
     {
         if (other.CompareTag("ColliderChecker") && other != _currentChecker)
         {
+            print("yes"+other.name);
             IsIn = true;
         }
     }

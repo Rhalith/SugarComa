@@ -94,7 +94,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 SpawnNewWave?.Invoke();
             }
         }
-        //TODO
+        //TODO add if gametime >= 0 to check.
         IEnumerator UpdateMeteorCount()
         {
             _meteorCount++;

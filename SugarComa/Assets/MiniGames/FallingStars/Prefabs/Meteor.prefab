@@ -362,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 6457620634197961541}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7816483564973452865}
@@ -422,7 +422,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7816483564973452864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 12.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -567,10 +567,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2571872955114278410}
     m_Modifications:
-    - target: {fileID: 263396314547566487, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
-      propertyPath: _currentChecker
-      value: 
-      objectReference: {fileID: 6306520027562687437}
     - target: {fileID: 5938148336897162123, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
       propertyPath: m_Name
       value: MeteorShadow
@@ -629,6 +625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4650118815374148360, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+    - {fileID: 1867423351999168899, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
 --- !u!1 &6868873016878089721 stripped
 GameObject:
@@ -1794,7 +1791,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7816483564973452865}
     m_Modifications:
-    - target: {fileID: 263396314547566487, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+    - target: {fileID: 1867423351999168899, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+      propertyPath: _meteor
+      value: 
+      objectReference: {fileID: 7816483564973452864}
+    - target: {fileID: 1867423351999168899, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
       propertyPath: _currentChecker
       value: 
       objectReference: {fileID: 6306520027562687437}
@@ -1809,6 +1810,10 @@ PrefabInstance:
     - target: {fileID: 5938148336897162127, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5938148336897162127, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5938148336897162127, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1850,8 +1855,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4650118815374148360, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
 --- !u!1 &7816483565522074281 stripped
 GameObject:
@@ -2929,10 +2933,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2571872955114278410}
     m_Modifications:
-    - target: {fileID: 263396314547566487, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
-      propertyPath: _currentChecker
-      value: 
-      objectReference: {fileID: 6306520027562687437}
     - target: {fileID: 5938148336897162123, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
       propertyPath: m_Name
       value: MeteorShadow
@@ -2991,6 +2991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4650118815374148360, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+    - {fileID: 1867423351999168899, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
 --- !u!1 &3385726911667208128 stripped
 GameObject:
@@ -3085,10 +3086,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2571872955114278410}
     m_Modifications:
-    - target: {fileID: 263396314547566487, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
-      propertyPath: _currentChecker
-      value: 
-      objectReference: {fileID: 6306520027562687437}
     - target: {fileID: 5938148336897162123, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
       propertyPath: m_Name
       value: MeteorShadow
@@ -3147,6 +3144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4650118815374148360, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
+    - {fileID: 1867423351999168899, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a390289cb541874eb530f17d62913cc, type: 3}
 --- !u!1 &3253228915652335299 stripped
 GameObject:

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5938148336897162126}
   - component: {fileID: 5938148336897162125}
   - component: {fileID: 6095383128354000510}
-  - component: {fileID: 263396314547566487}
+  - component: {fileID: 1867423351999168899}
   m_Layer: 0
   m_Name: MeteorShadow
   m_TagString: MeteorShadow
@@ -99,7 +99,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &263396314547566487
+--- !u!114 &1867423351999168899
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,4 +111,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997020cb7d809a94ba2ca05e11b17cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentChecker: {fileID: 0}
