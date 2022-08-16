@@ -11,6 +11,7 @@ TagManager:
   - Plane
   - MiniMeteor
   - ColliderChecker
+  - PoolEffect
   layers:
   - Default
   - TransparentFX

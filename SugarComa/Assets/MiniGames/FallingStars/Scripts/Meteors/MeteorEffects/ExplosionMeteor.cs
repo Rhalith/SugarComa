@@ -91,7 +91,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private Vector3 CalculateDistance(Rigidbody rig)
         {
             Vector3 distance = rig.velocity;
-            print("distance -> " + distance);
             distance += rig.transform.position;
             return distance;
         }
