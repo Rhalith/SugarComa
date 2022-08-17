@@ -69,7 +69,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnTrackingStopped()
         {
-            SwitchState(Context.Idle);
+            SwitchState(context.Idle);
         }
         #endregion
 
@@ -80,18 +80,18 @@ namespace Assets.MainBoard.Scripts.Player.States
             _path = _pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal, _currentStep);
 
             if (_path == null)
-                SwitchState(Context.Idle);
+                SwitchState(context.Idle);
 
             _pathTracker.StartTracking(_path, PlatformSpec.Goal, _currentPlatform.HasSelector, _currentStep);
         }
 
         public override void Exit()
         {
-            Context.PlayerCollector.CheckCurrentNode(_currentPlatform);
+            context.PlayerCollector.CheckCurrentNode(_currentPlatform);
 
             if (_currentStep <= 0)
             {
-                Context.IsMyTurn = false;
+                context.IsMyTurn = false;
                 SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index, MessageType.TurnOver)));
             }
 

@@ -30,8 +30,6 @@ namespace Assets.MainBoard.Scripts.Route
         private GameObject _currentGoal;
 
         private Platform _currentPlatform;
-
-        private PlatformSpec _platformSpecHolder;
         #endregion
 
         #region Public Fields
@@ -93,7 +91,6 @@ namespace Assets.MainBoard.Scripts.Route
 
         private void CreateGoal(int index)
         {
-            _platformSpecHolder = platforms[index].spec;
             platforms[index].spec = PlatformSpec.Goal;
             CreateGoalObject(platforms[index]);
             VirtualCameraLookTo(_camera, platforms[index].transform);
@@ -139,7 +136,6 @@ namespace Assets.MainBoard.Scripts.Route
                 _currentGoal.SetActive(false);
                 _selectedPlatform.ActivateMeshRenderer(true);
                 isGoalActive = false;
-                _selectedPlatform.spec = _platformSpecHolder;
                 RandomGoalSelect();
             }
         }

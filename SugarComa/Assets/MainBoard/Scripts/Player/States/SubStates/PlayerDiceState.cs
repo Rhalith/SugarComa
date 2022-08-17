@@ -23,7 +23,7 @@ namespace Assets.MainBoard.Scripts.Player.States.SubStates
         public void RollDice()
         {
             int tempStep = Random.Range(1, 10);
-            Context.Running.CurrentStep = tempStep;
+            context.Running.CurrentStep = tempStep;
             _diceText.text = tempStep.ToString();
         }
 

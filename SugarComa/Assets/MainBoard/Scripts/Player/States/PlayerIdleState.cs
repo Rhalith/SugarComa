@@ -41,7 +41,12 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         public PlayerIdleState(PlayerStateContext context, PlayerData playerData, string animBoolName) : base(context, playerData, animBoolName)
         {
-            // TODO
+        }
+
+        public override void Initialize(PlayerStateContext context, PlayerData playerData, string animBoolName, bool sendData = true)
+        {
+            base.Initialize(context, playerData, animBoolName);
+
             context.GobletSelection.OnTakeIt += GobletSelection_OnTakeIt;
             context.GobletSelection.OnLeaveIt += GobletSelection_OnLeaveIt;
         }
@@ -49,8 +54,8 @@ namespace Assets.MainBoard.Scripts.Player.States
         public override void Enter()
         {
             base.Enter();
-            _currentStep = Context.Running.CurrentStep;
-            _currentPlatform = Context.Running.CurrentPlatform;
+            _currentStep = context.Running.CurrentStep;
+            _currentPlatform = context.Running.CurrentPlatform;
 
             if(_currentStep == 0)
             {
@@ -70,19 +75,19 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentPlatform.selector.left.SetActive(true);
             _currentPlatform.selector.right.SetActive(true);
 
-            if (Context.SelectLeftPressed && leftPlatform.activeInHierarchy) 
+            if (context.SelectLeftPressed && leftPlatform.activeInHierarchy) 
                 SelectPlatform(RouteSelectorDirection.Left);
-            else if (Context.SelectRightPressed && rightPlatform.activeInHierarchy) 
+            else if (context.SelectRightPressed && rightPlatform.activeInHierarchy) 
                 SelectPlatform(RouteSelectorDirection.Right);
 
-            if (Context.ApplySelectPressed && _selectorDirection != RouteSelectorDirection.None)
+            if (context.ApplySelectPressed && _selectorDirection != RouteSelectorDirection.None)
             {
                 RouteSelectorDirection temp = _selectorDirection;
                 SelectPlatform(RouteSelectorDirection.None, leftPlatform, rightPlatform);
-                Context.Running.SelectorDir = temp;
+                context.Running.SelectorDir = temp;
 
-                SwitchState(Context.Running);
-                Context.Running.SelectorDir = RouteSelectorDirection.None;
+                SwitchState(context.Running);
+                context.Running.SelectorDir = RouteSelectorDirection.None;
             }
         }
 
@@ -99,20 +104,20 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void ProcessUI()
         {
-            if (Context.OpenInventory)
+            if (context.OpenInventory)
             {
                 _playerInventory.OpenInventory();
             }
-            else if (Context.CloseUI && !ItemPool._isItemUsing)
+            else if (context.CloseUI && !ItemPool._isItemUsing)
             {
                 _playerInventory.CloseInventory();
                 _mapCamera.SetCameraPriority(_mapCamera.cam, _mapCamera.mainCamera.Priority - 1, true);
             }
-            else if (Context.OpenMap)
+            else if (context.OpenMap)
             {
                 _mapCamera.SetCameraPriority(_mapCamera.cam, _mapCamera.mainCamera.Priority + 1);
             }
-            else if (Context.CloseUI && ItemPool._isItemUsing)
+            else if (context.CloseUI && ItemPool._isItemUsing)
             {
                 _itemPool.CloseItem();
             }
@@ -121,14 +126,14 @@ namespace Assets.MainBoard.Scripts.Player.States
         #region Goblet Selectio events
         private void GobletSelection_OnLeaveIt()
         {
-            SwitchState(Context.Running);
+            SwitchState(context.Running);
         }
 
         private void GobletSelection_OnTakeIt()
         {
             _currentPlatform.ResetSpec();
             PlayerStateContext.canPlayersAct = true;
-            Context.Running.CurrentStep = 0;
+            context.Running.CurrentStep = 0;
         }
         #endregion
 
@@ -138,17 +143,17 @@ namespace Assets.MainBoard.Scripts.Player.States
             {
                 ProcessSelect();
             }
-            else if (Context.SpacePressed)
+            else if (context.SpacePressed)
             {
                 if (_currentStep <= 0)
                 {
                     _dice.RollDice();
-                    _currentStep = Context.Running.CurrentStep;
+                    _currentStep = context.Running.CurrentStep;
                     _dice.Exit();
                 }
                 else
                 {
-                    SwitchState(Context.Running);
+                    SwitchState(context.Running);
                 }
             }
         }

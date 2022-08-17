@@ -7,17 +7,11 @@ namespace Assets.MainBoard.Scripts.Player.States
 {
     public abstract class PlayerBaseState
     {
-        private PlayerStateContext _context;
-        private PlayerData _playerData;
-        private string _animBoolName;
-        private int _animBoolHash;
-        private bool _sendData;
-
-        protected PlayerStateContext Context => _context;
-        protected PlayerData PlayerData => _playerData;
-        protected string AnimBoolName => _animBoolName;
-        protected int AnimBoolHash => _animBoolHash;
-        protected bool SendData => _sendData;
+        protected PlayerStateContext context;
+        protected PlayerData playerData;
+        protected string animBoolName;
+        protected int animBoolHash;
+        protected bool sendData;
 
         public PlayerBaseState() { }
 
@@ -26,27 +20,27 @@ namespace Assets.MainBoard.Scripts.Player.States
             Initialize(context, playerData, animBoolName, sendData);
         }
 
-        public void Initialize(PlayerStateContext context, PlayerData playerData, string animBoolName, bool sendData = true)
+        public virtual void Initialize(PlayerStateContext context, PlayerData playerData, string animBoolName, bool sendData = true)
         {
-            _context = context;
-            _playerData = playerData;
-            _animBoolName = animBoolName;
-            _sendData = sendData;
-            _animBoolHash = Animator.StringToHash(animBoolName);
+            this.context = context;
+            this.playerData = playerData;
+            this.animBoolName = animBoolName;
+            this.sendData = sendData;
+            this.animBoolHash = Animator.StringToHash(animBoolName);
         }
 
         public void SwitchState(PlayerBaseState state)
         {
-            if (Context.CurrentState == state) return;
+            if (context.CurrentState == state) return;
 
             // Send previous and next animation state bool hash's
-            SendStateData(Context.CurrentState.AnimBoolHash, state.AnimBoolHash);
+            SendStateData(context.CurrentState.animBoolHash, state.animBoolHash);
             // exit the current state of the context
             Exit();
             // enter the new state
             state.Enter();
             // switch the state of the context
-            Context.CurrentState = state;
+            context.CurrentState = state;
         }
 
         public void SendStateData(int prevAnimBoolHash, int nextAnimBoolHash)
@@ -58,8 +52,8 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         public virtual void Enter()
         {
-            Context.Animator.SetBool(AnimBoolHash, true);
-            if (SendData)
+            context.Animator.SetBool(animBoolHash, true);
+            if (sendData)
             {
                 
             }
@@ -67,7 +61,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         
         public virtual void Exit()
         {
-            Context.Animator.SetBool(AnimBoolHash, false);
+            context.Animator.SetBool(animBoolHash, false);
         }
 
         public virtual void Update()

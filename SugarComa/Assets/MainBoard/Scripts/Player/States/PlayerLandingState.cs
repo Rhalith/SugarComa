@@ -28,7 +28,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         public override void AnimationEnded()
         {
-            SwitchState(Context.Idle);
+            SwitchState(context.Idle);
         }
     }
 }
