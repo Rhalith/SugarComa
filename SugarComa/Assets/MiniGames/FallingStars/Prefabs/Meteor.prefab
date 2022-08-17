@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 5469553693885063360}
   m_Layer: 0
   m_Name: ColliderForCheck
-  m_TagString: ColliderChecker
+  m_TagString: SpawnDetector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1904,7 +1904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 04b3761f9886690438ad68b751435bff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.22
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 04b3761f9886690438ad68b751435bff, type: 3}
       propertyPath: m_LocalPosition.z

@@ -103,7 +103,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             {
                 x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
                 z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
-                Collider[] hits = Physics.OverlapBox(new Vector3(x, 0, z), new Vector3(20, 2, 20));
+                Collider[] hits = Physics.OverlapSphere(new Vector3(x, 0, z), 10f);
                 int count = 0;
                 foreach (Collider hit in hits)
                 { 
