@@ -18,7 +18,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _playerMovement.PlayerInput.PlayerInputs.Punch.started += Punch_started;
             _playerMovement.PlayerInput.PlayerInputs.Punch.canceled += Punch_started;
         }
-
+        // TODO animasyona ekle
         private void Punch_started(InputAction.CallbackContext obj)
         {
             print("test");
