@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4482475, g: 0.49827462, b: 0.57558316, a: 1}
+  m_IndirectSpecularColor: {r: 0.4482475, g: 0.49827433, b: 0.57558244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2362,7 +2362,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.5992907, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -7505,6 +7505,10 @@ PrefabInstance:
       propertyPath: _cam
       value: 
       objectReference: {fileID: 801087445}
+    - target: {fileID: 3947062569896441650, guid: 1ea63569642c2e2408c22d589feab383, type: 3}
+      propertyPath: m_Height
+      value: 4.26
+      objectReference: {fileID: 0}
     - target: {fileID: 4157132201750837891, guid: 1ea63569642c2e2408c22d589feab383, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 57.26686
