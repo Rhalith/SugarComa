@@ -105,7 +105,7 @@
                 "m_Node": {
                     "m_Id": "48e008d3d2da4b6c9c479abd840245c1"
                 },
-                "m_SlotId": 1
+                "m_SlotId": 2
             },
             "m_InputSlot": {
                 "m_Node": {
@@ -373,8 +373,8 @@
     "m_Hidden": false,
     "m_Value": {
         "r": 1.0,
-        "g": 0.0,
-        "b": 0.5254902243614197,
+        "g": 0.09019608050584793,
+        "b": 0.6431372761726379,
         "a": 0.0
     },
     "isMainColor": false,
@@ -416,6 +416,29 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "29e0c0e67f474e36afaf4317ebccbdc9",
+    "m_Id": 1,
+    "m_DisplayName": "Out_Vector4",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out_Vector4",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
     "m_Labels": []
 }
 
@@ -494,15 +517,15 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 304.9999694824219,
-            "y": 202.99998474121095,
-            "width": 104.99993896484375,
-            "height": 77.00004577636719
+            "x": 306.00006103515627,
+            "y": 203.0,
+            "width": 104.99996948242188,
+            "height": 77.00003051757813
         }
     },
     "m_Slots": [
         {
-            "m_Id": "8c38045809f04f2fa8b99a5f7d447b07"
+            "m_Id": "29e0c0e67f474e36afaf4317ebccbdc9"
         }
     ],
     "synonyms": [],
@@ -785,31 +808,6 @@
         "z": 0.0,
         "w": 0.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
-    "m_ObjectId": "8c38045809f04f2fa8b99a5f7d447b07",
-    "m_Id": 1,
-    "m_DisplayName": "Out_Vector4",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "OutVector4",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_Labels": []
 }
 
 {
@@ -1197,7 +1195,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "r": 0.46787476539611819,
+        "r": 0.26833343505859377,
         "g": 1.0,
         "b": 0.0,
         "a": 0.0

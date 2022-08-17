@@ -86,6 +86,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             list[i].SetActive(isOn);
             list[i].transform.position = new Vector3(vector3.x, 0, vector3.z);
+            if (!isOn)
+            {
+                list[i].transform.position = new Vector3(vector3.x, 0.09f, vector3.z);
+            }
         }
 
         private Vector3 CalculateDistance(Rigidbody rig)
