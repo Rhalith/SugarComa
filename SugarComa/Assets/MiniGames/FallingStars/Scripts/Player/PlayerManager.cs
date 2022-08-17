@@ -11,8 +11,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private ExplosionMeteor _explosionMeteor;
         private StickyMeteor _stickyMeteor;
         private PoisonMeteor _poisonMeteor;
+        private Punch _punch;
 
         [SerializeField] private PlayerMovement _playerMovement;
+        [SerializeField] private PlayerAnimation _playerAnimation;
+        [SerializeField] private PlayerHit _playerHit;
 
         private void Awake()
         {
@@ -20,6 +23,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _explosionMeteor = new(this);
             _stickyMeteor = new(this);
             _poisonMeteor = new(this);
+            _punch = new(this);
         }
 
         public void DamagePlayer(float damage)
@@ -32,7 +36,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _playerMovement.PlayerSpec.Health = 0;
             _playerMovement.PlayerSpec.IsDead = true;
         }
-
+        public void GetHit(Transform attackPlayer, Transform hitPlayer)
+        {
+            print("gettinghit");
+            StartCoroutine(_punch.GetHit(attackPlayer.forward, hitPlayer, _playerAnimation, _playerMovement.PlayerSpec));
+        }
         public void StartNumerator(MeteorType meteorType, float damage = 0, int duration = 0, float ratio = 0)
         {
             switch (meteorType)
@@ -195,6 +203,44 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             }
         }
 
+        #endregion
+        #region Punch
+        private class Punch
+        {
+            public Coroutine _corouite;
+            private readonly PlayerManager _playerManager;
+            public Punch(PlayerManager playerManager)
+            {
+                _playerManager = playerManager;
+            }
+            public IEnumerator GetHit(Vector3 direction, Transform transform, PlayerAnimation playerAnimation, PlayerSpecifications playerSpec, float time = 60f,  float waitTime = 0.005f)
+            {
+                StopPlayerMovement(true, playerSpec);
+                Quaternion desiredRotation = Quaternion.LookRotation(-direction, Vector3.up);
+                transform.rotation = desiredRotation;
+                while (time > 0)
+                {
+                    transform.Translate(-transform.forward / playerSpec.PunchRatio, Space.World);
+                    yield return new WaitForSeconds(waitTime);
+                    time--;
+                    playerAnimation.StartGettingHit();
+                }
+                playerAnimation.StopGettingHit();
+                StopPlayerMovement(false, playerSpec);
+            }
+
+            private void StopPlayerMovement(bool isStop, PlayerSpecifications playerSpec)
+            {
+                if (isStop)
+                {
+                    playerSpec.MoveSpeed = 0;
+                }
+                else
+                {
+                    playerSpec.MoveSpeed = playerSpec.LocalMoveSpeed;
+                }
+            }
+        }
         #endregion
     }
 }

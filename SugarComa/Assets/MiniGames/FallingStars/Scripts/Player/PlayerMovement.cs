@@ -29,27 +29,28 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         [SerializeField] private PlayerSpecifications _playerSpecs;
         private PlayerActions _playerInput;
         public PlayerSpecifications PlayerSpec { get => _playerSpecs; }
+        public PlayerActions PlayerInput { get => _playerInput; private set => _playerInput = value; }
         #endregion
 
         private void Awake()
         {
-            _playerInput = new PlayerActions();
+            PlayerInput = new PlayerActions();
 
-            _playerInput.PlayerInputs.Movement.performed += Movement_performed;
-            _playerInput.PlayerInputs.Movement.canceled += Movement_performed;
+            PlayerInput.PlayerInputs.Movement.performed += Movement_performed;
+            PlayerInput.PlayerInputs.Movement.canceled += Movement_performed;
 
-            _playerInput.PlayerInputs.Punch.started += Punch_started;
-            _playerInput.PlayerInputs.Punch.canceled += Punch_started;
+            //_playerInput.PlayerInputs.Punch.started += Punch_started;
+            //_playerInput.PlayerInputs.Punch.canceled += Punch_started;
 
-            _playerInput.PlayerInputs.RotationWithGamepad.performed += RotationWithGamepad_performed;
-            _playerInput.PlayerInputs.RotationWithGamepad.canceled += RotationWithGamepad_performed;
+            PlayerInput.PlayerInputs.RotationWithGamepad.performed += RotationWithGamepad_performed;
+            PlayerInput.PlayerInputs.RotationWithGamepad.canceled += RotationWithGamepad_performed;
 
-            _playerInput.PlayerInputs.RotationWithMouse.started += RotationWithMouse_performed;
-            _playerInput.PlayerInputs.RotationWithMouse.performed += RotationWithMouse_performed;
-            _playerInput.PlayerInputs.RotationWithMouse.canceled += RotationWithMouse_performed;
+            PlayerInput.PlayerInputs.RotationWithMouse.started += RotationWithMouse_performed;
+            PlayerInput.PlayerInputs.RotationWithMouse.performed += RotationWithMouse_performed;
+            PlayerInput.PlayerInputs.RotationWithMouse.canceled += RotationWithMouse_performed;
 
-            _playerInput.PlayerInputs.MouseForRotation.performed += MouseForRotation_performed;
-            _playerInput.PlayerInputs.MouseForRotation.canceled += MouseForRotation_performed;
+            PlayerInput.PlayerInputs.MouseForRotation.performed += MouseForRotation_performed;
+            PlayerInput.PlayerInputs.MouseForRotation.canceled += MouseForRotation_performed;
         }
 
         private void RotationWithMouse_performed(InputAction.CallbackContext obj)
@@ -71,12 +72,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _isGamepadActive = obj.performed;
         }
 
-        private void Punch_started(InputAction.CallbackContext obj)
-        {
-            _punch = obj.ReadValueAsButton();
-            if (!_punch) _animation.EndToHit();
-            else _animation.StartToHit();
-        }
+        //private void Punch_started(InputAction.CallbackContext obj)
+        //{
+        //    _punch = obj.ReadValueAsButton();
+        //    if (!_punch) _animation.EndToHit();
+        //    else _animation.StartToHit();
+        //}
 
         private void Movement_performed(InputAction.CallbackContext obj)
         {
@@ -88,12 +89,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         private void OnEnable()
         {
-            _playerInput.Enable();
+            PlayerInput.Enable();
         }
 
         private void OnDisable()
         {
-            _playerInput.Disable();
+            PlayerInput.Disable();
         }
         private void FixedUpdate()
         {
@@ -187,21 +188,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         //}
 
         //TODO
-        public void Aduket()
-        {
-            StartCoroutine(aduket());
-        }
-        IEnumerator aduket()
-        {
-            float time = 0;
-            while(time < 60)
-            {
-                transform.Translate(-Vector3.forward / 3);
-                yield return new WaitForSeconds(0.005f);
-                time++;
-                _animation.StartGettingHit();
-            }
-            _animation.StopGettingHit();
-        }
+        //public void Aduket()
+        //{
+        //    StartCoroutine(aduket());
+        //}
+        //IEnumerator aduket()
+        //{
+        //    float time = 0;
+        //    while(time < 60)
+        //    {
+        //        transform.Translate(-Vector3.forward / 3);
+        //        yield return new WaitForSeconds(0.005f);
+        //        time++;
+        //        _animation.StartGettingHit();
+        //    }
+        //    _animation.StopGettingHit();
+        //}
     }
 }
