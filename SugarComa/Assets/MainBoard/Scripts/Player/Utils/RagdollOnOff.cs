@@ -72,6 +72,7 @@ namespace Assets.MainBoard.Scripts.Player.Utils
             //_currentRigidBody.isKinematic = false;
         }
 
+        // TODO: Sürenin ayarlanmasý lazým
         IEnumerator ForDeath()
         {
             yield return null;

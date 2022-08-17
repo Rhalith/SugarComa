@@ -12,7 +12,6 @@ namespace Assets.MainBoard.Scripts.Player.Items.BoxGloves
         [SerializeField] ItemObject _itemObject;
         [SerializeField] GameObject _player;
         [SerializeField] int damage;
-        [SerializeField] PlayerMovement _playerMovement;
         [SerializeField] BoxGlovesAnimation _boxGlovesAnimation;
         [SerializeField] Animator _playerAnimator;
         #endregion
@@ -68,15 +67,18 @@ namespace Assets.MainBoard.Scripts.Player.Items.BoxGloves
         {
             if (other.gameObject.CompareTag("Player") && other.gameObject != _player)
             {
-                isHitPlayer = true; otherPlayersCollector.Add(other.GetComponent<PlayerCollector>());
+                isHitPlayer = true; 
+                otherPlayersCollector.Add(other.GetComponent<PlayerCollector>());
             }
         }
 
+        // TODO: Hasar verilmeden player silinebilir...
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.CompareTag("Player") && other != _player)
             {
-                isHitPlayer = false; otherPlayersCollector.Remove(other.GetComponent<PlayerCollector>());
+                isHitPlayer = false; 
+                otherPlayersCollector.Remove(other.GetComponent<PlayerCollector>());
             }
         }
     }

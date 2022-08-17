@@ -14,31 +14,38 @@ namespace Assets.MainBoard.Scripts.Route
 {
     public class GoalSelector : MonoBehaviour
     {
+        #region SerializeFields
         [SerializeField] List<Platform> platforms;
 
         [SerializeField] CinemachineVirtualCamera _camera;
 
         [SerializeField] CinemachineBrain _cinemachineBrain;
+        #endregion
 
-        public GameObject _platformChangerObject;
-
-        public GoalChestAnimation _chestAnimator;
-
+        #region Private Fields
         private int realPriority;
 
         private Platform _selectedPlatform;
-
-        public bool isGoalActive;
-
         //TODO
         private GameObject _currentGoal;
 
         private Platform _currentPlatform;
 
+        private PlatformSpec _platformSpecHolder;
+        #endregion
+
+        #region Public Fields
+        public GameObject _platformChangerObject;
+
+        public GoalChestAnimation _chestAnimator;
+
+        public bool isGoalActive;
+
         /// <summary>
         /// if there is a goal platform in map
         /// </summary>
         public static bool isAnyGoalPlatform;
+        #endregion
 
         private void Start()
         {
@@ -63,16 +70,17 @@ namespace Assets.MainBoard.Scripts.Route
             int index = Random.Range(0, platforms.Count);
 
             // Kaldýr...
-            // index = 1;
+             index = 1;
 
             // TODO: Check if player in that platform with currentplatform
             if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector)
             {
+                /*
                 if(_currentPlatform != null && platforms[index] == _currentPlatform)
                 {
                     RandomGoalSelect();
                 }
-
+                */
                 bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index, MessageType.CreateChest)));
 
                 if (result) CreateGoal(index);
@@ -85,6 +93,7 @@ namespace Assets.MainBoard.Scripts.Route
 
         private void CreateGoal(int index)
         {
+            _platformSpecHolder = platforms[index].spec;
             platforms[index].spec = PlatformSpec.Goal;
             CreateGoalObject(platforms[index]);
             VirtualCameraLookTo(_camera, platforms[index].transform);
@@ -130,6 +139,7 @@ namespace Assets.MainBoard.Scripts.Route
                 _currentGoal.SetActive(false);
                 _selectedPlatform.ActivateMeshRenderer(true);
                 isGoalActive = false;
+                _selectedPlatform.spec = _platformSpecHolder;
                 RandomGoalSelect();
             }
         }
