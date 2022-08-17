@@ -24,8 +24,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         #endregion
 
 
-        private float x;
-        private float z;
+        List<Vector3> points = new List<Vector3>();
+        private float distanceBetweenMeteors = 5f;
         private void Awake()
         {
             Instance = this;
@@ -36,17 +36,22 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             _miniGameManager.SpawnNewWave -= SpawnWave;
         }
-/*
-        private void GrowPool()
+        /*
+                private void GrowPool()
+                {
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Meteor instanceToAdd = Instantiate(_meteorPrefab);
+                        instanceToAdd.transform.SetParent(transform);
+                        AddToPool(instanceToAdd);
+                    }
+                }
+                */
+
+        private void Start()
         {
-            for (int i = 0; i < 20; i++)
-            {
-                Meteor instanceToAdd = Instantiate(_meteorPrefab);
-                instanceToAdd.transform.SetParent(transform);
-                AddToPool(instanceToAdd);
-            }
+            points = GetAvailablePos();
         }
-        */
         public void AddToPool(Meteor instance)
         {/*
             instance.gameObject.SetActive(false);
@@ -74,6 +79,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             int meteorCount = _miniGameManager.MeteorCount;
             List<Meteor> _list = new();
+            points = GetAvailablePos();
             for (int i = 0; i < meteorCount; i++)
             {
                 float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
@@ -81,11 +87,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 //float z = GetZValue(x,_borders._leftBorder.position.x);
                 Meteor instance = GetFromPool();
                 _list.Add(instance);
-                instance.transform.position = new Vector3(x,0,z);
+                instance.transform.position = points[i];
                 instance.MeteorShadow.SetActive(true);
                 StartCoroutine(ActivateObject(instance));
             }
             CheckMeteorPosition(_list);
+            points.Clear();
         }
 
         private float GetZValue(float x, float radius)
@@ -94,35 +101,44 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             return Random.Range(-zValue,zValue);
         }
 
-        private Vector3 GetAvailablePos()
+        private List<Vector3> GetAvailablePos()
         {
-            x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
-            z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
-            bool isOkey = false;
-            while (!isOkey)
+            List<Vector3> points = new List<Vector3>();
+            float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
+            float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+            Vector3 point = new Vector3(x, 0, z);
+            bool isOkey = true;
+            int meteorCount = _miniGameManager.MeteorCount;
+            points.Add(point);
+            int index = 0;
+            while (points.Count < meteorCount)
             {
                 x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
                 z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
-                Collider[] hits = Physics.OverlapSphere(new Vector3(x, 0, z), 10f);
-                int count = 0;
-                foreach (Collider hit in hits)
-                { 
-                    if (hit.gameObject.tag.Equals("SpawnDetector"))
+                point = new Vector3(x,0,z);
+
+                for(int i =0; i< points.Count; i++)
+                {
+                    if (!(Mathf.Abs(Vector3.Distance(point,points[i]))> 9f))
                     {
-                        print(hit.gameObject.tag);
-                        count++;
+                        isOkey = false;
                     }
                 }
-                if(count == 0)
+                index++;
+                if(index == 30)
                 {
+                    print("index reset");
                     isOkey = true;
                 }
-                else
+                if (isOkey)
                 {
-                    print("false");
+                    print("index ->" +index);
+                    points.Add(point);
+                    index = 0;
                 }
+
             }
-            return new Vector3(x, 0, z);
+            return points;
         }
 
         private void CheckMeteorPosition(List<Meteor> meteorList)
