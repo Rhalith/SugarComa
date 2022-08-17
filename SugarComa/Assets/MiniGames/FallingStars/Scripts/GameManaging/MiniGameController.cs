@@ -20,11 +20,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private Queue<Meteor> AvaliableMeteors = new Queue<Meteor>(11);
 
         public static MiniGameController Instance { get; private set; }
-        
+
         #endregion
 
 
-
+        private float x;
+        private float z;
         private void Awake()
         {
             Instance = this;
@@ -77,15 +78,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             {
                 float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
                 float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
-                while (!isPositionOkey(x, z))
-                {
-                    x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
-                    z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
-                }
                 //float z = GetZValue(x,_borders._leftBorder.position.x);
                 Meteor instance = GetFromPool();
                 _list.Add(instance);
-                instance.transform.position = new Vector3(x, 0, z);
+                instance.transform.position = new Vector3(x,0,z);
                 instance.MeteorShadow.SetActive(true);
                 StartCoroutine(ActivateObject(instance));
             }
@@ -98,24 +94,35 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             return Random.Range(-zValue,zValue);
         }
 
-        private bool isPositionOkey(float x, float z)
+        private Vector3 GetAvailablePos()
         {
-            Collider[] hits = Physics.OverlapSphere(new Vector3(x,0,z), 4.5f); //Measure collision via a small circle at the latest position, dont continue simulating Arc if hit
-            int count = 0;
-            foreach (Collider hit in hits)
+            x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
+            z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+            bool isOkey = false;
+            while (!isOkey)
             {
-                if (hit.gameObject.tag.Equals("PoolEffect"))
+                x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
+                z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+                Collider[] hits = Physics.OverlapBox(new Vector3(x, 0, z), new Vector3(20, 2, 20));
+                int count = 0;
+                foreach (Collider hit in hits)
+                { 
+                    if (hit.gameObject.tag.Equals("SpawnDetector"))
+                    {
+                        print(hit.gameObject.tag);
+                        count++;
+                    }
+                }
+                if(count == 0)
                 {
-                    count++;
+                    isOkey = true;
+                }
+                else
+                {
+                    print("false");
                 }
             }
-            print(count);
-            if (count > 0) //Return true if something is hit, stopping Arc simulation
-            {
-                return false;
-
-            }
-            return true;
+            return new Vector3(x, 0, z);
         }
 
         private void CheckMeteorPosition(List<Meteor> meteorList)
@@ -149,7 +156,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             yield return new WaitForSeconds(1f);
             gameObject.MeteorObject.SetActive(true);
         }
+      
     }
+
 }
 
 //[SerializeField] float _gameTime;
