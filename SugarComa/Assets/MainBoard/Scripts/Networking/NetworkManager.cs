@@ -54,8 +54,7 @@ namespace Assets.MainBoard.Scripts.Networking
             if(SteamManager.Instance.PlayerSteamId == SteamLobbyManager.currentLobby.Owner.Id)
             {
                 playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
-                playerHandler.currentPlayerInput.isMyTurn = true;
-                playerHandler.currentPlayerInput.Dice.SetActive(true);
+                playerHandler.mainPlayerStateContext.IsMyTurn = true;
             }
         }
 

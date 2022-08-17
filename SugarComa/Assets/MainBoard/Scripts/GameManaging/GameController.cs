@@ -66,7 +66,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             else
             {
-                _textChanger = new(_playerHandler.currentplayerGold, _playerHandler.currentplayerHealth, _playerHandler.currentplayerGoblet, _playerHandler.currentPlayerCollector);
+                _textChanger = new(_playerHandler.mainplayerGold, _playerHandler.mainplayerHealth, _playerHandler.mainplayerGoblet, _playerHandler.mainPlayerCollector);
             }
             notifyScript.AddObserver(_textChanger);
         }
@@ -91,16 +91,16 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             else
             {
-                _inventoryChanger1 = new(_playerHandler.currentPlayerInventory._items[0]); AddToObserver(_inventoryChanger1);
-                _inventoryChanger2 = new(_playerHandler.currentPlayerInventory._items[1]); AddToObserver(_inventoryChanger2);
-                _inventoryChanger3 = new(_playerHandler.currentPlayerInventory._items[2]); AddToObserver(_inventoryChanger3);
-                _inventoryChanger4 = new(_playerHandler.currentPlayerInventory._items[3]); AddToObserver(_inventoryChanger4);
-                _inventoryChanger5 = new(_playerHandler.currentPlayerInventory._items[4]); AddToObserver(_inventoryChanger5);
-                _inventoryChanger6 = new(_playerHandler.currentPlayerInventory._items[5]); AddToObserver(_inventoryChanger6);
-                _inventoryChanger7 = new(_playerHandler.currentPlayerInventory._items[6]); AddToObserver(_inventoryChanger7);
-                _inventoryChanger8 = new(_playerHandler.currentPlayerInventory._items[7]); AddToObserver(_inventoryChanger8);
-                _inventoryChanger9 = new(_playerHandler.currentPlayerInventory._items[8]); AddToObserver(_inventoryChanger9);
-                _inventoryChanger10 = new(_playerHandler.currentPlayerInventory._items[9]); AddToObserver(_inventoryChanger10);
+                _inventoryChanger1 = new(_playerHandler.mainPlayerInventory._items[0]); AddToObserver(_inventoryChanger1);
+                _inventoryChanger2 = new(_playerHandler.mainPlayerInventory._items[1]); AddToObserver(_inventoryChanger2);
+                _inventoryChanger3 = new(_playerHandler.mainPlayerInventory._items[2]); AddToObserver(_inventoryChanger3);
+                _inventoryChanger4 = new(_playerHandler.mainPlayerInventory._items[3]); AddToObserver(_inventoryChanger4);
+                _inventoryChanger5 = new(_playerHandler.mainPlayerInventory._items[4]); AddToObserver(_inventoryChanger5);
+                _inventoryChanger6 = new(_playerHandler.mainPlayerInventory._items[5]); AddToObserver(_inventoryChanger6);
+                _inventoryChanger7 = new(_playerHandler.mainPlayerInventory._items[6]); AddToObserver(_inventoryChanger7);
+                _inventoryChanger8 = new(_playerHandler.mainPlayerInventory._items[7]); AddToObserver(_inventoryChanger8);
+                _inventoryChanger9 = new(_playerHandler.mainPlayerInventory._items[8]); AddToObserver(_inventoryChanger9);
+                _inventoryChanger10 = new(_playerHandler.mainPlayerInventory._items[9]); AddToObserver(_inventoryChanger10);
             }
 
         }

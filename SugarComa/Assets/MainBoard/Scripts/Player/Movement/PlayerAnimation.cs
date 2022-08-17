@@ -1,3 +1,4 @@
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Player.Items.BoxGloves;
 using Assets.MainBoard.Scripts.Player.Utils;
 using Assets.MainBoard.Scripts.Route;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.Movement
 {
+    [System.Obsolete("Bu script düzenlenip, kaldýrýlacak.")]
     public class PlayerAnimation : MonoBehaviour
     {
         #region SerializeField
@@ -59,16 +61,15 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             if (jump == 0)
             {
                 _dice.SetActive(false);
-                _playerMovement.DiceText.enabled = true;
+                //_playerMovement.DiceText.enabled = true;
                 IEnumerator waitForCloseText()
                 {
                     yield return null;
                     yield return new WaitForSeconds(0.5f);
-                    _playerMovement.DiceText.enabled = false;
+                    //_playerMovement.DiceText.enabled = false;
                 }
                 StartCoroutine(waitForCloseText());
             }
-
         }
         /// <summary>
         /// Triggers landing animation.
@@ -76,20 +77,20 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         /// <param name="landing"></param>
         private void LandSet(int landing)
         {
+
+
             _animator.SetBool("landing", landing != 0);
             _land = landing != 0;
+            /*
             if (_playerMovement.PlayerCollector.isDead && landing == 0)
             {
                 DeathSet(0);
                 _playerMovement.PlayerCollector.isDead = false;
                 _scriptKeeper._playerCamera.Priority = 1;
             }
-            if (!GoalSelector.isAnyGoalPlatform && landing == 0)
-            {
-                _goalSelector.SelectGoalOnStart();
-                _dice.SetActive(true);
-            }
+            */
         }
+
         /// <summary>
         /// Triggers surprise animation.
         /// </summary>
@@ -155,13 +156,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         public void StartDeath()
         {
             DeathSet(1);
-        }
-        /// <summary>
-        /// When death animation ends. Invokes in death animation.
-        /// </summary>
-        public void AfterDeath()
-        {
-            _playerMovement.OnDeath();
         }
 
         /// <summary>

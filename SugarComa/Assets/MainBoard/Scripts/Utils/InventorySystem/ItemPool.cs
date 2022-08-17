@@ -40,7 +40,7 @@ namespace Assets.MainBoard.Scripts.Utils.InventorySystem
         private void CloseAllItems()
         {
             _playerAnimator.SetBool("itemUsing", false);
-            if (ItemUsing.BoxGlovesUsing) _playerAnimator.SetBool("boks", false);
+            if (ItemUsing.BoxGlovesUsing) _playerAnimator.SetBool("boxing", false);
         }
     }
 

@@ -72,12 +72,13 @@ namespace Assets.MainBoard.Scripts.Player.Utils
             //_currentRigidBody.isKinematic = false;
         }
 
+        // TODO: Sürenin ayarlanmasý lazým
         IEnumerator ForDeath()
         {
             yield return null;
             yield return new WaitForSeconds(2f);
             RagDollOff();
-            _playerMovement.OnDeath();
+            //_playerMovement.OnDeath();
         }
     }
 }

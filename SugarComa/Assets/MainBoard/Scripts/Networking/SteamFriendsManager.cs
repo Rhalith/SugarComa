@@ -61,6 +61,9 @@ public class SteamFriendsManager : MonoBehaviour
 
     public void InitFriendsAsync()
     {
+        // TODO: kod tekrarını düzelt
+        // UpdateFriendList();
+
         foreach (var friend in SteamFriends.GetFriends())
         {
             if (friend.IsOnline)

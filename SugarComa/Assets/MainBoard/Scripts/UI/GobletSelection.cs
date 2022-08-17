@@ -15,7 +15,6 @@ namespace Assets.MainBoard.Scripts.UI
         [SerializeField] private Button Goblet;
         [SerializeField] private GoalSelector _goalSelector;
         [SerializeField] private PathFinder _pathFinder;
-        [SerializeField] private PlayerAnimation _playerAnimation;
         #endregion
 
         #region Properties
@@ -60,14 +59,6 @@ namespace Assets.MainBoard.Scripts.UI
             _gameController.ChangeText();
             gameObject.SetActive(false);
             OnLeaveIt?.Invoke();
-        }
-
-        [System.Obsolete("Use player movement instead.")]
-        public void ContinueToMove()
-        {
-            // var path = _pathFinder.ToSelector(_playerMovement.CurrentPlatform, _playerMovement.CurrentStep);
-            // _playerMovement.StartFollowPath(path, true);
-            // _playerAnimation.ContinueRunning();
         }
     }
 }

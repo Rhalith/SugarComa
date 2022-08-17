@@ -784,6 +784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   rotationSpeed: 720
+  _playerAnimation: {fileID: 2946181445786484163}
 --- !u!114 &1281681497997228436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2031,6 +2032,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2946181445786484163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886945101997239710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8515dd818e2d248b8895dceb7f5a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boxGloves: {fileID: 7937054991280826797}
+  anim: {fileID: 4120892787933790878}
 --- !u!1 &4195898190158683059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9004233853494326404, guid: 7fca060d96bb7b548af373fad492934c, type: 3}

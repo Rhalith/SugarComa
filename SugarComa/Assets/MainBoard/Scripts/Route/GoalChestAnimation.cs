@@ -12,9 +12,10 @@ namespace Assets.MainBoard.Scripts.Route
 
         private int count;
 
-        #region Priorities
+        #region Properties
         public GoalSelector GoalSelector { get { return _goalSelector; } set { _goalSelector = value; } }
         #endregion
+
         public void ChangePlatform()
         {
             if (!_goalSelector.isGoalActive) _goalSelector.ChangeActiveObject(0);

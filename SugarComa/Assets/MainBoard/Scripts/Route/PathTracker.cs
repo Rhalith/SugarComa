@@ -21,6 +21,7 @@ namespace Assets.MainBoard.Scripts.Route
         private Vector3 _startPosition;
         private int _currentPlatformIndex;
         private Platform[] _path;
+        private bool _isCurrentPlatformSelector;
 
         public float speed; // game object movement speed.
         public float rotationSpeed; // game object movement speed.
@@ -181,12 +182,16 @@ namespace Assets.MainBoard.Scripts.Route
         {
             bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
 
+            // current -> next
+            if (_isCurrentPlatformSelector)
+                condition = false;
+
             if (condition)
             {
                 // platform is selector or current spec equals to the given spec then move is over.
-                if (_isSelector || _currentPlatformIndex >= 0 &&
+                if (_isSelector || (_currentPlatformIndex >= 0 &&
                     _currentPlatformIndex < _path.Length &&
-                    _spec == _path[_currentPlatformIndex].spec) condition = false;
+                    _spec == _path[_currentPlatformIndex].spec)) condition = false;
 
                 // if the step greater than maximum step, stop the movement.
                 if (_maxStep != -1) condition = condition && _step < _maxStep;
@@ -200,6 +205,7 @@ namespace Assets.MainBoard.Scripts.Route
                 _startPosition = transform.position;
                 _currentPosition = _path[_currentPlatformIndex].position;
                 _currentPosition.y = transform.position.y;
+                _isCurrentPlatformSelector = _path[_currentPlatformIndex].HasSelector;
 
                 OnCurrentPlatformChanged?.Invoke();
             }
