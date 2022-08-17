@@ -12,6 +12,7 @@ TagManager:
   - MiniMeteor
   - ColliderChecker
   - PoolEffect
+  - SpawnDetector
   layers:
   - Default
   - TransparentFX
