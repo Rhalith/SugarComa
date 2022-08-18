@@ -75,6 +75,37 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             MeteorShadow.SetActive(!value);
             _effectObject.SetActive(value);
         }
+
+        public void SetObjectMaterial(MeteorType type, Material material)
+        {
+            switch (type)
+            {
+                case MeteorType.classic:
+                    Material[] classicMaterials = _meteorObjects[0].GetComponent<Renderer>().materials;
+                    classicMaterials[2] = material;
+                    _meteorObjects[0].GetComponent<Renderer>().materials = classicMaterials;
+                    _meteorObjects[0].GetComponent<MeteorObject>().FlameMaterial = material;
+                    break;
+                case MeteorType.explosion:
+                    Material[] explosionMaterials = _meteorObjects[1].GetComponent<Renderer>().materials;
+                    explosionMaterials[1] = material;
+                    _meteorObjects[1].GetComponent<Renderer>().materials = explosionMaterials;
+                    _meteorObjects[1].GetComponent<MeteorObject>().FlameMaterial = material;
+                    break;
+                case MeteorType.poison:
+                    Material[] poisonMaterials = _meteorObjects[2].GetComponent<Renderer>().materials;
+                    poisonMaterials[1] = material;
+                    _meteorObjects[2].GetComponent<Renderer>().materials = poisonMaterials;
+                    _meteorObjects[2].GetComponent<MeteorObject>().FlameMaterial = material;
+                    break;
+                case MeteorType.sticky:
+                    Material[] stickyMaterials = _meteorObjects[3].GetComponent<Renderer>().materials;
+                    stickyMaterials[1] = material;
+                    _meteorObjects[3].GetComponent<Renderer>().materials = stickyMaterials;
+                    _meteorObjects[3].GetComponent<MeteorObject>().FlameMaterial = material;
+                    break;
+            }
+        }
         private void ResetMeteor(bool value)
         {
             MeteorShadow.SetActive(value);

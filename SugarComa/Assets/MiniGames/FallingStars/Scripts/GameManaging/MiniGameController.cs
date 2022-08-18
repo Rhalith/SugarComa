@@ -32,6 +32,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private void Awake()
         {
             Instance = this;
+            SetFlameMaterials();
             //GrowPool();
             _miniGameManager.SpawnNewWave += SpawnWave;
         }
@@ -102,11 +103,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             waveIndex++;
         }
 
-        private float GetZValue(float x, float radius)
-        {
-            float zValue = Mathf.Pow((Mathf.Pow(radius, 2) - Mathf.Pow(x, 2)), 0.5f);
-            return Random.Range(-zValue,zValue);
-        }
 
         private List<Vector3> GetAvailablePos()
         {
@@ -173,6 +169,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             yield return new WaitForSeconds(1f);
             gameObject.MeteorObject.SetActive(true);
+        }
+
+        private void SetFlameMaterials()
+        {
+            int i = 0;
+            foreach (GameObject meteor in _poolManager.Pools[0].pooledObjects)
+            {
+                Meteor _currentMeteor = meteor.GetComponent<Meteor>();
+                _currentMeteor.SetObjectMaterial(MeteorType.classic, MiniGameManager.MeteorMaterials.classic[i]);
+                _currentMeteor.SetObjectMaterial(MeteorType.poison, MiniGameManager.MeteorMaterials.poison[i]);
+                _currentMeteor.SetObjectMaterial(MeteorType.explosion, MiniGameManager.MeteorMaterials.explosion[i]);
+                _currentMeteor.SetObjectMaterial(MeteorType.sticky, MiniGameManager.MeteorMaterials.sticky[i]);
+                i++;
+            }
+            
         }
       
     }

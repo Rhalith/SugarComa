@@ -961,6 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteor: {fileID: 7816483564973452870}
+  _flameMaterial: {fileID: 2100000, guid: 7508427c14f7028459b50cc01d4e661a, type: 2}
 --- !u!4 &3367303003058122528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd839b142c783794b9cb3db44ecad8e5, type: 3}
@@ -1191,6 +1192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteor: {fileID: 7816483564973452870}
+  _flameMaterial: {fileID: 2100000, guid: 1a10a78278c6b2142af5bca889376ba8, type: 2}
 --- !u!4 &3382511955071703449 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cc02eed2b0e3c9142bdca9708ad7a344, type: 3}
@@ -1863,6 +1865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteor: {fileID: 7816483564973452870}
+  _flameMaterial: {fileID: 2100000, guid: a76c79467aa16344aaa046c32b5d9809, type: 2}
 --- !u!1001 &8836482520791825630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1962,6 +1965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteor: {fileID: 7816483564973452870}
+  _flameMaterial: {fileID: 2100000, guid: 0ed2120a5bbdc9b4eaa142e9e7029faf, type: 2}
 --- !u!4 &9019521986430491445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 951c15a31587ba34db31f10bfdfd89b4, type: 3}

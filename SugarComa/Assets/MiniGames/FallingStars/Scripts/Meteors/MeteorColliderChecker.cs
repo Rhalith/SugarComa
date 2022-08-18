@@ -25,7 +25,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             //_left = left; _right = right; _up = up; _bottom = bottom;
             //i++;
             float x = Random.Range(left.position.x, right.position.x);
-            float z = Random.Range(up.position.z, bottom.position.z);
+            float z = GetZValue(x, 50);
             _meteor.transform.position = new Vector3(x, 0, z);
             //if (IsIn)
             //{
@@ -48,6 +48,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                 IsIn = false;
                 _shadowRenderer.enabled = true;
             }
+        }
+        private float GetZValue(float x, float radius)
+        {
+            float zValue = Mathf.Pow(Mathf.Pow(radius, 2) - Mathf.Pow(x, 2), 0.5f);
+            return Random.Range(-zValue, zValue);
         }
 
         //private void ResetChecker()

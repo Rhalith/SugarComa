@@ -72,6 +72,8 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
+    - _EllipseHeight: 0.58
+    - _EllipseWidth: 1
     - _Float: 0
     - _Frame: 0
     - _GlossMapScale: 1
@@ -84,12 +86,17 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SurfaceInputs: 0
     - _UVSec: 0
-    - _Y: 0
+    - _Y: 35.599968
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.5136409, g: 1, b: 0, a: 0}
+    - _Color2: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Pos1: {r: 2, g: 2, b: 2, a: 0}
+    - _Pos2: {r: -3, g: -3, b: -3, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2516158379813820790
 MonoBehaviour:

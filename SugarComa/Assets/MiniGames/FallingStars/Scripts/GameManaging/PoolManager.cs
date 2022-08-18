@@ -14,6 +14,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         [SerializeField] private Pool[] _pools;
 
+        public Pool[] Pools { get => _pools; private set => _pools = value; }
+
         public void AddToPool(GameObject obj)
         {
             if (obj.activeInHierarchy) obj.SetActive(false);
@@ -30,7 +32,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         public GameObject GetFromPool(int poolIndex)
         {
             GameObject gameObject = null;
-            foreach (GameObject obj in _pools[poolIndex].pooledObjects)
+            foreach (GameObject obj in Pools[poolIndex].pooledObjects)
             {
                 if (!obj.activeInHierarchy && gameObject == null)
                 {
@@ -45,7 +47,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         public GameObject[] GetFromPool(int poolIndex, int count)
         {
             GameObject[] gameObjects = null;
-            foreach (GameObject obj in _pools[poolIndex].pooledObjects)
+            foreach (GameObject obj in Pools[poolIndex].pooledObjects)
             {
                 if (!obj.activeInHierarchy && gameObjects.Length < count)
                 {
