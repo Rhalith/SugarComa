@@ -2,19 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeteorColliderChecker : MonoBehaviour
+namespace Assets.MiniGames.FallingStars.Scripts.Meteors
 {
-    private bool _isIn;
-    [SerializeField] private Collider _currentChecker;
-
-    public bool IsIn { get => _isIn; set => _isIn = value; }
-
-    private void OnTriggerEnter(Collider other)
+    public class MeteorColliderChecker : MonoBehaviour
     {
-        if (other.CompareTag("ColliderChecker") && other != _currentChecker)
+        private bool _isIn;
+        [SerializeField] private Collider _currentChecker;
+        [SerializeField] MeshRenderer _shadowRenderer;
+        [SerializeField] private Meteor _meteor;
+        //public int i;
+        public bool IsIn { get => _isIn; set => _isIn = value; }
+
+        //private Transform _left, _right, _up, _bottom;
+
+        //private void Awake()
+        //{
+        //    _meteor.OnMeteorDisable += ResetChecker;
+        //}
+
+        public void ChangeMeteorPosition(Transform left, Transform right, Transform up, Transform bottom)
         {
-            print("yes"+other.name);
-            IsIn = true;
+            //_left = left; _right = right; _up = up; _bottom = bottom;
+            //i++;
+            float x = Random.Range(left.position.x, right.position.x);
+            float z = Random.Range(up.position.z, bottom.position.z);
+            _meteor.transform.position = new Vector3(x, 0, z);
+            //if (IsIn)
+            //{
+            //    ChangeMeteorPosition(left, right, up, bottom);
+            //}
         }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("ColliderChecker") && other != _currentChecker)
+            {
+                //ChangeMeteorPosition(_left, _right, _up, _bottom);
+                IsIn = true;
+            }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("ColliderChecker") && other != _currentChecker)
+            {
+                IsIn = false;
+                _shadowRenderer.enabled = true;
+            }
+        }
+
+        //private void ResetChecker()
+        //{
+        //    _shadowRenderer.enabled = false;
+        //    _meteor.transform.position = new Vector3(0, 12, 0);
+        //    IsIn = false;
+        //}
     }
 }

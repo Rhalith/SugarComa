@@ -87,17 +87,17 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             //points = GetAvailablePos();
             for (int i = 0; i < meteorCount; i++)
             {
-                float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
-                float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
+                //float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
+                //float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
                 //float z = GetZValue(x,_borders._leftBorder.position.x);
                 Meteor instance = GetFromPool();
                 _list.Add(instance);
                 //instance.transform.position = points[i];
-                instance.transform.position = _waveSpawnPoints[waveIndex].list[i].transform.position;
+                //instance.transform.position = _waveSpawnPoints[waveIndex].list[i].transform.position;
                 instance.MeteorShadow.SetActive(true);
                 StartCoroutine(ActivateObject(instance));
             }
-            //CheckMeteorPosition(_list);
+            CheckMeteorPosition(_list);
            // points.Clear();
             waveIndex++;
         }
@@ -153,12 +153,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             foreach (var item in meteorList)
             {
                 MeteorColliderChecker _meteorChecker = item.GetComponentInChildren<MeteorColliderChecker>();
-                if (_meteorChecker.IsIn)
-                {
-                    float x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
-                    float z = Random.Range(_borders._upBorder.position.z, _borders._bottomBorder.position.z);
-                    item.transform.position = new Vector3(x, 0, z);
-                }
+                _meteorChecker.ChangeMeteorPosition(_borders._leftBorder, _borders._rightBorder, _borders._upBorder, _borders._bottomBorder);
                 //var position = item.transform.position;
                 //for (int i = 0; i < meteorList.Count; i++)
                 //{

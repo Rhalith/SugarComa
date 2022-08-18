@@ -30,6 +30,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         #endregion
         #endregion
 
+        //private void Awake()
+        //{
+        //    _firstPosition.position = transform.position;
+        //}
+
         //private void OnEnable()
         //{
         //    CheckType(Type, _meteorMesh, _meteorRenderer);
