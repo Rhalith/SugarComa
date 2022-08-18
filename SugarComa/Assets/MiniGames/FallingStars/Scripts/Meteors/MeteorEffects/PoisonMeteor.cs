@@ -35,7 +35,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             {
                 PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
                 _players.Add(playerManager);
-                playerManager.StartNumerator(_meteor.Type, _damage, _poisonDuration);
+                playerManager.StartNumerator(_meteor.Type, _damage);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             {
                 PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
                 _players.Remove(playerManager);
-                playerManager.StopNumerator(_meteor.Type);
+                playerManager.StopNumerator(_meteor.Type, _damage, _poisonDuration);
             }
         }
 

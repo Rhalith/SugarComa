@@ -17,7 +17,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerAnimation _playerAnimation;
-        [SerializeField] private PlayerHit _playerHit;
+        [SerializeField] private PlayerChecker _playerChecker;
         [SerializeField] private TMP_Text _healthText;
 
         private void Awake()
@@ -133,7 +133,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                 }
             }
             public void StopIteration()
-            {
+            { 
                 _playerManager.StopCoroutine(_coroutine);
             }
         }
@@ -205,7 +205,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             }
             public void StopIteration()
             {
-                _playerManager.StopCoroutine(_coroutine);
+                if (_coroutine != null)
+                {
+                    _playerManager.StopCoroutine(_coroutine);
+                }
             }
         }
 

@@ -409,7 +409,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8691780276856062721, guid: 833036f31dd0901458bfe075cee0a2e2, type: 3}
 --- !u!114 &4931198814142781115
@@ -600,10 +600,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811034590857739845}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6239881831769578202, guid: 93e6c17b8ee7aca4d8f9acc45ac48e17, type: 3}
 --- !u!114 &5032233038539504548
@@ -830,7 +830,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: 4a02e70e5c9e96f40942b9483dede8b2, type: 3}
 --- !u!114 &3449959857748165794
@@ -961,7 +961,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteor: {fileID: 7816483564973452870}
-  _flameMaterial: {fileID: 2100000, guid: 7508427c14f7028459b50cc01d4e661a, type: 2}
 --- !u!4 &3367303003058122528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd839b142c783794b9cb3db44ecad8e5, type: 3}
@@ -1192,7 +1191,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteor: {fileID: 7816483564973452870}
-  _flameMaterial: {fileID: 2100000, guid: 1a10a78278c6b2142af5bca889376ba8, type: 2}
 --- !u!4 &3382511955071703449 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cc02eed2b0e3c9142bdca9708ad7a344, type: 3}
@@ -1293,10 +1291,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4052942473745039018}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6239881831769578202, guid: 93e6c17b8ee7aca4d8f9acc45ac48e17, type: 3}
 --- !u!114 &3395016940080904735
@@ -1411,10 +1409,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4320339972470953658}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6239881831769578202, guid: 93e6c17b8ee7aca4d8f9acc45ac48e17, type: 3}
 --- !u!114 &4236242815129290932
@@ -1613,10 +1611,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6676800396187991822}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7387706064836869012, guid: 04b3761f9886690438ad68b751435bff, type: 3}
 --- !u!114 &6842684522740813432
@@ -1865,7 +1863,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteor: {fileID: 7816483564973452870}
-  _flameMaterial: {fileID: 2100000, guid: a76c79467aa16344aaa046c32b5d9809, type: 2}
 --- !u!1001 &8836482520791825630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1965,7 +1962,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteor: {fileID: 7816483564973452870}
-  _flameMaterial: {fileID: 2100000, guid: 0ed2120a5bbdc9b4eaa142e9e7029faf, type: 2}
 --- !u!4 &9019521986430491445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 951c15a31587ba34db31f10bfdfd89b4, type: 3}

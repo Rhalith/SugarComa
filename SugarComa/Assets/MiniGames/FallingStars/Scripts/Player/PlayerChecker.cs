@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
-    public class PlayerHit : MonoBehaviour
+    public class PlayerChecker : MonoBehaviour
     {
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerManager _currentPlayer;
@@ -13,12 +13,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private List<PlayerManager> _playerManagers = new();
         private bool _punch;
 
+        public List<PlayerManager> PlayerManagers { get => _playerManagers; }
+        public PlayerManager CurrentPlayer { get => _currentPlayer; }
+
         private void Start()
         {
             _playerMovement.PlayerInput.PlayerInputs.Punch.started += Punch_started;
             _playerMovement.PlayerInput.PlayerInputs.Punch.canceled += Punch_started;
         }
-        // TODO animasyona ekle
+
         private void Punch_started(InputAction.CallbackContext obj)
         {
             print("test");
@@ -26,10 +29,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             if (_punch)
             {
                 _playerAnimation.StartToHit();
-                foreach (PlayerManager player in _playerManagers)
-                {
-                    player.GetHit(_currentPlayer.transform, player.transform);
-                }
             }
             else
             {
