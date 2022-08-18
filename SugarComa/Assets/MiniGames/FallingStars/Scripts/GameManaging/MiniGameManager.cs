@@ -22,7 +22,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private static MiniGameManager _instance;
 
         #region SerializeFields
-        [SerializeField] private MeteorMaterials _meteorMaterials;
+        [SerializeField] private FlameMaterials _flameMaterials;
+        [SerializeField] private EffectMaterials _effectMaterials;
         [SerializeField] private TMP_Text _timeText;
         #endregion
         #endregion
@@ -38,12 +39,20 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         [SerializeField] private int _meteorWaveSpawnTime = 4;
         #endregion
         #endregion
-        public static MeteorMaterials MeteorMaterials
+        public static FlameMaterials FlameMaterials
         {
             get
             {
                 if (_instance == null) return null;
-                return _instance._meteorMaterials;
+                return _instance._flameMaterials;
+            }
+        }
+        public static EffectMaterials EffectMaterials
+        {
+            get
+            {
+                if (_instance == null) return null;
+                return _instance._effectMaterials;
             }
         }
         void Awake()

@@ -21,6 +21,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         #region OtherComponents
         [SerializeField] private Meteor _meteor;
         [SerializeField] private GameObject _explosionMeteor;
+        private Material _effectMaterial;
         #endregion
         private void Awake()
         {
@@ -30,6 +31,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         private void OnEnable()
         {
             InvokeRepeating(nameof(UpScaleMeteorEffect), 0.2f, 0.1f);
+            _effectMaterial = GetComponent<Renderer>().material;
+            StartCoroutine(ChangeMaterial(_effectMaterial, "_z", 0.01f));
             StartCoroutine(CountdownTimer());
         }
 
@@ -61,7 +64,16 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);
         }
-
+        private IEnumerator ChangeMaterial(Material material, string refID, float waitDuration)
+        {
+            float _startValue = Random.Range(0, 50);
+            while (true)
+            {
+                material.SetFloat(refID, _startValue);
+                _startValue += 0.01f;
+                yield return new WaitForSeconds(waitDuration);
+            }
+        }
         private void ResetMeteor()
         {
             transform.localScale = _localScale;

@@ -50,7 +50,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
                 _startValue += 0.1f;
                 yield return new WaitForSeconds(waitDuration);
             }
-
         }
     }
 }

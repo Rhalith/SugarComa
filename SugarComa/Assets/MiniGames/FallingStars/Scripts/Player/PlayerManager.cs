@@ -2,6 +2,7 @@ using Assets.MiniGames.FallingStars.Scripts.Meteors;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
@@ -12,10 +13,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private StickyMeteor _stickyMeteor;
         private PoisonMeteor _poisonMeteor;
         private Punch _punch;
+        private string _text;
 
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private PlayerHit _playerHit;
+        [SerializeField] private TMP_Text _healthText;
 
         private void Awake()
         {
@@ -24,12 +27,15 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             _stickyMeteor = new(this);
             _poisonMeteor = new(this);
             _punch = new(this);
+            _text = _healthText.text;
+            _healthText.SetText(_text + _playerMovement.PlayerSpec.Health.ToString());
         }
 
         public void DamagePlayer(float damage)
         {
             _playerMovement.PlayerSpec.Health -= damage;
             if (_playerMovement.PlayerSpec.Health <= 0) KillPlayer();
+            _healthText.SetText(_text + _playerMovement.PlayerSpec.Health.ToString());
         }
         public void KillPlayer()
         {

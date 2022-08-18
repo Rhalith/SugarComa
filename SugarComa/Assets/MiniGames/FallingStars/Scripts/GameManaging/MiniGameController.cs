@@ -174,13 +174,20 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         private void SetFlameMaterials()
         {
             int i = 0;
+            int j = 0;
             foreach (GameObject meteor in _poolManager.Pools[0].pooledObjects)
             {
                 Meteor _currentMeteor = meteor.GetComponent<Meteor>();
-                _currentMeteor.SetObjectMaterial(MeteorType.classic, MiniGameManager.MeteorMaterials.classic[i]);
-                _currentMeteor.SetObjectMaterial(MeteorType.poison, MiniGameManager.MeteorMaterials.poison[i]);
-                _currentMeteor.SetObjectMaterial(MeteorType.explosion, MiniGameManager.MeteorMaterials.explosion[i]);
-                _currentMeteor.SetObjectMaterial(MeteorType.sticky, MiniGameManager.MeteorMaterials.sticky[i]);
+                _currentMeteor.SetObjectMaterial(MeteorType.classic, MiniGameManager.FlameMaterials.classic[i]);
+                _currentMeteor.SetObjectMaterial(MeteorType.poison, MiniGameManager.FlameMaterials.poison[i]);
+                _currentMeteor.SetObjectMaterial(MeteorType.explosion, MiniGameManager.FlameMaterials.explosion[i]);
+                _currentMeteor.SetObjectMaterial(MeteorType.sticky, MiniGameManager.FlameMaterials.sticky[i]);
+
+                _currentMeteor.SetEffectMaterial(MeteorType.classic, MiniGameManager.EffectMaterials.classic[i]);
+                _currentMeteor.SetEffectMaterial(MeteorType.explosion, null, MiniGameManager.EffectMaterials.explosion[j], MiniGameManager.EffectMaterials.explosion[j + 1], MiniGameManager.EffectMaterials.explosion[j + 2]);
+
+
+                j += 3;
                 i++;
             }
             

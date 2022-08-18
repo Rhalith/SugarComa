@@ -1,4 +1,4 @@
-using Assets.MiniGames.FallingStars.Scripts.GameManaging;
+using Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects;
 using Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects;
 using System.Collections;
 using System.Collections.Generic;
@@ -103,6 +103,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
                     stickyMaterials[1] = material;
                     _meteorObjects[3].GetComponent<Renderer>().materials = stickyMaterials;
                     _meteorObjects[3].GetComponent<MeteorObject>().FlameMaterial = material;
+                    break;
+            }
+        }
+
+        public void SetEffectMaterial(MeteorType type, Material classic, Material effectOne = null, Material effectTwo = null, Material effectThree = null)
+        {
+            switch (type)
+            {
+                case MeteorType.classic:
+                    _effectObjects[0].GetComponent<Renderer>().material = classic;
+                    break;
+                case MeteorType.explosion:
+                    _effectObjects[1].GetComponent<ExplosionMeteor>().MiniEffects[0].GetComponent<Renderer>().material = effectOne;
+                    _effectObjects[1].GetComponent<ExplosionMeteor>().MiniEffects[1].GetComponent<Renderer>().material = effectTwo;
+                    _effectObjects[1].GetComponent<ExplosionMeteor>().MiniEffects[2].GetComponent<Renderer>().material = effectThree;
                     break;
             }
         }
