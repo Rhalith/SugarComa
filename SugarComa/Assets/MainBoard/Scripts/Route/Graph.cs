@@ -119,12 +119,16 @@ namespace Assets.MainBoard.Scripts.Route
         /// <param name="maxStep"></param>
         public bool DepthFirstSearch(Platform source, Platform destination, List<Platform> path, int maxStep = -1)
         {
+            /*  Problem: Eğer goblet'i almazsak hala goal platform'unun üstünde bulunduğumuz için ve aşağıdaki kontrolden dolayı path'in içi boş olarak geliyor.
+            /*  Bu nedenden dolayı PathTracking çalışmıyor ve karakter hareket etmiyor.
+            */
             // stop searching and return true when source is equal to destination.
             if (source.Equals(destination))
             {
                 path.Add(destination);
                 return true;
             }
+            
 
             int step = path.Count;
             // stop the searching, if the step greater than maximum step.

@@ -80,11 +80,17 @@ namespace Assets.MainBoard.Scripts.Player.States
             _path = _pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal, _currentStep);
 
             if (_path == null)
+            {
                 SwitchState(context.Idle);
+                return;
+            }
 
             _pathTracker.StartTracking(_path, PlatformSpec.Goal, _currentPlatform.HasSelector, _currentStep);
         }
 
+        // TODO: Fix it
+        // Eğer sandık karakterden bir birim uzaktaysa ve oyuncu 1 atarsa hareket edildikten sonra burada turnover verilip context kapatıldığı için,
+        // idlestate içerisindeki goblet taking metodları NullReference hatasına sebep oluyor.
         public override void Exit()
         {
             context.PlayerCollector.CheckCurrentNode(_currentPlatform);

@@ -123,7 +123,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             }
         }
         
-        #region Goblet Selectio events
+        #region Goblet Selection events
         private void GobletSelection_OnLeaveIt()
         {
             SwitchState(context.Running);
@@ -134,6 +134,10 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentPlatform.ResetSpec();
             PlayerStateContext.canPlayersAct = true;
             context.Running.CurrentStep = 0;
+
+            // Turn Over
+            context.IsMyTurn = false;
+            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index, MessageType.TurnOver)));
         }
         #endregion
 
@@ -150,9 +154,6 @@ namespace Assets.MainBoard.Scripts.Player.States
                     _dice.RollDice();
                     _currentStep = context.Running.CurrentStep;
                     _dice.Exit();
-                }
-                else
-                {
                     SwitchState(context.Running);
                 }
             }
