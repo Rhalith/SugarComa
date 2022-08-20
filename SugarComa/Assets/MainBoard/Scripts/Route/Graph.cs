@@ -123,7 +123,7 @@ namespace Assets.MainBoard.Scripts.Route
             /*  Bu nedenden dolayı PathTracking çalışmıyor ve karakter hareket etmiyor.
             */
             // stop searching and return true when source is equal to destination.
-            if (source.Equals(destination))
+            if (path.Count > 0 && source.Equals(destination))
             {
                 path.Add(destination);
                 return true;
