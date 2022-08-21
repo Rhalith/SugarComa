@@ -10,7 +10,6 @@ namespace Assets.MainBoard.Scripts.Player.Utils
     {
         [SerializeField] CinemachineImpulseSource _impulseSource;
         [SerializeField] Animator _playerAnimator;
-        [SerializeField] PlayerMovement _playerMovement;
         [SerializeField] CapsuleCollider _mainCollider;
         [SerializeField] Collider[] _ragDollColliders;
         [SerializeField] Rigidbody[] _ragDollRigidBodies;

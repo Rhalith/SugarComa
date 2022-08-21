@@ -23,10 +23,10 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         [SerializeField] private GobletSelection _gobletSelection;
         [SerializeField] private PlayerInventory _playerInventory;
         [SerializeField] private PlayerAnimation _playerAnimation;
-        [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private ScriptKeeper _scriptKeeper;
         [SerializeField] Item item;
         #endregion
+
         public GameController GameController { set => _gameController = value; }
         public ScriptKeeper ScriptKeeper { get => _scriptKeeper; }
         public void CheckCurrentNode(Platform platform)
@@ -40,6 +40,9 @@ namespace Assets.MainBoard.Scripts.Player.Movement
                 case PlatformSpec.Goal: GobletSelection(); break;
             }
         }
+
+        // TODO: Altýn, Can güncellemelerini ilet.
+
         /// <summary>
         /// Adding value to player's gold
         /// </summary>
@@ -73,6 +76,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             }
             _gameController.ChangeText(_scriptKeeper);
         }
+
         public void AddItem()
         {
             //int i = Random.Range(1, 11);
@@ -86,6 +90,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
                     item.car.OnAddItem();
                     break;
                 case 3:
+                    // TODO: Ýsmi düzelt
                     item.sapan.OnAddItem();
                     break;
                 case 4:
@@ -134,6 +139,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             //_playerAnimation.StartDeath();
             isDead = true;
         }
+
         void GobletSelection()
         {
             _gobletSelection.OpenGobletSelection();

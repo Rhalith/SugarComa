@@ -24,7 +24,13 @@ namespace Assets.MainBoard.Scripts.Player.Items.BoxGloves
 
         public void DamageHealth(PlayerCollector playerCollector)
         {
-            if (playerCollector != null) playerCollector.DamagePlayer(damage);
+            if (playerCollector != null)
+            {
+                playerCollector.DamagePlayer(damage);
+                
+                // TODO: Send Message ile hasar yiyen player'ýn id'si ve hasarý yolla.
+                // DamagePlayer'ý ve KillPlayer'ý (PlayerCollector içindeler) IdleState'e taþýyabiliriz. 
+            }
         }
 
         /// <summary>
