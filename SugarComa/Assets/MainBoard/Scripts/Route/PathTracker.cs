@@ -177,18 +177,26 @@ namespace Assets.MainBoard.Scripts.Route
                 NextPlatform();
             }
         }
-
+         
         private void NextPlatform()
         {
             bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
+            bool selectionPass = false;
 
-            // Selection için durduktan sonra güncellenmiyor. Bu nedenle sürekli burada false'lanıryor.
-            // Selection işlemi yapıldıktan sonra aşağıdaki 2.if(condition) kontrolündeki şekilde platfrom bilgilerinin güncellenmesi gerekiyor.
+            // PROBLEM: Eğer başlangıç platform'u selection olursa pathfinder selecction'u bypass'lıyor ve bestway'e göre bir path çıkarıyor...
             // current -> next
-            if (_isCurrentPlatformSelector)
+            if (condition && _isCurrentPlatformSelector)
             {
-                condition = false;
-                UpdateCurrentPlatform();
+                if(_currentPlatformIndex < _path.Length - 1)
+                {
+                    UpdateCurrentPlatform();
+                    OnCurrentPlatformChanged?.Invoke();
+                    selectionPass = true;
+                }
+                else
+                {
+                    condition = false;
+                }
             }
 
             if (condition)
@@ -204,8 +212,11 @@ namespace Assets.MainBoard.Scripts.Route
 
             if (condition)
             {
-                UpdateCurrentPlatform();
-                OnCurrentPlatformChanged?.Invoke();
+                if (!selectionPass)
+                {
+                    UpdateCurrentPlatform();
+                    OnCurrentPlatformChanged?.Invoke();
+                }
             }
             else
             {

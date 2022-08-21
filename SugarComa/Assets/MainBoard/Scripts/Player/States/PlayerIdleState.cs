@@ -134,6 +134,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentPlatform.ResetSpec();
             PlayerStateContext.canPlayersAct = true;
             context.Running.CurrentStep = 0;
+            _currentStep = 0;
 
             // Turn Over
             context.IsMyTurn = false;

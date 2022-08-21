@@ -77,7 +77,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             base.Enter();
 
-            _path = _pathFinder.FindBest(_currentPlatform, PlatformSpec.Goal, _currentStep);
+            _path = _pathFinder.ToSelector(_currentPlatform, _currentStep, SelectorDir);
 
             if (_path == null)
             {

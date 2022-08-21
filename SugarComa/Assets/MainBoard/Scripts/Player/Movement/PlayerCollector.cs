@@ -129,7 +129,9 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         void KillPlayer()
         {
             _scriptKeeper._playerCamera.Priority = 3;
-            _playerAnimation.StartDeath();
+
+            // TODO: Fix it.
+            //_playerAnimation.StartDeath();
             isDead = true;
         }
         void GobletSelection()
