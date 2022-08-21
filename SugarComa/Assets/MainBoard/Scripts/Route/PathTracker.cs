@@ -182,16 +182,21 @@ namespace Assets.MainBoard.Scripts.Route
         {
             bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
 
+            // Selection için durduktan sonra güncellenmiyor. Bu nedenle sürekli burada false'lanıryor.
+            // Selection işlemi yapıldıktan sonra aşağıdaki 2.if(condition) kontrolündeki şekilde platfrom bilgilerinin güncellenmesi gerekiyor.
             // current -> next
             if (_isCurrentPlatformSelector)
+            {
                 condition = false;
+                UpdateCurrentPlatform();
+            }
 
             if (condition)
             {
-                // platform is selector or current spec equals to the given spec then move is over.
-                if (_isSelector || (_currentPlatformIndex >= 0 &&
+                // current spec equals to the given spec then move is over.
+                if (_currentPlatformIndex >= 0 &&
                     _currentPlatformIndex < _path.Length &&
-                    _spec == _path[_currentPlatformIndex].spec)) condition = false;
+                    _spec == _path[_currentPlatformIndex].spec) condition = false;
 
                 // if the step greater than maximum step, stop the movement.
                 if (_maxStep != -1) condition = condition && _step < _maxStep;
@@ -199,14 +204,7 @@ namespace Assets.MainBoard.Scripts.Route
 
             if (condition)
             {
-                _t = 0;
-                _step++;
-                _currentPlatformIndex += _toForward;
-                _startPosition = transform.position;
-                _currentPosition = _path[_currentPlatformIndex].position;
-                _currentPosition.y = transform.position.y;
-                _isCurrentPlatformSelector = _path[_currentPlatformIndex].HasSelector;
-
+                UpdateCurrentPlatform();
                 OnCurrentPlatformChanged?.Invoke();
             }
             else
@@ -214,6 +212,17 @@ namespace Assets.MainBoard.Scripts.Route
                 isMoving = false;
                 OnTrackingStopped?.Invoke();
             }
+        }
+
+        private void UpdateCurrentPlatform()
+        {
+            _t = 0;
+            _step++;
+            _currentPlatformIndex += _toForward;
+            _startPosition = transform.position;
+            _currentPosition = _path[_currentPlatformIndex].position;
+            _currentPosition.y = transform.position.y;
+            _isCurrentPlatformSelector = _path[_currentPlatformIndex].HasSelector;
         }
     }
 }
