@@ -46,6 +46,7 @@ namespace Assets.MainBoard.Scripts.UI
 
         public void TakeIt()
         {
+            // TODO: Goblet ve altýn güncellemelerini ilet.
             player.goblet++;
             player.gold -= 50;
             _gameController.ChangeText();

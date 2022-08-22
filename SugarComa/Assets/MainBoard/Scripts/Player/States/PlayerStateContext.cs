@@ -112,9 +112,11 @@ namespace Assets.MainBoard.Scripts.Player.States
         [SerializeField] private PlayerIdleState _playerIdle;
         [SerializeField] private PlayerRunningState _playerRunning;
         [SerializeField] private PlayerLandingState _playerLanding;
+        [SerializeField] private PlayerLandingState _playerDeath;
         public PlayerIdleState Idle => _playerIdle;
         public PlayerRunningState Running => _playerRunning;
         public PlayerLandingState Land => _playerLanding;
+        public PlayerLandingState Death => _playerDeath;
 
         private void InitializeStates()
         {
@@ -122,6 +124,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             _playerIdle.Dice.Initialize(this, _playerData, "");
             _playerLanding.Initialize(this, _playerData, "landing");
             _playerRunning.Initialize(this, _playerData, "running");
+            _playerDeath.Initialize(this, _playerData, "dead");
 
             // set current state to landing.
             _currentState = _playerLanding;

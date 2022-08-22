@@ -177,21 +177,34 @@ namespace Assets.MainBoard.Scripts.Route
                 NextPlatform();
             }
         }
-
+         
         private void NextPlatform()
         {
             bool condition = _isToForward ? _currentPlatformIndex < _path.Length - 1 : _currentPlatformIndex > 0;
+            bool selectionPass = false;
 
+            // PROBLEM: Eğer başlangıç platform'u selection olursa pathfinder selecction'u bypass'lıyor ve bestway'e göre bir path çıkarıyor...
             // current -> next
-            if (_isCurrentPlatformSelector)
-                condition = false;
+            if (condition && _isCurrentPlatformSelector)
+            {
+                if(_currentPlatformIndex < _path.Length - 1)
+                {
+                    UpdateCurrentPlatform();
+                    OnCurrentPlatformChanged?.Invoke();
+                    selectionPass = true;
+                }
+                else
+                {
+                    condition = false;
+                }
+            }
 
             if (condition)
             {
-                // platform is selector or current spec equals to the given spec then move is over.
-                if (_isSelector || (_currentPlatformIndex >= 0 &&
+                // current spec equals to the given spec then move is over.
+                if (_currentPlatformIndex >= 0 &&
                     _currentPlatformIndex < _path.Length &&
-                    _spec == _path[_currentPlatformIndex].spec)) condition = false;
+                    _spec == _path[_currentPlatformIndex].spec) condition = false;
 
                 // if the step greater than maximum step, stop the movement.
                 if (_maxStep != -1) condition = condition && _step < _maxStep;
@@ -199,21 +212,28 @@ namespace Assets.MainBoard.Scripts.Route
 
             if (condition)
             {
-                _t = 0;
-                _step++;
-                _currentPlatformIndex += _toForward;
-                _startPosition = transform.position;
-                _currentPosition = _path[_currentPlatformIndex].position;
-                _currentPosition.y = transform.position.y;
-                _isCurrentPlatformSelector = _path[_currentPlatformIndex].HasSelector;
-
-                OnCurrentPlatformChanged?.Invoke();
+                if (!selectionPass)
+                {
+                    UpdateCurrentPlatform();
+                    OnCurrentPlatformChanged?.Invoke();
+                }
             }
             else
             {
                 isMoving = false;
                 OnTrackingStopped?.Invoke();
             }
+        }
+
+        private void UpdateCurrentPlatform()
+        {
+            _t = 0;
+            _step++;
+            _currentPlatformIndex += _toForward;
+            _startPosition = transform.position;
+            _currentPosition = _path[_currentPlatformIndex].position;
+            _currentPosition.y = transform.position.y;
+            _isCurrentPlatformSelector = _path[_currentPlatformIndex].HasSelector;
         }
     }
 }

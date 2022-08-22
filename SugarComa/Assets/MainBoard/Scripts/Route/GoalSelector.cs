@@ -67,18 +67,14 @@ namespace Assets.MainBoard.Scripts.Route
         {
             int index = Random.Range(0, platforms.Count);
 
-            // Kaldýr...
-             index = 1;
-
-            // TODO: Check if player in that platform with currentplatform
             if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector)
             {
-                /*
+                // Checks for not placing chest same platform again.
                 if(_currentPlatform != null && platforms[index] == _currentPlatform)
                 {
                     RandomGoalSelect();
                 }
-                */
+
                 bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index, MessageType.CreateChest)));
 
                 if (result) CreateGoal(index);

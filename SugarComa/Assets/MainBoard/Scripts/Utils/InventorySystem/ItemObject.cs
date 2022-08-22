@@ -14,8 +14,6 @@ namespace Assets.MainBoard.Scripts.Utils.InventorySystem
 
         [SerializeField] PlayerInventory playerInventory;
 
-        [SerializeField] PlayerMovement _playerMovement;
-
         public Button _button;
         public void OnAddItem()
         {
