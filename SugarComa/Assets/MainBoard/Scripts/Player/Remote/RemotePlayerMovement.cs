@@ -6,8 +6,8 @@ namespace Assets.MainBoard.Scripts.Player.Remote
 {
     public class RemotePlayerMovement : MonoBehaviour
     {
-        [SerializeField] float speed = 1f;
-        [SerializeField] float rotationSpeed = 720;
+        [SerializeField] private float _speed = 3f;
+        [SerializeField] private float _rotationSpeed = 720;
         [SerializeField] private RemotePlayerAnimation _playerAnimation;
 
         private Vector3 _startPosition;
@@ -26,17 +26,12 @@ namespace Assets.MainBoard.Scripts.Player.Remote
 
         void Update()
         {
-            // Buradaki kontrol stateler içerisinde saðlanacaðý için gereksiz galiba
             if (_nextPosition == transform.position)
             {
-                /*
-                if (_playerAnimation.IsRunning)
-                    _playerAnimation.StopRunning();
-                */
                 return;
             }
 
-            _t += Time.deltaTime * speed;
+            _t += Time.deltaTime * _speed;
             // Smooth tracking
             // if object position not equal the current platform position move to position.
             transform.position = Vector3.Lerp(_startPosition, _nextPosition, _t);
@@ -46,7 +41,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
             if (movementDirection != Vector3.zero)
             {
                 var toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed * Time.deltaTime);
             }
         }
 

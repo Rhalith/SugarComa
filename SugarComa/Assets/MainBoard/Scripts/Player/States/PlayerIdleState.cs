@@ -61,7 +61,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             {
                 _dice.Enter();
             }
-    }
+        }
 
         public override void Update()
         {

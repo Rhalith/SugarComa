@@ -203,6 +203,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             mainPlayerStateContext.Running.PathFinder = _pathFinder;
             mainPlayerStateContext.Death.PathFinder = _pathFinder;
             mainPlayerStateContext.Land.GoalSelector = _goalSelector;
+            mainPlayerStateContext.PlayerHandler = this;
         }
 
         /// <summary>

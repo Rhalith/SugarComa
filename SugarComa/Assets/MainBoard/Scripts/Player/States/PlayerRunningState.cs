@@ -32,7 +32,6 @@ namespace Assets.MainBoard.Scripts.Player.States
             
         }
 
-
         #region Pathtracker
         public void InitializePathTracker()
         {
@@ -43,7 +42,6 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void OnTrackingStarted()
         {
-            
         }
 
         private void OnCurrentPlatformChanged()
@@ -56,15 +54,16 @@ namespace Assets.MainBoard.Scripts.Player.States
                     NetworkData networkData =
                         new NetworkData(MessageType.InputDown, _pathTracker.Next.position);
                     SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
-
-                    _currentPlatform = current;
-                    CurrentStep--;
                 }
                 else
                 {
-                    _currentPlatform = current;
-                    CurrentStep--;
+                    NetworkData networkData =
+                        new NetworkData(MessageType.InputDown, current.position);
+                    SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
                 }
+
+                _currentPlatform = current;
+                CurrentStep--;
             }
         }
 

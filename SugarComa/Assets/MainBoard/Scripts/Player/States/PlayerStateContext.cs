@@ -17,7 +17,6 @@ namespace Assets.MainBoard.Scripts.Player.States
         [SerializeField] private Animator _animator;
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private GobletSelection _gobletSelection;
-        [SerializeField] private PlayerHandler _playerHandler;
         //[SerializeField] private Cinemachine.CinemachineBrain _cinemachineBrain;
         #endregion
 
@@ -25,6 +24,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private PlayerInputAction _playerInput;
         private PlayerBaseState _currentState;
+        private PlayerHandler _playerHandler;
         #endregion
 
         #region Properties
@@ -44,6 +44,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         //public GameController GameController { get => _gameController; set => _gameController = value; }
         public PlayerCollector PlayerCollector => _playerCollector;
         public GobletSelection GobletSelection => _gobletSelection;
+        public PlayerHandler PlayerHandler { get => _playerHandler; set => _playerHandler = value; }
         #endregion
 
         #region Move To PlayerData
