@@ -78,7 +78,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <summary>
         /// Creates player.
         /// </summary>
-        public GameObject CreatePlayer(Steamworks.SteamId id, int index)
+        public GameObject CreatePlayer(SteamId id, int index)
         {
             if (SteamManager.Instance.PlayerSteamId == id)
             {
@@ -113,17 +113,22 @@ namespace Assets.MainBoard.Scripts.GameManaging
         }
 
         //TODO: System memory dll kullanılabilir performans'ı arttırmak için...
-        public void UpdateTurnQueue(Steamworks.SteamId[] _playerList)
+        public void UpdateTurnQueue(SteamId[] _playerList)
         {
             // Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
             _playerQueue = _playerList;
 
             PlayerListNetworkData playerListData =
                    new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerList));
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
+            bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
+            if (result)
+            {
+                var camera = GetCinemachineVirtualCamera(0);
+                camera.Priority = 2;
+            }
         }
 
-        private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+        private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
             if (NetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
             {

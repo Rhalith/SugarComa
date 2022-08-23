@@ -2,6 +2,7 @@
 using Assets.MainBoard.Scripts.UI;
 using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.Player.Movement;
+using Assets.MainBoard.Scripts.Networking;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -16,6 +17,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         [SerializeField] private Animator _animator;
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private GobletSelection _gobletSelection;
+        [SerializeField] private PlayerHandler _playerHandler;
         //[SerializeField] private Cinemachine.CinemachineBrain _cinemachineBrain;
         #endregion
 
@@ -48,7 +50,19 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         //TODO: Must move to playerData
         private bool _isMyTurn;
-        public bool IsMyTurn { get => _isMyTurn; set { _isMyTurn = enabled = value; } }
+        public bool IsMyTurn 
+        { 
+            get => _isMyTurn; 
+            set 
+            { 
+                _isMyTurn = enabled = value; 
+                if (!value)
+                {
+                    _playerIdle.Dice.Exit();
+                    _playerHandler.ChangeCurrentPlayer((byte)(NetworkManager.Instance.Index + 1));
+                }
+            } 
+        }
 
         #endregion
 
