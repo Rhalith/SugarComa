@@ -112,7 +112,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
 
         public ChestNetworkData(byte index, MessageType messageType)
         {
-            id = NetworkId.TurnNetworkDataId;
+            id = NetworkId.ChestNetworkDataId;
             this.index = index;
             this.messageType = messageType;
         }

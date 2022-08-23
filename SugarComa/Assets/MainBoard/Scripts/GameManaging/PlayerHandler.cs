@@ -104,7 +104,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 _createdObject.transform.GetChild(1).transform.position = new Vector3(0, 0.25f, 0);
 
                 RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
-                RemoteScKeeper.PlayerIndex = index;
+                RemoteScKeeper.playerIndex = index;
             }
 
             return _createdObject;
@@ -144,20 +144,26 @@ namespace Assets.MainBoard.Scripts.GameManaging
         public void ChangeCurrentPlayer(int index)
         {
             int prev = index - 1;
-            if (index >= SteamLobbyManager.MemberCount)
-            {
-                index = 0;
-            }
-            if (index == 0)
-                prev = SteamLobbyManager.MemberCount-1;
+            if (index >= SteamLobbyManager.MemberCount) index = 0;
+            if (index == 0) prev = SteamLobbyManager.MemberCount - 1;
 
             if (NetworkManager.Instance.Index == index)
-            {
                 mainPlayerStateContext.IsMyTurn = true;
-            }
 
-            CinemachineVirtualCamera current = NetworkManager.Instance.playerList.ElementAt(prev).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
-            CinemachineVirtualCamera next = NetworkManager.Instance.playerList.ElementAt(index).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
+            var prevPlayer = NetworkManager.Instance.playerList.ElementAt(prev);
+            var currentPlayer = NetworkManager.Instance.playerList.ElementAt(index);
+
+            CinemachineVirtualCamera next, current;
+            if (prevPlayer.Key == SteamManager.Instance.PlayerSteamId)
+                current = prevPlayer.Value.GetComponent<ScriptKeeper>().playerCamera;
+            else
+                current = prevPlayer.Value.GetComponent<RemoteScriptKeeper>().playerCamera;
+
+            if (currentPlayer.Key == SteamManager.Instance.PlayerSteamId)
+                next = currentPlayer.Value.GetComponent<ScriptKeeper>().playerCamera;
+            else
+                next = currentPlayer.Value.GetComponent<RemoteScriptKeeper>().playerCamera;
+
             ChangeCamPriority(current, next);
         }
 
@@ -181,16 +187,16 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="nextInventory"></param>
         private void SetScripts(ScriptKeeper scKeeper)
         {
-            mainPlayerStateContext = scKeeper._playerStateContext;
-            mainPlayerInventory = scKeeper._playerInventory;
-            mainPlayerCollector = scKeeper._playerCollector;
+            mainPlayerStateContext = scKeeper.playerStateContext;
+            mainPlayerInventory = scKeeper.playerInventory;
+            mainPlayerCollector = scKeeper.playerCollector;
             mainPlayerCollector.GameController = _gameController;
         }
 
         // Mapcam atamaları
         private void UpdateMapCam(ScriptKeeper scKeeper)
         {
-            _mapCamera.mainCamera = scKeeper._playerCamera;
+            _mapCamera.mainCamera = scKeeper.playerCamera;
             _mapCamera.player = scKeeper.playerTransform;
         }
 
@@ -209,10 +215,10 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="keeper"></param>
         private void SetGobletSelection(ScriptKeeper keeper)
         {
-            keeper._goalSelector = _goalSelector;
-            keeper._gobletSelection.GameController = _gameController;
-            keeper._gobletSelection.GoalSelector = _goalSelector;
-            keeper._gobletSelection.PathFinder = _pathFinder;
+            keeper.goalSelector = _goalSelector;
+            keeper.gobletSelection.GameController = _gameController;
+            keeper.gobletSelection.GoalSelector = _goalSelector;
+            keeper.gobletSelection.PathFinder = _pathFinder;
         }
         /// <summary>
         /// Changes current UI variables for check or use them.
@@ -234,7 +240,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="index"></param>
         private void SetPlayerSpec(ScriptKeeper keeper, int index)
         {
-            keeper._playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+            keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
         }
         #endregion
     }

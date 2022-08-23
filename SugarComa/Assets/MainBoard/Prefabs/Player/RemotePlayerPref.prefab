@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerIndex: 0
-  _remotePlayerMovement: {fileID: 3810639044006519611}
+  remotePlayerMovement: {fileID: 3810639044006519611}
   _playerCamera: {fileID: 5270025959120598230}
 --- !u!1 &5430843424964170137
 GameObject:

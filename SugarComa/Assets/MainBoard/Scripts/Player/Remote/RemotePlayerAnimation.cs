@@ -35,7 +35,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
             if (!NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
                 return;
 
-            if (scKeeper.PlayerIndex == animationStateData.playerIndex)
+            if (scKeeper.playerIndex == animationStateData.playerIndex)
             {
                 UpdateAnimState(animationStateData.animBoolHash);
             }

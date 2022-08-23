@@ -133,7 +133,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         void KillPlayer()
         {
-            _scriptKeeper._playerCamera.Priority = 3;
+            _scriptKeeper.playerCamera.Priority = 3;
 
             // TODO: Fix it.
             //_playerAnimation.StartDeath();
