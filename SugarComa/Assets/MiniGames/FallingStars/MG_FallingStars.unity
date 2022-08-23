@@ -10480,6 +10480,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3947062569896441651, guid: 1ea63569642c2e2408c22d589feab383, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4157132201750837891, guid: 1ea63569642c2e2408c22d589feab383, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 85.384895
