@@ -17,10 +17,10 @@ using UnityEngine.InputSystem.Utilities;
 
 namespace Assets.MiniGames.KosKosabilirsen.Scripts.Input
 {
-    public partial class @PlayerInputs : IInputActionCollection2, IDisposable
+    public partial class @Inputs : IInputActionCollection2, IDisposable
     {
         public InputActionAsset asset { get; }
-        public @PlayerInputs()
+        public @Inputs()
         {
             asset = InputActionAsset.FromJson(@"{
     ""name"": ""Inputs"",
@@ -52,7 +52,7 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.Input
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""cddb56a6-a7d1-40cc-89fb-c35dbf655a4a"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=1)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -85,7 +85,7 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.Input
                 {
                     ""name"": ""left"",
                     ""id"": ""060637a7-151a-4023-ade3-a6563af1fa37"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PlayerControl"",
@@ -330,8 +330,8 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.Input
         private readonly InputAction m_Movement_Jump;
         public struct MovementActions
         {
-            private @PlayerInputs m_Wrapper;
-            public MovementActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+            private @Inputs m_Wrapper;
+            public MovementActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Movement_Move;
             public InputAction @Jump => m_Wrapper.m_Movement_Jump;
             public InputActionMap Get() { return m_Wrapper.m_Movement; }
@@ -370,8 +370,8 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.Input
         private readonly InputAction m_Hook_ActivateHook;
         public struct HookActions
         {
-            private @PlayerInputs m_Wrapper;
-            public HookActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+            private @Inputs m_Wrapper;
+            public HookActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @ActivateHook => m_Wrapper.m_Hook_ActivateHook;
             public InputActionMap Get() { return m_Wrapper.m_Hook; }
             public void Enable() { Get().Enable(); }
@@ -405,8 +405,8 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.Input
         private readonly InputAction m_Rotation_ActivateMouseRotation;
         public struct RotationActions
         {
-            private @PlayerInputs m_Wrapper;
-            public RotationActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+            private @Inputs m_Wrapper;
+            public RotationActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @RotateWithGamepad => m_Wrapper.m_Rotation_RotateWithGamepad;
             public InputAction @RotateWithMouse => m_Wrapper.m_Rotation_RotateWithMouse;
             public InputAction @ActivateMouseRotation => m_Wrapper.m_Rotation_ActivateMouseRotation;
