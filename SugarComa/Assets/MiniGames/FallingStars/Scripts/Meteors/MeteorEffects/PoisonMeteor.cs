@@ -59,7 +59,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             foreach (var player in _players)
             {
-                player.StopNumerator(_meteor.Type);
+                player.StopNumerator(_meteor.Type, _damage, _poisonDuration);
             }
             StopAllCoroutines();
         }
