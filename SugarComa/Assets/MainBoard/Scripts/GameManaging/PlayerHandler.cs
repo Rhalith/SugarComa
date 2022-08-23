@@ -101,6 +101,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
 
                 _createdObject.transform.position = new Vector3(0, 0, 0);
+                _createdObject.transform.GetChild(1).transform.position = new Vector3(0, 0.25f, 0);
 
                 RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
                 RemoteScKeeper.PlayerIndex = index;

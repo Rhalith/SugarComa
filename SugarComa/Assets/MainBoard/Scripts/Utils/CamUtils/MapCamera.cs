@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
@@ -33,6 +31,7 @@ namespace Assets.MainBoard.Scripts.Utils.CamUtils
                 }
             }
         }
+
         private void GoToPlayer()
         {
             transform.position = player.transform.position;

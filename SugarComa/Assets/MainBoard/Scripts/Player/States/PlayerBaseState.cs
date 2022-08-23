@@ -1,7 +1,6 @@
+using UnityEngine;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Networking.Utils;
-using Assets.MainBoard.Scripts.Route;
-using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -40,8 +39,6 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             if (context.CurrentState == state) return;
 
-            // Send previous and next animation state bool hash's
-            SendStateData(context.CurrentState.animBoolHash, state.animBoolHash);
             // exit the current state of the context
             Exit();
             // enter the new state
@@ -50,19 +47,13 @@ namespace Assets.MainBoard.Scripts.Player.States
             context.CurrentState = state;
         }
 
-        public void SendStateData(int prevAnimBoolHash, int nextAnimBoolHash)
-        {
-            SteamServerManager.Instance.
-                SendingMessageToAll(NetworkHelper.Serialize(new AnimationStateData
-                (prevAnimBoolHash, nextAnimBoolHash, MessageType.AnimationStateUpdate)));
-        }
-
         public virtual void Enter()
         {
             context.Animator.SetBool(animBoolHash, true);
             if (sendData)
             {
-                
+                SteamServerManager.Instance.
+                    SendingMessageToAll(NetworkHelper.Serialize(new AnimationStateData(animBoolHash, MessageType.AnimationStateUpdate)));
             }
         }
         

@@ -45,7 +45,7 @@ namespace Assets.MainBoard.Scripts.Route
         public static bool isAnyGoalPlatform;
         #endregion
 
-        private void Start()
+        private void Awake()
         {
             SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
@@ -149,8 +149,11 @@ namespace Assets.MainBoard.Scripts.Route
             _currentGoal.SetActive(false);
             _currentGoal.GetComponent<GoalChestAnimation>().GoalSelector = this;
             _currentGoal.transform.position = platform.position;
+
             SetChestRotation(platform, _currentGoal.transform);
+
             _platformChangerObject.transform.position = platform.position;
+
             IEnumerator ChangeCameraAfterBlendCoroutine()
             {
                 yield return null; yield return null;

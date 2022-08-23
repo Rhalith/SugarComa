@@ -123,16 +123,14 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     {
         public int id;
         public int playerIndex;
-        public int prevAnimBoolHash;
-        public int nextAnimBoolHash;
+        public int animBoolHash;
         public MessageType messageType;
 
-        public AnimationStateData(int prevAnimBoolHash, int nextAnimBoolHash, MessageType messageType)
+        public AnimationStateData(int animBoolHash, MessageType messageType)
         {
             id = NetworkId.AnimationStateNetworkDataId;
             playerIndex = NetworkManager.Instance.Index;
-            this.prevAnimBoolHash = prevAnimBoolHash;
-            this.nextAnimBoolHash = nextAnimBoolHash;
+            this.animBoolHash = animBoolHash;
             this.messageType = messageType;
         }
     }

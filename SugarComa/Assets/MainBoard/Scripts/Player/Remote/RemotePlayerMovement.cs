@@ -1,9 +1,6 @@
+using UnityEngine;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Networking.Utils;
-using Assets.MainBoard.Scripts.Route;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.Remote
 {
