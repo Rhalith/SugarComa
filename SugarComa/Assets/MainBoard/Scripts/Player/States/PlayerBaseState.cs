@@ -20,6 +20,13 @@ namespace Assets.MainBoard.Scripts.Player.States
             Initialize(context, playerData, animBoolName, sendData);
         }
 
+        /// <summary>
+        /// This method should be called in scripts from which it is inherited.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="playerData"></param>
+        /// <param name="animBoolName"></param>
+        /// <param name="sendData"></param>
         public virtual void Initialize(PlayerStateContext context, PlayerData playerData, string animBoolName, bool sendData = true)
         {
             this.context = context;
