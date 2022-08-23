@@ -10,6 +10,8 @@ using UnityEngine;
 using Cinemachine;
 using System.Linq;
 using Assets.MainBoard.Scripts.Player.States;
+using System.Collections.Generic;
+using Steamworks;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -134,36 +136,25 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
-                ChangeCurrentPlayer(turnNetworkData.index+1);
+                ChangeCurrentPlayer(turnNetworkData.index + 1);
             }
         }
 
         /// <summary>
         /// Changes current player.
         /// </summary>
-        public void ChangeCurrentPlayer(int index)
+        public void ChangeCurrentPlayer(int nextIndex)
         {
-            int prev = index - 1;
-            if (index >= SteamLobbyManager.MemberCount) index = 0;
-            if (index == 0) prev = SteamLobbyManager.MemberCount - 1;
+            int currentIndex = nextIndex - 1;
+            if (nextIndex >= SteamLobbyManager.MemberCount) nextIndex = 0;
+            if (nextIndex == 0) currentIndex = SteamLobbyManager.MemberCount - 1;
 
-            if (NetworkManager.Instance.Index == index)
+            if (NetworkManager.Instance.Index == nextIndex)
                 mainPlayerStateContext.IsMyTurn = true;
 
-            var prevPlayer = NetworkManager.Instance.playerList.ElementAt(prev);
-            var currentPlayer = NetworkManager.Instance.playerList.ElementAt(index);
-
-            CinemachineVirtualCamera next, current;
-            if (prevPlayer.Key == SteamManager.Instance.PlayerSteamId)
-                current = prevPlayer.Value.GetComponent<ScriptKeeper>().playerCamera;
-            else
-                current = prevPlayer.Value.GetComponent<RemoteScriptKeeper>().playerCamera;
-
-            if (currentPlayer.Key == SteamManager.Instance.PlayerSteamId)
-                next = currentPlayer.Value.GetComponent<ScriptKeeper>().playerCamera;
-            else
-                next = currentPlayer.Value.GetComponent<RemoteScriptKeeper>().playerCamera;
-
+            CinemachineVirtualCamera current = GetCinemachineVirtualCamera(currentIndex);
+            CinemachineVirtualCamera next = GetCinemachineVirtualCamera(nextIndex);
+            
             ChangeCamPriority(current, next);
         }
 
@@ -241,6 +232,16 @@ namespace Assets.MainBoard.Scripts.GameManaging
         private void SetPlayerSpec(ScriptKeeper keeper, int index)
         {
             keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+        }
+
+        private CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)
+        {
+            var player = NetworkManager.Instance.playerList.ElementAt(index).Value;
+
+            if (NetworkManager.Instance.Index == index)
+                return player.GetComponent<ScriptKeeper>().playerCamera;
+
+            return player.GetComponent<RemoteScriptKeeper>().playerCamera;
         }
         #endregion
     }

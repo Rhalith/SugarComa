@@ -5739,18 +5739,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0b7bbbe16d37644b4ac73baa95a621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerCollector: {fileID: 4120892788481720713}
-  _gobletSelection: {fileID: 4120892788315320753}
-  _goalSelector: {fileID: 0}
-  _playerStateContext: {fileID: 3994039499720399007}
-  _playerInventory: {fileID: 4120892788481720717}
-  _currentUI: {fileID: 4120892787982766272}
+  currentUI: {fileID: 4120892788315320755}
+  playerTransform: {fileID: 4120892788481720714}
+  goalSelector: {fileID: 0}
+  playerCollector: {fileID: 4120892788481720713}
+  playerInventory: {fileID: 4120892788481720717}
+  gobletSelection: {fileID: 4120892788315320753}
+  playerCamera: {fileID: 4120892788676648186}
+  playerStateContext: {fileID: 3994039499720399007}
+  playerUIParentSetter: {fileID: 7305712665337842074}
   playerGold: {fileID: 4120892787917468866}
   playerHealth: {fileID: 4120892787250652913}
   playerGoblet: {fileID: 4120892787186706926}
-  _playerCamera: {fileID: 4120892788676648186}
-  playerTransform: {fileID: 4120892788481720714}
-  _playerUIParentSetter: {fileID: 7305712665337842074}
 --- !u!54 &5519808315850263234
 Rigidbody:
   m_ObjectHideFlags: 0
