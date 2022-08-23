@@ -76,7 +76,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <summary>
         /// Creates player.
         /// </summary>
-        public GameObject CreatePlayer(Steamworks.SteamId id)
+        public GameObject CreatePlayer(Steamworks.SteamId id, int index)
         {
             if (SteamManager.Instance.PlayerSteamId == id)
             {
@@ -101,6 +101,9 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
 
                 _createdObject.transform.position = new Vector3(0, 0, 0);
+
+                RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
+                RemoteScKeeper.PlayerIndex = index;
             }
 
             return _createdObject;
@@ -195,6 +198,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             mainPlayerStateContext.Idle.MapCamera = _mapCamera;
             mainPlayerStateContext.Running.CurrentPlatform = _startplatform;
             mainPlayerStateContext.Running.PathFinder = _pathFinder;
+            mainPlayerStateContext.Death.PathFinder = _pathFinder;
             mainPlayerStateContext.Land.GoalSelector = _goalSelector;
         }
 

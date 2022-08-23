@@ -36,6 +36,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             context.gameObject.transform.position = new Vector3(founded.position.x, founded.position.y + 0.25f, founded.position.z);
         }
 
+        // TODO: Death animasyonunun sonuna event olarak ekle...
         public override void AnimationEnded()
         {
             OnDeath();

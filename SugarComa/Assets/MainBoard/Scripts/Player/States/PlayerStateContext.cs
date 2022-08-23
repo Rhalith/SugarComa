@@ -112,11 +112,11 @@ namespace Assets.MainBoard.Scripts.Player.States
         [SerializeField] private PlayerIdleState _playerIdle;
         [SerializeField] private PlayerRunningState _playerRunning;
         [SerializeField] private PlayerLandingState _playerLanding;
-        [SerializeField] private PlayerLandingState _playerDeath;
+        [SerializeField] private PlayerDeathState _playerDeath;
         public PlayerIdleState Idle => _playerIdle;
         public PlayerRunningState Running => _playerRunning;
         public PlayerLandingState Land => _playerLanding;
-        public PlayerLandingState Death => _playerDeath;
+        public PlayerDeathState Death => _playerDeath;
 
         private void InitializeStates()
         {

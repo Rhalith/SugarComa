@@ -137,6 +137,8 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
             // TODO: Fix it.
             //_playerAnimation.StartDeath();
+            //ScriptKeeper._playerStateContext
+
             isDead = true;
         }
 

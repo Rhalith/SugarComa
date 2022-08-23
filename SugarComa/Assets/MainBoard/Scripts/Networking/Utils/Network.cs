@@ -122,6 +122,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     public struct AnimationStateData
     {
         public int id;
+        public int playerIndex;
         public int prevAnimBoolHash;
         public int nextAnimBoolHash;
         public MessageType messageType;
@@ -129,6 +130,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public AnimationStateData(int prevAnimBoolHash, int nextAnimBoolHash, MessageType messageType)
         {
             id = NetworkId.AnimationStateNetworkDataId;
+            playerIndex = NetworkManager.Instance.Index;
             this.prevAnimBoolHash = prevAnimBoolHash;
             this.nextAnimBoolHash = nextAnimBoolHash;
             this.messageType = messageType;

@@ -6,6 +6,7 @@ using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
 using Steamworks;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.Remote
@@ -13,6 +14,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
     public class RemotePlayerAnimation : MonoBehaviour
     {
         #region SerializeField
+        [SerializeField] private RemoteScriptKeeper scKeeper;
         [SerializeField] private GameObject _boxGloves;
         [SerializeField] private Animator anim;
         #endregion
@@ -39,7 +41,10 @@ namespace Assets.MainBoard.Scripts.Player.Remote
 
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
-            if (NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
+            if (!NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
+                return;
+
+            if (scKeeper.PlayerIndex == animationStateData.playerIndex)
             {
                 UpdateAnimState(animationStateData.prevAnimBoolHash, animationStateData.nextAnimBoolHash);
             }

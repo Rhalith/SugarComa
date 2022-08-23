@@ -16,7 +16,7 @@ namespace Assets.MainBoard.Scripts.Networking
         public int Index => _index;
 
         public int temp;
-        // Ayrı bir yerde tutulabilir.
+
         public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
 
         public PlayerHandler playerHandler;
@@ -69,7 +69,7 @@ namespace Assets.MainBoard.Scripts.Networking
             int i = 0;
             foreach (var id in SteamLobbyManager.Instance.inLobby.Keys)
             {
-                 playerList.Add(id, playerHandler.CreatePlayer(id));
+                 playerList.Add(id, playerHandler.CreatePlayer(id, i));
                 if (id == SteamManager.Instance.PlayerSteamId) _index = i;
                 i++;
             }
