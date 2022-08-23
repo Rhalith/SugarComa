@@ -52,7 +52,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             {
                 PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
                 _players.Remove(playerManager);
-                playerManager.StopNumerator(_meteor.Type, _damage);
+                playerManager.StopNumerator(_meteor.Type);
             }
         }
         private void UpScaleMeteorEffect()
@@ -79,6 +79,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             transform.localScale = _localScale;
             foreach (var player in _players)
             {
+                print("explosion");
                 player.StopNumerator(_meteor.Type);
             }
             _players.Clear();
