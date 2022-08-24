@@ -57,11 +57,12 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentStep = context.Running.CurrentStep;
             _currentPlatform = context.Running.CurrentPlatform;
 
-            if(_currentStep == 0)
+            // TODO: Fix it. Bir süre sonra Dice gözükmüyor.
+            if(context.IsMyTurn && _currentStep == 0)
             {
                 _dice.Enter();
             }
-    }
+        }
 
         public override void Update()
         {

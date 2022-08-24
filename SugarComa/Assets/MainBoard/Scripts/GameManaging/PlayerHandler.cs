@@ -10,6 +10,8 @@ using UnityEngine;
 using Cinemachine;
 using System.Linq;
 using Assets.MainBoard.Scripts.Player.States;
+using System.Collections.Generic;
+using Steamworks;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -76,7 +78,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <summary>
         /// Creates player.
         /// </summary>
-        public GameObject CreatePlayer(Steamworks.SteamId id)
+        public GameObject CreatePlayer(SteamId id, int index)
         {
             if (SteamManager.Instance.PlayerSteamId == id)
             {
@@ -101,23 +103,32 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
 
                 _createdObject.transform.position = new Vector3(0, 0, 0);
+                _createdObject.transform.GetChild(1).transform.position = new Vector3(0, 0.25f, 0);
+
+                RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
+                RemoteScKeeper.playerIndex = index;
             }
 
             return _createdObject;
         }
 
         //TODO: System memory dll kullanılabilir performans'ı arttırmak için...
-        public void UpdateTurnQueue(Steamworks.SteamId[] _playerList)
+        public void UpdateTurnQueue(SteamId[] _playerList)
         {
             // Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
             _playerQueue = _playerList;
 
             PlayerListNetworkData playerListData =
                    new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerList));
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
+            bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
+            if (result)
+            {
+                var camera = GetCinemachineVirtualCamera(0);
+                camera.Priority = 2;
+            }
         }
 
-        private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+        private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
             if (NetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
             {
@@ -130,30 +141,25 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
-                ChangeCurrentPlayer(turnNetworkData.index+1);
+                ChangeCurrentPlayer(turnNetworkData.index + 1);
             }
         }
 
         /// <summary>
         /// Changes current player.
         /// </summary>
-        public void ChangeCurrentPlayer(int index)
+        public void ChangeCurrentPlayer(int nextIndex)
         {
-            int prev = index - 1;
-            if (index >= SteamLobbyManager.MemberCount)
-            {
-                index = 0;
-            }
-            if (index == 0)
-                prev = SteamLobbyManager.MemberCount-1;
+            int currentIndex = nextIndex - 1;
+            if (nextIndex >= SteamLobbyManager.MemberCount) nextIndex = 0;
+            if (nextIndex == 0) currentIndex = SteamLobbyManager.MemberCount - 1;
 
-            if (NetworkManager.Instance.Index == index)
-            {
+            if (NetworkManager.Instance.Index == nextIndex)
                 mainPlayerStateContext.IsMyTurn = true;
-            }
 
-            CinemachineVirtualCamera current = NetworkManager.Instance.playerList.ElementAt(prev).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
-            CinemachineVirtualCamera next = NetworkManager.Instance.playerList.ElementAt(index).Value.GetComponent<RemoteScriptKeeper>()._playerCamera;
+            CinemachineVirtualCamera current = GetCinemachineVirtualCamera(currentIndex);
+            CinemachineVirtualCamera next = GetCinemachineVirtualCamera(nextIndex);
+            
             ChangeCamPriority(current, next);
         }
 
@@ -177,16 +183,16 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="nextInventory"></param>
         private void SetScripts(ScriptKeeper scKeeper)
         {
-            mainPlayerStateContext = scKeeper._playerStateContext;
-            mainPlayerInventory = scKeeper._playerInventory;
-            mainPlayerCollector = scKeeper._playerCollector;
+            mainPlayerStateContext = scKeeper.playerStateContext;
+            mainPlayerInventory = scKeeper.playerInventory;
+            mainPlayerCollector = scKeeper.playerCollector;
             mainPlayerCollector.GameController = _gameController;
         }
 
         // Mapcam atamaları
         private void UpdateMapCam(ScriptKeeper scKeeper)
         {
-            _mapCamera.mainCamera = scKeeper._playerCamera;
+            _mapCamera.mainCamera = scKeeper.playerCamera;
             _mapCamera.player = scKeeper.playerTransform;
         }
 
@@ -195,7 +201,9 @@ namespace Assets.MainBoard.Scripts.GameManaging
             mainPlayerStateContext.Idle.MapCamera = _mapCamera;
             mainPlayerStateContext.Running.CurrentPlatform = _startplatform;
             mainPlayerStateContext.Running.PathFinder = _pathFinder;
+            mainPlayerStateContext.Death.PathFinder = _pathFinder;
             mainPlayerStateContext.Land.GoalSelector = _goalSelector;
+            mainPlayerStateContext.PlayerHandler = this;
         }
 
         /// <summary>
@@ -204,10 +212,10 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="keeper"></param>
         private void SetGobletSelection(ScriptKeeper keeper)
         {
-            keeper._goalSelector = _goalSelector;
-            keeper._gobletSelection.GameController = _gameController;
-            keeper._gobletSelection.GoalSelector = _goalSelector;
-            keeper._gobletSelection.PathFinder = _pathFinder;
+            keeper.goalSelector = _goalSelector;
+            keeper.gobletSelection.GameController = _gameController;
+            keeper.gobletSelection.GoalSelector = _goalSelector;
+            keeper.gobletSelection.PathFinder = _pathFinder;
         }
         /// <summary>
         /// Changes current UI variables for check or use them.
@@ -229,7 +237,17 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="index"></param>
         private void SetPlayerSpec(ScriptKeeper keeper, int index)
         {
-            keeper._playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+            keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+        }
+
+        private CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)
+        {
+            var player = NetworkManager.Instance.playerList.ElementAt(index).Value;
+
+            if (NetworkManager.Instance.Index == index)
+                return player.GetComponent<ScriptKeeper>().playerCamera;
+
+            return player.GetComponent<RemoteScriptKeeper>().playerCamera;
         }
         #endregion
     }

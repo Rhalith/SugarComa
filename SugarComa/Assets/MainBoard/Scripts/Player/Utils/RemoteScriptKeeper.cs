@@ -6,7 +6,8 @@ namespace Assets.MainBoard.Scripts.Player.Utils
 {
     public class RemoteScriptKeeper : MonoBehaviour
     {
-        public RemotePlayerMovement _remotePlayerMovement;
-        public CinemachineVirtualCamera _playerCamera;
+        public int playerIndex;
+        public RemotePlayerMovement remotePlayerMovement;
+        public CinemachineVirtualCamera playerCamera;
     }
 }

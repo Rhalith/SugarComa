@@ -869,7 +869,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: 30364b1d91bde35449ea75ce0a121e6d, type: 2}
   text: {fileID: 4120892788971081945}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892787007096349}
 --- !u!114 &4120892787007096349
 MonoBehaviour:
@@ -1009,7 +1008,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: ceb9f48038aa9794da0fb0346eff6401, type: 2}
   text: {fileID: 4120892788742707360}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892787026762310}
 --- !u!114 &4120892787026762310
 MonoBehaviour:
@@ -1452,7 +1450,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: a8bf39e17fdde4248bd6840d48033073, type: 2}
   text: {fileID: 4120892787373975366}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892787223886195}
 --- !u!114 &4120892787223886195
 MonoBehaviour:
@@ -2363,7 +2360,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: 1194453f80f85784ebbb107ce14e2878, type: 2}
   text: {fileID: 4120892788480001696}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892787833103094}
 --- !u!114 &4120892787833103094
 MonoBehaviour:
@@ -3227,7 +3223,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: ff43e0c2002c29f4b82f711a61ee30bc, type: 2}
   text: {fileID: 4120892788379030896}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892788047059528}
 --- !u!114 &4120892788047059528
 MonoBehaviour:
@@ -3504,7 +3499,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: fc16983c7e9ddf541804e7391d630df1, type: 2}
   text: {fileID: 4120892787671738719}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892788247333578}
 --- !u!114 &4120892788247333578
 MonoBehaviour:
@@ -3644,7 +3638,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: 944b4114866a0c14fb0e85d15225cab7, type: 2}
   text: {fileID: 4120892788183864000}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892788270163767}
 --- !u!114 &4120892788270163767
 MonoBehaviour:
@@ -4207,7 +4200,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4120892788481720714}
   - component: {fileID: 4120892788481720719}
-  - component: {fileID: 4120892788481720712}
   - component: {fileID: 4120892788481720713}
   - component: {fileID: 4120892788481720717}
   - component: {fileID: 4120892788481720716}
@@ -4254,18 +4246,6 @@ MonoBehaviour:
   rotationSpeed: 720
   isMoving: 0
   _currentPosition: {x: 0, y: 0, z: 0}
---- !u!114 &4120892788481720712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4120892788481720715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c814e38117cb9444d88b62804941bcc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4120892788481720713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4286,7 +4266,6 @@ MonoBehaviour:
   _gobletSelection: {fileID: 4120892788315320753}
   _playerInventory: {fileID: 4120892788481720717}
   _playerAnimation: {fileID: 4120892787933790877}
-  _playerMovement: {fileID: 4120892788481720712}
   _scriptKeeper: {fileID: 7044238543435382551}
   item:
     shield: {fileID: 4120892788247333579}
@@ -4367,7 +4346,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _impulseSource: {fileID: 3402094004238756316}
   _playerAnimator: {fileID: 4120892787933790878}
-  _playerMovement: {fileID: 4120892788481720712}
   _mainCollider: {fileID: 2808706967063836918}
   _ragDollColliders:
   - {fileID: 2686570705529604541}
@@ -4574,7 +4552,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: 323e00f2afe7b254f843e5cef311fa95, type: 2}
   text: {fileID: 4120892787847291289}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892788627830473}
 --- !u!114 &4120892788627830473
 MonoBehaviour:
@@ -4684,7 +4661,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7784432, y: 1}
+    m_SensorSize: {x: 1.7783407, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5082,7 +5059,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: ad232955e5e5c0042b9a2303988e01fc, type: 2}
   text: {fileID: 4120892788457802528}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892788845651285}
 --- !u!114 &4120892788845651285
 MonoBehaviour:
@@ -5447,7 +5423,6 @@ MonoBehaviour:
   referenceItem: {fileID: 11400000, guid: 1d372a45ba034d74d9312fd02fc280a3, type: 2}
   text: {fileID: 4120892787134076784}
   playerInventory: {fileID: 4120892788481720717}
-  _playerMovement: {fileID: 4120892788481720712}
   _button: {fileID: 4120892789015795016}
 --- !u!114 &4120892789015795016
 MonoBehaviour:
@@ -5764,19 +5739,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0b7bbbe16d37644b4ac73baa95a621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerMovement: {fileID: 4120892788481720712}
-  _playerCollector: {fileID: 4120892788481720713}
-  _gobletSelection: {fileID: 4120892788315320753}
-  _goalSelector: {fileID: 0}
-  _playerStateContext: {fileID: 3994039499720399007}
-  _playerInventory: {fileID: 4120892788481720717}
-  _currentUI: {fileID: 4120892787982766272}
+  currentUI: {fileID: 4120892788315320755}
+  playerTransform: {fileID: 4120892788481720714}
+  goalSelector: {fileID: 0}
+  playerCollector: {fileID: 4120892788481720713}
+  playerInventory: {fileID: 4120892788481720717}
+  gobletSelection: {fileID: 4120892788315320753}
+  playerCamera: {fileID: 4120892788676648186}
+  playerStateContext: {fileID: 3994039499720399007}
+  playerUIParentSetter: {fileID: 7305712665337842074}
   playerGold: {fileID: 4120892787917468866}
   playerHealth: {fileID: 4120892787250652913}
   playerGoblet: {fileID: 4120892787186706926}
-  _playerCamera: {fileID: 4120892788676648186}
-  playerTransform: {fileID: 4120892788481720714}
-  _playerUIParentSetter: {fileID: 7305712665337842074}
 --- !u!54 &5519808315850263234
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6487,7 +6461,6 @@ MonoBehaviour:
   _itemObject: {fileID: 4120892788270163760}
   _player: {fileID: 4120892788481720715}
   damage: 30
-  _playerMovement: {fileID: 4120892788481720712}
   _boxGlovesAnimation: {fileID: 3140636335162172333}
   _playerAnimator: {fileID: 4120892787933790878}
   otherPlayersCollector: []
@@ -6917,7 +6890,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3886945101997239710}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d6275441ed283944bee082cccb35abd, type: 3}
   m_Name: 
@@ -6939,6 +6912,8 @@ MonoBehaviour:
     _currentPlatform: {fileID: 0}
     _currentStep: 0
     _pathFinder: {fileID: 0}
+  _playerDeath:
+    _pathFinder: {fileID: 0}
 --- !u!114 &4120892787933790877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6951,18 +6926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af1787fda3ba1479d89e13fd2c827f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jump: 0
-  _run: 0
-  _land: 0
-  _surprised: 0
-  _dead: 0
-  _animator: {fileID: 4120892787933790878}
-  _playerMovement: {fileID: 4120892788481720712}
-  _scriptKeeper: {fileID: 7044238543435382551}
   _boxGloves: {fileID: 7937054991280826797}
-  _goalSelector: {fileID: 0}
-  _ragdollOnOff: {fileID: 0}
-  _dice: {fileID: 7986056786197168510}
 --- !u!1 &4195898190158683059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9004233853494326404, guid: 7fca060d96bb7b548af373fad492934c, type: 3}

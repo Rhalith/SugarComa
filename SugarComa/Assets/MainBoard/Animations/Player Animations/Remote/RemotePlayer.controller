@@ -260,7 +260,7 @@ AnimatorStateMachine:
     m_Position: {x: 560, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4252320853548226013}
-    m_Position: {x: 850, y: 20, z: 0}
+    m_Position: {x: 890, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -144713273477742974}
     m_Position: {x: 560, y: -80, z: 0}
@@ -342,7 +342,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player
+  m_Name: RemotePlayer
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: running
@@ -681,7 +681,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 93e7c03c0bce7404fad3348367b100bb, type: 2}
+  m_Motion: {fileID: 7400000, guid: 28a67f74793401242891576a67e7e95e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

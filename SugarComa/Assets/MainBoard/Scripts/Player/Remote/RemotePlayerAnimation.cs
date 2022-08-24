@@ -1,31 +1,24 @@
-using Assets.MainBoard.Scripts.Networking;
-using Assets.MainBoard.Scripts.Networking.Utils;
-using Assets.MainBoard.Scripts.Player.Items.BoxGloves;
-using Assets.MainBoard.Scripts.Player.Utils;
-using Assets.MainBoard.Scripts.Route;
-using Assets.MainBoard.Scripts.Utils.InventorySystem;
 using Steamworks;
-using System.Collections;
 using UnityEngine;
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Player.Utils;
+using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.Utils.InventorySystem;
+using Assets.MainBoard.Scripts.Player.Items.BoxGloves;
 
 namespace Assets.MainBoard.Scripts.Player.Remote
 {
     public class RemotePlayerAnimation : MonoBehaviour
     {
         #region SerializeField
+        [SerializeField] private RemoteScriptKeeper scKeeper;
         [SerializeField] private GameObject _boxGloves;
         [SerializeField] private Animator anim;
         #endregion
 
         #region Private Field
-        private AnimatorControllerParameter[] animControlParams;
+        private int _lastAnimHash = -1;
         #endregion
-
-        void OnEnable()
-        {
-            // Gets all animator parameter as AnimatorControllerParameter array
-            animControlParams = anim.parameters;
-        }
 
         private void Awake()
         {
@@ -39,27 +32,23 @@ namespace Assets.MainBoard.Scripts.Player.Remote
 
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
-            if (NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
+            if (!NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
+                return;
+
+            if (scKeeper.playerIndex == animationStateData.playerIndex)
             {
-                UpdateAnimState(animationStateData.prevAnimBoolHash, animationStateData.nextAnimBoolHash);
+                UpdateAnimState(animationStateData.animBoolHash);
             }
         }
 
-        private void UpdateAnimState(int prevAnimBoolHash, int nextAnimBoolHash)
+        private void UpdateAnimState(int animBoolHash)
         {
-            foreach (AnimatorControllerParameter param in animControlParams)
-            {
-                int animBoolHash = Animator.StringToHash(param.name);
+            anim.SetBool(animBoolHash, true);
 
-                if (animBoolHash == nextAnimBoolHash)
-                {
-                    anim.SetBool(param.name, true);
-                }
-                else if (animBoolHash == prevAnimBoolHash)
-                {
-                    anim.SetBool(param.name, false);
-                }
-            }
+            if (_lastAnimHash != -1 && _lastAnimHash != animBoolHash)
+                anim.SetBool(_lastAnimHash, false);
+
+            _lastAnimHash = animBoolHash;
         }
 
         /// <summary>

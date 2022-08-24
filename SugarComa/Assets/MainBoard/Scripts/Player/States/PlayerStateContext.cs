@@ -1,9 +1,8 @@
-﻿using Assets.MainBoard.Scripts.GameManaging;
-using Assets.MainBoard.Scripts.Player.Movement;
-using Assets.MainBoard.Scripts.Route;
+﻿using UnityEngine;
 using Assets.MainBoard.Scripts.UI;
-using Assets.MainBoard.Scripts.Utils.InventorySystem;
-using UnityEngine;
+using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Player.Movement;
+using Assets.MainBoard.Scripts.Networking;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -25,6 +24,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private PlayerInputAction _playerInput;
         private PlayerBaseState _currentState;
+        private PlayerHandler _playerHandler;
         #endregion
 
         #region Properties
@@ -44,13 +44,26 @@ namespace Assets.MainBoard.Scripts.Player.States
         //public GameController GameController { get => _gameController; set => _gameController = value; }
         public PlayerCollector PlayerCollector => _playerCollector;
         public GobletSelection GobletSelection => _gobletSelection;
+        public PlayerHandler PlayerHandler { get => _playerHandler; set => _playerHandler = value; }
         #endregion
 
         #region Move To PlayerData
 
         //TODO: Must move to playerData
         private bool _isMyTurn;
-        public bool IsMyTurn { get => _isMyTurn; set { _isMyTurn = enabled = value; } }
+        public bool IsMyTurn 
+        { 
+            get => _isMyTurn; 
+            set 
+            { 
+                _isMyTurn = enabled = value; 
+                if (!value)
+                {
+                    _playerIdle.Dice.Exit();
+                    _playerHandler.ChangeCurrentPlayer((byte)(NetworkManager.Instance.Index + 1));
+                }
+            } 
+        }
 
         #endregion
 
@@ -112,11 +125,11 @@ namespace Assets.MainBoard.Scripts.Player.States
         [SerializeField] private PlayerIdleState _playerIdle;
         [SerializeField] private PlayerRunningState _playerRunning;
         [SerializeField] private PlayerLandingState _playerLanding;
-        [SerializeField] private PlayerLandingState _playerDeath;
+        [SerializeField] private PlayerDeathState _playerDeath;
         public PlayerIdleState Idle => _playerIdle;
         public PlayerRunningState Running => _playerRunning;
         public PlayerLandingState Land => _playerLanding;
-        public PlayerLandingState Death => _playerDeath;
+        public PlayerDeathState Death => _playerDeath;
 
         private void InitializeStates()
         {

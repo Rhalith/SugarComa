@@ -62,7 +62,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         {
             if (keeper != null)
             {
-                _textChanger = new(keeper.playerGold, keeper.playerHealth, keeper.playerGoblet, keeper._playerCollector);
+                _textChanger = new(keeper.playerGold, keeper.playerHealth, keeper.playerGoblet, keeper.playerCollector);
             }
             else
             {
@@ -78,16 +78,16 @@ namespace Assets.MainBoard.Scripts.GameManaging
         {
             if (keeper != null)
             {
-                _inventoryChanger1 = new(keeper._playerInventory._items[0]); AddToObserver(_inventoryChanger1);
-                _inventoryChanger2 = new(keeper._playerInventory._items[1]); AddToObserver(_inventoryChanger2);
-                _inventoryChanger3 = new(keeper._playerInventory._items[2]); AddToObserver(_inventoryChanger3);
-                _inventoryChanger4 = new(keeper._playerInventory._items[3]); AddToObserver(_inventoryChanger4);
-                _inventoryChanger5 = new(keeper._playerInventory._items[4]); AddToObserver(_inventoryChanger5);
-                _inventoryChanger6 = new(keeper._playerInventory._items[5]); AddToObserver(_inventoryChanger6);
-                _inventoryChanger7 = new(keeper._playerInventory._items[6]); AddToObserver(_inventoryChanger7);
-                _inventoryChanger8 = new(keeper._playerInventory._items[7]); AddToObserver(_inventoryChanger8);
-                _inventoryChanger9 = new(keeper._playerInventory._items[8]); AddToObserver(_inventoryChanger9);
-                _inventoryChanger10 = new(keeper._playerInventory._items[9]); AddToObserver(_inventoryChanger10);
+                _inventoryChanger1 = new(keeper.playerInventory._items[0]); AddToObserver(_inventoryChanger1);
+                _inventoryChanger2 = new(keeper.playerInventory._items[1]); AddToObserver(_inventoryChanger2);
+                _inventoryChanger3 = new(keeper.playerInventory._items[2]); AddToObserver(_inventoryChanger3);
+                _inventoryChanger4 = new(keeper.playerInventory._items[3]); AddToObserver(_inventoryChanger4);
+                _inventoryChanger5 = new(keeper.playerInventory._items[4]); AddToObserver(_inventoryChanger5);
+                _inventoryChanger6 = new(keeper.playerInventory._items[5]); AddToObserver(_inventoryChanger6);
+                _inventoryChanger7 = new(keeper.playerInventory._items[6]); AddToObserver(_inventoryChanger7);
+                _inventoryChanger8 = new(keeper.playerInventory._items[7]); AddToObserver(_inventoryChanger8);
+                _inventoryChanger9 = new(keeper.playerInventory._items[8]); AddToObserver(_inventoryChanger9);
+                _inventoryChanger10 = new(keeper.playerInventory._items[9]); AddToObserver(_inventoryChanger10);
             }
             else
             {
