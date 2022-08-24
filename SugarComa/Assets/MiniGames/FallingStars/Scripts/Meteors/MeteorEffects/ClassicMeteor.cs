@@ -66,6 +66,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);
         }
+
+        //TODO DOTWeen ile bir dene.
         private IEnumerator ChangeMaterial(Material material, string refID, float waitDuration)
         {
             float _startValue = Random.Range(0, 50);
