@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Assets.MiniGames.KosKosabilirsen.Scripts.Input;
+//using Assets.MiniGames.KosKosabilirsen.Scripts.Input;
 
 namespace Assets.MiniGames.KosKosabilirsen.Scripts.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        private Inputs _playerInput;
+        //private Inputs _playerInput;
         private Vector3 _movementDirection;
         private Vector3 _rotationDirection;
         private bool _isJumping;
@@ -20,12 +20,12 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.Player
 
         private void Awake()
         {
-            _playerInput = new();
+            //_playerInput = new();
 
-            EnableActions();
-            AddJumpActions();
-            AddMoveActions();
-            AddGamepadRotationActions();
+            //EnableActions();
+            //AddJumpActions();
+            //AddMoveActions();
+            //AddGamepadRotationActions();
         }
 
         private void Update()
@@ -101,45 +101,45 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.Player
             }
         }
 
-        private void EnableActions()
-        {
-            _playerInput.Movement.Enable();
-            _playerInput.Hook.Enable();
-            _playerInput.Rotation.Enable();
-        }
+        //private void EnableActions()
+        //{
+        //    _playerInput.Movement.Enable();
+        //    _playerInput.Hook.Enable();
+        //    _playerInput.Rotation.Enable();
+        //}
 
-        private void AddMoveActions()
-        {
-            _playerInput.Movement.Move.started += MoveAction;
-            _playerInput.Movement.Move.performed += MoveAction;
-            _playerInput.Movement.Move.canceled += MoveAction;
-        }
+        //private void AddMoveActions()
+        //{
+        //    _playerInput.Movement.Move.started += MoveAction;
+        //    _playerInput.Movement.Move.performed += MoveAction;
+        //    _playerInput.Movement.Move.canceled += MoveAction;
+        //}
 
-        private void MoveAction(InputAction.CallbackContext obj)
-        {
-            print("moveperformed");
-            Vector2 direction = obj.ReadValue<Vector2>();
-            _movementDirection.x = direction.x;
-            _movementDirection.z = direction.y;
-        }
-        private void AddJumpActions()
-        {
-            _playerInput.Movement.Jump.started += JumpAction;
-            _playerInput.Movement.Jump.performed += JumpAction;
-            _playerInput.Movement.Jump.canceled += JumpAction;
-        }
-        private void JumpAction(InputAction.CallbackContext obj)
-        {
-            print("jumpperformed");
-            _isJumping = obj.performed;
-        }
+        //private void MoveAction(InputAction.CallbackContext obj)
+        //{
+        //    print("moveperformed");
+        //    Vector2 direction = obj.ReadValue<Vector2>();
+        //    _movementDirection.x = direction.x;
+        //    _movementDirection.z = direction.y;
+        //}
+        //private void AddJumpActions()
+        //{
+        //    _playerInput.Movement.Jump.started += JumpAction;
+        //    _playerInput.Movement.Jump.performed += JumpAction;
+        //    _playerInput.Movement.Jump.canceled += JumpAction;
+        //}
+        //private void JumpAction(InputAction.CallbackContext obj)
+        //{
+        //    print("jumpperformed");
+        //    _isJumping = obj.performed;
+        //}
 
-        private void AddGamepadRotationActions()
-        {
-            _playerInput.Rotation.RotateWithGamepad.started += RotateAction;
-            _playerInput.Rotation.RotateWithGamepad.performed += RotateAction;
-            _playerInput.Rotation.RotateWithGamepad.canceled += RotateAction;
-        }
+        //private void AddGamepadRotationActions()
+        //{
+        //    _playerInput.Rotation.RotateWithGamepad.started += RotateAction;
+        //    _playerInput.Rotation.RotateWithGamepad.performed += RotateAction;
+        //    _playerInput.Rotation.RotateWithGamepad.canceled += RotateAction;
+        //}
 
         private void RotateAction(InputAction.CallbackContext obj)
         {
