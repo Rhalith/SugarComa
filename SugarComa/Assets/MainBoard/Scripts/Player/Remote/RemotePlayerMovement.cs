@@ -1,18 +1,25 @@
 using UnityEngine;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.Player.Utils;
+using System.Linq;
 
 namespace Assets.MainBoard.Scripts.Player.Remote
 {
     public class RemotePlayerMovement : MonoBehaviour
     {
+        #region SerializeFields
         [SerializeField] private float _speed = 3f;
         [SerializeField] private float _rotationSpeed = 720;
         [SerializeField] private RemotePlayerAnimation _playerAnimation;
+        [SerializeField] private RemoteScriptKeeper _scKeeper;
+        #endregion
 
+        #region Private Fields
         private Vector3 _startPosition;
         private Vector3 _nextPosition;
         private float _t;
+        #endregion
 
         private void Start()
         {
@@ -48,6 +55,10 @@ namespace Assets.MainBoard.Scripts.Player.Remote
         private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
         {
             if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
+                return;
+
+            // Check for sent data if it's belong to this remote player object
+            if (NetworkManager.Instance.playerList.ElementAt(_scKeeper.playerIndex).Key != steamid)
                 return;
 
             if (networkData.type == MessageType.InputDown)

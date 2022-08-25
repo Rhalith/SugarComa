@@ -782,9 +782,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2a590ca88a55d4c959dfe7099e5083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  rotationSpeed: 720
+  _speed: 3
+  _rotationSpeed: 720
   _playerAnimation: {fileID: 2946181445786484163}
+  _scKeeper: {fileID: 6181117765266773017}
 --- !u!114 &1281681497997228436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -903,7 +904,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7783407, y: 1}
+    m_SensorSize: {x: 1.7775424, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
