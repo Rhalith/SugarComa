@@ -41,10 +41,10 @@ namespace Assets.MainBoard.Scripts.Player.States
 
             // exit the current state of the context
             Exit();
-            // enter the new state
-            state.Enter();
             // switch the state of the context
             context.CurrentState = state;
+            // enter the new state
+            state.Enter();
         }
 
         public virtual void Enter()

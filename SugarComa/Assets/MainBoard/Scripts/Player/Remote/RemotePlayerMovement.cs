@@ -54,11 +54,11 @@ namespace Assets.MainBoard.Scripts.Player.Remote
 
         private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
         {
-            if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
-                return;
-
             // Check for sent data if it's belong to this remote player object
             if (NetworkManager.Instance.playerList.ElementAt(_scKeeper.playerIndex).Key != steamid)
+                return;
+
+            if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
                 return;
 
             if (networkData.type == MessageType.InputDown)

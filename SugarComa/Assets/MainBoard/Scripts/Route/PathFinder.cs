@@ -86,7 +86,8 @@ namespace Assets.MainBoard.Scripts.Route
         /// <param name="step"></param>
         public Platform[] ToSelector(Platform source, int step = -1, RouteSelectorDirection direction = RouteSelectorDirection.None)
         {
-            if (source == null || step == 0) return null;
+            // Last check: Checks if starting platform has selector and direction is not decided yet.
+            if (source == null || step == 0 || (direction == RouteSelectorDirection.None && source.HasSelector)) return null;
 
             var path = new List<Platform>();
             Platform next = source;
