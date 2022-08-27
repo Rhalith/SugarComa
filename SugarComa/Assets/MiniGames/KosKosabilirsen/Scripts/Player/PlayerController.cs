@@ -216,7 +216,7 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.Player
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
-            transform.Translate(targetDirection.normalized * (_speed * Time.deltaTime) +
+            transform.Translate(targetDirection.normalized * _speed * Time.deltaTime * 10f +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime, Space.World);
 
             // update animator if using character
