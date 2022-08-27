@@ -1,8 +1,4 @@
-using Assets.MiniGames.KosKosabilirsen.Scripts.Player;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
 {
