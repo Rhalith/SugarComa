@@ -408,7 +408,6 @@ GameObject:
   m_Component:
   - component: {fileID: 470624794}
   - component: {fileID: 470624793}
-  - component: {fileID: 470624796}
   - component: {fileID: 470624795}
   - component: {fileID: 470624797}
   m_Layer: 0
@@ -557,26 +556,6 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -5630151704836100654, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   ZAxis: {fileID: 0}
---- !u!114 &470624796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470624792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88777624b5b133f439da834f60a24109, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _orientation: {fileID: 484859990}
-  _player: {fileID: 1617719200}
-  _playerObject: {fileID: 1468867707}
-  _rb: {fileID: 1617719201}
-  _playerInputReceiver: {fileID: 1617719202}
-  rotationSpeed: 7
-  combatLookAt: {fileID: 0}
-  currentStyle: 0
 --- !u!114 &470624797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1901,7 +1880,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171016809}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88777624b5b133f439da834f60a24109, type: 3}
   m_Name: 
@@ -1911,8 +1890,10 @@ MonoBehaviour:
   _playerObject: {fileID: 1468867707}
   _rb: {fileID: 1617719201}
   _playerInputReceiver: {fileID: 1617719202}
+  _combatLookAtObject: {fileID: 0}
+  _thirdPersonCam: {fileID: 0}
+  _combatCam: {fileID: 0}
   rotationSpeed: 7
-  combatLookAt: {fileID: 1128815449}
   currentStyle: 1
 --- !u!114 &1171016813
 MonoBehaviour:
@@ -2301,6 +2282,7 @@ GameObject:
   - component: {fileID: 1472416394}
   - component: {fileID: 1472416393}
   - component: {fileID: 1472416396}
+  - component: {fileID: 1472416397}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2394,7 +2376,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 0.5
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -2408,6 +2390,28 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1472416397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472416392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88777624b5b133f439da834f60a24109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _orientation: {fileID: 484859990}
+  _player: {fileID: 1617719200}
+  _playerObject: {fileID: 1468867707}
+  _rb: {fileID: 1617719201}
+  _playerInputReceiver: {fileID: 1617719202}
+  _combatLookAtObject: {fileID: 1128815448}
+  _thirdPersonCam: {fileID: 470624792}
+  _combatCam: {fileID: 1171016809}
+  rotationSpeed: 7
+  currentStyle: 0
 --- !u!1 &1476933132
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,8 +2953,10 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   sprint: 0
+  combat: 0
   analogMovement: 0
   cursorLocked: 0
+  _tpCam: {fileID: 1472416397}
 --- !u!114 &1617719203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3391,7 +3397,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741085280}
-  m_LocalRotation: {x: 0.12754087, y: 0.000000008532932, z: -0.0000000010972584, w: 0.9918333}
+  m_LocalRotation: {x: 0.12754087, y: -0.000000008532932, z: 0.0000000010972584, w: 0.9918333}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

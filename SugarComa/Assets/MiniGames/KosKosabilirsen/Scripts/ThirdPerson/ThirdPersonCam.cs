@@ -11,9 +11,12 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private PlayerInputReceiver _playerInputReceiver;
 
-        public float rotationSpeed;
+        [Header("Cameras")]
+        [SerializeField] private GameObject _combatLookAtObject;
+        [SerializeField] private GameObject _thirdPersonCam;
+        [SerializeField] private GameObject _combatCam;
 
-        public Transform combatLookAt;
+        public float rotationSpeed;
 
         public CameraStyle currentStyle;
 
@@ -26,6 +29,26 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
         void Update()
         {
             RotatePlayer(currentStyle);
+        }
+
+        public void ChangeCamera(CameraStyle style)
+        {
+            _thirdPersonCam.SetActive(false);
+            _combatCam.SetActive(false);
+            _combatLookAtObject.SetActive(false);
+
+            switch (style)
+            {
+                case CameraStyle.Basic:
+                    _thirdPersonCam.SetActive(true);
+                    currentStyle = CameraStyle.Basic;
+                    break;
+                case CameraStyle.Combat:
+                    _combatLookAtObject.SetActive(true);
+                    _combatCam.SetActive(true);
+                    currentStyle = CameraStyle.Combat;
+                    break;
+            }
         }
 
         private void RotatePlayer(CameraStyle style)
@@ -44,7 +67,7 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
             }
             else if (style.Equals(CameraStyle.Combat))
             {
-                Vector3 combatDirection = combatLookAt.position - new Vector3(transform.position.x, combatLookAt.position.y, transform.position.z);
+                Vector3 combatDirection = _combatLookAtObject.transform.position - new Vector3(transform.position.x, _combatLookAtObject.transform.position.y, transform.position.z);
                 _orientation.forward = combatDirection.normalized;
 
                 _playerObject.forward = combatDirection.normalized;

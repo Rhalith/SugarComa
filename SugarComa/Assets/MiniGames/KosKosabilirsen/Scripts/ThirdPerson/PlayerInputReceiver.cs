@@ -10,12 +10,16 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
         public Vector2 look;
         public bool jump;
         public bool sprint;
+        public bool combat;
 
         [Header("Movement Settings")]
         public bool analogMovement;
 
         [Header("Mouse Cursor Settings")]
         public bool cursorLocked = true;
+
+        [Header("References")]
+        [SerializeField] private ThirdPersonCam _tpCam;
 
         public void OnMove(InputValue value)
         {
@@ -37,6 +41,18 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
         //    SprintInput(value.isPressed);
         //}
 
+        public void OnCombat(InputValue value)
+        {
+            CombatInput(value.isPressed);
+            if (value.isPressed)
+            {
+                _tpCam.ChangeCamera(ThirdPersonCam.CameraStyle.Combat);
+            }
+            else
+            {
+                _tpCam.ChangeCamera(ThirdPersonCam.CameraStyle.Basic);
+            }
+        }
 
         public void MoveInput(Vector2 newMoveDirection)
         {
@@ -48,6 +64,10 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
             look = newLookDirection;
         }
 
+        private void CombatInput(bool newCombatState)
+        {
+            combat = newCombatState;
+        }
         //public void JumpInput(bool newJumpState)
         //{
         //    jump = newJumpState;
