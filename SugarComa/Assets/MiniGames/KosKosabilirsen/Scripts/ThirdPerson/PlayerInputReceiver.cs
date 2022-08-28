@@ -11,6 +11,7 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
         public bool jump;
         public bool sprint;
         public bool combat;
+        public bool grapple;
 
         [Header("Movement Settings")]
         public bool analogMovement;
@@ -20,6 +21,7 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
 
         [Header("References")]
         [SerializeField] private ThirdPersonCam _tpCam;
+        [SerializeField] private Grappling _grappling;
 
         public void OnMove(InputValue value)
         {
@@ -54,6 +56,11 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
             }
         }
 
+        public void OnGrapple(InputValue value)
+        {
+            GrappleInput(value.isPressed);
+            _grappling.StartGrapple();
+        }
         public void MoveInput(Vector2 newMoveDirection)
         {
             move = newMoveDirection;
@@ -67,6 +74,11 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
         private void CombatInput(bool newCombatState)
         {
             combat = newCombatState;
+        }
+
+        private void GrappleInput(bool newGrappleState)
+        {
+            grapple = newGrappleState;
         }
         //public void JumpInput(bool newJumpState)
         //{
