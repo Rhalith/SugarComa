@@ -12,6 +12,7 @@ using System.Linq;
 using Assets.MainBoard.Scripts.Player.States;
 using System.Collections.Generic;
 using Steamworks;
+using Assets.MainBoard.Scripts.Player.Remote;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -106,10 +107,13 @@ namespace Assets.MainBoard.Scripts.GameManaging
             {
                 _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
 
+                GameObject stone = _createdObject.transform.GetChild(1).gameObject;
+
                 _createdObject.transform.position = new Vector3(0, 0, 0);
-                _createdObject.transform.GetChild(1).transform.position = new Vector3(0, 0.25f, 0);
+                stone.transform.position = new Vector3(0, 0.25f, 0);
 
                 RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
+                stone.GetComponent<RemotePlayerCollector>().GameController = _gameController;
                 RemoteScKeeper.playerIndex = index;
 
                 SetPlayerSpec(null, RemoteScKeeper, ++playerCount);

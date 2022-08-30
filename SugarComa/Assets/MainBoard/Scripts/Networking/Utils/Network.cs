@@ -144,19 +144,10 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public int playerIndex;
         public byte gold, health, goblet;
         public MessageType messageType;
-        private MessageType updatePlayerSpecs;
 
-        public PlayerSpecNetworkData(byte gold, byte health, byte goblet, MessageType updatePlayerSpecs) : this()
+        public PlayerSpecNetworkData(byte gold, byte health, byte goblet, MessageType messageType)
         {
-            this.gold = gold;
-            this.health = health;
-            this.goblet = goblet;
-            this.updatePlayerSpecs = updatePlayerSpecs;
-        }
-
-        public PlayerSpecNetworkData(byte gold, byte health, byte goblet, byte goblet1, MessageType messageType)
-        {
-            id = NetworkId.PlayerSpecDataId;
+            id = NetworkId.AnimationStateNetworkDataId;
             playerIndex = NetworkManager.Instance.Index;
             this.gold = gold;
             this.health = health;

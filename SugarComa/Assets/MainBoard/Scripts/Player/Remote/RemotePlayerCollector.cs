@@ -11,7 +11,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
 {
     public class RemotePlayerCollector : MonoBehaviour
     {
-        #region Properties
+        #region Public Fields
         public int health;
         public int gold;
         public int goblet;
