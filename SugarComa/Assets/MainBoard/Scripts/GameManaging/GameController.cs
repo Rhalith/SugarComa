@@ -8,32 +8,41 @@ namespace Assets.MainBoard.Scripts.GameManaging
 {
     public class GameController : MonoBehaviour
     {
+        #region Public Fiels
         public PlayerHandler _playerHandler;
+        #endregion
 
+        #region Readonly Fiels
         readonly NotifyScript notifyScript = new();
+        #endregion
 
+        #region Private Fiels
         private TextChanger _textChanger;
         private InventoryChanger _inventoryChanger1, _inventoryChanger2, _inventoryChanger3, _inventoryChanger4, _inventoryChanger5, _inventoryChanger6, _inventoryChanger7, _inventoryChanger8, _inventoryChanger9, _inventoryChanger10;
+        #endregion
 
         /// <summary>
         /// It notifies to UI for change. If you want to specify the UI you can add ScriptKeeper.
         /// </summary>
         /// <param name="keeper"></param>
-        public void ChangeText(ScriptKeeper keeper = null)
+        public void ChangeText(RemoteScriptKeeper remoteKeeper = null, ScriptKeeper keeper = null)
         {
             if (keeper != null)
             {
-                InstanceUIElements(keeper);
-                notifyScript.Notify();
-                ClearUIObserver();
+                InstanceUIElements(null, keeper);
+            }
+            else if(remoteKeeper != null)
+            {
+                InstanceUIElements(remoteKeeper);
             }
             else
             {
                 InstanceUIElements();
-                notifyScript.Notify();
-                ClearUIObserver();
             }
+            notifyScript.Notify();
+            ClearUIObserver();
         }
+
         /// <summary>
         /// It notifies to Inventory UI for change. If you want to specify the Inventory UI you can add ScriptKeeper.
         /// </summary>
@@ -58,11 +67,15 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// It instances UI elements for notify. If you want to specify the UI you can add ScriptKeeper.
         /// </summary>
         /// <param name="keeper"></param>
-        private void InstanceUIElements(ScriptKeeper keeper = null)
+        private void InstanceUIElements(RemoteScriptKeeper remoteKeeper = null, ScriptKeeper keeper = null)
         {
             if (keeper != null)
             {
                 _textChanger = new(keeper.playerGold, keeper.playerHealth, keeper.playerGoblet, keeper.playerCollector);
+            }
+            else if (remoteKeeper != null)
+            {
+                _textChanger = new(remoteKeeper.playerGold, remoteKeeper.playerHealth, remoteKeeper.playerGoblet, remoteKeeper.playerCollector);
             }
             else
             {
@@ -70,6 +83,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             notifyScript.AddObserver(_textChanger);
         }
+
         /// <summary>
         /// It instances Inventory UI elements for notify. If you want to specify the Inventory UI you can add ScriptKeeper.
         /// </summary>

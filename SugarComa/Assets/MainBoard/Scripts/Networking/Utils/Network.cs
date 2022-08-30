@@ -15,6 +15,8 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         UpdateQueue,
         CreateChest,
         AnimationStateUpdate,
+        UpdateGold,
+        UpdateHealth,
         Exit
     }
 
@@ -25,6 +27,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public static readonly int TurnNetworkDataId = Animator.StringToHash("TurnNetworkData");
         public static readonly int ChestNetworkDataId = Animator.StringToHash("ChestNetworkData");
         public static readonly int AnimationStateNetworkDataId = Animator.StringToHash("AnimationStateData");
+        public static readonly int PlayerSpecDataId = Animator.StringToHash("PlayerSpecData");
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -134,4 +137,22 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             this.messageType = messageType;
         }
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PlayerSpecNetworkData
+    {
+        public int id;
+        public int playerIndex;
+        public byte value;
+        public MessageType messageType;
+
+        public PlayerSpecNetworkData(byte value, MessageType messageType)
+        {
+            id = NetworkId.PlayerSpecDataId;
+            playerIndex = NetworkManager.Instance.Index;
+            this.value = value;
+            this.messageType = messageType;
+        }
+    }
+
 }

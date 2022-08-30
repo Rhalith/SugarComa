@@ -135,5 +135,21 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             }
             return true;
         }
+
+        public static bool TryGetPlayerSpecData(byte[] buffer, out PlayerSpecNetworkData networkData)
+        {
+            if (buffer.Length != Marshal.SizeOf<PlayerSpecNetworkData>())
+            {
+                networkData = new PlayerSpecNetworkData();
+                return false;
+            }
+
+            Deserialize(buffer, out networkData);
+            if (networkData.id != NetworkId.PlayerSpecDataId)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

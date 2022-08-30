@@ -61,6 +61,8 @@ namespace Assets.MainBoard.Scripts.Player.Remote
             if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
                 return;
 
+            // Player'larýn kaymasýný engellemek için önceki gönderilen pozisyona eriþtiðinde player yeni pozisyon hedef olarak alýnsýn.
+            // Bunu mesajý gönderdiðimiz yerde yapabiliriz belki
             if (networkData.type == MessageType.InputDown)
             {
                 _t = 0;

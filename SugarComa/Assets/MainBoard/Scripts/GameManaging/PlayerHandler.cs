@@ -37,7 +37,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [SerializeField] GameObject _playerSpecCanvas;
         #endregion
 
-
         #region HideInInspectors
         [HideInInspector] public PlayerStateContext mainPlayerStateContext;
         [HideInInspector] public PlayerInventory mainPlayerInventory;
@@ -49,9 +48,14 @@ namespace Assets.MainBoard.Scripts.GameManaging
         public MapCamera MapCamera => _mapCamera;
         #endregion
 
+        #region Public Fields
         public Steamworks.SteamId[] _playerQueue;
+        #endregion
+
+        #region Private Fields
         private GameObject _createdObject;
         private int playerCount;
+        #endregion
 
         void Awake()
         {
@@ -96,7 +100,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 SetUIElements(scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
                 SetGobletSelection(scKeeper);
-                SetPlayerSpec(scKeeper, ++playerCount);
+                SetPlayerSpec(scKeeper, null, ++playerCount);
             }
             else
             {
@@ -107,6 +111,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
                 RemoteScKeeper.playerIndex = index;
+
+                SetPlayerSpec(null, RemoteScKeeper, ++playerCount);
             }
 
             return _createdObject;
@@ -115,7 +121,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         //TODO: System memory dll kullanılabilir performans'ı arttırmak için...
         public void UpdateTurnQueue(SteamId[] _playerList)
         {
-            // Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
+            // TODO:  Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
             _playerQueue = _playerList;
 
             PlayerListNetworkData playerListData =
@@ -235,9 +241,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         /// <param name="keeper"></param>
         /// <param name="index"></param>
-        private void SetPlayerSpec(ScriptKeeper keeper, int index)
+        private void SetPlayerSpec(ScriptKeeper keeper, RemoteScriptKeeper remoteKeeper, int index)
         {
-            keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+            if( remoteKeeper == null)
+                keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+            else
+                remoteKeeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
         }
 
         private CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)

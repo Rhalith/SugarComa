@@ -1,4 +1,6 @@
 using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.Items;
 using Assets.MainBoard.Scripts.Player.Utils;
 using Assets.MainBoard.Scripts.Route;
@@ -27,8 +29,11 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         [SerializeField] Item item;
         #endregion
 
+        #region Properties
         public GameController GameController { set => _gameController = value; }
         public ScriptKeeper ScriptKeeper { get => _scriptKeeper; }
+        #endregion
+
         public void CheckCurrentNode(Platform platform)
         {
             switch (platform.spec)
@@ -41,8 +46,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             }
         }
 
-        // TODO: Altýn, Can güncellemelerini ilet.
-
         /// <summary>
         /// Adding value to player's gold
         /// </summary>
@@ -50,6 +53,9 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         void AddGold(int value)
         {
             gold += value;
+            // Update my gold value on other players
+            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, MessageType.UpdateGold)));
+
             _gameController.ChangeText();
         }
         /// <summary>
@@ -63,6 +69,9 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             {
                 health = 25;
             }
+            // Update my health value on other players
+            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)health, MessageType.UpdateHealth)));
+
             _gameController.ChangeText();
         }
 
@@ -72,9 +81,14 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             if (health <= 0)
             {
                 health = 0;
+                
+                // ?Update my health value on other players
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)health, MessageType.UpdateHealth)));
+
                 KillPlayer();
             }
-            _gameController.ChangeText(_scriptKeeper);
+
+            _gameController.ChangeText(null, _scriptKeeper);
         }
 
         public void AddItem()
