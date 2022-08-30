@@ -31,15 +31,6 @@ namespace Assets.MainBoard.Scripts.Player.Remote
         public RemoteScriptKeeper ScriptKeeper { get => _scriptKeeper; }
         #endregion
 
-        private void Awake()
-        {
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-        }
-
-        private void OnDestroy()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-        }
 
         // TODO: Altýn, Can güncellemelerini ilet.
         private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)

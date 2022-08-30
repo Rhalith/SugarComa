@@ -32,6 +32,17 @@ namespace Assets.MainBoard.Scripts.Networking
             _instance = this;
             SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
+        void Start()
+        {
+            SpawnPlayers();
+            SteamLobbyManager.Instance.inLobby.Clear();
+
+            if (SteamManager.Instance.PlayerSteamId == SteamLobbyManager.currentLobby.Owner.Id)
+            {
+                playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
+                playerHandler.mainPlayerStateContext.IsMyTurn = true;
+            }
+        }
 
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
@@ -46,18 +57,6 @@ namespace Assets.MainBoard.Scripts.Networking
             }
         }
 
-        void Start()
-        {
-            SpawnPlayers();
-            SteamLobbyManager.Instance.inLobby.Clear();
-
-            if(SteamManager.Instance.PlayerSteamId == SteamLobbyManager.currentLobby.Owner.Id)
-            {
-                playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
-                playerHandler.mainPlayerStateContext.IsMyTurn = true;
-            }
-        }
-
         private void OnApplicationQuit()
         {
             byte[] buffer = NetworkHelper.Serialize(new NetworkData(MessageType.Exit));
@@ -69,7 +68,7 @@ namespace Assets.MainBoard.Scripts.Networking
             int i = 0;
             foreach (var id in SteamLobbyManager.Instance.inLobby.Keys)
             {
-                 playerList.Add(id, playerHandler.CreatePlayer(id, i));
+                playerList.Add(id, playerHandler.CreatePlayer(id, i));
                 if (id == SteamManager.Instance.PlayerSteamId) _index = i;
                 i++;
             }

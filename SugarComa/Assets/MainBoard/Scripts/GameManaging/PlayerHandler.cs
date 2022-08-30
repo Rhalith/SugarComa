@@ -122,7 +122,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
             return _createdObject;
         }
 
-        //TODO: System memory dll kullanılabilir performans'ı arttırmak için...
+        // TODO: Hub mantığında sendmessage metodlarını ayrı bir script'e taşıyabiliriz düzenli olması açısından.
+        // TODO: System memory dll kullanılabilir performans'ı arttırmak için...
         public void UpdateTurnQueue(SteamId[] _playerList)
         {
             // TODO:  Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
