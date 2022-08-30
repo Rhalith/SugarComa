@@ -15,8 +15,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         UpdateQueue,
         CreateChest,
         AnimationStateUpdate,
-        UpdateGold,
-        UpdateHealth,
+        UpdatePlayerSpecs,
         Exit
     }
 
@@ -143,14 +142,25 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     {
         public int id;
         public int playerIndex;
-        public byte value;
+        public byte gold, health, goblet;
         public MessageType messageType;
+        private MessageType updatePlayerSpecs;
 
-        public PlayerSpecNetworkData(byte value, MessageType messageType)
+        public PlayerSpecNetworkData(byte gold, byte health, byte goblet, MessageType updatePlayerSpecs) : this()
+        {
+            this.gold = gold;
+            this.health = health;
+            this.goblet = goblet;
+            this.updatePlayerSpecs = updatePlayerSpecs;
+        }
+
+        public PlayerSpecNetworkData(byte gold, byte health, byte goblet, byte goblet1, MessageType messageType)
         {
             id = NetworkId.PlayerSpecDataId;
             playerIndex = NetworkManager.Instance.Index;
-            this.value = value;
+            this.gold = gold;
+            this.health = health;
+            this.goblet = goblet;
             this.messageType = messageType;
         }
     }

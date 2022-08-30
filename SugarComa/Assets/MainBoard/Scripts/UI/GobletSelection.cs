@@ -1,4 +1,6 @@
 using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Route;
 using UnityEngine;
@@ -49,6 +51,11 @@ namespace Assets.MainBoard.Scripts.UI
             // TODO: Goblet ve altýn güncellemelerini ilet.
             player.goblet++;
             player.gold -= 50;
+
+            // Update Player specs on other players
+            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)player.gold, (byte)player.health, (byte)player.goblet, MessageType.UpdatePlayerSpecs));
+            SteamServerManager.Instance.SendingMessageToAll(data);
+
             _gameController.ChangeText();
             gameObject.SetActive(false);
             OnTakeIt?.Invoke();

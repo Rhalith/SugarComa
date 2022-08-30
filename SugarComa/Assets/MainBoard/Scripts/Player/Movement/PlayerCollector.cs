@@ -1,12 +1,12 @@
-using Assets.MainBoard.Scripts.GameManaging;
-using Assets.MainBoard.Scripts.Networking;
-using Assets.MainBoard.Scripts.Networking.Utils;
-using Assets.MainBoard.Scripts.Player.Items;
-using Assets.MainBoard.Scripts.Player.Utils;
-using Assets.MainBoard.Scripts.Route;
-using Assets.MainBoard.Scripts.UI;
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
 using Assets.MainBoard.Scripts.Utils.PlatformUtils;
+using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Player.Items;
+using Assets.MainBoard.Scripts.Player.Utils;
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Route;
+using Assets.MainBoard.Scripts.UI;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.Movement
@@ -53,8 +53,9 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         void AddGold(int value)
         {
             gold += value;
-            // Update my gold value on other players
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, MessageType.UpdateGold)));
+
+            // Update player specs on other players
+            SendPlayerSpecUpdate();
 
             _gameController.ChangeText();
         }
@@ -69,8 +70,8 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             {
                 health = 25;
             }
-            // Update my health value on other players
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)health, MessageType.UpdateHealth)));
+            // Update player specs on other players
+            SendPlayerSpecUpdate();
 
             _gameController.ChangeText();
         }
@@ -81,14 +82,19 @@ namespace Assets.MainBoard.Scripts.Player.Movement
             if (health <= 0)
             {
                 health = 0;
-                
-                // ?Update my health value on other players
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)health, MessageType.UpdateHealth)));
-
                 KillPlayer();
             }
 
+            // Update player specs on other players
+            SendPlayerSpecUpdate();
+
             _gameController.ChangeText(null, _scriptKeeper);
+        }
+
+        private void SendPlayerSpecUpdate()
+        {
+            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, (byte)health, (byte)goblet, MessageType.UpdatePlayerSpecs));
+            SteamServerManager.Instance.SendingMessageToAll(data);
         }
 
         public void AddItem()

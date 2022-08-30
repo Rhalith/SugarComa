@@ -50,30 +50,17 @@ namespace Assets.MainBoard.Scripts.Player.Remote
             if (_scriptKeeper.playerIndex != playerSpecData.playerIndex)
                 return;
 
-            int value = playerSpecData.value;
-
-            switch (playerSpecData.messageType)
+            if (playerSpecData.messageType == MessageType.UpdatePlayerSpecs)
             {
-                case MessageType.UpdateGold:
-                    UpdateGold(value);
-                    break;
-                case MessageType.UpdateHealth:
-                    UpdateHealth(value);
-                    break;
-                default:
-                    break;
+                UpdateSpecs(playerSpecData.gold, playerSpecData.health, playerSpecData.goblet);
             }
         }
 
-        void UpdateGold(int value)
+        void UpdateSpecs(int gold, int health, int goblet)
         {
-            gold = value;
-            _gameController.ChangeText(_scriptKeeper);
-        }
-
-        void UpdateHealth(int value)
-        {
-            health = value;
+            this.gold = gold;
+            this.health = health;
+            this.goblet = goblet;
             _gameController.ChangeText(_scriptKeeper);
         }
 
