@@ -1,9 +1,10 @@
+using System.Linq;
 using Steamworks;
 using UnityEngine;
 using System.Collections.Generic;
 using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Player.Handlers;
 using Assets.MainBoard.Scripts.Networking.Utils;
-using System.Linq;
 
 namespace Assets.MainBoard.Scripts.Networking
 {
@@ -30,31 +31,16 @@ namespace Assets.MainBoard.Scripts.Networking
             }
 
             _instance = this;
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
+
         void Start()
         {
-            SpawnPlayers();
-            SteamLobbyManager.Instance.inLobby.Clear();
-
             if (SteamManager.Instance.PlayerSteamId == SteamLobbyManager.currentLobby.Owner.Id)
             {
-                playerHandler.UpdateTurnQueue(playerList.Keys.ToArray());
+                CreatePlayers();
                 playerHandler.mainPlayerStateContext.IsMyTurn = true;
             }
-        }
-
-        private void OnMessageReceived(SteamId steamid, byte[] buffer)
-        {
-            if (NetworkHelper.TryGetNetworkData(buffer, out NetworkData data) && data.type == MessageType.Exit)
-            {
-                if (playerList.TryGetValue(steamid, out GameObject gameObject))
-                {
-                    Destroy(gameObject);
-                    playerList.Remove(steamid);
-                    SteamLobbyManager.Instance.playerInfos.Remove(steamid);
-                }
-            }
+            SteamLobbyManager.Instance.inLobby.Clear();
         }
 
         private void OnApplicationQuit()
@@ -63,17 +49,24 @@ namespace Assets.MainBoard.Scripts.Networking
             SteamServerManager.Instance.SendingMessageToAll(buffer);
         }
 
-        void SpawnPlayers()
+        private void CreatePlayers()
         {
-            int i = 0;
-            foreach (var id in SteamLobbyManager.Instance.inLobby.Keys)
+            if (SteamManager.Instance.PlayerSteamId == SteamLobbyManager.currentLobby.Owner.Id)
             {
-                playerList.Add(id, playerHandler.CreatePlayer(id, i));
-                if (id == SteamManager.Instance.PlayerSteamId) _index = i;
-                i++;
-            }
+                var steamIds = SteamLobbyManager.Instance.inLobby.Keys.ToArray();
 
-            temp = _index;
+                PlayerListNetworkData playerListData =
+                       new(MessageType.CreatePlayers, NetworkHelper.SteamIdToByteArray(steamIds));
+
+                bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
+                if (result)
+                {
+                    PlayerTurnHandler.SpawnPlayers(steamIds);
+
+                    var camera = playerHandler.GetCinemachineVirtualCamera(0);
+                    camera.Priority = 2;
+                }
+            }
         }
     }
 }

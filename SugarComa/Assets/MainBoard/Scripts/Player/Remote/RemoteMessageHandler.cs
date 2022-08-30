@@ -1,11 +1,13 @@
-using Assets.MainBoard.Scripts.Networking;
-using Assets.MainBoard.Scripts.Networking.Utils;
-using Assets.MainBoard.Scripts.Player.Utils;
+using Steamworks;
 using UnityEngine;
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Player.Utils;
+using Assets.MainBoard.Scripts.Player.Handlers;
+using Assets.MainBoard.Scripts.Networking.Utils;
 
 public class RemoteMessageHandler : MonoBehaviour
 {
-    public RemoteScriptKeeper[] scriptKeepers;
+    private RemoteScriptKeeper[] _scriptKeepers;
 
     private void Awake()
     {
@@ -17,7 +19,16 @@ public class RemoteMessageHandler : MonoBehaviour
         SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
     }
 
-    private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+    private void OnMessageReceived(SteamId steamId, byte[] buffer)
+    {
+        if (IsNetworData(steamId, buffer)) return;
+        if (IsAnimationStateData(buffer)) return;
+        if (IsPlayerSpecNetworkData(buffer)) return;
+        if (IsPlayerListNetworkData(buffer)) return;
+    }
+
+    
+    private bool IsNetworData(SteamId steamId, byte[] buffer)
     {
         if (NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
         {
@@ -25,16 +36,72 @@ public class RemoteMessageHandler : MonoBehaviour
             // Bunu mesajý gönderdiðimiz yerde yapabiliriz belki
             if (networkData.type == MessageType.InputDown)
             {
-                scriptKeepers[NetworkManager.Instance.Index].remotePlayerMovement.UpdatePosition(networkData.position);
+                _scriptKeepers[PlayerTurnHandler.Index].remotePlayerMovement.UpdatePosition(networkData.position);
             }
+            else if (networkData.type == MessageType.Exit)
+            {
+                var player = PlayerTurnHandler.GetPlayer(steamId);
+                if (player != null)
+                {
+                    Destroy(gameObject);
+                    PlayerTurnHandler.RemovePlayer(steamId);
+                    SteamLobbyManager.Instance.playerInfos.Remove(steamId);
+                }
+            }
+
+            return true;
         }
-        else if (NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
+
+        return false;
+    }
+
+    private bool IsAnimationStateData(byte[] buffer)
+    {
+        if (NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
         {
-            scriptKeepers[NetworkManager.Instance.Index].playerAnimation.UpdateAnimState(animationStateData.animBoolHash);
+            _scriptKeepers[PlayerTurnHandler.Index].playerAnimation.UpdateAnimState(animationStateData.animBoolHash);
+            return true;
         }
-        else if (NetworkHelper.TryGetPlayerSpecData(buffer, out PlayerSpecNetworkData playerSpecData))
+        return false;
+    }
+
+    private bool IsPlayerSpecNetworkData(byte[] buffer)
+    {
+        if (NetworkHelper.TryGetPlayerSpecData(buffer, out PlayerSpecNetworkData playerSpecData))
         {
-            scriptKeepers[NetworkManager.Instance.Index].playerCollector.UpdateSpecs(playerSpecData.gold, playerSpecData.health, playerSpecData.goblet);
+            _scriptKeepers[PlayerTurnHandler.Index].playerCollector.UpdateSpecs(playerSpecData.gold, playerSpecData.health, playerSpecData.goblet);
+            return true;
         }
+        return false;
+    }
+
+    private bool IsPlayerListNetworkData(byte[] buffer)
+    {
+        if (NetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
+        {
+            var playerList = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
+
+            if (playerListData.type == MessageType.UpdatePlayers)
+            {
+                PlayerTurnHandler.UpdatePlayers(playerList);
+            }
+            else if (playerListData.type == MessageType.CreatePlayers)
+            {
+                PlayerTurnHandler.SpawnPlayers(playerList);
+            }
+
+            UpdateRemoteScriptKeeper();
+            return true;
+        }
+        return false;
+    }
+
+    private void UpdateRemoteScriptKeeper()
+    {
+        _scriptKeepers = new RemoteScriptKeeper[PlayerTurnHandler.PlayerCount];
+
+        int i = 0;
+        foreach (var players in PlayerTurnHandler.Players)
+            _scriptKeepers[i++] = players.GetComponent<RemoteScriptKeeper>();
     }
 }

@@ -11,7 +11,8 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         StartGame,
         InputDown,
         TurnOver,
-        UpdateQueue,
+        CreatePlayers,
+        UpdatePlayers,
         CreateChest,
         AnimationStateUpdate,
         UpdatePlayerSpecs,
@@ -88,7 +89,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             playerList = steamId;
         }
     }
-
+    
     [StructLayout(LayoutKind.Sequential)]
     public struct TurnNetworkData
     {

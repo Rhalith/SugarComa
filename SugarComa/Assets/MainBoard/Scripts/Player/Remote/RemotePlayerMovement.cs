@@ -1,8 +1,5 @@
 using UnityEngine;
-using Assets.MainBoard.Scripts.Networking;
-using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.Utils;
-using System.Linq;
 
 namespace Assets.MainBoard.Scripts.Player.Remote
 {
