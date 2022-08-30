@@ -75,7 +75,7 @@ namespace Assets.MainBoard.Scripts.Route
                     RandomGoalSelect();
                 }
 
-                bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index, MessageType.CreateChest)));
+                bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
 
                 if (result) CreateGoal(index);
             }

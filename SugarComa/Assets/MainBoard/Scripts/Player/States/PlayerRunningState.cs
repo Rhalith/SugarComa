@@ -98,7 +98,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             if (_currentStep <= 0)
             {
                 context.IsMyTurn = false;
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index, MessageType.TurnOver)));
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index)));
             }
 
             base.Exit();

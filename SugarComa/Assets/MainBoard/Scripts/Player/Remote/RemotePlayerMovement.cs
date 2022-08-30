@@ -21,16 +21,6 @@ namespace Assets.MainBoard.Scripts.Player.Remote
         private float _t;
         #endregion
 
-        private void Start()
-        {
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-
-        }
-        private void OnDestroy()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-        }
-
         void Update()
         {
             if (_nextPosition == transform.position)
@@ -52,24 +42,12 @@ namespace Assets.MainBoard.Scripts.Player.Remote
             }
         }
 
-        private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+        public void UpdatePosition(in Vector3 position)
         {
-            // Check for sent data if it's belong to this remote player object
-            if (NetworkManager.Instance.playerList.ElementAt(_scKeeper.playerIndex).Key != steamid)
-                return;
-
-            if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
-                return;
-
-            // Player'larýn kaymasýný engellemek için önceki gönderilen pozisyona eriþtiðinde player yeni pozisyon hedef olarak alýnsýn.
-            // Bunu mesajý gönderdiðimiz yerde yapabiliriz belki
-            if (networkData.type == MessageType.InputDown)
-            {
-                _t = 0;
-                _startPosition = transform.position;
-                _nextPosition = networkData.position;
-                _nextPosition.y = _startPosition.y;
-            }
+            _t = 0;
+            _startPosition = transform.position;
+            _nextPosition = position;
+            _nextPosition.y = _startPosition.y;
         }
     }
 }

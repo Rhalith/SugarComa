@@ -53,7 +53,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             if (sendData)
             {
                 SteamServerManager.Instance.
-                    SendingMessageToAll(NetworkHelper.Serialize(new AnimationStateData(animBoolHash, MessageType.AnimationStateUpdate)));
+                    SendingMessageToAll(NetworkHelper.Serialize(new AnimationStateData(animBoolHash)));
             }
         }
         

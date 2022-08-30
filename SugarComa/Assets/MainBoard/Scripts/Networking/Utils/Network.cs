@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Networking.Utils
@@ -95,13 +94,11 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     {
         public int id;
         public byte index;
-        public MessageType messageType;
 
-        public TurnNetworkData(byte index, MessageType messageType)
+        public TurnNetworkData(byte index)
         {
             id = NetworkId.TurnNetworkDataId;
             this.index = index;
-            this.messageType = messageType;
         }
     }
 
@@ -110,13 +107,11 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     {
         public int id;
         public byte index;
-        public MessageType messageType;
 
-        public ChestNetworkData(byte index, MessageType messageType)
+        public ChestNetworkData(byte index)
         {
             id = NetworkId.ChestNetworkDataId;
             this.index = index;
-            this.messageType = messageType;
         }
     }
 
@@ -126,14 +121,12 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public int id;
         public int playerIndex;
         public int animBoolHash;
-        public MessageType messageType;
 
-        public AnimationStateData(int animBoolHash, MessageType messageType)
+        public AnimationStateData(int animBoolHash)
         {
             id = NetworkId.AnimationStateNetworkDataId;
             playerIndex = NetworkManager.Instance.Index;
             this.animBoolHash = animBoolHash;
-            this.messageType = messageType;
         }
     }
 
@@ -143,16 +136,14 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public int id;
         public int playerIndex;
         public byte gold, health, goblet;
-        public MessageType messageType;
 
-        public PlayerSpecNetworkData(byte gold, byte health, byte goblet, MessageType messageType)
+        public PlayerSpecNetworkData(byte gold, byte health, byte goblet)
         {
             id = NetworkId.AnimationStateNetworkDataId;
             playerIndex = NetworkManager.Instance.Index;
             this.gold = gold;
             this.health = health;
             this.goblet = goblet;
-            this.messageType = messageType;
         }
     }
 

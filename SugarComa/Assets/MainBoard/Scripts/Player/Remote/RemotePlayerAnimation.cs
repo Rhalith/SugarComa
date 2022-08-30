@@ -20,28 +20,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
         private int _lastAnimHash = -1;
         #endregion
 
-        private void Awake()
-        {
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-        }
-
-        private void OnDisable()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-        }
-
-        private void OnMessageReceived(SteamId steamid, byte[] buffer)
-        {
-            if (!NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
-                return;
-
-            if (scKeeper.playerIndex == animationStateData.playerIndex)
-            {
-                UpdateAnimState(animationStateData.animBoolHash);
-            }
-        }
-
-        private void UpdateAnimState(int animBoolHash)
+        public void UpdateAnimState(int animBoolHash)
         {
             anim.SetBool(animBoolHash, true);
 

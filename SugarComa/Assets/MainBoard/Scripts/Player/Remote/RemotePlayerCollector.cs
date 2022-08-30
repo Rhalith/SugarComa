@@ -31,23 +31,7 @@ namespace Assets.MainBoard.Scripts.Player.Remote
         public RemoteScriptKeeper ScriptKeeper { get => _scriptKeeper; }
         #endregion
 
-
-        // TODO: Altýn, Can güncellemelerini ilet.
-        private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
-        {
-            if (!NetworkHelper.TryGetPlayerSpecData(buffer, out PlayerSpecNetworkData playerSpecData))
-                return;
-
-            if (_scriptKeeper.playerIndex != playerSpecData.playerIndex)
-                return;
-
-            if (playerSpecData.messageType == MessageType.UpdatePlayerSpecs)
-            {
-                UpdateSpecs(playerSpecData.gold, playerSpecData.health, playerSpecData.goblet);
-            }
-        }
-
-        void UpdateSpecs(int gold, int health, int goblet)
+        public void UpdateSpecs(int gold, int health, int goblet)
         {
             this.gold = gold;
             this.health = health;

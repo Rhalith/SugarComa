@@ -52,7 +52,7 @@ namespace Assets.MainBoard.Scripts.UI
             player.gold -= 50;
 
             // Update Player specs on other players
-            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)player.gold, (byte)player.health, (byte)player.goblet, MessageType.UpdatePlayerSpecs));
+            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)player.gold, (byte)player.health, (byte)player.goblet));
             SteamServerManager.Instance.SendingMessageToAll(data);
 
             _gameController.ChangeText();

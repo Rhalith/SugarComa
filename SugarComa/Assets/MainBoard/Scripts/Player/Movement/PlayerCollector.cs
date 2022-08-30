@@ -93,7 +93,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         private void SendPlayerSpecUpdate()
         {
-            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, (byte)health, (byte)goblet, MessageType.UpdatePlayerSpecs));
+            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, (byte)health, (byte)goblet));
             SteamServerManager.Instance.SendingMessageToAll(data);
         }
 

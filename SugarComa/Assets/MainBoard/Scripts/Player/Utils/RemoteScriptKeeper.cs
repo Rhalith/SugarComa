@@ -12,6 +12,7 @@ namespace Assets.MainBoard.Scripts.Player.Utils
         public RemotePlayerMovement remotePlayerMovement;
         public CinemachineVirtualCamera playerCamera;
         public RemotePlayerCollector playerCollector;
+        public RemotePlayerAnimation playerAnimation;
         public PlayerUIParentSetter playerUIParentSetter;
         public TMP_Text playerGold, playerHealth, playerGoblet;
     }
