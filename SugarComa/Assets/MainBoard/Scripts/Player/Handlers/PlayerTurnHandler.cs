@@ -9,10 +9,14 @@ namespace Assets.MainBoard.Scripts.Player.Handlers
 {
     public static class PlayerTurnHandler
     {
+        #region Private Static Fields
         private static int _index = -1;
         private static SteamId[] _steamIds;
         private static GameObject[] _players;
         private static PlayerHandler _playerHandler;
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Index of the current player.
@@ -62,6 +66,8 @@ namespace Assets.MainBoard.Scripts.Player.Handlers
                 return index < _players.Length ? _players[index] : _players[0];
             }
         }
+
+        #endregion
 
         /// <summary>
         /// Change current player to the next player.
@@ -155,6 +161,9 @@ namespace Assets.MainBoard.Scripts.Player.Handlers
             for (int i = 0; i < steamIds.Length; ++i)
             {
                 _players[i] = _playerHandler.CreatePlayer(steamIds[i]);
+
+                if (steamIds[i] == SteamManager.Instance.PlayerSteamId)
+                    NetworkManager.Instance.Index = i;
             }
         }
 

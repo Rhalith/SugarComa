@@ -13,14 +13,17 @@ namespace Assets.MainBoard.Scripts.Networking
         private static NetworkManager _instance;
         public static NetworkManager Instance => _instance;
 
+        #region Fields
         private int _index;
-        public int Index => _index;
 
         public int temp;
 
-        public Dictionary<SteamId, GameObject> playerList = new Dictionary<SteamId, GameObject>();
-
         public PlayerHandler playerHandler;
+        #endregion
+
+        #region Properties
+        public int Index { get => _index; set => _index = value; }
+        #endregion
 
         void Awake()
         {

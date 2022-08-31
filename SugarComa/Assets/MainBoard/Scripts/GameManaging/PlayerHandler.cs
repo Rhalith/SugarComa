@@ -12,6 +12,7 @@ using Assets.MainBoard.Scripts.Player.Remote;
 using Assets.MainBoard.Scripts.Utils.CamUtils;
 using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.Player.Handlers;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -244,7 +245,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
         public CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)
         {
-            var player = NetworkManager.Instance.playerList.ElementAt(index).Value;
+            var player = PlayerTurnHandler.Players[index];
 
             if (NetworkManager.Instance.Index == index)
                 return player.GetComponent<ScriptKeeper>().playerCamera;
