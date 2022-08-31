@@ -1,7 +1,8 @@
 using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Player.Remote;
 using TMPro;
-namespace Assets.MainBoard.Scripts.UI
+
+namespace Assets.MainBoard.Scripts.UI;
 {
     public interface IObserver
     {

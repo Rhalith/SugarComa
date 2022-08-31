@@ -1,6 +1,5 @@
-using Assets.MainBoard.Scripts.Player.Movement;
-using Assets.MainBoard.Scripts.Player.States;
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
+using Assets.MainBoard.Scripts.Player.States;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.Items

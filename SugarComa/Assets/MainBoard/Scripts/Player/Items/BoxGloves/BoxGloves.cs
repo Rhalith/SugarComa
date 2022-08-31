@@ -1,5 +1,5 @@
-using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
+using Assets.MainBoard.Scripts.Player.Movement;
 using System.Collections.Generic;
 using UnityEngine;
 

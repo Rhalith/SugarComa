@@ -1,6 +1,6 @@
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {

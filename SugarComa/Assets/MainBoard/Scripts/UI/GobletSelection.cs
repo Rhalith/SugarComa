@@ -1,10 +1,10 @@
-using Assets.MainBoard.Scripts.GameManaging;
-using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.Movement;
+using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.UI
 {
