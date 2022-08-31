@@ -86,8 +86,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 ScriptKeeper scKeeper = _createdObject.GetComponent<ScriptKeeper>();
 
-                UpdateMapCam(scKeeper);
                 SetScripts(scKeeper);
+                UpdateMapCam(scKeeper);
                 UpdateStateContext();
 
                 // TODO: Tracker zaten tanımlandığı için eventleri initialize edebiliriz running'de... (Silinebilir mi?)
