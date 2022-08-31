@@ -1,6 +1,8 @@
+using Assets.MainBoard.Scripts.Player.Remote;
+using Assets.MainBoard.Scripts.UI;
 using UnityEngine;
 using Cinemachine;
-using Assets.MainBoard.Scripts.Player.Remote;
+using TMPro;
 
 namespace Assets.MainBoard.Scripts.Player.Utils
 {
@@ -9,5 +11,9 @@ namespace Assets.MainBoard.Scripts.Player.Utils
         public int playerIndex;
         public RemotePlayerMovement remotePlayerMovement;
         public CinemachineVirtualCamera playerCamera;
+        public RemotePlayerCollector playerCollector;
+        public RemotePlayerAnimation playerAnimation;
+        public PlayerUIParentSetter playerUIParentSetter;
+        public TMP_Text playerGold, playerHealth, playerGoblet;
     }
 }

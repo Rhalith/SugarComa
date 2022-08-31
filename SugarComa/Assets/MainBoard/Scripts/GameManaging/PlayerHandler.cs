@@ -1,17 +1,17 @@
-using Assets.MainBoard.Scripts.Networking;
-using Assets.MainBoard.Scripts.Networking.Utils;
-using Assets.MainBoard.Scripts.Player.Items;
-using Assets.MainBoard.Scripts.Player.Movement;
-using Assets.MainBoard.Scripts.Player.Utils;
-using Assets.MainBoard.Scripts.Route;
-using Assets.MainBoard.Scripts.Utils.CamUtils;
 using TMPro;
-using UnityEngine;
-using Cinemachine;
-using System.Linq;
-using Assets.MainBoard.Scripts.Player.States;
-using System.Collections.Generic;
 using Steamworks;
+using Cinemachine;
+using UnityEngine;
+using Assets.MainBoard.Scripts.Route;
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MainBoard.Scripts.Player.Items;
+using Assets.MainBoard.Scripts.Player.Utils;
+using Assets.MainBoard.Scripts.Player.States;
+using Assets.MainBoard.Scripts.Player.Remote;
+using Assets.MainBoard.Scripts.Utils.CamUtils;
+using Assets.MainBoard.Scripts.Player.Movement;
+using Assets.MainBoard.Scripts.Player.Handlers;
+using Assets.MainBoard.Scripts.Networking.Utils;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -37,7 +37,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [SerializeField] GameObject _playerSpecCanvas;
         #endregion
 
-
         #region HideInInspectors
         [HideInInspector] public PlayerStateContext mainPlayerStateContext;
         [HideInInspector] public PlayerInventory mainPlayerInventory;
@@ -49,9 +48,14 @@ namespace Assets.MainBoard.Scripts.GameManaging
         public MapCamera MapCamera => _mapCamera;
         #endregion
 
+        #region Public Fields
         public Steamworks.SteamId[] _playerQueue;
+        #endregion
+
+        #region Private Fields
         private GameObject _createdObject;
         private int playerCount;
+        #endregion
 
         void Awake()
         {
@@ -70,15 +74,10 @@ namespace Assets.MainBoard.Scripts.GameManaging
             playerCount = 0;
         }
 
-        private void OnDestroy()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-        }
-
         /// <summary>
         /// Creates player.
         /// </summary>
-        public GameObject CreatePlayer(SteamId id, int index)
+        public GameObject CreatePlayer(SteamId id)
         {
             if (SteamManager.Instance.PlayerSteamId == id)
             {
@@ -87,8 +86,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 ScriptKeeper scKeeper = _createdObject.GetComponent<ScriptKeeper>();
 
-                UpdateMapCam(scKeeper);
                 SetScripts(scKeeper);
+                UpdateMapCam(scKeeper);
                 UpdateStateContext();
 
                 // TODO: Tracker zaten tanımlandığı için eventleri initialize edebiliriz running'de... (Silinebilir mi?)
@@ -96,43 +95,43 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 SetUIElements(scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
                 SetGobletSelection(scKeeper);
-                SetPlayerSpec(scKeeper, ++playerCount);
+                SetPlayerSpec(scKeeper, null, ++playerCount);
             }
             else
             {
                 _createdObject = Instantiate(_remotePlayerPrefab, playerParent.transform);
 
+                GameObject stone = _createdObject.transform.GetChild(1).gameObject;
+
                 _createdObject.transform.position = new Vector3(0, 0, 0);
-                _createdObject.transform.GetChild(1).transform.position = new Vector3(0, 0.25f, 0);
+                stone.transform.position = new Vector3(0, 0.25f, 0);
 
                 RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
-                RemoteScKeeper.playerIndex = index;
+                stone.GetComponent<RemotePlayerCollector>().GameController = _gameController;
+
+                SetPlayerSpec(null, RemoteScKeeper, ++playerCount);
             }
 
             return _createdObject;
         }
 
-        //TODO: System memory dll kullanılabilir performans'ı arttırmak için...
+
         public void UpdateTurnQueue(SteamId[] _playerList)
         {
-            // Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
+            // TODO:  Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
             _playerQueue = _playerList;
 
             PlayerListNetworkData playerListData =
-                   new PlayerListNetworkData(MessageType.UpdateQueue, NetworkHelper.SteamIdToByteArray(_playerList));
+                   new PlayerListNetworkData(MessageType.UpdatePlayers, NetworkHelper.SteamIdToByteArray(_playerList));
             bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
-            if (result)
-            {
-                var camera = GetCinemachineVirtualCamera(0);
-                camera.Priority = 2;
-            }
+            
         }
 
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
             if (NetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
             {
-                if (playerListData.type == MessageType.UpdateQueue)
+                if (playerListData.type == MessageType.UpdatePlayers)
                 {
                     _playerQueue = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
 
@@ -235,14 +234,17 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         /// <param name="keeper"></param>
         /// <param name="index"></param>
-        private void SetPlayerSpec(ScriptKeeper keeper, int index)
+        private void SetPlayerSpec(ScriptKeeper keeper, RemoteScriptKeeper remoteKeeper, int index)
         {
-            keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+            if( remoteKeeper == null)
+                keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+            else
+                remoteKeeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
         }
 
-        private CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)
+        public CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)
         {
-            var player = NetworkManager.Instance.playerList.ElementAt(index).Value;
+            var player = PlayerTurnHandler.Players[index];
 
             if (NetworkManager.Instance.Index == index)
                 return player.GetComponent<ScriptKeeper>().playerCamera;

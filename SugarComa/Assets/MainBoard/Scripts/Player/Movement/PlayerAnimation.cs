@@ -1,9 +1,5 @@
-using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Player.Items.BoxGloves;
-using Assets.MainBoard.Scripts.Player.Utils;
-using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Player.Movement

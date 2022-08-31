@@ -1,8 +1,10 @@
-using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.Movement;
+using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.UI
 {
@@ -46,9 +48,13 @@ namespace Assets.MainBoard.Scripts.UI
 
         public void TakeIt()
         {
-            // TODO: Goblet ve altýn güncellemelerini ilet.
             player.goblet++;
             player.gold -= 50;
+
+            // Update Player specs on other players
+            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)player.gold, (byte)player.health, (byte)player.goblet));
+            SteamServerManager.Instance.SendingMessageToAll(data);
+
             _gameController.ChangeText();
             gameObject.SetActive(false);
             OnTakeIt?.Invoke();

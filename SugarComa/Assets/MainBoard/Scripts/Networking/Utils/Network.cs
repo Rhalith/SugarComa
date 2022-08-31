@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Networking.Utils
@@ -12,9 +11,11 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         StartGame,
         InputDown,
         TurnOver,
-        UpdateQueue,
+        CreatePlayers,
+        UpdatePlayers,
         CreateChest,
         AnimationStateUpdate,
+        UpdatePlayerSpecs,
         Exit
     }
 
@@ -25,6 +26,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public static readonly int TurnNetworkDataId = Animator.StringToHash("TurnNetworkData");
         public static readonly int ChestNetworkDataId = Animator.StringToHash("ChestNetworkData");
         public static readonly int AnimationStateNetworkDataId = Animator.StringToHash("AnimationStateData");
+        public static readonly int PlayerSpecDataId = Animator.StringToHash("PlayerSpecData");
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -87,19 +89,17 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             playerList = steamId;
         }
     }
-
+    
     [StructLayout(LayoutKind.Sequential)]
     public struct TurnNetworkData
     {
         public int id;
         public byte index;
-        public MessageType messageType;
 
-        public TurnNetworkData(byte index, MessageType messageType)
+        public TurnNetworkData(byte index)
         {
             id = NetworkId.TurnNetworkDataId;
             this.index = index;
-            this.messageType = messageType;
         }
     }
 
@@ -108,13 +108,11 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     {
         public int id;
         public byte index;
-        public MessageType messageType;
 
-        public ChestNetworkData(byte index, MessageType messageType)
+        public ChestNetworkData(byte index)
         {
             id = NetworkId.ChestNetworkDataId;
             this.index = index;
-            this.messageType = messageType;
         }
     }
 
@@ -124,14 +122,30 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public int id;
         public int playerIndex;
         public int animBoolHash;
-        public MessageType messageType;
 
-        public AnimationStateData(int animBoolHash, MessageType messageType)
+        public AnimationStateData(int animBoolHash)
         {
             id = NetworkId.AnimationStateNetworkDataId;
             playerIndex = NetworkManager.Instance.Index;
             this.animBoolHash = animBoolHash;
-            this.messageType = messageType;
         }
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PlayerSpecNetworkData
+    {
+        public int id;
+        public int playerIndex;
+        public byte gold, health, goblet;
+
+        public PlayerSpecNetworkData(byte gold, byte health, byte goblet)
+        {
+            id = NetworkId.AnimationStateNetworkDataId;
+            playerIndex = NetworkManager.Instance.Index;
+            this.gold = gold;
+            this.health = health;
+            this.goblet = goblet;
+        }
+    }
+
 }

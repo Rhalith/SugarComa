@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Utils.CamUtils
 {
-
     //TODO
     public class CameraAnimations : MonoBehaviour
     {

@@ -1,7 +1,6 @@
-﻿using Assets.MainBoard.Scripts.Networking;
+﻿using Assets.MainBoard.Scripts.Player.Handlers;
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
-using UnityEngine;
-using System.Linq;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -20,7 +19,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             base.Enter();
 
-            if (NetworkManager.Instance.playerList.ElementAt(0).Key == SteamManager.Instance.PlayerSteamId && !GoalSelector.isAnyGoalPlatform)
+            if (PlayerTurnHandler.SteamIds[0] == SteamManager.Instance.PlayerSteamId && !GoalSelector.isAnyGoalPlatform)
             {
                 GoalSelector.RandomGoalSelect();
             }

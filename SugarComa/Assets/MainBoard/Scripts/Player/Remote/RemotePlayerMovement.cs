@@ -1,28 +1,22 @@
+using Assets.MainBoard.Scripts.Player.Utils;
 using UnityEngine;
-using Assets.MainBoard.Scripts.Networking;
-using Assets.MainBoard.Scripts.Networking.Utils;
 
 namespace Assets.MainBoard.Scripts.Player.Remote
 {
     public class RemotePlayerMovement : MonoBehaviour
     {
+        #region SerializeFields
         [SerializeField] private float _speed = 3f;
         [SerializeField] private float _rotationSpeed = 720;
         [SerializeField] private RemotePlayerAnimation _playerAnimation;
+        [SerializeField] private RemoteScriptKeeper _scKeeper;
+        #endregion
 
+        #region Private Fields
         private Vector3 _startPosition;
         private Vector3 _nextPosition;
         private float _t;
-
-        private void Start()
-        {
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-
-        }
-        private void OnDestroy()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-        }
+        #endregion
 
         void Update()
         {
@@ -45,18 +39,12 @@ namespace Assets.MainBoard.Scripts.Player.Remote
             }
         }
 
-        private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
+        public void UpdatePosition(in Vector3 position)
         {
-            if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
-                return;
-
-            if (networkData.type == MessageType.InputDown)
-            {
-                _t = 0;
-                _startPosition = transform.position;
-                _nextPosition = networkData.position;
-                _nextPosition.y = _startPosition.y;
-            }
+            _t = 0;
+            _startPosition = transform.position;
+            _nextPosition = position;
+            _nextPosition.y = _startPosition.y;
         }
     }
 }

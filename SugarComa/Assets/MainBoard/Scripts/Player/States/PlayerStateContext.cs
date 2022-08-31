@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using Assets.MainBoard.Scripts.UI;
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.Player.Movement;
-using Assets.MainBoard.Scripts.Networking;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {

@@ -1,7 +1,5 @@
-using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.Utils.PlatformUtils;
-using System.Collections;
-using System.Collections.Generic;
+using Assets.MainBoard.Scripts.GameManaging;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Route

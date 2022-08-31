@@ -1,8 +1,7 @@
 using Assets.MainBoard.Scripts.Player.Items;
-using Assets.MainBoard.Scripts.Player.Movement;
-using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
+using TMPro;
 
 namespace Assets.MainBoard.Scripts.Utils.InventorySystem
 {

@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Cinemachine;
-using Assets.MainBoard.Scripts.GameManaging;
-using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Utils.PlatformUtils;
-using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Player.States;
-using System.Linq;
+using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Networking;
+using System.Collections.Generic;
+using System.Collections;
+using UnityEngine;
+using Cinemachine;
 
 namespace Assets.MainBoard.Scripts.Route
 {
@@ -75,7 +73,7 @@ namespace Assets.MainBoard.Scripts.Route
                     RandomGoalSelect();
                 }
 
-                bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index, MessageType.CreateChest)));
+                bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
 
                 if (result) CreateGoal(index);
             }

@@ -1,15 +1,11 @@
-﻿using Assets.MainBoard.Scripts.Utils.InventorySystem;
-using Assets.MainBoard.Scripts.Utils.PlatformUtils;
+﻿using Assets.MainBoard.Scripts.Player.States.SubStates;
+using Assets.MainBoard.Scripts.Utils.InventorySystem;
+using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Utils.CamUtils;
-using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Player.Items;
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
 using UnityEngine;
-using Assets.MainBoard.Scripts.GameManaging;
-using Assets.MainBoard.Scripts.UI;
-using Assets.MainBoard.Scripts.Networking.Utils;
-using Assets.MainBoard.Scripts.Networking;
-using Assets.MainBoard.Scripts.Player.States.SubStates;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -139,7 +135,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
             // Turn Over
             context.IsMyTurn = false;
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index, MessageType.TurnOver)));
+            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index)));
         }
         #endregion
 
