@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MeteorFlame 3
+  m_Name: MeteorFlame 5
   m_Shader: {fileID: -6465566751694194690, guid: 376d17a0df40fb540a8cd8213afa784e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -88,7 +88,7 @@ Material:
     - _SrcBlend: 1
     - _SurfaceInputs: 0
     - _UVSec: 0
-    - _Y: 54
+    - _Y: 23.706398
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
