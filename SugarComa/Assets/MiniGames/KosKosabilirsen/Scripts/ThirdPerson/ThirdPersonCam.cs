@@ -72,7 +72,6 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
 
                 _playerObject.forward = combatDirection.normalized;
             }
-
         }
     }
 }
