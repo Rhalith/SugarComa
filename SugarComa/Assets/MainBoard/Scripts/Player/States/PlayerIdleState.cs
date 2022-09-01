@@ -54,11 +54,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentStep = context.Running.CurrentStep;
             _currentPlatform = context.Running.CurrentPlatform;
 
-            // TODO: Fix it. Bir süre sonra Dice gözükmüyor.
-            if(context.IsMyTurn && _currentStep == 0)
-            {
-                _dice.Enter();
-            }
+            CheckTurnForDice();
         }
 
         public override void Update()
@@ -66,6 +62,15 @@ namespace Assets.MainBoard.Scripts.Player.States
             ProcessUI();
             base.Update();
         }
+
+        public void CheckTurnForDice()
+        {
+            if (context.IsMyTurn && _currentStep == 0)
+            {
+                _dice.Enter();
+            }
+        }
+
         private void ProcessSelect()
         {
             var leftPlatform = _currentPlatform.selector.left;

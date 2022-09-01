@@ -153,7 +153,11 @@ namespace Assets.MainBoard.Scripts.GameManaging
             if (nextIndex == 0) currentIndex = SteamLobbyManager.MemberCount - 1;
 
             if (NetworkManager.Instance.Index == nextIndex)
+            {
                 mainPlayerStateContext.IsMyTurn = true;
+
+                mainPlayerStateContext.Idle.CheckTurnForDice();
+            }
 
             CinemachineVirtualCamera current = GetCinemachineVirtualCamera(currentIndex);
             CinemachineVirtualCamera next = GetCinemachineVirtualCamera(nextIndex);
