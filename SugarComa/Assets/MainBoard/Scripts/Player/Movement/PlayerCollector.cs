@@ -24,7 +24,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         [SerializeField] private GameController _gameController;
         [SerializeField] private GobletSelection _gobletSelection;
         [SerializeField] private PlayerInventory _playerInventory;
-        [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private ScriptKeeper _scriptKeeper;
         [SerializeField] Item item;
         #endregion

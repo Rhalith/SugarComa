@@ -15,6 +15,7 @@ namespace Assets.MainBoard.Scripts.UI
         public RemotePlayerCollector remotePlayerCollector;
         public TMP_Text playerGold, playerHealth, playerGoblet;
 
+        // For Local player's
         public TextChanger(TMP_Text playerGold, TMP_Text playerHealth,TMP_Text playerGoblet, PlayerCollector collector)
         {
             this.playerGold = playerGold;
@@ -23,6 +24,7 @@ namespace Assets.MainBoard.Scripts.UI
             playerCollector = collector;
         }
 
+        // For Remote player's
         public TextChanger(TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet, RemotePlayerCollector collector)
         {
             this.playerGold = playerGold;
