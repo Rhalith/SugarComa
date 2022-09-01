@@ -14,6 +14,6 @@ namespace Assets.MainBoard.Scripts.Player.Utils
         public RemotePlayerCollector playerCollector;
         public RemotePlayerAnimation playerAnimation;
         public PlayerUIParentSetter playerUIParentSetter;
-        public TMP_Text playerGold, playerHealth, playerGoblet;
+        public TMP_Text playerName, playerGold, playerHealth, playerGoblet;
     }
 }

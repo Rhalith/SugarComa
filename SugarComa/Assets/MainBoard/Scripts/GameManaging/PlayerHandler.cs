@@ -41,7 +41,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [HideInInspector] public PlayerStateContext mainPlayerStateContext;
         [HideInInspector] public PlayerInventory mainPlayerInventory;
         [HideInInspector] public PlayerCollector mainPlayerCollector;
-        [HideInInspector] public TMP_Text mainplayerGold, mainplayerHealth, mainplayerGoblet;
+        [HideInInspector] public TMP_Text mainplayerName, mainplayerGold, mainplayerHealth, mainplayerGoblet;
         #endregion
 
         #region Properties
@@ -91,7 +91,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 // TODO: Tracker zaten tanımlandığı için eventleri initialize edebiliriz running'de... (Silinebilir mi?)
                 mainPlayerStateContext.Running.InitializePathTracker();
 
-                SetUIElements(scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
+                SetUIElements(scKeeper.playerName, scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
                 SetGobletSelection(scKeeper);
                 SetPlayerSpec(scKeeper, null);
                 DefaultPlayerSpecSetter(scKeeper);
@@ -118,12 +118,14 @@ namespace Assets.MainBoard.Scripts.GameManaging
         {
             if(scKeeper != null)
             {
+                scKeeper.playerGold.text = SteamManager.Instance.PlayerName;
                 scKeeper.playerGold.text = "Gold: 50";
                 scKeeper.playerHealth.text = "Health: 25";
                 scKeeper.playerGoblet.text = "Goblet: 0";
             }
             else if(remoteScKeeper != null)
             {
+                scKeeper.playerGold.text = "Player";
                 remoteScKeeper.playerGold.text = "Gold: 50";
                 remoteScKeeper.playerHealth.text = "Health: 25";
                 remoteScKeeper.playerGoblet.text = "Goblet: 0";
@@ -240,8 +242,9 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="playerGold"></param>
         /// <param name="playerHealth"></param>
         /// <param name="playerGoblet"></param>
-        private void SetUIElements(TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet)
+        private void SetUIElements(TMP_Text playerName, TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet)
         {
+            mainplayerName = playerName;
             mainplayerGold = playerGold;
             mainplayerHealth = playerHealth;
             mainplayerGoblet = playerGoblet;

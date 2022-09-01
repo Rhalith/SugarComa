@@ -33,6 +33,11 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         public ScriptKeeper ScriptKeeper { get => _scriptKeeper; }
         #endregion
 
+        private void Start()
+        {
+            SendPlayerSpecUpdate();
+        }
+
         public void CheckCurrentNode(Platform platform)
         {
             switch (platform.spec)
@@ -92,7 +97,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         private void SendPlayerSpecUpdate()
         {
-            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, (byte)health, (byte)goblet));
+            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, (byte)health, (byte)goblet, SteamManager.Instance.PlayerName));
             SteamServerManager.Instance.SendingMessageToAll(data);
         }
 

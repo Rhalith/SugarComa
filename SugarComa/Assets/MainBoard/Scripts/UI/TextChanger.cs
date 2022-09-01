@@ -13,11 +13,12 @@ namespace Assets.MainBoard.Scripts.UI
     {
         public PlayerCollector playerCollector;
         public RemotePlayerCollector remotePlayerCollector;
-        public TMP_Text playerGold, playerHealth, playerGoblet;
+        public TMP_Text playerName, playerGold, playerHealth, playerGoblet;
 
         // For Local player's
-        public TextChanger(TMP_Text playerGold, TMP_Text playerHealth,TMP_Text playerGoblet, PlayerCollector collector)
+        public TextChanger(TMP_Text playerName,  TMP_Text playerGold, TMP_Text playerHealth,TMP_Text playerGoblet, PlayerCollector collector)
         {
+            this.playerName = playerName;
             this.playerGold = playerGold;
             this.playerHealth = playerHealth;
             this.playerGoblet = playerGoblet;
@@ -25,8 +26,9 @@ namespace Assets.MainBoard.Scripts.UI
         }
 
         // For Remote player's
-        public TextChanger(TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet, RemotePlayerCollector collector)
+        public TextChanger(TMP_Text playerName,  TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet, RemotePlayerCollector collector)
         {
+            this.playerName = playerName;
             this.playerGold = playerGold;
             this.playerHealth = playerHealth;
             this.playerGoblet = playerGoblet;

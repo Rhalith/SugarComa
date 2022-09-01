@@ -137,14 +137,16 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public int id;
         public int playerIndex;
         public byte gold, health, goblet;
+        public string name;
 
-        public PlayerSpecNetworkData(byte gold, byte health, byte goblet)
+        public PlayerSpecNetworkData(byte gold, byte health, byte goblet, string name)
         {
             id = NetworkId.AnimationStateNetworkDataId;
             playerIndex = NetworkManager.Instance.Index;
             this.gold = gold;
             this.health = health;
             this.goblet = goblet;
+            this.name = name;
         }
     }
 
