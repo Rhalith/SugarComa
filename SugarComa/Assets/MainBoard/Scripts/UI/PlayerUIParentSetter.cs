@@ -13,15 +13,16 @@ namespace Assets.MainBoard.Scripts.UI
         {
             if (parent != null) gameObject.transform.parent = parent.transform;
         }
-        public void SetParent(GameObject parent, int index)
+
+        public void SetUIParent(GameObject parent, int index, string playerName)
         {
-            gameObject.transform.parent = parent.transform;
-            ChangePlayerName(playerText, index);
+            gameObject.transform.SetParent(parent.transform);
+            ChangePlayerName(playerText, playerName);
         }
 
-        private void ChangePlayerName(TMP_Text player, int index)
+        private void ChangePlayerName(TMP_Text player, string playerName)
         {
-            player.text = "Player " + index;
+            player.text = playerName;
         }
     }
 }

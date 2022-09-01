@@ -240,9 +240,9 @@ namespace Assets.MainBoard.Scripts.GameManaging
         private void SetPlayerSpec(ScriptKeeper keeper, RemoteScriptKeeper remoteKeeper, int index)
         {
             if( remoteKeeper == null)
-                keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+                keeper.playerUIParentSetter.SetUIParent(_playerSpecCanvas, index, SteamManager.Instance.PlayerName);
             else
-                remoteKeeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+                remoteKeeper.playerUIParentSetter.SetUIParent(_playerSpecCanvas, index, SteamManager.Instance.PlayerName);
         }
 
         public CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)
