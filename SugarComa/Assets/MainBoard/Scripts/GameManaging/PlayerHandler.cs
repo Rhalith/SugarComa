@@ -54,7 +54,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
         #region Private Fields
         private GameObject _createdObject;
-        private int playerCount;
         #endregion
 
         void Awake()
@@ -71,7 +70,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
         private void Start()
         {
             SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-            playerCount = 0;
         }
 
         /// <summary>
@@ -95,7 +93,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 SetUIElements(scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
                 SetGobletSelection(scKeeper);
-                SetPlayerSpec(scKeeper, null, ++playerCount);
+                SetPlayerSpec(scKeeper, null);
+                DefaultPlayerSpecSetter(scKeeper);
             }
             else
             {
@@ -109,11 +108,27 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
                 stone.GetComponent<RemotePlayerCollector>().GameController = _gameController;
 
-                SetPlayerSpec(null, RemoteScKeeper, ++playerCount);
+                SetPlayerSpec(null, RemoteScKeeper);
+                DefaultPlayerSpecSetter(null, RemoteScKeeper);
             }
             return _createdObject;
         }
 
+        private void DefaultPlayerSpecSetter(ScriptKeeper scKeeper, RemoteScriptKeeper remoteScKeeper = null)
+        {
+            if(scKeeper != null)
+            {
+                scKeeper.playerGold.text = "Gold: 50";
+                scKeeper.playerHealth.text = "Health: 25";
+                scKeeper.playerGoblet.text = "Goblet: 0";
+            }
+            else if(remoteScKeeper != null)
+            {
+                remoteScKeeper.playerGold.text = "Gold: 50";
+                remoteScKeeper.playerHealth.text = "Health: 25";
+                remoteScKeeper.playerGoblet.text = "Goblet: 0";
+            }
+        }
 
         public void UpdateTurnQueue(SteamId[] _playerList)
         {
@@ -237,12 +252,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         /// <param name="keeper"></param>
         /// <param name="index"></param>
-        private void SetPlayerSpec(ScriptKeeper keeper, RemoteScriptKeeper remoteKeeper, int index)
+        private void SetPlayerSpec(ScriptKeeper keeper, RemoteScriptKeeper remoteKeeper)
         {
             if( remoteKeeper == null)
-                keeper.playerUIParentSetter.SetUIParent(_playerSpecCanvas, index, SteamManager.Instance.PlayerName);
+                keeper.playerUIParentSetter.SetUIParent(_playerSpecCanvas, SteamManager.Instance.PlayerName);
             else
-                remoteKeeper.playerUIParentSetter.SetUIParent(_playerSpecCanvas, index, SteamManager.Instance.PlayerName);
+                remoteKeeper.playerUIParentSetter.SetUIParent(_playerSpecCanvas, SteamManager.Instance.PlayerName);
         }
 
         public CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)

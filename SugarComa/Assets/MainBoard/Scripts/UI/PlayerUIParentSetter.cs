@@ -14,7 +14,7 @@ namespace Assets.MainBoard.Scripts.UI
             if (parent != null) gameObject.transform.parent = parent.transform;
         }
 
-        public void SetUIParent(GameObject parent, int index, string playerName)
+        public void SetUIParent(GameObject parent, string playerName)
         {
             gameObject.transform.SetParent(parent.transform);
             ChangePlayerName(playerText, playerName);
