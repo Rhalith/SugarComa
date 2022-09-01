@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using Assets.MainBoard.Scripts.Player.Movement;
 
 namespace Assets.MainBoard.Scripts.Player.Utils
 {

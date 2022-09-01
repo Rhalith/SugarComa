@@ -6,6 +6,7 @@ using Assets.MainBoard.Scripts.Player.Items;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
 using UnityEngine;
+using Assets.MainBoard.Scripts.Player.Handlers;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -135,7 +136,8 @@ namespace Assets.MainBoard.Scripts.Player.States
 
             // Turn Over
             context.IsMyTurn = false;
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index)));
+            PlayerTurnHandler.NextPlayer();
+            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
         }
         #endregion
 

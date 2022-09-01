@@ -3,6 +3,7 @@ using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
 using UnityEngine;
+using Assets.MainBoard.Scripts.Player.Handlers;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -97,7 +98,8 @@ namespace Assets.MainBoard.Scripts.Player.States
             if (_currentStep <= 0)
             {
                 context.IsMyTurn = false;
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index)));
+                PlayerTurnHandler.NextPlayer();
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
             }
 
             base.Exit();

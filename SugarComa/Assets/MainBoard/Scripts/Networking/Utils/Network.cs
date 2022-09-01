@@ -94,12 +94,12 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
     public struct TurnNetworkData
     {
         public int id;
-        public byte index;
+        public MessageType messageType;
 
-        public TurnNetworkData(byte index)
+        public TurnNetworkData(MessageType messageType)
         {
             id = NetworkId.TurnNetworkDataId;
-            this.index = index;
+            this.messageType = messageType;
         }
     }
 

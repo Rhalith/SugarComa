@@ -111,7 +111,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 SetPlayerSpec(null, RemoteScKeeper, ++playerCount);
             }
-
             return _createdObject;
         }
 
@@ -124,7 +123,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
             PlayerListNetworkData playerListData =
                    new PlayerListNetworkData(MessageType.UpdatePlayers, NetworkHelper.SteamIdToByteArray(_playerList));
             bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
-            
         }
 
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
@@ -140,7 +138,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
-                ChangeCurrentPlayer(turnNetworkData.index + 1);
+                PlayerTurnHandler.NextPlayer();
+                ChangeCurrentPlayer(PlayerTurnHandler.Index);
             }
         }
 

@@ -8,6 +8,7 @@ using Assets.MainBoard.Scripts.Networking.Utils;
 public class RemoteMessageHandler : MonoBehaviour
 {
     private RemoteScriptKeeper[] _scriptKeepers;
+    private int localIndex;
 
     private void Awake()
     {
@@ -21,6 +22,8 @@ public class RemoteMessageHandler : MonoBehaviour
 
     private void OnMessageReceived(SteamId steamId, byte[] buffer)
     {
+        Debug.Log(PlayerTurnHandler.Index);
+
         if (IsNetworData(steamId, buffer)) return;
         if (IsAnimationStateData(buffer)) return;
         if (IsPlayerSpecNetworkData(buffer)) return;
@@ -36,7 +39,8 @@ public class RemoteMessageHandler : MonoBehaviour
             // Bunu mesajý gönderdiðimiz yerde yapabiliriz belki
             if (networkData.type == MessageType.InputDown)
             {
-                _scriptKeepers[PlayerTurnHandler.Index].remotePlayerMovement.UpdatePosition(networkData.position);
+                int keeperIndex = PlayerTurnHandler.Index > localIndex ? PlayerTurnHandler.Index - 1 : PlayerTurnHandler.Index;
+                _scriptKeepers[keeperIndex].remotePlayerMovement.UpdatePosition(networkData.position);
             }
             else if (networkData.type == MessageType.Exit)
             {
@@ -59,7 +63,8 @@ public class RemoteMessageHandler : MonoBehaviour
     {
         if (NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
         {
-            _scriptKeepers[PlayerTurnHandler.Index].playerAnimation.UpdateAnimState(animationStateData.animBoolHash);
+            int keeperIndex = PlayerTurnHandler.Index > localIndex ? PlayerTurnHandler.Index - 1 : PlayerTurnHandler.Index;
+            _scriptKeepers[keeperIndex].playerAnimation.UpdateAnimState(animationStateData.animBoolHash);
             return true;
         }
         return false;
@@ -69,7 +74,8 @@ public class RemoteMessageHandler : MonoBehaviour
     {
         if (NetworkHelper.TryGetPlayerSpecData(buffer, out PlayerSpecNetworkData playerSpecData))
         {
-            _scriptKeepers[PlayerTurnHandler.Index].playerCollector.UpdateSpecs(playerSpecData.gold, playerSpecData.health, playerSpecData.goblet);
+            int keeperIndex = PlayerTurnHandler.Index > localIndex ? PlayerTurnHandler.Index - 1 : PlayerTurnHandler.Index;
+            _scriptKeepers[keeperIndex].playerCollector.UpdateSpecs(playerSpecData.gold, playerSpecData.health, playerSpecData.goblet);
             return true;
         }
         return false;
@@ -96,12 +102,21 @@ public class RemoteMessageHandler : MonoBehaviour
         return false;
     }
 
-    private void UpdateRemoteScriptKeeper()
+    public void UpdateRemoteScriptKeeper()
     {
-        _scriptKeepers = new RemoteScriptKeeper[PlayerTurnHandler.PlayerCount];
+        // Players except local player
+        _scriptKeepers = new RemoteScriptKeeper[PlayerTurnHandler.PlayerCount - 1];
 
-        int i = 0;
-        foreach (var players in PlayerTurnHandler.Players)
-            _scriptKeepers[i++] = players.GetComponent<RemoteScriptKeeper>();
+        // TODO: scriptKeeper'lar index bound olmadýðý için hatalý alýnabilir...
+        int i = 0, j = 0;
+        foreach (var steamId in PlayerTurnHandler.SteamIds)
+        {
+            if (steamId != SteamManager.Instance.PlayerSteamId)
+                _scriptKeepers[j++] = PlayerTurnHandler.Players[i].GetComponent<RemoteScriptKeeper>();
+            else
+                localIndex = i;
+
+            i++;
+        }
     }
 }
