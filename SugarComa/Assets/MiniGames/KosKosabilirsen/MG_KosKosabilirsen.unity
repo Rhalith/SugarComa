@@ -1545,7 +1545,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755350835}
-  m_LocalRotation: {x: 0.12754087, y: 0.000000008532932, z: -0.0000000010972584, w: 0.9918333}
+  m_LocalRotation: {x: 0.12754087, y: -0.000000008532932, z: 0.0000000010972584, w: 0.9918333}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2834,7 +2834,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472416392}
-  m_LocalRotation: {x: 0.173503, y: 0.000000008472711, z: -0.0000000014926796, w: 0.98483336}
+  m_LocalRotation: {x: 0.173503, y: 0.000000008472715, z: -0.0000000014927025, w: 0.98483336}
   m_LocalPosition: {x: 0, y: 5.5, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3241,6 +3241,7 @@ MonoBehaviour:
   cursorLocked: 1
   _tpCam: {fileID: 1472416397}
   _grappling: {fileID: 1617719205}
+  _playerMovement: {fileID: 1617719204}
 --- !u!114 &1617719203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3283,17 +3284,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130ee4a6d2470d24bacccc22bcd468c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  _walkSpeed: 5
+  _sprintSpeed: 10
   _groundDrag: 5
   _airMultiplier: 0.5
   _orientation: {fileID: 484859990}
   _rb: {fileID: 1617719201}
   _playerInputReceiver: {fileID: 1617719202}
+  _grappling: {fileID: 1617719205}
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
   grounded: 0
+  state: 2
 --- !u!114 &1617719205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3315,6 +3319,7 @@ MonoBehaviour:
   _lineRenderer: {fileID: 1301832845}
   _maxDistance: 25
   _delayTime: 0.25
+  _overShootYAxis: 2
   _grapplingCoolDown: 1
   _coolDownTimer: 0
   grappling: 0

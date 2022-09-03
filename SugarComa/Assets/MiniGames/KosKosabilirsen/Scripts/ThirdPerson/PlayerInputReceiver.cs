@@ -22,6 +22,7 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
         [Header("References")]
         [SerializeField] private ThirdPersonCam _tpCam;
         [SerializeField] private Grappling _grappling;
+        [SerializeField] private PlayerMovement _playerMovement;
 
         public void OnMove(InputValue value)
         {
@@ -48,10 +49,12 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
             CombatInput(value.isPressed);
             if (value.isPressed)
             {
+                _playerMovement.Sprint = false;
                 _tpCam.ChangeCamera(ThirdPersonCam.CameraStyle.Combat);
             }
             else
             {
+                _playerMovement.Sprint = true;
                 _tpCam.ChangeCamera(ThirdPersonCam.CameraStyle.Basic);
             }
         }

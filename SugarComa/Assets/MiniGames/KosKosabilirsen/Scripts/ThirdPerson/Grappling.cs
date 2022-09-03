@@ -16,6 +16,7 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
         [Header("Grappling")]
         [SerializeField] private float _maxDistance;
         [SerializeField] private float _delayTime;
+        [SerializeField] private float _overShootYAxis;
         private Vector3 _grapplePoint;
 
         [Header("Cooldown")]
@@ -43,6 +44,8 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
                 return;
             }
             grappling = true;
+            _playerMovement.Freeze = true;
+
 
             RaycastHit hit;
 
@@ -64,7 +67,21 @@ namespace Assets.MiniGames.KosKosabilirsen.Scripts.ThirdPerson
 
         private void ExecuteGrapple()
         {
+            _playerMovement.Freeze = false;
 
+            Vector3 _lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+
+            float _relativeGrapplePointY = _grapplePoint.y - _lowestPoint.y;
+            float _highestPointOnGrappling = _relativeGrapplePointY + _overShootYAxis;
+
+            if (_relativeGrapplePointY < 0)
+            {
+                _highestPointOnGrappling = _overShootYAxis;
+            }
+
+            _playerMovement.JumpToPosition(_grapplePoint, _highestPointOnGrappling);
+
+            Invoke(nameof(StopGrapple), 1f);
         }
 
         public void StopGrapple()
