@@ -109,12 +109,11 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 stone.GetComponent<RemotePlayerCollector>().GameController = _gameController;
 
                 SetPlayerSpec(null, RemoteScKeeper);
-                DefaultPlayerSpecSetter(null, RemoteScKeeper);
             }
             return _createdObject;
         }
 
-        private void DefaultPlayerSpecSetter(ScriptKeeper scKeeper, RemoteScriptKeeper remoteScKeeper = null)
+        private void DefaultPlayerSpecSetter(ScriptKeeper scKeeper)
         {
             if(scKeeper != null)
             {
@@ -122,13 +121,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 scKeeper.playerGold.text = "Gold: 50";
                 scKeeper.playerHealth.text = "Health: 25";
                 scKeeper.playerGoblet.text = "Goblet: 0";
-            }
-            else if(remoteScKeeper != null)
-            {
-                scKeeper.playerGold.text = "Player";
-                remoteScKeeper.playerGold.text = "Gold: 50";
-                remoteScKeeper.playerHealth.text = "Health: 25";
-                remoteScKeeper.playerGoblet.text = "Goblet: 0";
             }
         }
 
