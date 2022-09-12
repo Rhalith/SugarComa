@@ -3658,6 +3658,7 @@ MonoBehaviour:
   playerCollector: {fileID: 5378364220203802039}
   playerAnimation: {fileID: 2748003326102867728}
   playerUIParentSetter: {fileID: 5245359921352172014}
+  playerName: {fileID: 1185064836957954771}
   playerGold: {fileID: 1483940271967607990}
   playerHealth: {fileID: 1483940271292403333}
   playerGoblet: {fileID: 1483940271362605466}

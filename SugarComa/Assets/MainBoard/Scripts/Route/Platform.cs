@@ -1,5 +1,5 @@
-using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.Utils.PlatformUtils;
+using Assets.MainBoard.Scripts.GameManaging;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Route

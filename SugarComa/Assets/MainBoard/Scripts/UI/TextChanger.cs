@@ -2,7 +2,7 @@ using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Player.Remote;
 using TMPro;
 
-namespace Assets.MainBoard.Scripts.UI;
+namespace Assets.MainBoard.Scripts.UI
 {
     public interface IObserver
     {
@@ -13,18 +13,22 @@ namespace Assets.MainBoard.Scripts.UI;
     {
         public PlayerCollector playerCollector;
         public RemotePlayerCollector remotePlayerCollector;
-        public TMP_Text playerGold, playerHealth, playerGoblet;
+        public TMP_Text playerName, playerGold, playerHealth, playerGoblet;
 
-        public TextChanger(TMP_Text playerGold, TMP_Text playerHealth,TMP_Text playerGoblet, PlayerCollector collector)
+        // For Local player's
+        public TextChanger(TMP_Text playerName,  TMP_Text playerGold, TMP_Text playerHealth,TMP_Text playerGoblet, PlayerCollector collector)
         {
+            this.playerName = playerName;
             this.playerGold = playerGold;
             this.playerHealth = playerHealth;
             this.playerGoblet = playerGoblet;
             playerCollector = collector;
         }
 
-        public TextChanger(TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet, RemotePlayerCollector collector)
+        // For Remote player's
+        public TextChanger(TMP_Text playerName,  TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet, RemotePlayerCollector collector)
         {
+            this.playerName = playerName;
             this.playerGold = playerGold;
             this.playerHealth = playerHealth;
             this.playerGoblet = playerGoblet;

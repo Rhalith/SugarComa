@@ -618,7 +618,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 822391269}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: Assets.MainBoard.Scripts.Networking.SteamLobbyManager,
+          Assembly-CSharp
         m_MethodName: CreateLobbyAsync
         m_Mode: 1
         m_Arguments:
@@ -2341,7 +2342,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1566980485}
   m_HandleRect: {fileID: 1566980484}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

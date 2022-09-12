@@ -70,15 +70,15 @@ namespace Assets.MainBoard.Scripts.GameManaging
         {
             if (keeper != null)
             {
-                _textChanger = new(keeper.playerGold, keeper.playerHealth, keeper.playerGoblet, keeper.playerCollector);
+                _textChanger = new(keeper.playerName, keeper.playerGold, keeper.playerHealth, keeper.playerGoblet, keeper.playerCollector);
             }
             else if (remoteKeeper != null)
             {
-                _textChanger = new(remoteKeeper.playerGold, remoteKeeper.playerHealth, remoteKeeper.playerGoblet, remoteKeeper.playerCollector);
+                _textChanger = new(remoteKeeper.playerName, remoteKeeper.playerGold, remoteKeeper.playerHealth, remoteKeeper.playerGoblet, remoteKeeper.playerCollector);
             }
             else
             {
-                _textChanger = new(_playerHandler.mainplayerGold, _playerHandler.mainplayerHealth, _playerHandler.mainplayerGoblet, _playerHandler.mainPlayerCollector);
+                _textChanger = new(_playerHandler.mainplayerName, _playerHandler.mainplayerGold, _playerHandler.mainplayerHealth, _playerHandler.mainplayerGoblet, _playerHandler.mainPlayerCollector);
             }
             notifyScript.AddObserver(_textChanger);
         }

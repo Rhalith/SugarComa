@@ -14,9 +14,11 @@ namespace Assets.MainBoard.Scripts.Networking
         #region Fields
         private int _index;
 
-        public int temp;
+        [SerializeField] RemoteMessageHandler remoteMessageHandler;
 
+        public int temp;
         public PlayerHandler playerHandler;
+
         #endregion
 
         #region Properties
@@ -36,9 +38,10 @@ namespace Assets.MainBoard.Scripts.Networking
 
         void Start()
         {
+            CreatePlayers();
             if (SteamManager.Instance.PlayerSteamId == SteamLobbyManager.currentLobby.Owner.Id)
             {
-                CreatePlayers();
+                // TODO: Bu hatalý
                 playerHandler.mainPlayerStateContext.IsMyTurn = true;
             }
             SteamLobbyManager.Instance.inLobby.Clear();
@@ -63,6 +66,8 @@ namespace Assets.MainBoard.Scripts.Networking
                 if (result)
                 {
                     PlayerTurnHandler.SpawnPlayers(steamIds);
+
+                    remoteMessageHandler.UpdateRemoteScriptKeeper();
 
                     var camera = playerHandler.GetCinemachineVirtualCamera(0);
                     camera.Priority = 2;

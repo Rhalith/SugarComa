@@ -6,6 +6,7 @@ using Assets.MainBoard.Scripts.Player.Items;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
 using UnityEngine;
+using Assets.MainBoard.Scripts.Player.Handlers;
 
 namespace Assets.MainBoard.Scripts.Player.States
 {
@@ -53,11 +54,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentStep = context.Running.CurrentStep;
             _currentPlatform = context.Running.CurrentPlatform;
 
-            // TODO: Fix it. Bir süre sonra Dice gözükmüyor.
-            if(context.IsMyTurn && _currentStep == 0)
-            {
-                _dice.Enter();
-            }
+            CheckTurnForDice();
         }
 
         public override void Update()
@@ -65,6 +62,15 @@ namespace Assets.MainBoard.Scripts.Player.States
             ProcessUI();
             base.Update();
         }
+
+        public void CheckTurnForDice()
+        {
+            if (context.IsMyTurn && _currentStep == 0)
+            {
+                _dice.Enter();
+            }
+        }
+
         private void ProcessSelect()
         {
             var leftPlatform = _currentPlatform.selector.left;
@@ -135,7 +141,8 @@ namespace Assets.MainBoard.Scripts.Player.States
 
             // Turn Over
             context.IsMyTurn = false;
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData((byte)NetworkManager.Instance.Index)));
+            PlayerTurnHandler.NextPlayer();
+            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
         }
         #endregion
 

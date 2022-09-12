@@ -41,7 +41,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [HideInInspector] public PlayerStateContext mainPlayerStateContext;
         [HideInInspector] public PlayerInventory mainPlayerInventory;
         [HideInInspector] public PlayerCollector mainPlayerCollector;
-        [HideInInspector] public TMP_Text mainplayerGold, mainplayerHealth, mainplayerGoblet;
+        [HideInInspector] public TMP_Text mainplayerName, mainplayerGold, mainplayerHealth, mainplayerGoblet;
         #endregion
 
         #region Properties
@@ -54,7 +54,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
         #region Private Fields
         private GameObject _createdObject;
-        private int playerCount;
         #endregion
 
         void Awake()
@@ -71,7 +70,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
         private void Start()
         {
             SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-            playerCount = 0;
         }
 
         /// <summary>
@@ -93,9 +91,10 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 // TODO: Tracker zaten tanımlandığı için eventleri initialize edebiliriz running'de... (Silinebilir mi?)
                 mainPlayerStateContext.Running.InitializePathTracker();
 
-                SetUIElements(scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
+                SetUIElements(scKeeper.playerName, scKeeper.playerGold, scKeeper.playerHealth, scKeeper.playerGoblet);
                 SetGobletSelection(scKeeper);
-                SetPlayerSpec(scKeeper, null, ++playerCount);
+                SetPlayerSpec(scKeeper, null);
+                DefaultPlayerSpecSetter(scKeeper);
             }
             else
             {
@@ -109,12 +108,21 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
                 stone.GetComponent<RemotePlayerCollector>().GameController = _gameController;
 
-                SetPlayerSpec(null, RemoteScKeeper, ++playerCount);
+                SetPlayerSpec(null, RemoteScKeeper);
             }
-
             return _createdObject;
         }
 
+        private void DefaultPlayerSpecSetter(ScriptKeeper scKeeper)
+        {
+            if(scKeeper != null)
+            {
+                scKeeper.playerGold.text = SteamManager.Instance.PlayerName;
+                scKeeper.playerGold.text = "Gold: 50";
+                scKeeper.playerHealth.text = "Health: 25";
+                scKeeper.playerGoblet.text = "Goblet: 0";
+            }
+        }
 
         public void UpdateTurnQueue(SteamId[] _playerList)
         {
@@ -124,7 +132,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
             PlayerListNetworkData playerListData =
                    new PlayerListNetworkData(MessageType.UpdatePlayers, NetworkHelper.SteamIdToByteArray(_playerList));
             bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
-            
         }
 
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
@@ -140,7 +147,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
             else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
-                ChangeCurrentPlayer(turnNetworkData.index + 1);
+                PlayerTurnHandler.NextPlayer();
+                ChangeCurrentPlayer(PlayerTurnHandler.Index);
             }
         }
 
@@ -154,7 +162,11 @@ namespace Assets.MainBoard.Scripts.GameManaging
             if (nextIndex == 0) currentIndex = SteamLobbyManager.MemberCount - 1;
 
             if (NetworkManager.Instance.Index == nextIndex)
+            {
                 mainPlayerStateContext.IsMyTurn = true;
+
+                mainPlayerStateContext.Idle.CheckTurnForDice();
+            }
 
             CinemachineVirtualCamera current = GetCinemachineVirtualCamera(currentIndex);
             CinemachineVirtualCamera next = GetCinemachineVirtualCamera(nextIndex);
@@ -222,8 +234,9 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// <param name="playerGold"></param>
         /// <param name="playerHealth"></param>
         /// <param name="playerGoblet"></param>
-        private void SetUIElements(TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet)
+        private void SetUIElements(TMP_Text playerName, TMP_Text playerGold, TMP_Text playerHealth, TMP_Text playerGoblet)
         {
+            mainplayerName = playerName;
             mainplayerGold = playerGold;
             mainplayerHealth = playerHealth;
             mainplayerGoblet = playerGoblet;
@@ -234,12 +247,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         /// <param name="keeper"></param>
         /// <param name="index"></param>
-        private void SetPlayerSpec(ScriptKeeper keeper, RemoteScriptKeeper remoteKeeper, int index)
+        private void SetPlayerSpec(ScriptKeeper keeper, RemoteScriptKeeper remoteKeeper)
         {
             if( remoteKeeper == null)
-                keeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+                keeper.playerUIParentSetter.SetUIParent(_playerSpecCanvas, SteamManager.Instance.PlayerName);
             else
-                remoteKeeper.playerUIParentSetter.SetParent(_playerSpecCanvas, index);
+                remoteKeeper.playerUIParentSetter.SetUIParent(_playerSpecCanvas, SteamManager.Instance.PlayerName);
         }
 
         public CinemachineVirtualCamera GetCinemachineVirtualCamera(int index)

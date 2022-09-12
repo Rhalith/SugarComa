@@ -24,7 +24,6 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         [SerializeField] private GameController _gameController;
         [SerializeField] private GobletSelection _gobletSelection;
         [SerializeField] private PlayerInventory _playerInventory;
-        [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private ScriptKeeper _scriptKeeper;
         [SerializeField] Item item;
         #endregion
@@ -33,6 +32,11 @@ namespace Assets.MainBoard.Scripts.Player.Movement
         public GameController GameController { set => _gameController = value; }
         public ScriptKeeper ScriptKeeper { get => _scriptKeeper; }
         #endregion
+
+        private void Start()
+        {
+            SendPlayerSpecUpdate();
+        }
 
         public void CheckCurrentNode(Platform platform)
         {
@@ -93,7 +97,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         private void SendPlayerSpecUpdate()
         {
-            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, (byte)health, (byte)goblet));
+            byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)gold, (byte)health, (byte)goblet, SteamManager.Instance.PlayerName));
             SteamServerManager.Instance.SendingMessageToAll(data);
         }
 

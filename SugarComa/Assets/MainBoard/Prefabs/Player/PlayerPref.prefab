@@ -4265,7 +4265,6 @@ MonoBehaviour:
   _gameController: {fileID: 0}
   _gobletSelection: {fileID: 4120892788315320753}
   _playerInventory: {fileID: 4120892788481720717}
-  _playerAnimation: {fileID: 7716385271381925211}
   _scriptKeeper: {fileID: 7044238543435382551}
   item:
     shield: {fileID: 4120892788247333579}
@@ -4661,7 +4660,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.6870933, y: 1}
+    m_SensorSize: {x: 1.7768818, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5748,6 +5747,7 @@ MonoBehaviour:
   playerCamera: {fileID: 4120892788676648186}
   playerStateContext: {fileID: 496513627321159967}
   playerUIParentSetter: {fileID: 7305712665337842074}
+  playerName: {fileID: 4456993289406761639}
   playerGold: {fileID: 4120892787917468866}
   playerHealth: {fileID: 4120892787250652913}
   playerGoblet: {fileID: 4120892787186706926}

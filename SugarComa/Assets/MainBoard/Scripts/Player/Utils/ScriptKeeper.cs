@@ -21,6 +21,6 @@ namespace Assets.MainBoard.Scripts.Player.Utils
         public CinemachineVirtualCamera playerCamera;
         public PlayerStateContext playerStateContext;
         public PlayerUIParentSetter playerUIParentSetter;
-        public TMP_Text playerGold, playerHealth, playerGoblet;
+        public TMP_Text playerName, playerGold, playerHealth, playerGoblet;
     }
 }
