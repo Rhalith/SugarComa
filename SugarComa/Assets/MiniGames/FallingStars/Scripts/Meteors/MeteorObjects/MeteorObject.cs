@@ -11,6 +11,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
     public class MeteorObject : MonoBehaviour
     {
         [SerializeField] private Meteor _meteor;
+        [SerializeField] private int _animationTime = 2;
+        [SerializeField] private float _addValue = 15f;
         private Material _flameMaterial;
 
         public Material FlameMaterial { get => _flameMaterial; set => _flameMaterial = value; }
@@ -30,7 +32,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
 
         private void OnEnable()
         {
-            StartCoroutine(ChangeMaterial(FlameMaterial, "_Y", 0.01f));
+            ChangeMaterial(FlameMaterial, "_Y", _animationTime+2f, _addValue);
+            //StartCoroutine(ChangeMaterial(FlameMaterial, "_Y", 0.01f));
+        }
+        private void OnDisable()
+        {
+            FlameMaterial.SetFloat("_Y", 0);
         }
 
         private void CheckHit(Collider collider)
@@ -41,15 +48,22 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorObjects
                 playerManager.KillPlayer();
             }
         }
-        private IEnumerator ChangeMaterial(Material material, string refID, float waitDuration)
+        //private IEnumerator ChangeMaterial(Material material, string refID, float waitDuration)
+        //{
+        //    float _startValue = Random.Range(0, 50);
+        //    while (true)
+        //    {
+        //        material.SetFloat(refID, _startValue);
+        //        _startValue += 0.1f;
+        //        yield return new WaitForSeconds(waitDuration);
+        //    }
+        //}
+        private void ChangeMaterial(Material material, string refID, float waitDuration, float addValue)
         {
             float _startValue = Random.Range(0, 50);
-            while (true)
-            {
-                material.SetFloat(refID, _startValue);
-                _startValue += 0.1f;
-                yield return new WaitForSeconds(waitDuration);
-            }
+            float _endValue = _startValue + addValue;
+            material.SetFloat(refID, _startValue);
+            material.DOFloat(_endValue, refID, waitDuration);
         }
     }
 }
