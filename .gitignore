@@ -15,9 +15,6 @@
 .vs/
 .vsconfig
 
-# JetBrains cache/options directory
-.idea/
-
 # file on crash reports
 sysinfo.txt
 # Unity3D generated meta files
