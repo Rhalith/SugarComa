@@ -129,7 +129,14 @@ namespace Assets.MainBoard.Scripts.Player.States
         #region Goblet Selection events
         private void GobletSelection_OnLeaveIt()
         {
-            SwitchState(context.Running);
+            if (context.Running.CurrentStep == 0)
+            {
+                // Bunları genel bir dosyada metoda al
+                PlayerTurnHandler.NextPlayer();
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+            }
+            else
+                SwitchState(context.Running);
         }
 
         private void GobletSelection_OnTakeIt()
