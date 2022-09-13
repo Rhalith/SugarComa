@@ -77,7 +77,6 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EmitStr: 1.36
     - _Float: 0.35
     - _GlossMapScale: 1
     - _Glossiness: 0.5

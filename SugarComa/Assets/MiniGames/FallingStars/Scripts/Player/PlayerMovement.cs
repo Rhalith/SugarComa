@@ -66,8 +66,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private void RotationWithGamepad_performed(InputAction.CallbackContext obj)
         {
             var input = obj.ReadValue<Vector2>();
-            _rotationDir.x = -input.x;
-            _rotationDir.z = -input.y;
+            _rotationDir.x = input.x;
+            _rotationDir.z = input.y;
             _rotationDir = _rotationDir.normalized;
             _isGamepadActive = obj.performed;
         }
@@ -82,8 +82,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private void Movement_performed(InputAction.CallbackContext obj)
         {
             var input = obj.ReadValue<Vector2>();
-            _movement.x = -input.x;
-            _movement.z = -input.y;
+            _movement.x = input.x;
+            _movement.z = input.y;
             _movementDir = _movement.normalized;
         }
 

@@ -1,6 +1,5 @@
 using Assets.MiniGames.FallingStars.Scripts.GameManaging;
 using Assets.MiniGames.FallingStars.Scripts.Player;
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +15,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         [SerializeField] private int _duration = 4;
         [SerializeField] private float _damage;
         [SerializeField] private float _upScaleValue;
-        [SerializeField] private float _addValue = 10f;
         #endregion
         #endregion
 
@@ -34,9 +32,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
         {
             InvokeRepeating(nameof(UpScaleMeteorEffect), 0.2f, 0.1f);
             _effectMaterial = GetComponent<Renderer>().material;
-            //StartCoroutine(ChangeMaterial(_effectMaterial, "_z", 0.01f));
+            StartCoroutine(ChangeMaterial(_effectMaterial, "_z", 0.01f));
             StartCoroutine(CountdownTimer());
-            ChangeMaterial(_effectMaterial, "_z", _duration+2f, _addValue);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -55,7 +52,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             {
                 PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
                 _players.Remove(playerManager);
-                playerManager.StopNumerator(_meteor.Type);
+                playerManager.StopNumerator(_meteor.Type, _damage);
             }
         }
         private void UpScaleMeteorEffect()
@@ -67,30 +64,21 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors.MeteorEffects
             yield return new WaitForSeconds(_duration);
             MiniGameController.Instance.AddToPool(_meteor);
         }
-        //private IEnumerator ChangeMaterial(Material material, string refID, float waitDuration)
-        //{
-        //    float _startValue = Random.Range(0, 50);
-        //    while (true)
-        //    {
-        //        material.SetFloat(refID, _startValue);
-        //        _startValue += 0.01f;
-        //        yield return new WaitForSeconds(waitDuration);
-        //    }
-        //}
-        private void ChangeMaterial(Material material, string refID, float waitDuration, float addValue)
+        private IEnumerator ChangeMaterial(Material material, string refID, float waitDuration)
         {
             float _startValue = Random.Range(0, 50);
-            float _endValue = _startValue + addValue;
-            material.SetFloat(refID, _startValue);
-            material.DOFloat(_endValue, refID, waitDuration);
+            while (true)
+            {
+                material.SetFloat(refID, _startValue);
+                _startValue += 0.01f;
+                yield return new WaitForSeconds(waitDuration);
+            }
         }
         private void ResetMeteor()
         {
-            _effectMaterial.SetFloat("_z", 0);
             transform.localScale = _localScale;
             foreach (var player in _players)
             {
-                print("explosion");
                 player.StopNumerator(_meteor.Type);
             }
             _players.Clear();

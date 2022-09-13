@@ -20,7 +20,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         private MeteorType _type;
         private GameObject _meteorObject;
         private GameObject _effectObject;
-        private GameObject _vfxObject = null;
 
         #region SerializeFields
         [SerializeField] private GameObject _meteorShadow;
@@ -28,8 +27,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         [SerializeField] private GameObject[] _meteorObjects = new GameObject[4];
         [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
         [SerializeField] private GameObject[] _effectObjects = new GameObject[4];
-        [Tooltip("Order -> Classic -> Explosion -> Poison -> Sticky")]
-        [SerializeField] private GameObject[] _vfxObjects = new GameObject[4];
         #endregion
         #endregion
 
@@ -76,8 +73,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         {
             MeteorObject.SetActive(!value);
             MeteorShadow.SetActive(!value);
-            if (!_effectObject.Equals(_effectObjects[0]))_effectObject.SetActive(value);
-            if (_vfxObject != null) _vfxObject.SetActive(value);
+            _effectObject.SetActive(value);
         }
 
         public void SetObjectMaterial(MeteorType type, Material material)
@@ -129,7 +125,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
         {
             MeteorShadow.SetActive(value);
             _effectObject.SetActive(!value);
-            if(_vfxObject != null)_vfxObject.SetActive(!value);
         }
         private void CheckType(MeteorType type)
         {
@@ -143,7 +138,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Meteors
             {
                 case MeteorType.classic:
                     _effectObject = _effectObjects[0];
-                    _vfxObject = _vfxObjects[0];
                     break;
                 case MeteorType.explosion:
                     _effectObject = _effectObjects[1];

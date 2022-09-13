@@ -55,7 +55,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     _classicMeteor._coroutine = StartCoroutine(_classicMeteor.DamageToPlayer(damage));
                     break;
                 case MeteorType.explosion:
-                    _explosionMeteor._coroutines.Add(StartCoroutine(_explosionMeteor.DamageToPlayer(damage)));
+                    _explosionMeteor._coroutine = StartCoroutine(_explosionMeteor.DamageToPlayer(damage));
                     break;
                 case MeteorType.poison:
                     _poisonMeteor.StopIteration();
@@ -116,7 +116,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         #region ExplosionMeteor
         private class ExplosionMeteor
         {
-            public List<Coroutine> _coroutines = new();
+            public Coroutine _coroutine;
             private readonly PlayerManager _playerManager;
 
             public ExplosionMeteor(PlayerManager playerManager)
@@ -133,11 +133,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                 }
             }
             public void StopIteration()
-            {
-                foreach (Coroutine coroutine in _coroutines)
-                {
-                    _playerManager.StopCoroutine(coroutine);
-                }
+            { 
+                _playerManager.StopCoroutine(_coroutine);
             }
         }
         #endregion
