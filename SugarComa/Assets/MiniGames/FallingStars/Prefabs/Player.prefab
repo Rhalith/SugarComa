@@ -87,10 +87,10 @@ MonoBehaviour:
   _cam: {fileID: 0}
   _animation: {fileID: 3947062569896441645}
   _playerSpecs:
-    _moveSpeed: 5
+    _moveSpeed: 10
     _rotationSpeed: 10
     _health: 25
-    _localMoveSpeed: 5
+    _localMoveSpeed: 10
     _localRotationSpeed: 10
     _punchRatio: 3
 --- !u!54 &3947062569896441651
@@ -108,7 +108,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &3947062569896441650
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -117,12 +117,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3947062569896441643}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.68647224
-  m_Height: 4.2533035
+  m_Height: 4.26
   m_Direction: 1
-  m_Center: {x: -0.06393647, y: 0.49785328, z: 0.16687602}
+  m_Center: {x: -0.06393647, y: 0.47, z: 0.16687602}
 --- !u!1 &5905893125998474472
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -750, y: -400}
+  m_AnchoredPosition: {x: -794, y: 438}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2093908722131407262
@@ -198,8 +198,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4280747995
+  m_fontColor: {r: 0.85882354, g: 0.027450979, b: 0.15138271, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -216,13 +216,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
