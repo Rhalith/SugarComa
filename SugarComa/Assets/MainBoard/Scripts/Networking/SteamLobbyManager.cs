@@ -336,7 +336,7 @@ namespace Assets.MainBoard.Scripts.Networking
             GameObject obj = Instantiate(InLobbyFriend, content);
             obj.GetComponent<LobbyFriendObject>().steamid = playerInfo.SteamId;
             obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
-            obj.GetComponentInChildren<Text>().text = name;
+            obj.GetComponentInChildren<TMPro.TMP_Text>().text = name;
             obj.GetComponentInChildren<RawImage>().texture = playerInfo.Texture;
 
             if (!inLobby.TryAdd(playerInfo.SteamId, obj))
