@@ -244,6 +244,7 @@ namespace Assets.MainBoard.Scripts.Networking
                 Destroy(user);
             }
             inLobby.Clear();
+            playerInfos.Clear();
 
             OnLobbyJoined.Invoke();
 
