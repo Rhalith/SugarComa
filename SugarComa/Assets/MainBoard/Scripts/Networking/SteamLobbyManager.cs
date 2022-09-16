@@ -348,5 +348,10 @@ namespace Assets.MainBoard.Scripts.Networking
             playerInfos.Add(playerInfo.SteamId, playerInfo);
             return true;
         }
+
+        public void BackToMenu()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
     }
 }
