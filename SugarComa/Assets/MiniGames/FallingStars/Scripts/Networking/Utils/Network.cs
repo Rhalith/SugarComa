@@ -7,10 +7,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.Networking.Utils
     {
         Move,
         Rotate,
+        EndMiniGame,
         AnimationStateUpdate,
         UpdatePlayerSpecs,
-        Ready,
-        UnReady,
         Exit
     }
 

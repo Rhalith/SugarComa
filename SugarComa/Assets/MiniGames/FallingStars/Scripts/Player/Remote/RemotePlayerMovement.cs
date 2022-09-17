@@ -17,12 +17,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player.Remote
         #region Private Fields
         private Vector3 _movementDir;
         private Vector3 _rotationDir;
-        private Camera _mainCam;
         #endregion
 
         #region Properties
         public PlayerSpecifications PlayerSpec { get => _playerSpecs; }
-        public Camera MainCam { get => _mainCam; set => _mainCam = value; }
         public Vector3 MovementDir { get => _movementDir; set => _movementDir = value; }
         public Vector3 RotationDir { get => _rotationDir; set => _rotationDir = value; }
         #endregion

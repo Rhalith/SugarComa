@@ -18,15 +18,18 @@ namespace Assets.MainBoard.Scripts.Networking
         public static SteamLobbyManager Instance => _instance;
 
         public GameObject startGameButton;
-        public Transform content;
+        public Transform hostContent;
+        public Transform clientContent;
+        public GameObject hostLeftMessageObj;
+
         public static SteamManager steamManager;
         public static Lobby currentLobby;
         public static bool UserInLobby;
 
         #region Events
-
         public UnityEvent OnLobbyCreated;
-        public UnityEvent OnLobbyJoined;
+        public UnityEvent OnLobbyJoinedHost;
+        public UnityEvent OnLobbyJoinedClient;
         public UnityEvent OnLobbyLeave;
         #endregion
 
@@ -34,10 +37,16 @@ namespace Assets.MainBoard.Scripts.Networking
 
         public const int MinPlayerCount = 2;
         public const int MaxPlayerCount = 8;
+
+        #region properties
         public static int MemberCount => currentLobby.MemberCount;
+        public bool AmIHost => currentLobby.Owner.Id == steamManager.PlayerSteamId;
+        #endregion
 
         public Dictionary<SteamId, LobbyPlayerInfo> playerInfos = new Dictionary<SteamId, LobbyPlayerInfo>();
         public Dictionary<SteamId, GameObject> inLobby = new Dictionary<SteamId, GameObject>();
+
+        private SteamId hostId;
 
         private void Awake()
         {
@@ -77,8 +86,6 @@ namespace Assets.MainBoard.Scripts.Networking
         {
             if (arg1.buildIndex == 0) return;
 
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-
             SceneManager.activeSceneChanged -= SceneManager_ActiveSceneChanged;
 
             #region Lobby Events
@@ -102,7 +109,7 @@ namespace Assets.MainBoard.Scripts.Networking
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
-
+        
         void Update()
         {
             SteamClient.RunCallbacks();
@@ -186,10 +193,19 @@ namespace Assets.MainBoard.Scripts.Networking
         void OnLobbyMemberDisconnectedCallBack(Lobby lobby, Friend friend)
         {
             Debug.Log($"{friend.Name} left the lobby");
+
+            if (friend.Id == hostId)
+            {
+                LeaveLobby();
+                hostLeftMessageObj.SetActive(true);
+                return;
+            }
+
             Debug.Log($"New lobby owner is {currentLobby.Owner}");
 
-            if (SteamManager.Instance.PlayerSteamId == currentLobby.Owner.Id)
+            if (AmIHost)
                 startGameButton.SetActive(true);
+
             if (inLobby.TryGetValue(friend.Id, out GameObject gameObject))
             {
                 Destroy(gameObject);
@@ -246,7 +262,10 @@ namespace Assets.MainBoard.Scripts.Networking
             inLobby.Clear();
             playerInfos.Clear();
 
-            OnLobbyJoined.Invoke();
+            if (AmIHost)
+                OnLobbyJoinedHost.Invoke();
+            else
+                OnLobbyJoinedClient.Invoke();
 
             int count = currentLobby.MemberCount-1;
 
@@ -266,6 +285,8 @@ namespace Assets.MainBoard.Scripts.Networking
             }
 
             await CreatePlayer(steamManager.PlayerSteamId, SteamClient.Name);
+
+            hostId = currentLobby.Owner.Id;
 
             // Update ready/unready status
             if (count > 0)
@@ -334,7 +355,14 @@ namespace Assets.MainBoard.Scripts.Networking
             Texture2D texture2D = await SteamFriendsManager.GetTextureFromSteamIdAsync(id);
 
             LobbyPlayerInfo playerInfo = new LobbyPlayerInfo(id, name, texture2D);
-            GameObject obj = Instantiate(InLobbyFriend, content);
+
+            GameObject obj;
+
+            if (AmIHost)
+                obj = Instantiate(InLobbyFriend, hostContent);
+            else
+                obj = Instantiate(InLobbyFriend, clientContent);
+
             obj.GetComponent<LobbyFriendObject>().steamid = playerInfo.SteamId;
             obj.GetComponent<LobbyFriendObject>().CheckIfOwner();
             obj.GetComponentInChildren<TMPro.TMP_Text>().text = name;

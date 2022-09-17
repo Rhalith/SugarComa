@@ -176,6 +176,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
         }
         
+
+        // TODO: Movement ve Rotation tek bir mesaj olarak iletilebilir.
         private bool SendRotationDirection()
         {
             bool result = false;
@@ -200,8 +202,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         {
             return SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Move, _movementDir)));
         }
-
-
 
         /// <summary>
         /// Put it to update otherwise it wont work properly.

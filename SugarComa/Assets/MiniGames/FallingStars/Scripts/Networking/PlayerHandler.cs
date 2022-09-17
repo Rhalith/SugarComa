@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MiniGames.FallingStars.Scripts.Player;
+using System.Collections.Generic;
 
 namespace Assets.MiniGames.FallingStars.Scripts.Networking
 {
@@ -16,6 +17,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Networking
         [SerializeField] private GameObject _remotePlayerPrefab;
         [SerializeField] private GameObject _playerParent;
         [SerializeField] private Camera _mapCam;
+        #endregion
+
+        #region Public Fields
+        public Dictionary<SteamId, GameObject> RemotePlayerList = new Dictionary<SteamId, GameObject>();
         #endregion
 
         void Awake()
@@ -54,6 +59,8 @@ namespace Assets.MiniGames.FallingStars.Scripts.Networking
             else
             {
                 createdObject = Instantiate(_remotePlayerPrefab, _playerParent.transform);
+
+                RemotePlayerList.Add(id, createdObject);
             }
             return createdObject;
         }

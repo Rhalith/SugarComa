@@ -26,7 +26,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         #endregion
 
-
         List<Vector3> points = new List<Vector3>();
 
         private void Awake()
@@ -36,10 +35,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             //GrowPool();
             _miniGameManager.SpawnNewWave += SpawnWave;
         }
+
         private void OnDisable()
         {
             _miniGameManager.SpawnNewWave -= SpawnWave;
         }
+
         /*
                 private void GrowPool()
                 {
@@ -57,15 +58,20 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             _spawnPointsParent.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360),0);
             points = GetAvailablePos();
         }
+
         public void AddToPool(Meteor instance)
-        {/*
+        {
+            /*
             instance.gameObject.SetActive(false);
-            AvaliableMeteors.Enqueue(instance);*/
+            AvaliableMeteors.Enqueue(instance);
+            */
+
             _poolManager.AddToPool(instance.gameObject);
         }
 
         public Meteor GetFromPool()
-        {/*
+        {
+            /*
             if (AvaliableMeteors.Count == 0)
             {
                 GrowPool();
@@ -74,7 +80,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             Meteor instance = AvaliableMeteors.Dequeue();
             instance.GetComponent<Meteor>().SetType();
             instance.gameObject.SetActive(true);
-            return instance;*/
+            return instance;
+            */
+
             Meteor instance = _poolManager.GetFromPool(0).GetComponent<Meteor>();
             instance.SetType();
             return instance;
@@ -82,7 +90,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
 
         public void SpawnWave()
         {
-            
             int meteorCount = _miniGameManager.MeteorCount;
             List<Meteor> _list = new();
             //points = GetAvailablePos();
@@ -99,10 +106,9 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 StartCoroutine(ActivateObject(instance));
             }
             CheckMeteorPosition(_list);
-           // points.Clear();
+            // points.Clear();
             waveIndex++;
         }
-
 
         private List<Vector3> GetAvailablePos()
         {
@@ -114,6 +120,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             int meteorCount = _miniGameManager.MeteorCount;
             points.Add(point);
             int index = 0;
+
             while (points.Count < meteorCount)
             {
                 x = Random.Range(_borders._leftBorder.position.x, _borders._rightBorder.position.x);
@@ -127,19 +134,20 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                         isOkey = false;
                     }
                 }
+
                 index++;
                 if(index == 30)
                 {
                     print("index reset");
                     isOkey = true;
                 }
+
                 if (isOkey)
                 {
                     print("index ->" +index);
                     points.Add(point);
                     index = 0;
                 }
-
             }
             return points;
         }
@@ -150,6 +158,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             {
                 MeteorColliderChecker _meteorChecker = item.GetComponentInChildren<MeteorColliderChecker>();
                 _meteorChecker.ChangeMeteorPosition(_borders._leftBorder, _borders._rightBorder, _borders._upBorder, _borders._bottomBorder);
+
                 //var position = item.transform.position;
                 //for (int i = 0; i < meteorList.Count; i++)
                 //{
@@ -165,6 +174,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
             }
             meteorList.Clear();
         }
+        
         private IEnumerator ActivateObject(Meteor gameObject)
         {
             yield return new WaitForSeconds(1f);
@@ -194,6 +204,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         }
       
     }
+    
     [System.Serializable]
     public struct Wave
     {

@@ -151,5 +151,21 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             }
             return true;
         }
+        
+        public static bool TryGetMiniGameNetworkData(byte[] buffer, out MiniGameNetworkData networkData)
+        {
+            if (buffer.Length != Marshal.SizeOf<MiniGameNetworkData>())
+            {
+                networkData = new MiniGameNetworkData();
+                return false;
+            }
+
+            Deserialize(buffer, out networkData);
+            if (networkData.id != NetworkId.MiniGameNetworkDataId)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

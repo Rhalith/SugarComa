@@ -16,6 +16,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         CreateChest,
         AnimationStateUpdate,
         UpdatePlayerSpecs,
+        GoToMinigame,
         Exit
     }
 
@@ -27,6 +28,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public static readonly int ChestNetworkDataId = Animator.StringToHash("ChestNetworkData");
         public static readonly int AnimationStateNetworkDataId = Animator.StringToHash("AnimationStateData");
         public static readonly int PlayerSpecDataId = Animator.StringToHash("PlayerSpecData");
+        public static readonly int MiniGameNetworkDataId = Animator.StringToHash("MiniGameNetworkData");
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -145,6 +147,19 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             this.gold = gold;
             this.health = health;
             this.goblet = goblet;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MiniGameNetworkData
+    {
+        public int id;
+        public MessageType type;
+
+        public MiniGameNetworkData(MessageType type)
+        {
+            id = NetworkId.MiniGameNetworkDataId;
+            this.type = type;
         }
     }
 
