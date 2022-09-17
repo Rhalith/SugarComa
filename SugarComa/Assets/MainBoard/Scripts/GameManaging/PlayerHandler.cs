@@ -72,6 +72,11 @@ namespace Assets.MainBoard.Scripts.GameManaging
             SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
 
+        private void OnDestroy()
+        {
+            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
+        }
+
         /// <summary>
         /// Creates player.
         /// </summary>

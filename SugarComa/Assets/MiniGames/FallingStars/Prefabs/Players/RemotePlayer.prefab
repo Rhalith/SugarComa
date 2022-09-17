@@ -788,13 +788,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3397840931310065139}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dda7ba3b7b675824a8505f02266a441c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerMovement: {fileID: 8261269366927898952}
-  _currentPlayer: {fileID: 8261269366927898967}
+  _playerMovement: {fileID: 0}
+  _currentPlayer: {fileID: 0}
   _playerAnimation: {fileID: 8261269366927898954}
 --- !u!1 &3448695217035683592
 GameObject:
@@ -1692,9 +1692,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8261269366927898953}
+  - component: {fileID: 8266184152273647546}
   - component: {fileID: 8261269366927898954}
-  - component: {fileID: 8261269366927898967}
-  - component: {fileID: 8261269366927898952}
   - component: {fileID: 8261269366927898964}
   - component: {fileID: 8261269366927898965}
   m_Layer: 0
@@ -1722,6 +1721,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8266184152273647546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8261269366927898956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 057c73b0a416c8c47ae956177a04fcbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 8261269366927898954}
+  _playerSpecs:
+    _moveSpeed: 10
+    _rotationSpeed: 10
+    _health: 25
+    _localMoveSpeed: 10
+    _localRotationSpeed: 10
+    _punchRatio: 3
 --- !u!114 &8261269366927898954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1739,43 +1758,6 @@ MonoBehaviour:
   _hit: 0
   _gettingHit: 0
   _animator: {fileID: 8261269367221288707}
---- !u!114 &8261269366927898967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8261269366927898956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d72dd564b12eb354ba2e4ef8bb20787a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerMovement: {fileID: 8261269366927898952}
-  _playerAnimation: {fileID: 8261269366927898954}
-  _playerChecker: {fileID: 5766642246675947788}
-  _healthText: {fileID: 2292108221704524719}
---- !u!114 &8261269366927898952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8261269366927898956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1789662f2f8e44f9f315d5f140212e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cam: {fileID: 0}
-  _animation: {fileID: 8261269366927898954}
-  _playerSpecs:
-    _moveSpeed: 10
-    _rotationSpeed: 10
-    _health: 25
-    _localMoveSpeed: 10
-    _localRotationSpeed: 10
-    _punchRatio: 3
 --- !u!54 &8261269366927898964
 Rigidbody:
   m_ObjectHideFlags: 0
