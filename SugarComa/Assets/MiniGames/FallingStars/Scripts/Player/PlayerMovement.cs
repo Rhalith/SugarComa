@@ -1,3 +1,5 @@
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MiniGames.FallingStars.Scripts.Networking.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,29 +9,29 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        #region Properties
         #region Serialized Field
-        //[SerializeField] private float _jumpHeight = 1f;
-        //[SerializeField] private float _gravityValue = -9.81f;
-        [SerializeField] private Camera _cam;
+        [SerializeField] private PlayerAnimation _animation;
+        [SerializeField] private PlayerSpecifications _playerSpecs;
         #endregion
+
+        #region Private Fields
         private Vector3 _movement;
         private Vector3 _movementDir;
         private Vector3 _rotationDir;
         private Vector3 _mouseDir;
         private bool _punch;
-        private bool _isMouseActive;
+        public bool _isMouseActive;
         private bool _isGamepadActive;
         private RaycastHit _hit;
         private Ray _ray;
+        private PlayerActions _playerInput; 
+        private Camera _mainCam;
         #endregion
 
-        #region OtherComponents
-        [SerializeField] private PlayerAnimation _animation;
-        [SerializeField] private PlayerSpecifications _playerSpecs;
-        private PlayerActions _playerInput;
+        #region Properties
         public PlayerSpecifications PlayerSpec { get => _playerSpecs; }
         public PlayerActions PlayerInput { get => _playerInput; private set => _playerInput = value; }
+        public Camera MainCam { get => _mainCam; set => _mainCam = value; }
         #endregion
 
         private void Awake()
@@ -96,6 +98,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         {
             PlayerInput.Disable();
         }
+        
         private void FixedUpdate()
         {
             MovePlayer();
@@ -105,8 +108,11 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         {
             if(_playerSpecs.MoveSpeed > 0)
             {
-                RotatePlayer();
-                TranslatePlayer();
+                if (SendMoveDirection())
+                    TranslatePlayer();
+
+                if(SendRotationDirection())
+                    RotatePlayer();
             }
             else
             {
@@ -131,7 +137,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         private void TranslatePlayer()
         {
-            if (_movement.x != 0 || _movement.z != 0)
+            if (_movementDir.x != 0 || _movementDir.z != 0)
             {
                 transform.Translate(_playerSpecs.MoveSpeed * Time.deltaTime * _movementDir, Space.World);
                 _animation.StartRunning();
@@ -144,7 +150,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         private void RotateWithMouse(Vector3 direction)
         {
-            _ray = _cam.ScreenPointToRay(direction);
+            _ray = _mainCam.ScreenPointToRay(direction);
             if (Physics.Raycast(_ray, out _hit))
             {
                 if (!_hit.collider.CompareTag("Player"))
@@ -169,9 +175,38 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             Quaternion desiredRotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _playerSpecs.RotationSpeed * Time.deltaTime);
         }
+        
+
+        // TODO: Movement ve Rotation tek bir mesaj olarak iletilebilir.
+        private bool SendRotationDirection()
+        {
+            bool result = false;
+
+            if (_isMouseActive)
+            {
+                result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Rotate, Vector3.zero, _mouseDir)));
+            }
+            else if (_isGamepadActive)
+            {
+                result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Rotate, Vector3.zero, _rotationDir)));
+            }
+            else if (_movementDir.x != 0 || _movementDir.z != 0)
+            {
+                result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Rotate, Vector3.zero, _movementDir)));
+            }
+
+            return result;
+        }
+
+        private bool SendMoveDirection()
+        {
+            return SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Move, _movementDir)));
+        }
+
         /// <summary>
         /// Put it to update otherwise it wont work properly.
         /// </summary>
+        
         //private void Jump()
         //{
         //    if (_isGrounded && _playerVelocity.y < 0)

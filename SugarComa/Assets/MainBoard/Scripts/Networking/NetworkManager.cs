@@ -44,7 +44,8 @@ namespace Assets.MainBoard.Scripts.Networking
                 // TODO: Bu hatalý
                 playerHandler.mainPlayerStateContext.IsMyTurn = true;
             }
-            SteamLobbyManager.Instance.inLobby.Clear();
+            // For using on other scenes
+            //SteamLobbyManager.Instance.inLobby.Clear();
         }
 
         private void OnApplicationQuit()

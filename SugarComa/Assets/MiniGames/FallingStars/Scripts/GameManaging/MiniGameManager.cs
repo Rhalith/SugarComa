@@ -1,10 +1,14 @@
+using Assets.MainBoard.Scripts.Networking;
+using Assets.MiniGames.FallingStars.Scripts.Networking.Utils;
 using Assets.MiniGames.FallingStars.Scripts.Utils;
 using DG.Tweening;
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -17,29 +21,28 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
     }
     public class MiniGameManager : MonoBehaviour
     {
-
         #region Components
         private static MiniGameManager _instance;
+        #endregion
+
+        #region Private Fields
+        private int _meteorCount = 3;
+        #endregion
 
         #region SerializeFields
         [SerializeField] private FlameMaterials _flameMaterials;
         [SerializeField] private EffectMaterials _effectMaterials;
         [SerializeField] private TMP_Text _timeText;
         [SerializeField] private float _gameTime = 120f;
-        #endregion
+        [SerializeField] private int _meteorCountUpdateTime = 15;
+        [SerializeField] private int _meteorWaveSpawnTime = 4;
+        [SerializeField] private GameObject TimesUpMessageObj;
         #endregion
 
         #region Properties
         public Action SpawnNewWave;
         public int MeteorCount => _meteorCount;
 
-        private int _meteorCount = 3;
-
-        #region SerializeFields
-        [SerializeField] private int _meteorCountUpdateTime = 15;
-        [SerializeField] private int _meteorWaveSpawnTime = 4;
-        #endregion
-        #endregion
         public static FlameMaterials FlameMaterials
         {
             get
@@ -48,6 +51,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 return _instance._flameMaterials;
             }
         }
+
         public static EffectMaterials EffectMaterials
         {
             get
@@ -58,6 +62,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         }
 
         public float GameTime { get => _gameTime; }
+        #endregion
 
         void Awake()
         {
@@ -87,10 +92,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 SpawnNewWave?.Invoke();
             }
         }
+
         private void UpdateMeteorCount()
         {
             _meteorCount++;
         }
+
         IEnumerator StartCountdown()
         {
             string text = _timeText.text.ToString();
@@ -100,6 +107,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
                 if (_gameTime == 0)
                 {
                     _timeText.SetText(text + _gameTime.ToString().AddColor(Color.red));
+                    TimesUpMessageObj.SetActive(true);
                 }
                 yield return new WaitForSeconds(1.0f);
                 _gameTime--;
@@ -109,7 +117,36 @@ namespace Assets.MiniGames.FallingStars.Scripts.GameManaging
         {
             StartCoroutine(SpawnWave());
             SpawnNewWave?.Invoke();
+        }
 
+        public void EndMiniGame()
+        {
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.EndMiniGame)));
+
+            if (result)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            }
+        }
+
+        private void OnMessageReceived(SteamId steamid, byte[] buffer)
+        {
+            if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
+            {
+                return;
+            }
+
+            switch (networkData.type)
+            {
+                case MessageType.EndMiniGame:
+                    {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                    }
+                    break;
+                default:
+                    throw new System.Exception();
+            }
         }
     }
 }

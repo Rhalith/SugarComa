@@ -40,12 +40,12 @@ namespace Assets.MainBoard.Scripts.Networking
         {
             if (SteamLobbyManager.UserInLobby)
             {
-                bool[] response = new bool[SteamLobbyManager.Instance.playerInfos.Count - 1];
+                bool[] response = new bool[SteamLobbyManager.Instance.playerInfos.Count-1];
 
                 int index = 0;
                 foreach (var id in SteamLobbyManager.Instance.playerInfos.Keys)
                 {
-                    if (id != SteamManager.Instance.PlayerSteamId)
+                    if(id != SteamManager.Instance.PlayerSteamId)
                     {
                         response[index] = SteamNetworking.SendP2PPacket(id, buffer);
                         index++;

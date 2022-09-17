@@ -90,7 +90,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _emitPower: 3.6
-    - _particleOffset: 9.31
+    - _particleOffset: 0
     - _ters: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
