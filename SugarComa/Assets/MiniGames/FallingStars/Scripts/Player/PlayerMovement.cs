@@ -7,12 +7,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        #region Properties
         #region Serialized Field
-        //[SerializeField] private float _jumpHeight = 1f;
-        //[SerializeField] private float _gravityValue = -9.81f;
-        [SerializeField] private Camera _cam;
+        [SerializeField] private PlayerAnimation _animation;
+        [SerializeField] private PlayerSpecifications _playerSpecs;
         #endregion
+
+        #region Private Fields
         private Vector3 _movement;
         private Vector3 _movementDir;
         private Vector3 _rotationDir;
@@ -22,14 +22,14 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         private bool _isGamepadActive;
         private RaycastHit _hit;
         private Ray _ray;
+        private PlayerActions _playerInput; 
+        private Camera _mainCam;
         #endregion
 
-        #region OtherComponents
-        [SerializeField] private PlayerAnimation _animation;
-        [SerializeField] private PlayerSpecifications _playerSpecs;
-        private PlayerActions _playerInput;
+        #region Properties
         public PlayerSpecifications PlayerSpec { get => _playerSpecs; }
         public PlayerActions PlayerInput { get => _playerInput; private set => _playerInput = value; }
+        public Camera MainCam { get => _mainCam; set => _mainCam = value; }
         #endregion
 
         private void Awake()
@@ -144,7 +144,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         private void RotateWithMouse(Vector3 direction)
         {
-            _ray = _cam.ScreenPointToRay(direction);
+            _ray = _mainCam.ScreenPointToRay(direction);
             if (Physics.Raycast(_ray, out _hit))
             {
                 if (!_hit.collider.CompareTag("Player"))

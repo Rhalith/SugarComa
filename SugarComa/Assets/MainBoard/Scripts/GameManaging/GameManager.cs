@@ -1,5 +1,6 @@
 using Assets.MainBoard.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -123,6 +124,11 @@ namespace Assets.MainBoard.Scripts.GameManaging
             if (_isGameOver) return;
 
             _totalGameTime += Time.deltaTime;
+        }
+    
+        public void GoToMinigame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
