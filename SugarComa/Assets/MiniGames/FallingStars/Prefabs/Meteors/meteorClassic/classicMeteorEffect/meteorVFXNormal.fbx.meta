@@ -1,12 +1,42 @@
 fileFormatVersion: 2
-guid: 7fca060d96bb7b548af373fad492934c
+guid: 18938cbf9fd38e64693c6063be1498c6
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
-      74: -203655887218126122
-    second: mixamo.com
-  externalObjects: {}
+      74: -623603649343465320
+    second: Scene
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: expIn
+    second: {fileID: 2100000, guid: 55e62e96944641749ae1358538567626, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: expMid
+    second: {fileID: 2100000, guid: 4ab9ceae10313fe44996794fae4053db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: expOut
+    second: {fileID: 2100000, guid: 324e618ccd398e444b9e75cf9957f34a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: expPlane
+    second: {fileID: 2100000, guid: d89af2f8c58d626479b0d6ff9ff8f360, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: planeParticle1
+    second: {fileID: 2100000, guid: 2904e4ae2e0df434aa7b5ff5600ba5e9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: planeParticle2
+    second: {fileID: 2100000, guid: e57c0d906d7db9b42a5b6fb4f653e6ff, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,18 +66,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mixamo.com
-      takeName: mixamo.com
+      name: Scene
+      takeName: Scene
       internalID: 0
-      firstFrame: 0
-      lastFrame: 200
+      firstFrame: 12
+      lastFrame: 39
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -59,11 +89,32 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.1007326
+        functionName: ActivateEffect
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: ActivateEffect
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0
+        functionName: ActivateMaterials
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 1.5
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 12
     isReadable: 0
   meshes:
     lODScreenPercentages: []
