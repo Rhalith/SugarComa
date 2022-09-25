@@ -57,21 +57,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Networking.Utils
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct AnimationStateData
-    {
-        public int id;
-        //public int playerIndex;
-        public int animBoolHash;
-
-        public AnimationStateData(int animBoolHash)
-        {
-            id = NetworkId.AnimationStateNetworkDataId;
-           //playerIndex = NetworkManager.Instance.Index;
-            this.animBoolHash = animBoolHash;
-        }
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     public struct PlayerSpecNetworkData
     {
         public int id;

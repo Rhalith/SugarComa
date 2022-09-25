@@ -30,9 +30,9 @@ public class RemoteMessageHandler : MonoBehaviour
         if (IsPlayerListNetworkData(buffer)) return;
     }
 
-    
     private bool IsNetworData(SteamId steamId, byte[] buffer)
     {
+        // TODO: NetworkData interface'i default deðer döndürüyor hatalý olarak, bu interface'i ayýrýnca düzelmiþti...
         if (NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
         {
             // Player'larýn kaymasýný engellemek için önceki gönderilen pozisyona eriþtiðinde player yeni pozisyon hedef olarak alýnsýn.
@@ -52,7 +52,6 @@ public class RemoteMessageHandler : MonoBehaviour
                     SteamLobbyManager.Instance.playerInfos.Remove(steamId);
                 }
             }
-
             return true;
         }
 

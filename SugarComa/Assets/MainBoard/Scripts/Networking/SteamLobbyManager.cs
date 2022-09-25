@@ -93,6 +93,7 @@ namespace Assets.MainBoard.Scripts.Networking
             SteamMatchmaking.OnLobbyEntered -= OnLobbyEnteredCallBack;
             SteamMatchmaking.OnLobbyMemberJoined -= OnLobbyMemberJoinedCallBack;
             SteamFriends.OnGameLobbyJoinRequested -= OnGameLobbyJoinRequestCallBack;
+            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
             #endregion
         }
 

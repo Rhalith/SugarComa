@@ -1,6 +1,5 @@
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MiniGames.FallingStars.Scripts.Networking.Utils;
-using Assets.MiniGames.FallingStars.Scripts.Player;
 using Assets.MiniGames.FallingStars.Scripts.Player.Remote;
 using UnityEngine;
 

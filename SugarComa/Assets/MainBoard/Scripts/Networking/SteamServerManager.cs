@@ -67,8 +67,8 @@ namespace Assets.MainBoard.Scripts.Networking
                     var packet = SteamNetworking.ReadP2PPacket();
                     if (packet != null && packet.HasValue)
                     {
+                        //Debug.Log(packet.Value.SteamId + " " + packet.Value.Data);
                         OnMessageReceived?.Invoke(packet.Value.SteamId, packet.Value.Data);
-                        //HandleMessageFrom(packet.Value.SteamId, packet.Value.Data);
                     }
                 }
             }
