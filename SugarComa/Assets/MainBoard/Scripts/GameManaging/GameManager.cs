@@ -125,13 +125,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
 
             _instance = this;
-
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived; ;
-        }
-
-        private void OnDisable()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
         }
 
         private void Update()
@@ -139,36 +132,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
             if (_isGameOver) return;
 
             _totalGameTime += Time.deltaTime;
-        }
-    
-        public void GoToMinigame()
-        {
-            bool result = SteamServerManager.Instance
-                .SendingMessageToAll(NetworkHelper.Serialize(new MiniGameNetworkData(MessageType.GoToMinigame)));
-
-            if (result)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }
-        }
-
-        private void OnMessageReceived(SteamId steamid, byte[] buffer)
-        {
-            if (!NetworkHelper.TryGetMiniGameNetworkData(buffer, out MiniGameNetworkData networkData))
-            {
-                return;
-            }
-
-            switch (networkData.type)
-            {
-                case MessageType.GoToMinigame:
-                    {
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                    }
-                    break;
-                default:
-                    throw new System.Exception();
-            }
         }
     }
 }

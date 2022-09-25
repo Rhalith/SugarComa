@@ -12,6 +12,7 @@ using Assets.MainBoard.Scripts.Utils.CamUtils;
 using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Player.Handlers;
 using Assets.MainBoard.Scripts.Networking.Utils;
+using UnityEngine.SceneManagement;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -46,10 +47,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
         #region Properties
         public MapCamera MapCamera => _mapCamera;
-        #endregion
-
-        #region Public Fields
-        public Steamworks.SteamId[] _playerQueue;
         #endregion
 
         #region Private Fields
@@ -129,31 +126,28 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
         }
 
-        public void UpdateTurnQueue(SteamId[] _playerList)
-        {
-            // TODO:  Minigame'lere göre sıra belirlendiğinde buradan güncelleme yapılarak playerListData iletilebilir.
-            _playerQueue = _playerList;
-
-            PlayerListNetworkData playerListData =
-                   new PlayerListNetworkData(MessageType.UpdatePlayers, NetworkHelper.SteamIdToByteArray(_playerList));
-            bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(playerListData));
-        }
-
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
-            if (NetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
-            {
-                if (playerListData.type == MessageType.UpdatePlayers)
-                {
-                    _playerQueue = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
-
-                    ChangeCurrentPlayer(0);
-                }
-            }
-            else if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
+            if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
                 PlayerTurnHandler.NextPlayer();
                 ChangeCurrentPlayer(PlayerTurnHandler.Index);
+            }
+            else if (!NetworkHelper.TryGetMiniGameNetworkData(buffer, out MiniGameNetworkData minigameNetworkData))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
+
+        // MinigameScene index could be send
+        public void GoToMinigame()
+        {
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new MiniGameNetworkData(MessageType.GoToMinigame)));
+
+            if (result)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
 
@@ -163,20 +157,28 @@ namespace Assets.MainBoard.Scripts.GameManaging
         public void ChangeCurrentPlayer(int nextIndex)
         {
             int currentIndex = nextIndex - 1;
-            if (nextIndex >= SteamLobbyManager.MemberCount) nextIndex = 0;
-            if (nextIndex == 0) currentIndex = SteamLobbyManager.MemberCount - 1;
 
-            if (NetworkManager.Instance.Index == nextIndex)
+            if (nextIndex >= SteamLobbyManager.MemberCount)
             {
-                mainPlayerStateContext.IsMyTurn = true;
-
-                mainPlayerStateContext.Idle.CheckTurnForDice();
+                if (SteamLobbyManager.currentLobby.Owner.Id == SteamManager.Instance.PlayerSteamId)
+                    GoToMinigame();
             }
+            else
+            {
+                if (nextIndex == 0) currentIndex = SteamLobbyManager.MemberCount - 1;
 
-            CinemachineVirtualCamera current = GetCinemachineVirtualCamera(currentIndex);
-            CinemachineVirtualCamera next = GetCinemachineVirtualCamera(nextIndex);
-            
-            ChangeCamPriority(current, next);
+                if (NetworkManager.Instance.Index == nextIndex)
+                {
+                    mainPlayerStateContext.IsMyTurn = true;
+
+                    mainPlayerStateContext.Idle.CheckTurnForDice();
+                }
+
+                CinemachineVirtualCamera current = GetCinemachineVirtualCamera(currentIndex);
+                CinemachineVirtualCamera next = GetCinemachineVirtualCamera(nextIndex);
+
+                ChangeCamPriority(current, next);
+            }
         }
 
         /// <summary>
