@@ -1794,7 +1794,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 816450d2edab48c4b9b54a5292733be6, type: 3}
   m_PrefabInstance: {fileID: 708196543}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &435805167
+--- !u!65 &435805164
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2789,6 +2789,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7029948723529949830, guid: 816450d2edab48c4b9b54a5292733be6, type: 3}
+      propertyPath: m_TagString
+      value: Lava
+      objectReference: {fileID: 0}
+    - target: {fileID: -516098083770646512, guid: 816450d2edab48c4b9b54a5292733be6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 816450d2edab48c4b9b54a5292733be6, type: 3}
       propertyPath: m_Name
       value: fallingStarsMap
@@ -3124,7 +3132,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7784554, y: 1}
+    m_SensorSize: {x: 1.7782608, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

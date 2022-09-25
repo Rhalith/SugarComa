@@ -34,19 +34,25 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
         public void DamagePlayer(float damage)
         {
             _playerMovement.PlayerSpec.Health -= damage;
-            if (_playerMovement.PlayerSpec.Health <= 0) KillPlayer();
+
+            if (_playerMovement.PlayerSpec.Health <= 0) 
+                KillPlayer();
+
             _healthText.SetText(_text + _playerMovement.PlayerSpec.Health.ToString());
         }
+
         public void KillPlayer()
         {
             _playerMovement.PlayerSpec.Health = 0;
             _playerMovement.PlayerSpec.IsDead = true;
         }
+
         public void GetHit(Transform attackPlayer, Transform hitPlayer)
         {
             print("gettinghit");
             StartCoroutine(_punch.GetHit(attackPlayer.forward, hitPlayer, _playerAnimation, _playerMovement.PlayerSpec));
         }
+
         public void StartNumerator(MeteorType meteorType, float damage = 0, int duration = 0, float ratio = 0)
         {
             switch (meteorType)
@@ -66,6 +72,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
                     break;
             }
         }
+
         public void StopNumerator(MeteorType meteorType, float damage = 0, int duration = 0)
         {
             switch (meteorType)
@@ -87,6 +94,7 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
             }
         }
+
         #region ClassicMeteor
 
         private class ClassicMeteor
@@ -254,5 +262,6 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             }
         }
         #endregion
+        
     }
 }

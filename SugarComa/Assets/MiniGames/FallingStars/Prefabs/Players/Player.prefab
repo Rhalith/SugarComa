@@ -565,7 +565,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1789662f2f8e44f9f315d5f140212e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cam: {fileID: 0}
   _animation: {fileID: 3947062569896441645}
   _playerSpecs:
     _moveSpeed: 10
@@ -574,6 +573,9 @@ MonoBehaviour:
     _localMoveSpeed: 10
     _localRotationSpeed: 10
     _punchRatio: 3
+  _isMouseActive: 0
+  _verticalBound: 25
+  _horizontalBound: 50
 --- !u!54 &3947062569896441651
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -589,7 +591,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!136 &3947062569896441650
 CapsuleCollider:
   m_ObjectHideFlags: 0

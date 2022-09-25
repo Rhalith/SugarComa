@@ -135,6 +135,12 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
             }
         }
 
+        private float CheckBoundaries()
+        {
+            Vector3 newPos = transform.localPosition + _movementDir * _playerSpecs.MoveSpeed;
+            return Vector3.Distance(Vector3.zero, newPos);
+        }
+
         private void TranslatePlayer()
         {
             if (_movementDir.x != 0 || _movementDir.z != 0)
@@ -200,7 +206,10 @@ namespace Assets.MiniGames.FallingStars.Scripts.Player
 
         private bool SendMoveDirection()
         {
-            return SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Move, _movementDir)));
+            if (CheckBoundaries() <= 60)
+                return SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Move, _movementDir)));
+            else
+                return false;
         }
 
         /// <summary>
