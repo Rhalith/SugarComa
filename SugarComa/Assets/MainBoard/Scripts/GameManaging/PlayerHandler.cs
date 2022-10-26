@@ -156,12 +156,15 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         public void ChangeCurrentPlayer(int nextIndex)
         {
+
             int currentIndex = nextIndex - 1;
 
             if (nextIndex >= SteamLobbyManager.MemberCount)
             {
                 if (SteamLobbyManager.currentLobby.Owner.Id == SteamManager.Instance.PlayerSteamId)
                     GoToMinigame();
+
+                nextIndex = 0;
             }
             else
             {

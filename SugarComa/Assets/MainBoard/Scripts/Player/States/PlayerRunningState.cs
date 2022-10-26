@@ -93,9 +93,9 @@ namespace Assets.MainBoard.Scripts.Player.States
         // idlestate içerisindeki goblet taking metodları NullReference hatasına sebep oluyor.
         public override void Exit()
         {
+            context.PlayerCollector.CheckCurrentNode(_currentPlatform);
             if (_currentStep <= 0)
             {
-                context.PlayerCollector.CheckCurrentNode(_currentPlatform);
                 context.IsMyTurn = false;
 
                 if (_currentPlatform.spec != PlatformSpec.Goal)

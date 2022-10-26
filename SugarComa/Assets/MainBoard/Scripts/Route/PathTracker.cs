@@ -188,7 +188,7 @@ namespace Assets.MainBoard.Scripts.Route
                 {
                     UpdateCurrentPlatform();
                     OnCurrentPlatformChanged?.Invoke();
-                    selectionPass = true;
+                    selectionPass = true; 
                 }
                 else
                 {
