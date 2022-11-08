@@ -1,5 +1,9 @@
+using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Utils;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+using Steamworks;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -7,8 +11,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
     {
         private static GameManager _instance;
 
+        #region Private Fields
         private bool _isGameOver;
         private float _totalGameTime;
+        #endregion
+
+        #region Serialize Fields
         [SerializeField] private SelectionMaterial _selectionMaterial;
         [SerializeField] private PlatformTexture _platformTexture;
         [SerializeField] private GoldMeshes _goldMeshes;
@@ -17,7 +25,9 @@ namespace Assets.MainBoard.Scripts.GameManaging
         [SerializeField] private TrapMeshes _trapMeshes;
         [SerializeField] private JackpotMeshes _jackpotMeshes;
         [SerializeField] private GoalObject _goalObject;
+        #endregion
 
+        #region Properties
         public static PlatformTexture PlatformTexture
         {
             get
@@ -104,6 +114,7 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 return _instance._totalGameTime;
             }
         }
+        #endregion
 
         void Awake()
         {
@@ -115,7 +126,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
             _instance = this;
 
-            DontDestroyOnLoad(gameObject);
+            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived; ;
+        }
+
+        private void OnDisable()
+        {
+            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
         }
 
         private void Update()
@@ -123,6 +139,36 @@ namespace Assets.MainBoard.Scripts.GameManaging
             if (_isGameOver) return;
 
             _totalGameTime += Time.deltaTime;
+        }
+    
+        public void GoToMinigame()
+        {
+            bool result = SteamServerManager.Instance
+                .SendingMessageToAll(NetworkHelper.Serialize(new MiniGameNetworkData(MessageType.GoToMinigame)));
+
+            if (result)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
+
+        private void OnMessageReceived(SteamId steamid, byte[] buffer)
+        {
+            if (!NetworkHelper.TryGetMiniGameNetworkData(buffer, out MiniGameNetworkData networkData))
+            {
+                return;
+            }
+
+            switch (networkData.type)
+            {
+                case MessageType.GoToMinigame:
+                    {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    }
+                    break;
+                default:
+                    throw new System.Exception();
+            }
         }
     }
 }
