@@ -26,9 +26,6 @@ public class SteamFriendsManager : MonoBehaviour
         }
 
         _instance = this;
-
-        // TODO: Can be used for updating friend list???
-        //InvokeRepeating(nameof(ReceivingMessages), 0, 0.05f);
     }
 
     async void Start()
@@ -36,7 +33,6 @@ public class SteamFriendsManager : MonoBehaviour
         if (!SteamClient.IsValid) return;
 
         playername.text = SteamClient.Name;
-        InitFriendsAsync();
         var img = await SteamFriends.GetLargeAvatarAsync(SteamClient.SteamId);
         pp.texture = GetTextureFromImage(img.Value);
     }
@@ -59,25 +55,6 @@ public class SteamFriendsManager : MonoBehaviour
         return texture;
     }
 
-    public void InitFriendsAsync()
-    {
-        // TODO: kod tekrarını düzelt
-        // UpdateFriendList();
-
-        foreach (var friend in SteamFriends.GetFriends())
-        {
-            if (friend.IsOnline)
-            {
-                GameObject f = Instantiate(friendObj, friendsContent);
-                f.GetComponentInChildren<Text>().text = friend.Name;
-                f.GetComponent<FriendObject>().steamid = friend.Id;
-                AssingFriendImage(f, friend.Id);
-
-                FriendList.Add(friend.Id, f);
-            }
-        }
-    }
-
     // TODO: kontrol et...
     // Çevrimiçin olan arkadaşlar için bir tetikleyici yoksa bu şekilde yapılabilir ama for döngüsü yorucu...
     public void UpdateFriendList()
@@ -89,7 +66,7 @@ public class SteamFriendsManager : MonoBehaviour
                 if (!FriendList.ContainsKey(friend.Id) && !SteamLobbyManager.Instance.inLobby.ContainsKey(friend.Id))
                 {
                     GameObject f = Instantiate(friendObj, friendsContent);
-                    f.GetComponentInChildren<Text>().text = friend.Name;
+                    f.GetComponentInChildren<TMPro.TMP_Text>().text = friend.Name;
                     f.GetComponent<FriendObject>().steamid = friend.Id;
                     AssingFriendImage(f, friend.Id);
 
