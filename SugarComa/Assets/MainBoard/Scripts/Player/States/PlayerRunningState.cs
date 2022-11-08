@@ -97,8 +97,12 @@ namespace Assets.MainBoard.Scripts.Player.States
             {
                 context.PlayerCollector.CheckCurrentNode(_currentPlatform);
                 context.IsMyTurn = false;
-                PlayerTurnHandler.NextPlayer();
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+
+                if (_currentPlatform.spec != PlatformSpec.Goal)
+                {
+                    PlayerTurnHandler.NextPlayer();
+                    SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+                }
             }
 
             base.Exit();
