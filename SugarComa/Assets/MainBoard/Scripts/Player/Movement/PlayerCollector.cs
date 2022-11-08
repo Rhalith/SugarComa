@@ -40,13 +40,23 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
         public void CheckCurrentNode(Platform platform)
         {
-            switch (platform.spec)
+            if (_scriptKeeper.playerStateContext.Running.CurrentStep > 0)
             {
-                case PlatformSpec.Gold: AddGold(Random.Range(5, 8)); break;
-                case PlatformSpec.Heal: AddHealth(); break;
-                case PlatformSpec.Gift: AddItem(); break;
-                case PlatformSpec.Jackpot: RandomJackpot(5); break;
-                case PlatformSpec.Goal: GobletSelection(); break;
+                switch (platform.spec)
+                {
+                    case PlatformSpec.Goal: GobletSelection(); break;
+                }
+            }
+            else
+            {
+                switch (platform.spec)
+                {
+                    case PlatformSpec.Gold: AddGold(Random.Range(5, 8)); break;
+                    case PlatformSpec.Heal: AddHealth(); break;
+                    case PlatformSpec.Gift: AddItem(); break;
+                    case PlatformSpec.Jackpot: RandomJackpot(5); break;
+                    case PlatformSpec.Goal: GobletSelection(); break;
+                }
             }
         }
 
