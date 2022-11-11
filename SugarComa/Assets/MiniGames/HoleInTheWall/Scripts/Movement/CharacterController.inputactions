@@ -1,0 +1,84 @@
+{
+    "name": "CharacterController",
+    "maps": [
+        {
+            "name": "Movement",
+            "id": "f9a42a97-4f9d-4b61-aca3-241259c70796",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "088e0c7c-8c0e-429f-accc-6b7b2c1b0277",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "WASD",
+                    "id": "418822fb-2d81-47ce-bd6d-53bc6ec1f547",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "8ab18bad-473f-4b9b-aa3c-5e378747743f",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "58c9f59b-f878-48f0-95c7-c4084fa0feea",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "7b132416-8c9a-425e-87f7-0da2e855a885",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "30097820-9f63-4f3a-9401-eb4ed02ac674",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "TPSMovement",
+            "bindingGroup": "TPSMovement",
+            "devices": []
+        }
+    ]
+}
