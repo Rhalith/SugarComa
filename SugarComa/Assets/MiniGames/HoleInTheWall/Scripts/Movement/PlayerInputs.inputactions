@@ -1,5 +1,5 @@
 {
-    "name": "CharacterController",
+    "name": "PlayerInputs",
     "maps": [
         {
             "name": "Movement",
@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Test",
+                    "type": "Button",
+                    "id": "b0628f22-6b65-4057-9856-145c9e43cf8d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -33,7 +42,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "TPSMovement",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -44,7 +53,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "TPSMovement",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -55,7 +64,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "TPSMovement",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -66,10 +75,21 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "TPSMovement",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b6b38e4c-79af-4cf0-afd0-8e1561d6a6f2",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "TPSMovement",
+                    "action": "Test",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
