@@ -15,14 +15,12 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
+public partial class @PlayerInputs : IInputActionCollection2, IDisposable
 {
-    public partial class @PlayerInputs : IInputActionCollection2, IDisposable
+    public InputActionAsset asset { get; }
+    public @PlayerInputs()
     {
-        public InputActionAsset asset { get; }
-        public @PlayerInputs()
-        {
-            asset = InputActionAsset.FromJson(@"{
+        asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerInputs"",
     ""maps"": [
         {
@@ -39,7 +37,7 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Test"",
+                    ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""b0628f22-6b65-4057-9856-145c9e43cf8d"",
                     ""expectedControlType"": ""Button"",
@@ -111,7 +109,7 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""TPSMovement"",
-                    ""action"": ""Test"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -126,119 +124,118 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
         }
     ]
 }");
-            // Movement
-            m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
-            m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
-            m_Movement_Test = m_Movement.FindAction("Test", throwIfNotFound: true);
-        }
-
-        public void Dispose()
-        {
-            UnityEngine.Object.Destroy(asset);
-        }
-
-        public InputBinding? bindingMask
-        {
-            get => asset.bindingMask;
-            set => asset.bindingMask = value;
-        }
-
-        public ReadOnlyArray<InputDevice>? devices
-        {
-            get => asset.devices;
-            set => asset.devices = value;
-        }
-
-        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
-
-        public bool Contains(InputAction action)
-        {
-            return asset.Contains(action);
-        }
-
-        public IEnumerator<InputAction> GetEnumerator()
-        {
-            return asset.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public void Enable()
-        {
-            asset.Enable();
-        }
-
-        public void Disable()
-        {
-            asset.Disable();
-        }
-        public IEnumerable<InputBinding> bindings => asset.bindings;
-
-        public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
-        {
-            return asset.FindAction(actionNameOrId, throwIfNotFound);
-        }
-        public int FindBinding(InputBinding bindingMask, out InputAction action)
-        {
-            return asset.FindBinding(bindingMask, out action);
-        }
-
         // Movement
-        private readonly InputActionMap m_Movement;
-        private IMovementActions m_MovementActionsCallbackInterface;
-        private readonly InputAction m_Movement_Move;
-        private readonly InputAction m_Movement_Test;
-        public struct MovementActions
+        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
+        m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
+    }
+
+    public void Dispose()
+    {
+        UnityEngine.Object.Destroy(asset);
+    }
+
+    public InputBinding? bindingMask
+    {
+        get => asset.bindingMask;
+        set => asset.bindingMask = value;
+    }
+
+    public ReadOnlyArray<InputDevice>? devices
+    {
+        get => asset.devices;
+        set => asset.devices = value;
+    }
+
+    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+
+    public bool Contains(InputAction action)
+    {
+        return asset.Contains(action);
+    }
+
+    public IEnumerator<InputAction> GetEnumerator()
+    {
+        return asset.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public void Enable()
+    {
+        asset.Enable();
+    }
+
+    public void Disable()
+    {
+        asset.Disable();
+    }
+    public IEnumerable<InputBinding> bindings => asset.bindings;
+
+    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
+    {
+        return asset.FindAction(actionNameOrId, throwIfNotFound);
+    }
+    public int FindBinding(InputBinding bindingMask, out InputAction action)
+    {
+        return asset.FindBinding(bindingMask, out action);
+    }
+
+    // Movement
+    private readonly InputActionMap m_Movement;
+    private IMovementActions m_MovementActionsCallbackInterface;
+    private readonly InputAction m_Movement_Move;
+    private readonly InputAction m_Movement_Jump;
+    public struct MovementActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public MovementActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Movement_Move;
+        public InputAction @Jump => m_Wrapper.m_Movement_Jump;
+        public InputActionMap Get() { return m_Wrapper.m_Movement; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
+        public void SetCallbacks(IMovementActions instance)
         {
-            private @PlayerInputs m_Wrapper;
-            public MovementActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Move => m_Wrapper.m_Movement_Move;
-            public InputAction @Test => m_Wrapper.m_Movement_Test;
-            public InputActionMap Get() { return m_Wrapper.m_Movement; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
-            public void SetCallbacks(IMovementActions instance)
+            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
             {
-                if (m_Wrapper.m_MovementActionsCallbackInterface != null)
-                {
-                    @Move.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
-                    @Move.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
-                    @Move.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
-                    @Test.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnTest;
-                    @Test.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnTest;
-                    @Test.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnTest;
-                }
-                m_Wrapper.m_MovementActionsCallbackInterface = instance;
-                if (instance != null)
-                {
-                    @Move.started += instance.OnMove;
-                    @Move.performed += instance.OnMove;
-                    @Move.canceled += instance.OnMove;
-                    @Test.started += instance.OnTest;
-                    @Test.performed += instance.OnTest;
-                    @Test.canceled += instance.OnTest;
-                }
+                @Move.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
+            }
+            m_Wrapper.m_MovementActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
-        public MovementActions @Movement => new MovementActions(this);
-        private int m_TPSMovementSchemeIndex = -1;
-        public InputControlScheme TPSMovementScheme
+    }
+    public MovementActions @Movement => new MovementActions(this);
+    private int m_TPSMovementSchemeIndex = -1;
+    public InputControlScheme TPSMovementScheme
+    {
+        get
         {
-            get
-            {
-                if (m_TPSMovementSchemeIndex == -1) m_TPSMovementSchemeIndex = asset.FindControlSchemeIndex("TPSMovement");
-                return asset.controlSchemes[m_TPSMovementSchemeIndex];
-            }
+            if (m_TPSMovementSchemeIndex == -1) m_TPSMovementSchemeIndex = asset.FindControlSchemeIndex("TPSMovement");
+            return asset.controlSchemes[m_TPSMovementSchemeIndex];
         }
-        public interface IMovementActions
-        {
-            void OnMove(InputAction.CallbackContext context);
-            void OnTest(InputAction.CallbackContext context);
-        }
+    }
+    public interface IMovementActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

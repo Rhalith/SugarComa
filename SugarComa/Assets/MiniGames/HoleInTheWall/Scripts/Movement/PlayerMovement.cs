@@ -7,8 +7,8 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
 {
     public class PlayerMovement : MonoBehaviour
     {
-        private Vector2 _movement;
-        public void OnZattiriZortZort(InputAction.CallbackContext obj)
+        private PlayerInputs playerInputs;
+        public void OnMove(InputAction.CallbackContext obj)
         {
             print("zort");
         }
@@ -16,7 +16,13 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
         // Start is called before the first frame update
         void Start()
         {
+            playerInputs = new PlayerInputs();
+            playerInputs.Movement.Jump.performed += Move_performed;
+        }
 
+        private void Move_performed(InputAction.CallbackContext obj)
+        {
+            print(obj);
         }
 
         // Update is called once per frame

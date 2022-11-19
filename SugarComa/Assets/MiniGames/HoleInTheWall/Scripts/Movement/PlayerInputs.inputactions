@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Test",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "b0628f22-6b65-4057-9856-145c9e43cf8d",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "TPSMovement",
-                    "action": "Test",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
