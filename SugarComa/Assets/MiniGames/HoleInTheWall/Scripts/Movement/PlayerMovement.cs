@@ -10,6 +10,7 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
         [SerializeField] private float _moveSpeed;
         [SerializeField] private Transform _orientation;
         [SerializeField] private Rigidbody _rigidBody;
+        [SerializeField] private CapsuleCollider _capsuleCollider;
 
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _airMultiplier;
@@ -17,6 +18,7 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
         [SerializeField] private float _playerHeight;
         [SerializeField] private LayerMask _whatIsGround;
         private bool _isGrounded;
+        private bool _isCrouched;
 
         private Vector2 _movement;
         private Vector3 _moveDir;
@@ -38,10 +40,17 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
 
         public void OnCrouch(InputAction.CallbackContext obj)
         {
-            float localy = gameObject.transform.localScale.y;
-            if (_isGrounded && obj.performed)
+            if (_isGrounded && !_isCrouched)
             {
-                
+                _capsuleCollider.height = 1f;
+                _capsuleCollider.center = new Vector3(0, -0.5f, 0);
+                _isCrouched = true;
+            }
+            else if (_isCrouched && obj.canceled)
+            {
+                _capsuleCollider.height = 2f;
+                _capsuleCollider.center = new Vector3(0, 0f, 0);
+                _isCrouched = false;
             }
         }
 
