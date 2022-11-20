@@ -36,6 +36,15 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
             }
         }
 
+        public void OnCrouch(InputAction.CallbackContext obj)
+        {
+            float localy = gameObject.transform.localScale.y;
+            if (_isGrounded && obj.performed)
+            {
+                
+            }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -101,6 +110,11 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
             _rigidBody.velocity = new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z);
 
             _rigidBody.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
+        }
+
+        private void Crouch()
+        {
+            
         }
     }
 }
