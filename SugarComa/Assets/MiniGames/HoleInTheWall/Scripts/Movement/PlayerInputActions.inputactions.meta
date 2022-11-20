@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 11731f60a45a4f94e8de33426b2da3e8
+guid: ba0d2895cc3f2a249b616319ef362a39
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -11,4 +11,4 @@ ScriptedImporter:
   generateWrapperCode: 1
   wrapperCodePath: 
   wrapperClassName: 
-  wrapperCodeNamespace: 
+  wrapperCodeNamespace: Assets.MiniGames.HoleInTheWall.Scripts.Movement

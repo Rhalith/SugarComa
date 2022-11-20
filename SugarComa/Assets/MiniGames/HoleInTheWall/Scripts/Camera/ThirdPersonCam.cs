@@ -1,3 +1,4 @@
+using Assets.MiniGames.HoleInTheWall.Scripts.Movement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,7 @@ public class ThirdPersonCam : MonoBehaviour
 
     [SerializeField] private float _rotationSpeed;
 
-    public float HorizontalInput;
-    public float VerticalInput;
+    [SerializeField] private PlayerMovement _playerMovement;
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class ThirdPersonCam : MonoBehaviour
         Vector3 viewDir = _player.position - new Vector3(transform.position.x, _player.position.y, transform.position.z);
         _orientation.forward = viewDir.normalized;
 
-        Vector3 inputDir = _orientation.forward * VerticalInput + _orientation.right * HorizontalInput;
+        Vector3 inputDir = _orientation.forward * _playerMovement.Movement.y + _orientation.right * _playerMovement.Movement.x;
 
         if(inputDir != Vector3.zero) 
         { 
