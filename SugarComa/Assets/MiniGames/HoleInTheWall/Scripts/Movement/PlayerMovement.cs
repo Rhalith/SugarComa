@@ -1,3 +1,4 @@
+using Assets.MiniGames.HoleInTheWall.Scripts.Animations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,12 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private float _moveSpeed;
+        [SerializeField] private PlayerAnimations _animations;
         [SerializeField] private Transform _orientation;
         [SerializeField] private Rigidbody _rigidBody;
         [SerializeField] private CapsuleCollider _capsuleCollider;
 
+        [SerializeField] private float _moveSpeed;
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _airMultiplier;
         [SerializeField] private float _groundDrag;
@@ -28,6 +30,8 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
         public void OnMove(InputAction.CallbackContext obj)
         {
             _movement = obj.ReadValue<Vector2>();
+            if (obj.performed) _animations.StartRunning();
+            if (obj.canceled) _animations.StopRunning();
         }
 
         public void OnJump(InputAction.CallbackContext obj)
