@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Steamworks;
 
-namespace Assets.MainBoard.Scripts.Networking
+namespace Assets.MainBoard.Scripts.Networking.LobbyNetworking
 {
     public class LobbyFriendObject : MonoBehaviour
     {

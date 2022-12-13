@@ -1,11 +1,13 @@
-using Steamworks;
+ï»¿using Steamworks;
 using UnityEngine;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Player.Utils;
 using Assets.MainBoard.Scripts.Player.Handlers;
 using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
+using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
-public class NetworkMessageHandler : MonoBehaviour
+public class MBNetworkMessageHandler : MonoBehaviour
 {
     private RemoteScriptKeeper[] _scriptKeepers;
     private int localIndex;
@@ -30,10 +32,10 @@ public class NetworkMessageHandler : MonoBehaviour
 
     private bool IsNetworData(SteamId steamId, byte[] buffer)
     {
-        if (NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
+        if (MBNetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
         {
-            // Player'larýn kaymasýný engellemek için önceki gönderilen pozisyona eriþtiðinde player yeni pozisyon hedef olarak alýnsýn.
-            // Bunu mesajý gönderdiðimiz yerde yapabiliriz belki
+            // Player'larÄ±n kaymasÄ±nÄ± engellemek iÃ§in Ã¶nceki gÃ¶nderilen pozisyona eriÅŸtiÄŸinde player yeni pozisyon hedef olarak alÄ±nsÄ±n.
+            // Bunu mesajÄ± gÃ¶nderdiÄŸimiz yerde yapabiliriz belki
             if (networkData.type == MessageType.InputDown)
             {
                 int keeperIndex = PlayerTurnHandler.Index > localIndex ? PlayerTurnHandler.Index - 1 : PlayerTurnHandler.Index;
@@ -57,7 +59,7 @@ public class NetworkMessageHandler : MonoBehaviour
 
     private bool IsAnimationStateData(byte[] buffer)
     {
-        if (NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
+        if (MBNetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
         {
             int keeperIndex = PlayerTurnHandler.Index > localIndex ? PlayerTurnHandler.Index - 1 : PlayerTurnHandler.Index;
             _scriptKeepers[keeperIndex].playerAnimation.UpdateAnimState(animationStateData.animBoolHash);
@@ -68,7 +70,7 @@ public class NetworkMessageHandler : MonoBehaviour
 
     private bool IsPlayerSpecNetworkData(byte[] buffer)
     {
-        if (NetworkHelper.TryGetPlayerSpecData(buffer, out PlayerSpecNetworkData playerSpecData))
+        if (MBNetworkHelper.TryGetPlayerSpecData(buffer, out PlayerSpecNetworkData playerSpecData))
         {
             int keeperIndex = PlayerTurnHandler.Index > localIndex ? PlayerTurnHandler.Index - 1 : PlayerTurnHandler.Index;
             _scriptKeepers[keeperIndex].playerCollector.UpdateSpecs(playerSpecData.gold, playerSpecData.health, playerSpecData.goblet);
@@ -79,7 +81,7 @@ public class NetworkMessageHandler : MonoBehaviour
 
     private bool IsPlayerListNetworkData(byte[] buffer)
     {
-        if (NetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
+        if (MBNetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
         {
             var playerList = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
 
@@ -103,7 +105,7 @@ public class NetworkMessageHandler : MonoBehaviour
         // Players except local player
         _scriptKeepers = new RemoteScriptKeeper[PlayerTurnHandler.PlayerCount - 1];
 
-        // TODO: scriptKeeper'lar index bound olmadýðý için hatalý alýnabilir...
+        // TODO: scriptKeeper'lar index bound olmadÄ±ÄŸÄ± iÃ§in hatalÄ± alÄ±nabilir...
         int i = 0, j = 0;
         foreach (var steamId in PlayerTurnHandler.SteamIds)
         {

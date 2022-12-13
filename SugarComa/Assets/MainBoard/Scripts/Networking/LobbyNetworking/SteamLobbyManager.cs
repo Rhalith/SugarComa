@@ -1,16 +1,14 @@
 ﻿using Steamworks;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.UI;
 using Steamworks.Data;
 using UnityEngine.Events;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using Button = UnityEngine.UIElements.Button;
 using Assets.MainBoard.Scripts.Networking.Utils;
 
-namespace Assets.MainBoard.Scripts.Networking
+namespace Assets.MainBoard.Scripts.Networking.LobbyNetworking
 {
     public class SteamLobbyManager : MonoBehaviour
     {
@@ -41,6 +39,7 @@ namespace Assets.MainBoard.Scripts.Networking
         #region properties
         public static int MemberCount => currentLobby.MemberCount;
         public bool AmIHost => currentLobby.Owner.Id == steamManager.PlayerSteamId;
+        public bool AmIReady => playerInfos[steamManager.PlayerSteamId].IsReady;
         #endregion
 
         public Dictionary<SteamId, LobbyPlayerInfo> playerInfos = new Dictionary<SteamId, LobbyPlayerInfo>();
@@ -61,13 +60,11 @@ namespace Assets.MainBoard.Scripts.Networking
             steamManager = GetComponent<SteamManager>();
 
             SceneManager.activeSceneChanged += SceneManager_ActiveSceneChanged;
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
         }
 
         private void OnDisable()
         {
             SceneManager.activeSceneChanged -= SceneManager_ActiveSceneChanged;
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
         }
 
         private void Start()
@@ -93,22 +90,7 @@ namespace Assets.MainBoard.Scripts.Networking
             SteamMatchmaking.OnLobbyEntered -= OnLobbyEnteredCallBack;
             SteamMatchmaking.OnLobbyMemberJoined -= OnLobbyMemberJoinedCallBack;
             SteamFriends.OnGameLobbyJoinRequested -= OnGameLobbyJoinRequestCallBack;
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
             #endregion
-        }
-
-        public void StartGame()
-        {
-            if (Instance.playerInfos.Any((playerInfo) => !playerInfo.Value.IsReady))
-                return;
-
-            bool result = SteamServerManager.Instance
-                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.StartGame)));
-
-            if (result)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }
         }
         
         void Update()
@@ -125,69 +107,6 @@ namespace Assets.MainBoard.Scripts.Networking
             {
                 SteamFriendsManager.Instance.UpdateFriendListByFriend(friend.Id);
                 AcceptP2P(friend.Id);
-            }
-        }
-
-        public void SendReadyToAll()
-        {
-            bool result = SteamServerManager.Instance
-                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.Ready)));
-            if (result)
-            {
-                playerInfos[SteamManager.Instance.PlayerSteamId].IsReady = true;
-                inLobby[SteamManager.Instance.PlayerSteamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
-            }
-        }
-
-        // Bu değişiklikler için observer pattern kullanabilir miyiz?
-
-        public void SendUnreadyToAll()
-        {
-            bool result = SteamServerManager.Instance
-                .SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.UnReady)));
-            if (result)
-            {
-                playerInfos[SteamManager.Instance.PlayerSteamId].IsReady = false;
-                inLobby[SteamManager.Instance.PlayerSteamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
-            }
-        }
-
-        private void OnMessageReceived(SteamId steamid, byte[] buffer)
-        {
-            if (!NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
-            {
-                return;
-            }
-
-            switch (networkData.type)
-            {
-                case MessageType.Ready:
-                    {
-                        playerInfos[steamid].IsReady = true;
-                        inLobby[steamid].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
-                    }
-                    break;
-                case MessageType.UnReady:
-                    {
-                        playerInfos[steamid].IsReady = false;
-                        inLobby[steamid].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
-                    }
-                    break;
-                case MessageType.StartGame:
-                    {
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                    }
-                    break;
-                case MessageType.ReadyCheck:
-                    {
-                        if(playerInfos[steamManager.PlayerSteamId].IsReady)
-                            SteamServerManager.Instance.SendingMessage(steamid, NetworkHelper.Serialize(new NetworkData(MessageType.Ready)));
-                        else
-                            SteamServerManager.Instance.SendingMessage(steamid, NetworkHelper.Serialize(new NetworkData(MessageType.UnReady)));
-                    }
-                    break;
-                default:
-                    throw new System.Exception();
             }
         }
 
@@ -291,7 +210,7 @@ namespace Assets.MainBoard.Scripts.Networking
 
             // Update ready/unready status
             if (count > 0)
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.ReadyCheck)));
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new LobbyData(LobbyMessageType.ReadyCheck)));
         }
 
         public async void CreateLobbyAsync()
@@ -382,6 +301,25 @@ namespace Assets.MainBoard.Scripts.Networking
         public void BackToMenu()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+
+        public void UpdateLobbyFriend(SteamId steamId, LobbyMessageType updateType)
+        {
+            switch (updateType)
+            {
+                case LobbyMessageType.Ready:
+                    {
+                        playerInfos[steamId].IsReady = true;
+                        inLobby[steamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.green;
+                    }
+                    break;
+                case LobbyMessageType.UnReady:
+                    {
+                        playerInfos[steamId].IsReady = false;
+                        inLobby[steamId].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = UnityEngine.Color.red;
+                    }
+                    break;
+            }
         }
     }
 }

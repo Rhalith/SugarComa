@@ -4,6 +4,8 @@ using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Player.Utils;
 using Assets.MainBoard.Scripts.Player.Handlers;
 using Assets.MainBoard.Scripts.Networking.Utils;
+using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
+using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
 public class RemoteMessageHandler : MonoBehaviour
 {
@@ -33,7 +35,7 @@ public class RemoteMessageHandler : MonoBehaviour
     private bool IsNetworData(SteamId steamId, byte[] buffer)
     {
         // TODO: NetworkData interface'i default deðer döndürüyor hatalý olarak, bu interface'i ayýrýnca düzelmiþti...
-        if (NetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
+        if (MBNetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
         {
             // Player'larýn kaymasýný engellemek için önceki gönderilen pozisyona eriþtiðinde player yeni pozisyon hedef olarak alýnsýn.
             // Bunu mesajý gönderdiðimiz yerde yapabiliriz belki
@@ -60,7 +62,7 @@ public class RemoteMessageHandler : MonoBehaviour
 
     private bool IsAnimationStateData(byte[] buffer)
     {
-        if (NetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
+        if (MBNetworkHelper.TryGetAnimationData(buffer, out AnimationStateData animationStateData))
         {
             int keeperIndex = PlayerTurnHandler.Index > localIndex ? PlayerTurnHandler.Index - 1 : PlayerTurnHandler.Index;
             _scriptKeepers[keeperIndex].playerAnimation.UpdateAnimState(animationStateData.animBoolHash);
@@ -71,7 +73,7 @@ public class RemoteMessageHandler : MonoBehaviour
 
     private bool IsPlayerSpecNetworkData(byte[] buffer)
     {
-        if (NetworkHelper.TryGetPlayerSpecData(buffer, out PlayerSpecNetworkData playerSpecData))
+        if (MBNetworkHelper.TryGetPlayerSpecData(buffer, out PlayerSpecNetworkData playerSpecData))
         {
             int keeperIndex = PlayerTurnHandler.Index > localIndex ? PlayerTurnHandler.Index - 1 : PlayerTurnHandler.Index;
             _scriptKeepers[keeperIndex].playerCollector.UpdateSpecs(playerSpecData.gold, playerSpecData.health, playerSpecData.goblet);
@@ -82,7 +84,7 @@ public class RemoteMessageHandler : MonoBehaviour
 
     private bool IsPlayerListNetworkData(byte[] buffer)
     {
-        if (NetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
+        if (MBNetworkHelper.TryGetPlayerListData(buffer, out PlayerListNetworkData playerListData))
         {
             var playerList = NetworkHelper.ByteArrayToSteamId(playerListData.playerList);
 

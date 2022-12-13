@@ -5,6 +5,7 @@ using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
 using UnityEngine.UI;
 using UnityEngine;
+using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
 namespace Assets.MainBoard.Scripts.UI
 {

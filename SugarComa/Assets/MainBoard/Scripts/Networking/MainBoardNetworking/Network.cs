@@ -1,13 +1,11 @@
-﻿using System.Runtime.InteropServices;
+﻿using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace Assets.MainBoard.Scripts.Networking.Utils
+namespace Assets.MainBoard.Scripts.Networking.MainBoardNetworking
 {
     public enum MessageType : byte
     {
-        Ready,
-        UnReady, 
-        ReadyCheck,
         StartGame,
         InputDown,
         TurnOver,
@@ -162,5 +160,4 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
             this.type = type;
         }
     }
-
 }

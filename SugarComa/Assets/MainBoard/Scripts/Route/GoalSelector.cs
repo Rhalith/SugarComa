@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
+using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
 namespace Assets.MainBoard.Scripts.Route
 {
@@ -55,7 +56,7 @@ namespace Assets.MainBoard.Scripts.Route
 
         private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
         {
-            if (NetworkHelper.TryGetChestData(buffer, out ChestNetworkData chestData))
+            if (MBNetworkHelper.TryGetChestData(buffer, out ChestNetworkData chestData))
             {
                 CreateGoal(chestData.index);
             }

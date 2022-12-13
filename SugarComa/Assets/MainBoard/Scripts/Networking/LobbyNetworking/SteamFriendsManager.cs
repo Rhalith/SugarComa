@@ -1,4 +1,4 @@
-﻿using Assets.MainBoard.Scripts.Networking;
+﻿using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;

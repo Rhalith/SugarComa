@@ -8,6 +8,7 @@ using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.UI;
 using UnityEngine;
+using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
 namespace Assets.MainBoard.Scripts.Player.Movement
 {

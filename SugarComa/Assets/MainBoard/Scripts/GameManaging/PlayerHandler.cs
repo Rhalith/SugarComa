@@ -2,6 +2,7 @@ using TMPro;
 using Steamworks;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Player.Items;
@@ -12,7 +13,8 @@ using Assets.MainBoard.Scripts.Utils.CamUtils;
 using Assets.MainBoard.Scripts.Player.Movement;
 using Assets.MainBoard.Scripts.Player.Handlers;
 using Assets.MainBoard.Scripts.Networking.Utils;
-using UnityEngine.SceneManagement;
+using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
+using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
 namespace Assets.MainBoard.Scripts.GameManaging
 {
@@ -128,12 +130,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
         private void OnMessageReceived(SteamId steamid, byte[] buffer)
         {
-            if (NetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
+            if (MBNetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
             {
                 PlayerTurnHandler.NextPlayer();
                 ChangeCurrentPlayer(PlayerTurnHandler.Index);
             }
-            else if (!NetworkHelper.TryGetMiniGameNetworkData(buffer, out MiniGameNetworkData minigameNetworkData))
+            else if (!MBNetworkHelper.TryGetMiniGameNetworkData(buffer, out MiniGameNetworkData minigameNetworkData))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }

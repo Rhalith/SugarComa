@@ -1,3 +1,4 @@
+using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
 using Steamworks;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Assets.MainBoard.Scripts.Networking
     {
         public static SteamServerManager _instance;
         public static SteamServerManager Instance => _instance;
+
+        public float sendMessageRepeatingTime = 0.05f;
 
         public delegate void MessageReceivedHandler(SteamId steamid, byte[] buffer);
         public delegate void GameStartedHandler();
@@ -24,7 +27,7 @@ namespace Assets.MainBoard.Scripts.Networking
 
             _instance = this;
             DontDestroyOnLoad(this);
-            InvokeRepeating(nameof(ReceivingMessages), 0, 0.05f);
+            InvokeRepeating(nameof(ReceivingMessages), 0, sendMessageRepeatingTime);
         }
 
         public bool SendingMessage(SteamId targetSteamId, byte[] buffer)

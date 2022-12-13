@@ -1,14 +1,12 @@
+using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
+using Assets.MainBoard.Scripts.Networking.Utils;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace Assets.MainBoard.Scripts.Networking.Utils
+namespace Assets.MainBoard.Scripts.Networking.MainBoardNetworking
 {
     public enum MessageType2 : byte
     {
-        Ready,
-        UnReady,
-        ReadyCheck,
-        StartGame,
         InputDown,
         TurnOver,
         CreatePlayers,
@@ -68,11 +66,19 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         public int animBoolHash;
         */
 
-        public byte[] _buffer;
+        private byte[] _buffer;
+
+        public byte[] Buffer => _buffer;
+
+        public NetworkData2(MessageType2 messageType)
+        {
+            // Q: Boyutu dinamik olarak nasýl verebiliriz?
+            _buffer = new byte[112];
+        }
 
         /*
-        // NetworkId static diye parametre olarak kullanýlamýyor...
-        // Bunun yerine messagetype kullanýlabilir?
+        // NetworkId static diye parametre olarak kullanýlamýyor.
+        // Bunun yerine messagetype kullanýlabilir mi?
         public void ChangeMessageId(NetworkId id)
         {
             this.id = id;
@@ -93,7 +99,7 @@ namespace Assets.MainBoard.Scripts.Networking.Utils
         {
             int length = Marshal.SizeOf<ulong>() *  SteamLobbyManager.MemberCount;
 
-            byte[] tempArr = NetworkHelperNew.SteamIdToByteArray(playerList);
+            byte[] tempArr = NetworkHelper.SteamIdToByteArray(playerList);
             // Temp'i buffer'a at
             System.Array.Copy(tempArr, 0, _buffer, 32, length);
         }

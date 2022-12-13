@@ -1,7 +1,7 @@
 using Steamworks;
 using UnityEngine;
 
-namespace Assets.MainBoard.Scripts.Networking.Utils
+namespace Assets.MainBoard.Scripts.Networking.LobbyNetworking
 {
     public class LobbyPlayerInfo
     {
