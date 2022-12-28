@@ -1,6 +1,7 @@
 using Assets.MainBoard.Scripts.Utils.InventorySystem;
 using Assets.MainBoard.Scripts.Player.States;
 using UnityEngine;
+using Assets.MiniGames.HoleInTheWall.Scripts.Obstacles;
 
 namespace Assets.MainBoard.Scripts.Player.Items
 {

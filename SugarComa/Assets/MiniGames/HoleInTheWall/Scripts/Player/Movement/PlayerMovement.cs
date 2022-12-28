@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
+namespace Assets.MiniGames.HoleInTheWall.Scripts.Player.Movement
 {
     public class PlayerMovement : MonoBehaviour
     {

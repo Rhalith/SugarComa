@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace Assets.MiniGames.HoleInTheWall.Scripts.Movement
+namespace Assets.MiniGames.HoleInTheWall.Scripts.Player.Movement
 {
     public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {

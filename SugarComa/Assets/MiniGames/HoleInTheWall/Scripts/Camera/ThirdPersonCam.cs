@@ -1,4 +1,4 @@
-using Assets.MiniGames.HoleInTheWall.Scripts.Movement;
+using Assets.MiniGames.HoleInTheWall.Scripts.Player.Movement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
