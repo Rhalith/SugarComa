@@ -44,18 +44,7 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Player.Movement
 
         public void OnCrouch(InputAction.CallbackContext obj)
         {
-            if (_isGrounded && !_isCrouched)
-            {
-                _capsuleCollider.height = 2f;
-                _capsuleCollider.center = new Vector3(0, 1f, 0);
-                _isCrouched = true;
-            }
-            else if (_isCrouched && obj.canceled)
-            {
-                _capsuleCollider.height = 4f;
-                _capsuleCollider.center = new Vector3(0, 2f, 0);
-                _isCrouched = false;
-            }
+            Crouch(obj);
         }
 
         // Start is called before the first frame update
@@ -125,9 +114,20 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Player.Movement
             _rigidBody.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
         }
 
-        private void Crouch()
+        private void Crouch(InputAction.CallbackContext obj)
         {
-            
+            if (_isGrounded && !_isCrouched)
+            {
+                _capsuleCollider.height = 2f;
+                _capsuleCollider.center = new Vector3(0, 1f, 0);
+                _isCrouched = true;
+            }
+            else if (_isCrouched && obj.canceled)
+            {
+                _capsuleCollider.height = 4f;
+                _capsuleCollider.center = new Vector3(0, 2f, 0);
+                _isCrouched = false;
+            }
         }
     }
 }
