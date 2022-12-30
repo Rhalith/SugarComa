@@ -496,10 +496,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.74856186
-  m_Height: 4.2
+  m_Radius: 0.75
+  m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: 2.1, z: 0.099104404}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!95 &346804503
 Animator:
   serializedVersion: 4
@@ -2020,7 +2020,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1107837665}
-  m_LocalRotation: {x: 0.14256498, y: -0.00000001703063, z: 0.0000000024530273, w: 0.9897855}
+  m_LocalRotation: {x: 0.14256498, y: 0.000000017030622, z: -0.0000000024530264, w: 0.9897855}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2523,7 +2523,7 @@ MonoBehaviour:
   m_BindingMode: 4
   m_SplineCurvature: 0.3
   m_Orbits:
-  - m_Height: 8
+  - m_Height: 9.5
     m_Radius: 7
   - m_Height: 4.5
     m_Radius: 12
@@ -2898,7 +2898,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997323427}
-  m_LocalRotation: {x: 0.12339127, y: 0.000000004778184, z: -4.6729853e-10, w: 0.9923581}
+  m_LocalRotation: {x: 0.12339127, y: 0.0000000047782107, z: -4.6750837e-10, w: 0.9923581}
   m_LocalPosition: {x: 3.7864592, y: 16.417599, z: 52.690624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
