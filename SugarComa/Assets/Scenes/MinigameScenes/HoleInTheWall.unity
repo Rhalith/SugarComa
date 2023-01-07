@@ -192,7 +192,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 73363500}
-  m_LocalRotation: {x: 0.12339128, y: -0.0000000042687227, z: 5.3077936e-10, w: 0.9923581}
+  m_LocalRotation: {x: 0.12339128, y: 0.0000000042687227, z: -5.3077936e-10, w: 0.9923581}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -535,7 +535,9 @@ MonoBehaviour:
   _jump: 0
   _run: 0
   _dead: 0
+  _slide: 0
   _animator: {fileID: 346804503}
+  _playerSlide: {fileID: 346804506}
 --- !u!114 &346804505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,6 +552,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 1052839314}
   _player: {fileID: 1055809456}
+--- !u!114 &346804506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346804501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225e71ad6046a1c42b10eba4c001b29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerMovement: {fileID: 1055809459}
 --- !u!1 &397997011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1154,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791531512}
-  m_LocalRotation: {x: 0.17842482, y: -0.000000008465139, z: 0.0000000015350227, w: 0.98395354}
+  m_LocalRotation: {x: 0.1784248, y: 0.000000008465139, z: -0.0000000015350226, w: 0.98395354}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2898,7 +2913,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997323427}
-  m_LocalRotation: {x: 0.12339127, y: -0.000000004778184, z: 4.672983e-10, w: 0.9923581}
+  m_LocalRotation: {x: 0.12339127, y: 0.0000000047782107, z: -4.6750837e-10, w: 0.9923581}
   m_LocalPosition: {x: 3.7864592, y: 16.417599, z: 52.690624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

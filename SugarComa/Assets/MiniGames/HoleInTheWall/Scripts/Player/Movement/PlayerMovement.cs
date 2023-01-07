@@ -26,6 +26,8 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Player.Movement
         private Vector3 _moveDir;
 
         public Vector2 Movement { get => _movement; }
+        public CapsuleCollider CapsuleCollider { get => _capsuleCollider; }
+        public bool IsCrouched { get => _isCrouched; set => _isCrouched = value; }
 
         public void OnMove(InputAction.CallbackContext obj)
         {
@@ -118,15 +120,7 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Player.Movement
         {
             if (_isGrounded && !_isCrouched)
             {
-                _capsuleCollider.height = 2f;
-                _capsuleCollider.center = new Vector3(0, 1f, 0);
-                _isCrouched = true;
-            }
-            else if (_isCrouched && obj.canceled)
-            {
-                _capsuleCollider.height = 4f;
-                _capsuleCollider.center = new Vector3(0, 2f, 0);
-                _isCrouched = false;
+                _animations.StartSliding();
             }
         }
     }
