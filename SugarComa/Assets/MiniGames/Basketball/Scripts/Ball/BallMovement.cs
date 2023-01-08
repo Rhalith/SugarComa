@@ -10,6 +10,7 @@ public class BallMovement : MonoBehaviour
     void Start()
     {
         _rigidBody.AddForce(_vector * _velocity, ForceMode.Impulse);
+        _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
     }
 
 }
