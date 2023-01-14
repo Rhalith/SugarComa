@@ -6,7 +6,12 @@ namespace Assets.MiniGames.Basketball.Scripts
 {
     public class PlayerSpecs : MonoBehaviour
     {
-
+        
     }
-
+    public enum PlayerState
+    {
+        Aiming,
+        Shooting,
+        Waiting
+    }
 }

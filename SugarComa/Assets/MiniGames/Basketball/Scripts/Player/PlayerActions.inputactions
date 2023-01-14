@@ -7,12 +7,12 @@
             "actions": [
                 {
                     "name": "Throw",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "3c0505e3-a22a-4463-a863-308793218af2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

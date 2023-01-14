@@ -2,15 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallMovement : MonoBehaviour
+namespace Assets.MiniGames.Basketball.Scripts.Ball
 {
-    [SerializeField] Rigidbody _rigidBody;
-    [SerializeField] Vector3 _vector;
-    [SerializeField] float _velocity;
-    void Start()
+    public class BallMovement : MonoBehaviour
     {
-        _rigidBody.AddForce(_vector * _velocity, ForceMode.Impulse);
-        _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
-    }
+        [SerializeField] private BallManager _ballManager;
+        [SerializeField] private Rigidbody _rigidBody;
+        [SerializeField] private Vector3 _vector;
+        [SerializeField] private float _velocity;
+        public void ThrowBall()
+        {
+            _rigidBody.isKinematic = false;
+            _rigidBody.AddForce(_vector * _velocity, ForceMode.Impulse);
+            _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
+            _ballManager.ChangePlayerState(PlayerState.Waiting);
+        }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (!collision.gameObject.CompareTag("Player"))
+            {
+                _ballManager.ChangePlayerState(PlayerState.Aiming);
+            }
+        }
+
+    }
 }

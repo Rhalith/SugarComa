@@ -35,6 +35,7 @@ namespace Assets.MiniGames.Basketball.Scripts
         public void Throw()
         {
             ThrowSet(1);
+            AimSet(0);
         }
         public void ThrowFalse()
         {
