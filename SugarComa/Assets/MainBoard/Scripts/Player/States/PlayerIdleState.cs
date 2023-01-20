@@ -133,9 +133,8 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             if (context.Running.CurrentStep == 0)
             {
-                // Bunları genel bir dosyada metoda al
-                PlayerTurnHandler.NextPlayer();
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+                // Turn Over
+                SendTurnOverMessage();
             }
             else
                 SwitchState(context.Running);
@@ -149,10 +148,12 @@ namespace Assets.MainBoard.Scripts.Player.States
             _currentStep = 0;
 
             // Turn Over
-            context.IsMyTurn = false;
+            SendTurnOverMessage();
+        }
 
-            PlayerTurnHandler.NextPlayer();
-            SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+        private void SendTurnOverMessage()
+        {
+            RemoteMessageHandler.Instance.SendTurnOver(context);
         }
         #endregion
 

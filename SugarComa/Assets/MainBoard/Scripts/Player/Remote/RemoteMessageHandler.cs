@@ -1,9 +1,11 @@
 using Steamworks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Assets.MainBoard.Scripts.Route;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Player.Utils;
 using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Player.States;
 using Assets.MainBoard.Scripts.Player.Handlers;
 using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
@@ -11,12 +13,25 @@ using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
 public class RemoteMessageHandler : MonoBehaviour
 {
+    private static RemoteMessageHandler _instance;
+    public static RemoteMessageHandler Instance => _instance;
+
+
     public PlayerHandler playerHandler;
+    public GoalSelector goalSelector;
     private RemoteScriptKeeper[] _scriptKeepers;
     public int localIndex;
 
     private void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            DestroyImmediate(this);
+            return;
+        }
+
+        _instance = this;
+
         SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
     }
 
@@ -25,19 +40,21 @@ public class RemoteMessageHandler : MonoBehaviour
         SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
     }
 
+    #region Receivers
     private void OnMessageReceived(SteamId steamId, byte[] buffer)
     {
         Debug.Log(PlayerTurnHandler.Index);
 
-        if (IsNetworData(steamId, buffer)) return;
+        if (IsNetworkData(steamId, buffer)) return;
         if (IsAnimationStateData(buffer)) return;
         if (IsPlayerSpecNetworkData(buffer)) return;
         if (IsPlayerListNetworkData(buffer)) return;
         if (IsTurnOverNetworkData(buffer)) return;
         if (IsMiniGameNetworkData(buffer)) return;
+        if (IsChestNetworkData(buffer)) return;
     }
 
-    private bool IsNetworData(SteamId steamId, byte[] buffer)
+    private bool IsNetworkData(SteamId steamId, byte[] buffer)
     {
         // TODO: NetworkData interface'i default deðer döndürüyor hatalý olarak, bu interface'i ayýrýnca düzelmiþti...
         if (MBNetworkHelper.TryGetNetworkData(buffer, out NetworkData networkData))
@@ -134,6 +151,34 @@ public class RemoteMessageHandler : MonoBehaviour
         return false;
     }
 
+    private bool IsChestNetworkData(byte[] buffer)
+    {
+        if (MBNetworkHelper.TryGetChestData(buffer, out ChestNetworkData chestData))
+        {
+            goalSelector.CreateGoal(chestData.index);
+
+            return true;
+        }
+        return false;
+    }
+    #endregion
+
+    #region Senders
+    public void SendTurnOver(PlayerStateContext context)
+    {
+        // Inside IsMyTurn ChangeCurrentPlayer called, if it is false.
+        context.IsMyTurn = false;
+        PlayerTurnHandler.NextPlayer();
+        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+    }
+
+    public bool SendNewChestIndex(int index)
+    {
+        //return SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
+        return SteamServerManager.Instance.SendingMessage(SteamManager.Instance.PlayerSteamId, NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
+    }
+
+    #endregion
     public void UpdateRemoteScriptKeeper()
     {
         // Players except local player

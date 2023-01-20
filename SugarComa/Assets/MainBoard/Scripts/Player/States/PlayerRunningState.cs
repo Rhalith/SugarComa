@@ -91,13 +91,10 @@ namespace Assets.MainBoard.Scripts.Player.States
             context.PlayerCollector.CheckCurrentNode(_currentPlatform);
             if (_currentStep <= 0)
             {
-                // IsMyTurn içindeki index ile PlayerTurnHandler içindeki index'i eşle
-                context.IsMyTurn = false;
-
                 if (_currentPlatform.spec != PlatformSpec.Goal)
                 {
-                    PlayerTurnHandler.NextPlayer();
-                    SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
+                    // IsMyTurn içindeki index ile PlayerTurnHandler içindeki index'i eşle
+                    RemoteMessageHandler.Instance.SendTurnOver(context);
                 }
             }
 

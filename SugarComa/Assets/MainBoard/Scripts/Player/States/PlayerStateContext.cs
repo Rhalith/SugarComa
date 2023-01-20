@@ -60,6 +60,7 @@ namespace Assets.MainBoard.Scripts.Player.States
                 if (!value)
                 {
                     _playerIdle.Dice.Exit();
+                    // Switchs Cam
                     _playerHandler.ChangeCurrentPlayer((byte)(NetworkManager.Instance.Index + 1));
                 }
             } 

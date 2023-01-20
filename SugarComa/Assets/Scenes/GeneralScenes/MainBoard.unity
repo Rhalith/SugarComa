@@ -174,7 +174,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773513, y: 1}
+    m_SensorSize: {x: 1.7777779, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -8420,6 +8420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHandler: {fileID: 1222331013}
+  goalSelector: {fileID: 1970712952}
   localIndex: 0
 --- !u!1001 &1226529639
 PrefabInstance:
@@ -13285,7 +13286,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773513, y: 1}
+    m_SensorSize: {x: 1.7777779, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

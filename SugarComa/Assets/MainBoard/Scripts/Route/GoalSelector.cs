@@ -44,24 +44,6 @@ namespace Assets.MainBoard.Scripts.Route
         public static bool isAnyGoalPlatform;
         #endregion
 
-        private void Awake()
-        {
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-        }
-
-        private void OnDestroy()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-        }
-
-        private void OnMessageReceived(Steamworks.SteamId steamid, byte[] buffer)
-        {
-            if (MBNetworkHelper.TryGetChestData(buffer, out ChestNetworkData chestData))
-            {
-                CreateGoal(chestData.index);
-            }
-        }
-
         public void RandomGoalSelect()
         {
             int index = Random.Range(0, platforms.Count);
@@ -73,10 +55,14 @@ namespace Assets.MainBoard.Scripts.Route
                 {
                     RandomGoalSelect();
                 }
+                else
+                {
+                    bool result = RemoteMessageHandler.Instance.SendNewChestIndex(index);
 
-                bool result = SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
 
-                if (result) CreateGoal(index);
+                    //if (result)
+                    //    CreateGoal(index);
+                }
             }
             else
             {
@@ -84,7 +70,7 @@ namespace Assets.MainBoard.Scripts.Route
             }
         }
 
-        private void CreateGoal(int index)
+        public void CreateGoal(int index)
         {
             platforms[index].spec = PlatformSpec.Goal;
             CreateGoalObject(platforms[index]);

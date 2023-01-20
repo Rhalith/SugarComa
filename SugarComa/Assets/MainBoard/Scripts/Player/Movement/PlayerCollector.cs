@@ -75,6 +75,7 @@ namespace Assets.MainBoard.Scripts.Player.Movement
 
             _gameController.ChangeText();
         }
+
         /// <summary>
         /// Adding health, if value is null it will full the health.
         /// </summary>
