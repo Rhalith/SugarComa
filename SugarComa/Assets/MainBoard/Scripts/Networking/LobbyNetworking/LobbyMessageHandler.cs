@@ -70,6 +70,7 @@ public class LobbyMessageHandler : MonoBehaviour
     {
         bool result = SteamServerManager.Instance
             .SendingMessageToAll(NetworkHelper.Serialize(new LobbyData(LobbyMessageType.Ready)));
+
         if (result)
         {
             steamLobbyManager.UpdateLobbyFriend(SteamManager.Instance.PlayerSteamId, LobbyMessageType.Ready);    
@@ -80,6 +81,7 @@ public class LobbyMessageHandler : MonoBehaviour
     {
         bool result = SteamServerManager.Instance
             .SendingMessageToAll(NetworkHelper.Serialize(new LobbyData(LobbyMessageType.UnReady)));
+
         if (result)
         {
             steamLobbyManager.UpdateLobbyFriend(SteamManager.Instance.PlayerSteamId, LobbyMessageType.UnReady);

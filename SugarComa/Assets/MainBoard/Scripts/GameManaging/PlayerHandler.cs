@@ -66,16 +66,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
             _instance = this;
         }
 
-        private void Start()
-        {
-            SteamServerManager.Instance.OnMessageReceived += OnMessageReceived;
-        }
-
-        private void OnDestroy()
-        {
-            SteamServerManager.Instance.OnMessageReceived -= OnMessageReceived;
-        }
-
         /// <summary>
         /// Creates player.
         /// </summary>
@@ -106,9 +96,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
 
                 GameObject stone = _createdObject.transform.GetChild(1).gameObject;
 
-                _createdObject.transform.position = new Vector3(0, 0, 0);
-                stone.transform.position = new Vector3(0, 0.25f, 0);
-
                 RemoteScriptKeeper RemoteScKeeper = _createdObject.GetComponent<RemoteScriptKeeper>();
                 stone.GetComponent<RemotePlayerCollector>().GameController = _gameController;
 
@@ -125,19 +112,6 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 scKeeper.playerGold.text = "Gold: 50";
                 scKeeper.playerHealth.text = "Health: 25";
                 scKeeper.playerGoblet.text = "Goblet: 0";
-            }
-        }
-
-        private void OnMessageReceived(SteamId steamid, byte[] buffer)
-        {
-            if (MBNetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnNetworkData))
-            {
-                PlayerTurnHandler.NextPlayer();
-                ChangeCurrentPlayer(PlayerTurnHandler.Index);
-            }
-            else if (!MBNetworkHelper.TryGetMiniGameNetworkData(buffer, out MiniGameNetworkData minigameNetworkData))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
 
@@ -158,32 +132,28 @@ namespace Assets.MainBoard.Scripts.GameManaging
         /// </summary>
         public void ChangeCurrentPlayer(int nextIndex)
         {
-
-            int currentIndex = nextIndex - 1;
+            int currentIndex = nextIndex <= 0 ? SteamLobbyManager.MemberCount - 1 : nextIndex - 1;
 
             if (nextIndex >= SteamLobbyManager.MemberCount)
             {
+                /*
                 if (SteamLobbyManager.currentLobby.Owner.Id == SteamManager.Instance.PlayerSteamId)
                     GoToMinigame();
-
+                */
                 nextIndex = 0;
             }
-            else
+
+            if (NetworkManager.Instance.Index == nextIndex)
             {
-                if (nextIndex == 0) currentIndex = SteamLobbyManager.MemberCount - 1;
+                mainPlayerStateContext.IsMyTurn = true;
 
-                if (NetworkManager.Instance.Index == nextIndex)
-                {
-                    mainPlayerStateContext.IsMyTurn = true;
-
-                    mainPlayerStateContext.Idle.CheckTurnForDice();
-                }
-
-                CinemachineVirtualCamera current = GetCinemachineVirtualCamera(currentIndex);
-                CinemachineVirtualCamera next = GetCinemachineVirtualCamera(nextIndex);
-
-                ChangeCamPriority(current, next);
+                mainPlayerStateContext.Idle.CheckTurnForDice();
             }
+
+            CinemachineVirtualCamera current = GetCinemachineVirtualCamera(currentIndex);
+            CinemachineVirtualCamera next = GetCinemachineVirtualCamera(nextIndex);
+
+            ChangeCamPriority(current, next);
         }
 
         /// <summary>

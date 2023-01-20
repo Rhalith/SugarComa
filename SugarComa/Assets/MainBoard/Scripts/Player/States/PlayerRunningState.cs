@@ -45,23 +45,17 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
         }
 
+        /// <summary>
+        /// Test edilecek: Öncesinde current.next yollanıyordu. Şu haliyle çalışmakta şu an için.
+        /// </summary>
         private void OnCurrentPlatformChanged()
         {
             var current = _pathTracker.CurrentPlatform;
             if (current != null)
             {
-                if (_pathTracker.Next != null)
-                {
-                    NetworkData networkData =
-                        new NetworkData(MessageType.InputDown, _pathTracker.Next.position);
-                    SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
-                }
-                else
-                {
-                    NetworkData networkData =
+                NetworkData networkData =
                         new NetworkData(MessageType.InputDown, current.position);
-                    SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
-                }
+                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
 
                 _currentPlatform = current;
                 CurrentStep--;
@@ -97,6 +91,7 @@ namespace Assets.MainBoard.Scripts.Player.States
             context.PlayerCollector.CheckCurrentNode(_currentPlatform);
             if (_currentStep <= 0)
             {
+                // IsMyTurn içindeki index ile PlayerTurnHandler içindeki index'i eşle
                 context.IsMyTurn = false;
 
                 if (_currentPlatform.spec != PlatformSpec.Goal)

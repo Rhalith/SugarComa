@@ -120,7 +120,6 @@ namespace Assets.MainBoard.Scripts.Route
             }
 
             isMoving = true;
-            NextPlatform();
             OnTrackingStarted?.Invoke();
         }
 
@@ -141,13 +140,15 @@ namespace Assets.MainBoard.Scripts.Route
             _spec = specification;
 
             isMoving = true;
-            NextPlatform();
             OnTrackingStarted?.Invoke();
         }
 
+        private void Awake()
+        {
+            _currentPosition = transform.position;
+        }
 
         // Multiplayer hareket için burayı kullanıyoz, ayrı bir fonksiyon açılabilir.
-
         private void Update()
         {
             if (!isMoving) return;

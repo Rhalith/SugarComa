@@ -51,6 +51,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         public override void Enter()
         {
+            // Turn değiştikten sonra, base enter'da tekrar mesaj yolluyoruz. Index değiştiği için hatalı yapılıyor.
             base.Enter();
             _currentStep = context.Running.CurrentStep;
             _currentPlatform = context.Running.CurrentPlatform;
@@ -149,6 +150,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
             // Turn Over
             context.IsMyTurn = false;
+
             PlayerTurnHandler.NextPlayer();
             SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new TurnNetworkData(MessageType.TurnOver)));
         }

@@ -1,7 +1,9 @@
 using Steamworks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Assets.MainBoard.Scripts.Networking;
 using Assets.MainBoard.Scripts.Player.Utils;
+using Assets.MainBoard.Scripts.GameManaging;
 using Assets.MainBoard.Scripts.Player.Handlers;
 using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
@@ -9,8 +11,9 @@ using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
 public class RemoteMessageHandler : MonoBehaviour
 {
+    public PlayerHandler playerHandler;
     private RemoteScriptKeeper[] _scriptKeepers;
-    private int localIndex;
+    public int localIndex;
 
     private void Awake()
     {
@@ -30,6 +33,8 @@ public class RemoteMessageHandler : MonoBehaviour
         if (IsAnimationStateData(buffer)) return;
         if (IsPlayerSpecNetworkData(buffer)) return;
         if (IsPlayerListNetworkData(buffer)) return;
+        if (IsTurnOverNetworkData(buffer)) return;
+        if (IsMiniGameNetworkData(buffer)) return;
     }
 
     private bool IsNetworData(SteamId steamId, byte[] buffer)
@@ -81,6 +86,28 @@ public class RemoteMessageHandler : MonoBehaviour
         }
         return false;
     }
+    
+    private bool IsTurnOverNetworkData(byte[] buffer)
+    {
+        if (MBNetworkHelper.TryGetTurnNetworkData(buffer, out TurnNetworkData turnData))
+        {
+            PlayerTurnHandler.NextPlayer();
+            playerHandler.ChangeCurrentPlayer(PlayerTurnHandler.Index);
+
+            return true;
+        }
+        return false;
+    }
+    
+    private bool IsMiniGameNetworkData(byte[] buffer)
+    {
+        if (MBNetworkHelper.TryGetMiniGameNetworkData(buffer, out MiniGameNetworkData minigameData))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            return true;
+        }
+        return false;
+    }
 
     private bool IsPlayerListNetworkData(byte[] buffer)
     {
@@ -98,6 +125,10 @@ public class RemoteMessageHandler : MonoBehaviour
             }
 
             UpdateRemoteScriptKeeper();
+
+            var camera = playerHandler.GetCinemachineVirtualCamera(0);
+            camera.Priority = 2;
+
             return true;
         }
         return false;

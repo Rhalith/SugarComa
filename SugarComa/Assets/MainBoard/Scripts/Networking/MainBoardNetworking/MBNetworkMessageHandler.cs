@@ -7,6 +7,7 @@ using Assets.MainBoard.Scripts.Networking.Utils;
 using Assets.MainBoard.Scripts.Networking.LobbyNetworking;
 using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
 
+// NEW NETWORK HANDLER. WILL USE INSTEAD OF REMOTEMESSAGEHANDLER...
 public class MBNetworkMessageHandler : MonoBehaviour
 {
     private RemoteScriptKeeper[] _scriptKeepers;
@@ -95,6 +96,11 @@ public class MBNetworkMessageHandler : MonoBehaviour
             }
 
             UpdateRemoteScriptKeeper();
+            /*
+            var camera = playerHandler.GetCinemachineVirtualCamera(0);
+            camera.Priority = 2;
+            */
+
             return true;
         }
         return false;
