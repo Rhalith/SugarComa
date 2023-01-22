@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SliderbarMovement : MonoBehaviour
 {
-    [SerializeField] private RectTransform _rectTransform;
+    [SerializeField] private Transform _transform;
     [SerializeField] private float _speed;
     [SerializeField] private bool _isStopped;
     [SerializeField] private bool _isLeft;
@@ -13,13 +13,13 @@ public class SliderbarMovement : MonoBehaviour
 
     public BarState GetBarPosition()
     {
-        switch (_rectTransform.anchoredPosition3D.x)
+        switch (_transform.position.x)
         {
-            case float n when(-200 < n && n < 200):
+            case float n when(-0.213f < n && n < 0.213f):
                 return BarState.Green;
-            case float n when ((200 < n && n < 700) || (-700 < n && n < -200)):
+            case float n when ((0.213f < n && n < 0.746f) || (-0.746f < n && n < -200)):
                 return BarState.Yellow;
-            case float n when ((700 < n && n < 1050) || (-1050 < n && n < -700)):
+            case float n when ((0.746f < n && n < 1.12f) || (-1.12f < n && n < -0.746f)):
                 return BarState.Red;
             default:
                 return BarState.Red;
@@ -35,8 +35,8 @@ public class SliderbarMovement : MonoBehaviour
     {
         if (!_isStopped)
         {
-            if (_rectTransform.anchoredPosition3D.x <= -1050) _isLeft = false;
-            if (_rectTransform.anchoredPosition3D.x >= 1050) _isLeft = true;
+            if (_transform.position.x <= -1.12f) _isLeft = false;
+            if (_transform.position.x >= 1.12f) _isLeft = true;
             if (_isLeft) MoveToLeft();
             else MoveToRight();
         }
@@ -44,12 +44,12 @@ public class SliderbarMovement : MonoBehaviour
 
     private void MoveToLeft()
     {
-        _rectTransform.anchoredPosition3D = new Vector3(_rectTransform.anchoredPosition3D.x - (10 * _speed), _rectTransform.anchoredPosition3D.y, _rectTransform.anchoredPosition3D.z);
+        _transform.position = new Vector3(_transform.position.x - (0.005f * _speed), _transform.position.y, _transform.position.z);
     }
 
     private void MoveToRight()
     {
-        _rectTransform.anchoredPosition3D = new Vector3(_rectTransform.anchoredPosition3D.x + (10 * _speed), _rectTransform.anchoredPosition3D.y, _rectTransform.anchoredPosition3D.z);
+        _transform.position = new Vector3(_transform.position.x + (0.005f * _speed), _transform.position.y, _transform.position.z);
     }
 }
 
