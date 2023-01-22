@@ -6,10 +6,12 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
 {
     public class BallManager : MonoBehaviour
     {
+        [SerializeField] private SliderbarMovement _slideBar;
         [SerializeField] private PlayerManager _playerManager;
         [SerializeField] private List<BallMovement> _balls;
 
         public List<BallMovement> Balls { get => _balls; }
+        public SliderbarMovement SlideBar { get => _slideBar; }
 
         public void ChangePlayerState(PlayerState playerState)
         {
