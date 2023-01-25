@@ -14,7 +14,7 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         {
             _rigidBody.isKinematic = false;
             _ballManager.ChangePlayerState(PlayerState.Waiting);
-            CheckBarState(_ballManager.SlideBar.GetBarPosition());
+            CheckBarState(_ballManager.SlideBar.GetBarPosition(), _ballManager.BallShots);
         }
 
         public void ResetBall()
@@ -31,20 +31,20 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
             }
         }
 
-        private void CheckBarState(BarState barState)
+        private void CheckBarState(BarState barState, BallShots ballShots)
         {
             switch (barState)
             {
                 case BarState.Green:
-                    _rigidBody.AddForce(_vector * _velocity, ForceMode.Impulse);
+                    _rigidBody.AddForce(ballShots.GetGoal() * _velocity, ForceMode.Impulse);
                     _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
                     break;
                 case BarState.Yellow:
-                    _rigidBody.AddForce(_vector * _velocity * 1.2f, ForceMode.Impulse);
+                    _rigidBody.AddForce(ballShots.GetAirBall() * _velocity, ForceMode.Impulse);
                     _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
                     break;
                 case BarState.Red:
-                    _rigidBody.AddForce(_vector * _velocity * 1.4f, ForceMode.Impulse);
+                    _rigidBody.AddForce(ballShots.GetBrick() * _velocity, ForceMode.Impulse);
                     _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
                     break;
             }

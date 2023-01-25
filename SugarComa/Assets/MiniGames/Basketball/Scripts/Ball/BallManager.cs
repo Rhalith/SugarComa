@@ -10,8 +10,16 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         [SerializeField] private PlayerManager _playerManager;
         [SerializeField] private List<BallMovement> _balls;
 
+        private BallShots _ballShots;
+
         public List<BallMovement> Balls { get => _balls; }
         public SliderbarMovement SlideBar { get => _slideBar; }
+        public BallShots BallShots { get => _ballShots; }
+
+        private void Start()
+        {
+            _ballShots = new BallShots();
+        }
 
         public void ChangePlayerState(PlayerState playerState)
         {
