@@ -17,5 +17,9 @@ public class BasketballEditor : Editor
             {
                 myScript.ResetBall();
             }
+            else if (GUILayout.Button("ThrowBall"))
+            {
+                myScript.ThrowBallVector();
+            }
         }
 }

@@ -19,6 +19,7 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         private void Start()
         {
             _ballShots = new BallShots();
+            ChangePlayerState(PlayerState.Aiming);
         }
 
         public void ChangePlayerState(PlayerState playerState)
@@ -35,6 +36,12 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
             {
                 _playerManager.PlayerWaiting();
             }
+        }
+
+        public BallMovement GetBall()
+        {
+            //will change
+            return _balls[0];
         }
     }
 }

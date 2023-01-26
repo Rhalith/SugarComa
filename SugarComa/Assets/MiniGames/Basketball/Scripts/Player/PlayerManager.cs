@@ -15,25 +15,27 @@ namespace Assets.MiniGames.Basketball.Scripts
         [SerializeField] private BallManager _ballManager;
         [SerializeField] private SliderbarMovement _sliderBarMovement;
 
+        public BallManager BallManager { get => _ballManager; }
 
         public void OnThrow()
         {
             if (_playerState.Equals(PlayerState.Aiming))
             {
-                PlayerShooting();
+                _ballManager.ChangePlayerState(PlayerState.Shooting);
             }
         }
         public void PlayerAiming()
         {
             _sliderBarMovement.IsStopped = false;
             _playerState = PlayerState.Aiming;
+            _playerAnimation.Aim();
         }
         public void PlayerShooting()
         {
             _sliderBarMovement.IsStopped = true;
             _playerState= PlayerState.Shooting;
             _playerAnimation.Throw();
-            _ballManager.Balls[0].ThrowBall();//Normally it will invoke at the end of animation of throw. But right now there are no animations. So...
+            _playerAnimation.Ball = _ballManager.GetBall();
         }
         public void PlayerWaiting()
         {

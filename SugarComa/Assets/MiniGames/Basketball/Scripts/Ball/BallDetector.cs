@@ -14,6 +14,11 @@ public class BallDetector : MonoBehaviour
         {
             Score++;
             m_TextMeshPro.text = "00"+Score.ToString();
+            _netAnimator.SetBool("isShot",true);
         }
+    }
+    private void ResetAnimation()
+    {
+        _netAnimator.SetBool("isShot", false);
     }
 }
