@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5650588257732753930}
   - component: {fileID: 5650588257732753931}
   - component: {fileID: 1346938367422568763}
-  - component: {fileID: 4820687442614327487}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -78,23 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574811f9b9bf2424fbfa5b4fd216a275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAnimation: {fileID: 4820687442614327487}
---- !u!114 &4820687442614327487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5650588257732753938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38acb8064ed08c84097635fce044931d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _aim: 0
-  _throw: 0
-  _waiting: 0
-  _animator: {fileID: 163076147825103059}
+  _playerAnimation: {fileID: 0}
+  _playerState: 0
+  _ballManager: {fileID: 0}
+  _sliderBarMovement: {fileID: 0}
 --- !u!1001 &2698895230787448838
 PrefabInstance:
   m_ObjectHideFlags: 0

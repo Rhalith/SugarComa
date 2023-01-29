@@ -1,3 +1,5 @@
+using Assets.MiniGames.Basketball.Scripts.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +10,32 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
     {
         [SerializeField] private BallManager _ballManager;
         [SerializeField] private Rigidbody _rigidBody;
+        [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private Vector3 _vector;
         [SerializeField] private float _velocity;
 
-        private void Start()
-        {
-            _ballManager.ChangePlayerState(PlayerState.Waiting);
-        }
+        private bool _isReady = false;
+
+        public bool IsReady { get => _isReady; set => _isReady = value; }
+
         public void ThrowBall()
         {
+            _meshRenderer.enabled = true;
             _rigidBody.isKinematic = false;
             CheckBarState(_ballManager.SlideBar.GetBarPosition(), _ballManager.BallShots);
+            _isReady = false;
         }
+        public void PrepareBall()
+        {
+            _meshRenderer.enabled = false;
+            _rigidBody.isKinematic = true;
+            _isReady = true;
+            //will change
+            transform.position = new Vector3(0, 3.6f, 2.2f);
+            _ballManager.StartDribbling();
+        }
+        [Obsolete("Should be deleted after testing complete.")]
+        #region InspectorMethods
         public void ThrowBallVector()
         {
             _rigidBody.isKinematic = false;
@@ -32,7 +48,7 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
             _rigidBody.isKinematic = true;
             transform.position = new Vector3(0, 3.6f, 2.2f);
         }
-
+        #endregion
         private void CheckBarState(BarState barState, BallShots ballShots)
         {
             switch (barState)
@@ -51,6 +67,5 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
                     break;
             }
         }
-
     }
 }

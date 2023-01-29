@@ -1,4 +1,5 @@
-using System.Collections;
+using Assets.MiniGames.Basketball.Scripts.Player;
+using Assets.MiniGames.Basketball.Scripts.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,29 +20,30 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         private void Start()
         {
             _ballShots = new BallShots();
-            ChangePlayerState(PlayerState.Aiming);
+            Invoke(nameof(StartGame), 3f);
         }
 
-        public void ChangePlayerState(PlayerState playerState)
+        private void StartGame()
         {
-            if (playerState.Equals(PlayerState.Aiming))
-            {
-                _playerManager.PlayerAiming();
-            }
-            else if (playerState.Equals(PlayerState.Shooting))
-            {
-                _playerManager.PlayerShooting();
-            }
-            else
-            {
-                _playerManager.PlayerWaiting();
-            }
+            _balls[0].PrepareBall();
+            _playerManager.PlayerAnimation.Ball = _balls[0];
         }
 
+        public void StartDribbling()
+        {
+            _playerManager.PlayerAiming();
+        }
         public BallMovement GetBall()
         {
-            //will change
-            return _balls[0];
+            for (int i = 0; i < _balls.Count; i++)
+            {
+                if (_balls[i].IsReady)
+                {
+                    _balls[i].PrepareBall();
+                    return _balls[i];
+                }
+            }
+            return null;
         }
     }
 }

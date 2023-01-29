@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace Assets.MiniGames.Basketball.Scripts
+namespace Assets.MiniGames.Basketball.Scripts.Player
 {
     public partial class @PlayerActions : IInputActionCollection2, IDisposable
     {

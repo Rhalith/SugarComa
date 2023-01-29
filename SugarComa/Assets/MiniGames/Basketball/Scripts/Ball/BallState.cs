@@ -4,17 +4,9 @@ using UnityEngine;
 
 namespace Assets.MiniGames.Basketball.Scripts.Ball
 {
-    public class BallState : MonoBehaviour
+    enum BallState
     {
-        private bool isReady;
-        public bool IsReady { get => isReady; set => isReady = value; }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("BallResetter"))
-            {
-                isReady = true;
-            }
-        }
+        Ready,
+        NotReady
     }
 }

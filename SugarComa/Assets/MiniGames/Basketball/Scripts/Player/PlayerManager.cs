@@ -1,11 +1,9 @@
 using Assets.MiniGames.Basketball.Scripts.Ball;
-using System.Collections;
-using System.Collections.Generic;
+using Assets.MiniGames.Basketball.Scripts.UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
-namespace Assets.MiniGames.Basketball.Scripts
+namespace Assets.MiniGames.Basketball.Scripts.Player
 {
     public class PlayerManager : MonoBehaviour
     {
@@ -16,30 +14,31 @@ namespace Assets.MiniGames.Basketball.Scripts
         [SerializeField] private SliderbarMovement _sliderBarMovement;
 
         public BallManager BallManager { get => _ballManager; }
+        public PlayerAnimation PlayerAnimation { get => _playerAnimation; }
 
         public void OnThrow()
         {
             if (_playerState.Equals(PlayerState.Aiming))
             {
-                _ballManager.ChangePlayerState(PlayerState.Shooting);
+                PlayerShooting();
             }
         }
         public void PlayerAiming()
         {
-            _sliderBarMovement.IsStopped = false;
             _playerState = PlayerState.Aiming;
+            _sliderBarMovement.IsStopped = false;
             _playerAnimation.Aim();
         }
         public void PlayerShooting()
         {
-            _sliderBarMovement.IsStopped = true;
-            _playerState= PlayerState.Shooting;
-            _playerAnimation.Throw();
-            _playerAnimation.Ball = _ballManager.GetBall();
+            BallMovement ballMovement = _playerAnimation.Ball;
+            if (ballMovement != null)
+            {
+                _playerState = PlayerState.Shooting;
+                _sliderBarMovement.IsStopped = true;
+                _playerAnimation.Throw();
+            }
         }
-        public void PlayerWaiting()
-        {
-            _playerState = PlayerState.Waiting;
-        }
+
     }
 }
