@@ -31,7 +31,7 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
             _rigidBody.isKinematic = true;
             _isReady = true;
             //will change
-            transform.position = new Vector3(0, 3.6f, 2.2f);
+            transform.position = new Vector3(-0.1026847f, 4.775045f, 1.953461f);
             _ballManager.StartDribbling();
         }
         [Obsolete("Should be deleted after testing complete.")]
@@ -46,7 +46,7 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         public void ResetBall()
         {
             _rigidBody.isKinematic = true;
-            transform.position = new Vector3(0, 3.6f, 2.2f);
+            transform.position = new Vector3(-0.1026847f, 4.775045f, 1.953461f);
         }
         #endregion
         private void CheckBarState(BarState barState, BallShots ballShots)
