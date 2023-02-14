@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.MiniGames.Basketball.Scripts.Ball
 {
@@ -39,14 +40,22 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         public void ThrowBallVector()
         {
             _rigidBody.isKinematic = false;
-            _rigidBody.AddForce(_vector * _velocity, ForceMode.Impulse);
+            float result = (float)Random.Range(12,16)/8;
+            print(result);
+            Vector3 vector = new(0, (1.32f / result + 4.905f * result), 8.21f / result);
+            _rigidBody.AddForce(vector, ForceMode.VelocityChange);
             _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
+            Invoke(nameof(UnfreezePositionX), 0.5f);
         }
-
+        private void UnfreezePositionX()
+        {
+            _rigidBody.constraints -= RigidbodyConstraints.FreezePositionX;
+        }
         public void ResetBall()
         {
-            _rigidBody.isKinematic = true;
+            _rigidBody.constraints = RigidbodyConstraints.FreezePositionX;
             transform.position = new Vector3(-0.1026847f, 4.775045f, 1.953461f);
+            _rigidBody.isKinematic = true;
         }
         #endregion
         private void CheckBarState(BarState barState, BallShots ballShots)
