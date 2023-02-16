@@ -53,11 +53,19 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
                 new Vector3(0, 9.5f, 4.5f),
                 new Vector3(0, 9.8f, 4.5f),
                 new Vector3(0, 10f, 4.5f),
+                new Vector3(-0.1f, 9.5f, 5f),
+                new Vector3(-0.2f, 9.5f, 5f),
+                new Vector3(-0.3f, 9.5f, 5f),
                 new Vector3(0, 9.5f, 5f),
                 new Vector3(0.3f, 9.5f, 5f),
+                new Vector3(0.3f, 9.4f, 4.5f),
+                new Vector3(0.4f, 9.5f, 5f),
                 new Vector3(0, 9.5f, 5.2f),
                 new Vector3(0, 9.5f, 5.4f),
-                new Vector3(0, 9.5f, 5.6f),
+                new Vector3(0, 9.5f, 5.6f),                
+                new Vector3(-0.8f, 9f, 5f),
+                new Vector3(-0.9f, 9f, 5f),
+                new Vector3(0,8f,25f),
             };
         }
         private void PrepareAirBalls()
@@ -66,32 +74,37 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
             {
                 new Vector3(0.1f, 9.5f, 5f),
                 new Vector3(0.2f, 9.5f, 5f),
+                new Vector3(0.7f, 9.5f, 5f),
+                new Vector3(-0.7f, 9.5f, 5f),
+                new Vector3(-0.3f, 9.3f, 4.5f),
                 new Vector3(0, 9f, 4.5f),
-                new Vector3(0, 2f, 1.8f),
-                new Vector3(0, 2.1f, 1.2f),
-                new Vector3(0, 2.1f, 1.7f),
-                new Vector3(0, 2.2f, 1.1f),
-                new Vector3(0, 2.2f, 1.3f),
-                new Vector3(0, 2.3f, 0.9f),
-                new Vector3(0, 2.3f, 1.2f),
-                new Vector3(0, 2.4f, 1f),
-                new Vector3(0, 2.5f, 0.8f),
+                new Vector3(0.2f, 9.2f, 4.5f),
+                new Vector3(0f, 9.2f, 4.3f),
+                new Vector3(0f, 9.2f, 4.4f),
+                new Vector3(0.2f, 9.4f, 4.5f),
+                new Vector3(0.3f, 9.2f, 4.5f),
+                new Vector3(0.3f, 9.2f, 5f),
+                new Vector3(-0.2f, 9.2f, 5f),
+                new Vector3(0, 9f, 4.6f),
             };
         }
         private void PrepareBricks()
         {
             _bricks = new List<Vector3>
             {
-                new Vector3(0, 2f, 1f),
-                new Vector3(0, 2f, 1.2f),
-                new Vector3(0, 2.1f, 0.7f),
-                new Vector3(0, 2.1f, 2.2f),
-                new Vector3(0, 2.2f, 0.6f),
-                new Vector3(0, 2.3f, 0.7f),
-                new Vector3(0, 2.3f, 0.8f),
-                new Vector3(0, 2.4f, 0.7f),
-                new Vector3(0, 2.4f, 1.2f),
-                new Vector3(0, 2.5f, 0.6f),
+                new Vector3(0.8f, 9f, 5f),
+                new Vector3(0.9f, 9f, 5f),
+                new Vector3(0f, 8f, 5f),
+                new Vector3(0f, 8f, 4f),
+                new Vector3(0f, 8f, 3f),
+                new Vector3(0f, 9f, 4f),
+                new Vector3(0.4f, 10f, 4f),
+                new Vector3(-0.4f, 10f, 4f),
+                new Vector3(0f, 6f, 8f),
+                new Vector3(0.2f, 6f, 8f),
+                new Vector3(-0.5f, 6f, 8f),
+                new Vector3(0.8f, 8f, 12f),
+                new Vector3(-0.8f, 8f, 12f),
             };
         }
     }

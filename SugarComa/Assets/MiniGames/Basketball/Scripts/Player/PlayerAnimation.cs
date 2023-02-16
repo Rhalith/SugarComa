@@ -64,6 +64,11 @@ namespace Assets.MiniGames.Basketball.Scripts.Player
         {
             yield return new WaitForSeconds(1f);
             _ball = _playerManager.BallManager.GetBall();
+            if (_ball == null)
+            {
+                StartCoroutine(ResetPlayerAim());
+                yield return null;
+            }
             _playerManager.PlayerAiming();
         }
     }

@@ -53,15 +53,15 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
             switch (barState)
             {
                 case BarState.Green:
-                    _rigidBody.AddForce(ballShots.GetGoal() * _velocity, ForceMode.Impulse);
+                    _rigidBody.AddForce(ballShots.GetGoal(), ForceMode.VelocityChange);
                     _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
                     break;
                 case BarState.Yellow:
-                    _rigidBody.AddForce(ballShots.GetAirBall() * _velocity, ForceMode.Impulse);
+                    _rigidBody.AddForce(ballShots.GetAirBall(), ForceMode.VelocityChange);
                     _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
                     break;
                 case BarState.Red:
-                    _rigidBody.AddForce(ballShots.GetBrick() * _velocity, ForceMode.Impulse);
+                    _rigidBody.AddForce(ballShots.GetBrick(), ForceMode.VelocityChange);
                     _rigidBody.AddTorque(new Vector3(0, 0, 1) * _velocity, ForceMode.Impulse);
                     break;
             }
