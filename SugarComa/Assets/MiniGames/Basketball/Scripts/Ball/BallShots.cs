@@ -48,23 +48,25 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         {
             _goals = new List<Vector3>
             {
-                new Vector3(0, 2f, 1.3f),
-                new Vector3(0, 2f, 1.5f),
-                new Vector3(0, 2.1f, 1.1f),
-                new Vector3(0, 2.1f, 1.3f),
-                new Vector3(0, 2.1f, 1.6f),
-                new Vector3(0, 2.2f, 1f),
-                new Vector3(0, 2.2f, 1.2f),
-                new Vector3(0, 2.3f, 1f),
-                new Vector3(0, 2.4f, 1f),
-                new Vector3(0, 2.5f, 0.9f),
+                new Vector3(0, 9.3f, 4.5f),
+                new Vector3(0, 9.4f, 4.5f),
+                new Vector3(0, 9.5f, 4.5f),
+                new Vector3(0, 9.8f, 4.5f),
+                new Vector3(0, 10f, 4.5f),
+                new Vector3(0, 9.5f, 5f),
+                new Vector3(0.3f, 9.5f, 5f),
+                new Vector3(0, 9.5f, 5.2f),
+                new Vector3(0, 9.5f, 5.4f),
+                new Vector3(0, 9.5f, 5.6f),
             };
         }
         private void PrepareAirBalls()
         {
             _airBalls = new List<Vector3>
             {
-                new Vector3(0, 2f, 1.4f),
+                new Vector3(0.1f, 9.5f, 5f),
+                new Vector3(0.2f, 9.5f, 5f),
+                new Vector3(0, 9f, 4.5f),
                 new Vector3(0, 2f, 1.8f),
                 new Vector3(0, 2.1f, 1.2f),
                 new Vector3(0, 2.1f, 1.7f),

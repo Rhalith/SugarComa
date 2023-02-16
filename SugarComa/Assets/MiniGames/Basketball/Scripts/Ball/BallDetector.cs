@@ -11,6 +11,7 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         [Header("Net Attributes")]
         [SerializeField] TMPro.TextMeshPro m_TextMeshPro;
         [SerializeField] private Animator _netAnimator;
+        [SerializeField] private GameObject _goalEffect;
         public float Score;
         #endregion
         #region ReadyAttributes
@@ -35,13 +36,15 @@ namespace Assets.MiniGames.Basketball.Scripts.Ball
         private void ResetAnimation()
         {
             _netAnimator.SetBool("isShot", false);
+            _goalEffect.SetActive(false);
         }
 
         private void ScoreBall()
         {
             _netAnimator.SetBool("isShot", true);
+            _goalEffect.SetActive(true);
             Score++;
-            m_TextMeshPro.text = "00" + Score.ToString();
+            m_TextMeshPro.text = Score.ToString().PadLeft(3,'0');
             Invoke(nameof(ResetAnimation), 0.2f);
         }
         private void ReadyBall(Collider other)
