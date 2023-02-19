@@ -39,6 +39,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         /// <summary>
         /// if an animation or action will play to all players.
         /// </summary>
+
         public static bool canPlayersAct = true;
         //public Cinemachine.CinemachineBrain CineMachineBrain { set => _cinemachineBrain = value; }
         //public GameController GameController { get => _gameController; set => _gameController = value; }
@@ -97,8 +98,8 @@ namespace Assets.MainBoard.Scripts.Player.States
         private void InitializePlayerInputs()
         {
             _playerInput = new PlayerInputAction();
-            _playerInput.MainBoard.Space1.started += OnSpace;
-            _playerInput.MainBoard.Space1.canceled += OnSpace;
+            _playerInput.MainBoard.Space.started += OnSpace;
+            _playerInput.MainBoard.Space.canceled += OnSpace;
 
             _playerInput.MainBoard.A.started += OnAPressed;
             _playerInput.MainBoard.A.canceled += OnAPressed;

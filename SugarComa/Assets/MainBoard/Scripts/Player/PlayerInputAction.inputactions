@@ -6,7 +6,7 @@
             "id": "ead05179-b5c7-47ac-9216-abbd068680d8",
             "actions": [
                 {
-                    "name": "Space1",
+                    "name": "Space",
                     "type": "Value",
                     "id": "23d11112-eb60-44d3-84c4-f0d33bbe39ee",
                     "expectedControlType": "Button",
@@ -86,7 +86,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Space1",
+                    "action": "Space",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -115,7 +115,7 @@
                 {
                     "name": "",
                     "id": "e0e8ee2a-6299-4a78-865c-126b1f1087c7",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
