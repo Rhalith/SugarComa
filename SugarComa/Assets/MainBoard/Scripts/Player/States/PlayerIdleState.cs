@@ -69,6 +69,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         {
             if (context.IsMyTurn && _currentStep == 0)
             {
+                // Makes dice visible
                 _dice.Enter();
             }
         }
@@ -142,8 +143,10 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void GobletSelection_OnTakeIt()
         {
+            // USED
+            PlayerStateContext.canPlayersAct = false;
+
             _currentPlatform.ResetSpec();
-            PlayerStateContext.canPlayersAct = true;
             context.Running.CurrentStep = 0;
             _currentStep = 0;
 
@@ -163,12 +166,14 @@ namespace Assets.MainBoard.Scripts.Player.States
             {
                 ProcessSelect();
             }
-            else if (context.SpacePressed)
+            else if (context.SpacePressed && PlayerStateContext.canPlayersAct)
             {
                 if (_currentStep <= 0)
                 {
                     _dice.RollDice();
                     _currentStep = context.Running.CurrentStep;
+
+                    // Makes dice invisible
                     _dice.Exit();
                     SwitchState(context.Running);
                 }

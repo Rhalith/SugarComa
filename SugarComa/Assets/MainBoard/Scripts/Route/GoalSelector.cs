@@ -25,16 +25,16 @@ namespace Assets.MainBoard.Scripts.Route
         private int realPriority;
 
         private Platform _selectedPlatform;
-        //TODO
+
         private GameObject _currentGoal;
 
         private Platform _currentPlatform;
         #endregion
 
         #region Public Fields
-        public GameObject _platformChangerObject;
+        public GameObject PlatformChangerObject;
 
-        public GoalChestAnimation _chestAnimator;
+        public GoalChestAnimation ChestAnimator;
 
         public bool isGoalActive;
 
@@ -42,11 +42,17 @@ namespace Assets.MainBoard.Scripts.Route
         /// if there is a goal platform in map
         /// </summary>
         public static bool isAnyGoalPlatform;
+
+        public bool isChestAnim;
         #endregion
 
+        int imd = 3;
         public void RandomGoalSelect()
         {
-            int index = Random.Range(0, platforms.Count);
+            //int index = Random.Range(1, platforms.Count);
+
+            int index = imd;
+            imd++;
 
             if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector)
             {
@@ -59,9 +65,8 @@ namespace Assets.MainBoard.Scripts.Route
                 {
                     bool result = RemoteMessageHandler.Instance.SendNewChestIndex(index);
 
-
-                    //if (result)
-                    //    CreateGoal(index);
+                    if (result)
+                        StartCoroutine(CreateGoal(index));
                 }
             }
             else
@@ -70,8 +75,46 @@ namespace Assets.MainBoard.Scripts.Route
             }
         }
 
-        public void CreateGoal(int index)
+        public IEnumerator CreateGoal(int index)
         {
+            if (isAnyGoalPlatform)
+            {
+                _currentPlatform.ResetSpec();
+
+                //isChestAnim become true inside here
+                TakeGoblet();
+            }
+
+            while (isChestAnim)
+            {
+
+            }
+
+            platforms[index].spec = PlatformSpec.Goal;
+            CreateGoalObject(platforms[index]);
+            VirtualCameraLookTo(_camera, platforms[index].transform);
+            print(platforms[index]);
+            isAnyGoalPlatform = true;
+            _currentPlatform = platforms[index];
+            yield return null;
+        }
+
+        /*
+        public void CreateGoalMeth(int index)
+        {
+            if (isAnyGoalPlatform)
+            {
+                _currentPlatform.ResetSpec();
+
+                //isChestAnim become true inside here
+                TakeGoblet();
+            }
+
+            /* use an asyncronous method for waiting. 
+            while (isChestAnim)
+            {
+            }
+            //
             platforms[index].spec = PlatformSpec.Goal;
             CreateGoalObject(platforms[index]);
             VirtualCameraLookTo(_camera, platforms[index].transform);
@@ -79,7 +122,9 @@ namespace Assets.MainBoard.Scripts.Route
             isAnyGoalPlatform = true;
             PlayerStateContext.canPlayersAct = false;
             _currentPlatform = platforms[index];
+             
         }
+        */
 
         private void VirtualCameraLookTo(CinemachineVirtualCamera camera, Transform target)
         {
@@ -98,7 +143,6 @@ namespace Assets.MainBoard.Scripts.Route
         public void ResetGoalCameraPriority()
         {
             _camera.Priority = realPriority;
-            PlayerStateContext.canPlayersAct = true;
         }
 
         /// <summary>
@@ -123,8 +167,8 @@ namespace Assets.MainBoard.Scripts.Route
 
         public void TakeGoblet()
         {
-            _chestAnimator = _currentGoal.GetComponent<GoalChestAnimation>();
-            _chestAnimator.StartChestOpeningAnimation();
+            ChestAnimator = _currentGoal.GetComponent<GoalChestAnimation>();
+            ChestAnimator.StartChestOpeningAnimation();
         }
 
         private void CreateGoalObject(Platform platform)
@@ -137,13 +181,17 @@ namespace Assets.MainBoard.Scripts.Route
 
             SetChestRotation(platform, _currentGoal.transform);
 
-            _platformChangerObject.transform.position = platform.position;
+            PlatformChangerObject.transform.position = platform.position;
 
             IEnumerator ChangeCameraAfterBlendCoroutine()
             {
+                // why yield return null two times
                 yield return null; yield return null;
                 while (_cinemachineBrain.IsBlending) { yield return null; }
-                _platformChangerObject.SetActive(true);
+
+                // Torus activated here...
+                PlatformChangerObject.SetActive(true);
+                PlatformChangerObject.GetComponent<Animator>().SetTrigger("PutChest");
                 StopCoroutine(ChangeCameraAfterBlendCoroutine());
             }
             StartCoroutine(ChangeCameraAfterBlendCoroutine());

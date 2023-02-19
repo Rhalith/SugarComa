@@ -51,12 +51,16 @@ namespace Assets.MainBoard.Scripts.UI
         {
             player.goblet++;
             player.gold -= 50;
-
+            
+            /*
             // Update Player specs on other players
             byte[] data = NetworkHelper.Serialize(new PlayerSpecNetworkData((byte)player.gold, (byte)player.health, (byte)player.goblet));
             SteamServerManager.Instance.SendingMessageToAll(data);
+            */
 
             _gameController.ChangeText();
+
+            // Script is on the GobletInterface (UI)
             gameObject.SetActive(false);
             OnTakeIt?.Invoke();
             _goalSelector.TakeGoblet();

@@ -75,6 +75,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChestAnimation
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 283e646bb787d1440a0787879ed5e7d3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2389538849530911561, guid: 283e646bb787d1440a0787879ed5e7d3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -126,4 +130,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce5b0250c9bcb5944b4754df2aa86a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _goalSelector: {fileID: 0}
+  goalSelector: {fileID: 0}
+  anim: {fileID: 2483456346146096077}
