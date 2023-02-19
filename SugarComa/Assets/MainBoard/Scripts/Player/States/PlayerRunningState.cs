@@ -53,9 +53,8 @@ namespace Assets.MainBoard.Scripts.Player.States
             var current = _pathTracker.CurrentPlatform;
             if (current != null)
             {
-                NetworkData networkData =
-                        new NetworkData(MessageType.InputDown, current.position);
-                SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(networkData));
+                // Send player's new position
+                RemoteMessageHandler.Instance.SendNewPosition(current.position);
 
                 _currentPlatform = current;
                 CurrentStep--;

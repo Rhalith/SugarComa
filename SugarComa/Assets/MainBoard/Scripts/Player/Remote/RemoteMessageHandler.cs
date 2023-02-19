@@ -51,7 +51,7 @@ public class RemoteMessageHandler : MonoBehaviour
         if (IsPlayerListNetworkData(buffer)) return;
         if (IsTurnOverNetworkData(buffer)) return;
         if (IsMiniGameNetworkData(buffer)) return;
-        if (IsChestNetworkData(buffer)) return;
+        if (IsChestNetworkData(steamId, buffer)) return;
     }
 
     private bool IsNetworkData(SteamId steamId, byte[] buffer)
@@ -151,11 +151,11 @@ public class RemoteMessageHandler : MonoBehaviour
         return false;
     }
 
-    private bool IsChestNetworkData(byte[] buffer)
+    private bool IsChestNetworkData(SteamId steamId, byte[] buffer)
     {
         if (MBNetworkHelper.TryGetChestData(buffer, out ChestNetworkData chestData))
         {
-            goalSelector.CreateGoal(chestData.index);
+            StartCoroutine(goalSelector.CreateGoal(chestData.index));
 
             return true;
         }
@@ -164,6 +164,11 @@ public class RemoteMessageHandler : MonoBehaviour
     #endregion
 
     #region Senders
+    public void SendNewPosition(Vector3 newPos)
+    {
+        SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new NetworkData(MessageType.InputDown, newPos)));
+    }
+    
     public void SendTurnOver(PlayerStateContext context)
     {
         // Inside IsMyTurn ChangeCurrentPlayer called, if it is false.
@@ -174,8 +179,8 @@ public class RemoteMessageHandler : MonoBehaviour
 
     public bool SendNewChestIndex(int index)
     {
-        //return SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
-        return SteamServerManager.Instance.SendingMessage(SteamManager.Instance.PlayerSteamId, NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
+        return SteamServerManager.Instance.SendingMessageToAll(NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
+        //return SteamServerManager.Instance.SendingMessage(SteamManager.Instance.PlayerSteamId, NetworkHelper.Serialize(new ChestNetworkData((byte)index)));
     }
 
     #endregion
