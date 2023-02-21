@@ -16,13 +16,13 @@ namespace Assets.MiniGames.HoleInTheWall.Scripts.Animations
             if (start)
             {
                 _playerMovement.CapsuleCollider.height = 2f;
-                _playerMovement.CapsuleCollider.center = new Vector3(0, 1f, 0);
+                _playerMovement.CapsuleCollider.center = new Vector3(0, 0f, 0);
                 _playerMovement.IsCrouched = true;
             }
             else
             {
                 _playerMovement.CapsuleCollider.height = 4f;
-                _playerMovement.CapsuleCollider.center = new Vector3(0, 2f, 0);
+                _playerMovement.CapsuleCollider.center = new Vector3(0, 1f, 0);
                 _playerMovement.IsCrouched = false;
             }
         }
