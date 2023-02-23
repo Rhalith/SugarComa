@@ -77,7 +77,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 283e646bb787d1440a0787879ed5e7d3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2389538849530911561, guid: 283e646bb787d1440a0787879ed5e7d3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -118,7 +118,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3054938490156896383
+--- !u!114 &822850974754404588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7052442493378672624}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce5b0250c9bcb5944b4754df2aa86a24, type: 3}
+  m_Script: {fileID: 11500000, guid: 17dd926438528d54ca250283bcbcec23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   goalSelector: {fileID: 0}
