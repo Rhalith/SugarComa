@@ -32,19 +32,19 @@ public class PlayerAnimation : MonoBehaviour
             case float i when i > 0f && i < 30f:
                 _animator.speed = 0.4f;
                 break;
-            case float i when i > 30f && i < 65f:
+            case float i when i >= 30f && i < 65f:
                 _animator.speed = 0.5f;
                 break;
-            case float i when i > 65f && i < 100f:
+            case float i when i >= 65f && i < 100f:
                 _animator.speed = 0.8f;
                 break;
-            case float i when i > 100f && i < 125f:
+            case float i when i >= 100f && i < 125f:
                 _animator.speed = 1f;
                 break;
-            case float i when i > 125f && i < 150f:
+            case float i when i >= 125f && i < 150f:
                 _animator.speed = 1.2f;
                 break;
-            case float i when i > 150f && i < 200f:
+            case float i when i >= 150f && i < 210f:
                 _animator.speed = 1.4f;
                 break;
             default:
