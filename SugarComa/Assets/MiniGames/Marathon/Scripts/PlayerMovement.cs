@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerAnimation _playerAnimation;
     [SerializeField] private float _speed;
-    private bool _isClicking;
+    private bool _isLeft;
     private void Start()
     {
         _playerAnimation = gameObject.GetComponent<PlayerAnimation>();
@@ -33,12 +35,26 @@ public class PlayerMovement : MonoBehaviour
     }
     private void SpeedUpPlayer()
     {
-        _isClicking = true;
         _playerAnimation.StartRunning();
         if(_speed < 200f)_speed+=10;
     }
-    public void OnSpeedUp()
+    public void OnSpeedUp(InputValue value)
     {
-        SpeedUpPlayer();
+        CheckKey(value);
+    }
+
+    private void CheckKey(InputValue value)
+    {
+        float input = value.Get<float>();
+        if(_isLeft == false && input < 0)
+        {
+            _isLeft = true;
+            SpeedUpPlayer();
+        }
+        else if (_isLeft == true && input > 0)
+        {
+            _isLeft = false;
+            SpeedUpPlayer();
+        }
     }
 }
