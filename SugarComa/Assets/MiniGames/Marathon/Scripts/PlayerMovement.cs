@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAnimation _playerAnimation;
     [SerializeField] private float _speed;
     private bool _isLeft;
+    private bool _isFirst = true;
     private void Start()
     {
         _playerAnimation = gameObject.GetComponent<PlayerAnimation>();
@@ -46,13 +47,20 @@ public class PlayerMovement : MonoBehaviour
     private void CheckKey(InputValue value)
     {
         float input = value.Get<float>();
-        if(_isLeft == false && input < 0)
+        if(!_isLeft && input < 0)
         {
             _isLeft = true;
             SpeedUpPlayer();
         }
-        else if (_isLeft == true && input > 0)
+        else if (_isLeft && input > 0)
         {
+            _isLeft = false;
+            SpeedUpPlayer();
+        }
+        //This is only for if player starts with key "D"
+        if (_isFirst && !_isLeft && input > 0)
+        {
+            _isFirst = false;
             _isLeft = false;
             SpeedUpPlayer();
         }
