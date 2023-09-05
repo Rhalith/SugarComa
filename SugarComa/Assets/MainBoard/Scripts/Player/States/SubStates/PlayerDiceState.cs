@@ -6,10 +6,10 @@ namespace Assets.MainBoard.Scripts.Player.States.SubStates
     public class PlayerDiceState : PlayerBaseState
     {
         #region Private Members
-        [SerializeField] private GameObject _dice;
-        [SerializeField] private TMPro.TMP_Text _diceText;
+        [SerializeField] private GameObject dice;
+        [SerializeField] private TMPro.TMP_Text diceText;
         #endregion
-        public GameObject Dice => _dice;
+        public GameObject Dice => dice;
 
         public PlayerDiceState(PlayerStateContext context, PlayerData playerData, string animBoolName, bool sendData = true) : base(context, playerData, animBoolName, sendData)
         {
@@ -17,19 +17,19 @@ namespace Assets.MainBoard.Scripts.Player.States.SubStates
 
         public override void Enter()
         {
-            _dice.SetActive(true);
+            dice.SetActive(true);
         }
 
         public void RollDice()
         {
             int tempStep = Random.Range(1, 10);
             context.Running.CurrentStep = tempStep;
-            _diceText.text = tempStep.ToString();
+            diceText.text = tempStep.ToString();
         }
 
         public override void Exit()
         {
-            _dice.SetActive(false);
+            dice.SetActive(false);
         }
     }
 }

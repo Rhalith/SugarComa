@@ -63,7 +63,9 @@ namespace Assets.MainBoard.Scripts.UI
             // Script is on the GobletInterface (UI)
             gameObject.SetActive(false);
             OnTakeIt?.Invoke();
-            _goalSelector.TakeGoblet();
+
+
+            _goalSelector.StartChestOpeningAnim();
         }
 
         public void LeaveIt()

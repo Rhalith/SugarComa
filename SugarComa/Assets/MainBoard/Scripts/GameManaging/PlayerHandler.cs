@@ -55,6 +55,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
         private GameObject _createdObject;
         #endregion
 
+        public bool IsChestTaken;
+
         void Awake()
         {
             if (_instance != null && _instance != this)
@@ -64,6 +66,12 @@ namespace Assets.MainBoard.Scripts.GameManaging
             }
 
             _instance = this;
+
+        }
+
+        private void GobletSelection_OnTakeIt()
+        {
+            IsChestTaken = true;
         }
 
         /// <summary>
@@ -81,6 +89,8 @@ namespace Assets.MainBoard.Scripts.GameManaging
                 SetScripts(scKeeper);
                 UpdateMapCam(scKeeper);
                 UpdateStateContext();
+
+                mainPlayerStateContext.GobletSelection.OnTakeIt += GobletSelection_OnTakeIt;
 
                 // TODO: Tracker zaten tanımlandığı için eventleri initialize edebiliriz running'de... (Silinebilir mi?)
                 mainPlayerStateContext.Running.InitializePathTracker();

@@ -23,10 +23,12 @@ namespace Assets.MainBoard.Scripts.Route
         // Calls inside chest's Chest opening animation.
         public void StartPlatformChangeAnimation()
         {
-            GoalSelector.isAnyGoalPlatform = false;
             goalSelector.PlatformChangerObject.SetActive(true);
             goalSelector.PlatformChangerObject.GetComponent<Animator>().SetTrigger("TakeChest");
 
+            //goalSelector.ChangeActiveObject(2);
+
+            GoalSelector.isAnyGoalPlatform = false;
             goalSelector.isChestAnim = false;
         }
         #endregion

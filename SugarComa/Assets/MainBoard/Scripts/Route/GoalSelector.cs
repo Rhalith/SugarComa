@@ -8,6 +8,8 @@ using System.Collections;
 using UnityEngine;
 using Cinemachine;
 using Assets.MainBoard.Scripts.Networking.MainBoardNetworking;
+using UnityEngine.Profiling;
+using Assets.MainBoard.Scripts.Player.Handlers;
 
 namespace Assets.MainBoard.Scripts.Route
 {
@@ -45,14 +47,9 @@ namespace Assets.MainBoard.Scripts.Route
 
         public bool isChestAnim;
         #endregion
-
-        int imd = 3;
         public void RandomGoalSelect()
         {
-            //int index = Random.Range(1, platforms.Count);
-
-            int index = imd;
-            imd++;
+            int index = Random.Range(1, platforms.Count);
 
             if (platforms[index].spec != PlatformSpec.Goal && !platforms[index].HasSelector)
             {
@@ -64,7 +61,7 @@ namespace Assets.MainBoard.Scripts.Route
                 else
                 {
                     bool result = RemoteMessageHandler.Instance.SendNewChestIndex(index);
-
+                    
                     if (result)
                         StartCoroutine(CreateGoal(index));
                 }
@@ -82,21 +79,16 @@ namespace Assets.MainBoard.Scripts.Route
                 _currentPlatform.ResetSpec();
 
                 //isChestAnim become true inside here
-                TakeGoblet();
+                StartChestOpeningAnim();
             }
 
-            while (isChestAnim)
-            {
-
-            }
+            yield return new WaitUntil(() => !isChestAnim);
 
             platforms[index].spec = PlatformSpec.Goal;
             CreateGoalObject(platforms[index]);
             VirtualCameraLookTo(_camera, platforms[index].transform);
             print(platforms[index]);
-            isAnyGoalPlatform = true;
             _currentPlatform = platforms[index];
-            yield return null;
         }
 
         /*
@@ -148,6 +140,7 @@ namespace Assets.MainBoard.Scripts.Route
         /// <summary>
         /// i == 0(Platform -> Chest), i == 1 (Chest -> Platform)
         /// </summary>
+        /// 
         public void ChangeActiveObject(int i)
         {
             if (i == 0)
@@ -156,16 +149,30 @@ namespace Assets.MainBoard.Scripts.Route
                 _currentGoal.SetActive(true);
                 isGoalActive = true;
             }
-            else
+            else if(i == 1)
             {
-                _currentGoal.SetActive(false);
+                // Could use object pooling for chest later...
+                Destroy(_currentGoal);
                 _selectedPlatform.ActivateMeshRenderer(true);
                 isGoalActive = false;
-                RandomGoalSelect();
+
+                // Random Goal Select'i remote'lardan çaðýrma
+
+                // New networking input... Will work after chestAnimation happened.
+                // add if(id == hostId) check
+                if(PlayerTurnHandler.Index == RemoteMessageHandler.Instance.localIndex)
+                    RandomGoalSelect();
             }
+            else
+            {
+                Destroy(_currentGoal);
+                _selectedPlatform.ActivateMeshRenderer(true);
+                isGoalActive = false;
+            }
+
         }
 
-        public void TakeGoblet()
+        public void StartChestOpeningAnim()
         {
             ChestAnimator = _currentGoal.GetComponent<GoalChestAnimation>();
             ChestAnimator.StartChestOpeningAnimation();

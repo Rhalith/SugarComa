@@ -18,6 +18,7 @@ namespace Assets.MainBoard.Scripts.Player.States
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private GobletSelection _gobletSelection;
         //[SerializeField] private Cinemachine.CinemachineBrain _cinemachineBrain;
+        public bool canPlayerActPublic;
         #endregion
 
         #region Private Members
@@ -26,6 +27,10 @@ namespace Assets.MainBoard.Scripts.Player.States
         private PlayerBaseState _currentState;
         private PlayerHandler _playerHandler;
         #endregion
+
+
+        private static PlayerStateContext _instance;
+        public static PlayerStateContext Instance => _instance;
 
         #region Properties
 
@@ -40,7 +45,8 @@ namespace Assets.MainBoard.Scripts.Player.States
         /// if an animation or action will play to all players.
         /// </summary>
 
-        public static bool canPlayersAct = true;
+        public static bool canPlayersAct = false;
+
         //public Cinemachine.CinemachineBrain CineMachineBrain { set => _cinemachineBrain = value; }
         //public GameController GameController { get => _gameController; set => _gameController = value; }
         public PlayerCollector PlayerCollector => _playerCollector;
@@ -71,6 +77,14 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void Awake()
         {
+            if (_instance != null && _instance != this)
+            {
+                DestroyImmediate(this);
+                return;
+            }
+
+            _instance = this;
+
             // Initialize the player inputs.
             InitializePlayerInputs();
             InitializeStates();
@@ -85,6 +99,7 @@ namespace Assets.MainBoard.Scripts.Player.States
 
         private void Update()
         {
+            canPlayerActPublic = canPlayersAct;
             if (GameManager.IsGameOver) return;
 
             _currentState.Update();

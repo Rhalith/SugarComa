@@ -1,4 +1,7 @@
+using Assets.MainBoard.Scripts.GameManaging;
+using Assets.MainBoard.Scripts.Player.Handlers;
 using Assets.MainBoard.Scripts.Player.States;
+using Assets.MainBoard.Scripts.UI;
 using UnityEngine;
 
 namespace Assets.MainBoard.Scripts.Route
@@ -21,9 +24,6 @@ namespace Assets.MainBoard.Scripts.Route
         {
             if (!goalSelector.isGoalActive)
                 goalSelector.ChangeActiveObject(0);
-
-            if (count < 2) 
-                count++;
         }
 
         // Main Chest Creation method. ChangePlatform and this method call inside the ChestOpeningAnimation animation.
@@ -35,7 +35,7 @@ namespace Assets.MainBoard.Scripts.Route
             gameObject.SetActive(false);
 
 
-            if (count > 1 && !GoalSelector.isAnyGoalPlatform)
+            if (!GoalSelector.isAnyGoalPlatform)
             {
                 goalSelector.ChangeActiveObject(1);
             }
@@ -43,6 +43,15 @@ namespace Assets.MainBoard.Scripts.Route
 
         public void ResetPlayerAct()
         {
+            // Change... After chest animations over and if it is players turn. Its turns overs
+            // We checking it from PlayerHandler. Change it.
+            if (PlayerHandler.Instance.IsChestTaken)
+            {
+                PlayerHandler.Instance.IsChestTaken = false;
+                RemoteMessageHandler.Instance.SendTurnOver(PlayerStateContext.Instance);
+            }
+
+            GoalSelector.isAnyGoalPlatform = true;
             PlayerStateContext.canPlayersAct = true;
         }
         #endregion

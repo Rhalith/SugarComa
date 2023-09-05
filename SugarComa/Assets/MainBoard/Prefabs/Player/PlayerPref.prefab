@@ -4660,7 +4660,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7782608, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6219,7 +6219,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7755278540377684912}
   m_LocalRotation: {x: -0.16948605, y: 0.000000029802322, z: -0.000000007450581, w: 0.98553264}
-  m_LocalPosition: {x: 0, y: 0, z: 6.4327464}
+  m_LocalPosition: {x: 0, y: 0, z: 6.349}
   m_LocalScale: {x: 0.10000001, y: 0.1, z: 0.10000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6228,7 +6228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.75403917}
+  m_AnchoredPosition: {x: 0, y: 0.99}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3603890999873461326
@@ -6293,7 +6293,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 7
+  m_text: sadsadsadasdasdasd
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6356,7 +6356,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -4.417812, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -6958,13 +6958,14 @@ MonoBehaviour:
   _animator: {fileID: 3143581662385314892}
   _rb: {fileID: 5019937161402794153}
   _gobletSelection: {fileID: 4120892788315320753}
+  canPlayerActPublic: 0
   _playerIdle:
     _itemPool: {fileID: 4120892788034233094}
     _mapCamera: {fileID: 0}
     _playerInventory: {fileID: 4120892788481720717}
     _dice:
-      _dice: {fileID: 7986056786197168510}
-      _diceText: {fileID: 3643661254280034090}
+      dice: {fileID: 7986056786197168510}
+      diceText: {fileID: 3643661254280034090}
   _playerRunning:
     _pathTracker: {fileID: 4120892788481720719}
     _currentPlatform: {fileID: 0}

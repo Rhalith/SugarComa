@@ -150,8 +150,10 @@ namespace Assets.MainBoard.Scripts.Player.States
             context.Running.CurrentStep = 0;
             _currentStep = 0;
 
+            /*
             // Turn Over
             SendTurnOverMessage();
+            */
         }
 
         private void SendTurnOverMessage()

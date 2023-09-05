@@ -63,21 +63,24 @@ namespace Assets.MainBoard.Scripts.Networking
         // Receiving data packages
         private void ReceivingMessages()
         {
+            /*
             try
             {
-                while (SteamNetworking.IsP2PPacketAvailable())
-                {
-                    var packet = SteamNetworking.ReadP2PPacket();
-                    if (packet != null && packet.HasValue)
-                    {
-                        //Debug.Log(packet.Value.SteamId + " " + packet.Value.Data);
-                        OnMessageReceived?.Invoke(packet.Value.SteamId, packet.Value.Data);
-                    }
-                }
+                
             }
             catch (System.Exception e)
             {
                 Debug.Log(e.Message);
+            }
+            */
+            while (SteamNetworking.IsP2PPacketAvailable())
+            {
+                var packet = SteamNetworking.ReadP2PPacket();
+                if (packet != null && packet.HasValue)
+                {
+                    //Debug.Log(packet.Value.SteamId + " " + packet.Value.Data);
+                    OnMessageReceived?.Invoke(packet.Value.SteamId, packet.Value.Data);
+                }
             }
         }
 

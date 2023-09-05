@@ -481,6 +481,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChestAnimation
       objectReference: {fileID: 0}
+    - target: {fileID: 7052442493378672624, guid: 5159bb8d583e3a64d834eb942bf30396, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7679938883806883146, guid: 5159bb8d583e3a64d834eb942bf30396, type: 3}
       propertyPath: m_RootOrder
       value: 1
