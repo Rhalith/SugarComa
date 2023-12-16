@@ -2,7 +2,7 @@
  
 A Sugar Game
 
-<img src="https://raw.githubusercontent.com/Rhalith/SugarComa/main/GithubDocs/GameMap.jpeg"  width="800" height="450">
+![GameMap](https://github.com/Rhalith/SugarComa/assets/82326121/5ea7155a-af8f-4ba8-9415-9985811aebe5)
 
 https://github.com/Rhalith/SugarComa/assets/82326121/29616a7e-468c-4d6f-905a-7c6dfbd0c5ce
 
